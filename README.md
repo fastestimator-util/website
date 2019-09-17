@@ -1,2 +1,2 @@
 # website
-FastEstimator websites for hosting
+FastEstimator website
