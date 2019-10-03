@@ -1,0 +1,600 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>fastestimator.pipeline &mdash; FastEstimator 0.0.1 documentation</title>
+  
+
+  
+  
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/>
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../_static/language_data.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> FastEstimator
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0a0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../learn.html">Learn</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../apphub.html">Example</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api.html">API</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">FastEstimator</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+        
+      <li>fastestimator.pipeline</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for fastestimator.pipeline</h1><div class="highlight"><pre>
+<span></span><span class="c1"># Copyright 2019 The FastEstimator Authors. All Rights Reserved.</span>
+<span class="c1">#</span>
+<span class="c1"># Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);</span>
+<span class="c1"># you may not use this file except in compliance with the License.</span>
+<span class="c1"># You may obtain a copy of the License at</span>
+<span class="c1">#</span>
+<span class="c1">#     http://www.apache.org/licenses/LICENSE-2.0</span>
+<span class="c1">#</span>
+<span class="c1"># Unless required by applicable law or agreed to in writing, software</span>
+<span class="c1"># distributed under the License is distributed on an &quot;AS IS&quot; BASIS,</span>
+<span class="c1"># WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span>
+<span class="c1"># See the License for the specific language governing permissions and</span>
+<span class="c1"># limitations under the License.</span>
+<span class="c1"># ==============================================================================</span>
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">multiprocessing</span> <span class="k">as</span> <span class="nn">mp</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">time</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
+
+<span class="kn">from</span> <span class="nn">fastestimator.op.tensorop</span> <span class="k">import</span> <span class="n">TensorFilter</span>
+<span class="kn">from</span> <span class="nn">fastestimator.util</span> <span class="k">import</span> <span class="n">RecordWriter</span>
+<span class="kn">from</span> <span class="nn">fastestimator.op</span> <span class="k">import</span> <span class="n">get_inputs_by_key</span><span class="p">,</span> <span class="n">get_inputs_by_op</span><span class="p">,</span> <span class="n">get_op_from_mode</span><span class="p">,</span> <span class="n">verify_ops</span><span class="p">,</span> \
+    <span class="n">write_outputs_by_key</span>
+<span class="kn">from</span> <span class="nn">fastestimator.schedule</span> <span class="k">import</span> <span class="n">Scheduler</span>
+<span class="kn">from</span> <span class="nn">fastestimator.util.tfrecord</span> <span class="k">import</span> <span class="n">get_features</span>
+<span class="kn">from</span> <span class="nn">fastestimator.util.util</span> <span class="k">import</span> <span class="n">convert_tf_dtype</span><span class="p">,</span> <span class="n">flatten_list</span><span class="p">,</span> <span class="n">get_num_devices</span>
+
+
+<div class="viewcode-block" id="Pipeline"><a class="viewcode-back" href="../../api.html#fastestimator.pipeline.Pipeline">[docs]</a><span class="k">class</span> <span class="nc">Pipeline</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Class representing the data pipeline required for fastestimator</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        data: The input for the pipeline. This can be either a dictionary, a tfrecord path or a RecordWriter.</span>
+<span class="sd">        batch_size: Integer representing the batch size per device for training the model.</span>
+<span class="sd">        ops: List of fastestimator operations that needs to be applied on the data in the pipeline.</span>
+<span class="sd">        read_feature: List of features that should be used in training. If None all the features available are used.</span>
+<span class="sd">        padded_batch: Boolean representing if a batch should be padded or not.</span>
+<span class="sd">        expand_dims: Boolean representing if a batch dimensions should be expanded or not.</span>
+<span class="sd">        max_shuffle_buffer_mb: Maximum buffer size to shuffle data. This is used only if the number of examples are</span>
+<span class="sd">            more than that could fit in the buffer. Defaults to 3000.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+                 <span class="n">data</span><span class="p">,</span>
+                 <span class="n">batch_size</span><span class="p">,</span>
+                 <span class="n">ops</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                 <span class="n">read_feature</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                 <span class="n">padded_batch</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                 <span class="n">expand_dims</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                 <span class="n">max_shuffle_buffer_mb</span><span class="o">=</span><span class="mi">3000</span><span class="p">):</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">batch_size</span> <span class="o">=</span> <span class="n">batch_size</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">data</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ops</span> <span class="o">=</span> <span class="n">ops</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">read_feature</span> <span class="o">=</span> <span class="n">read_feature</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">padded_batch</span> <span class="o">=</span> <span class="n">padded_batch</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">expand_dims</span> <span class="o">=</span> <span class="n">expand_dims</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">max_shuffle_buffer_mb</span> <span class="o">=</span> <span class="n">max_shuffle_buffer_mb</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">possible_mode</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;train&quot;</span><span class="p">,</span> <span class="s2">&quot;eval&quot;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">padded_shape</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">global_batch_multiplier</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">eval_shuffle</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">num_core</span> <span class="o">=</span> <span class="n">mp</span><span class="o">.</span><span class="n">cpu_count</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_verify_input</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_reset</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">_verify_input</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="p">(</span><span class="nb">dict</span><span class="p">,</span> <span class="n">RecordWriter</span><span class="p">,</span> <span class="nb">str</span><span class="p">)),</span> \
+            <span class="s2">&quot;data must be either RecordWriter, dictionary or record path&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">read_feature</span><span class="p">:</span>
+            <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">read_feature</span><span class="p">,</span>
+                              <span class="p">(</span><span class="nb">list</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">,</span> <span class="nb">dict</span><span class="p">)),</span> <span class="s2">&quot;read_feature must be either list, tuple or dictionary&quot;</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">read_feature</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">read_feature</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">read_feature</span><span class="p">]</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">ops</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ops</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">ops</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">ops</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">ops</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="k">def</span> <span class="nf">_reset</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mode_list</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">all_features</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;train&quot;</span><span class="p">:</span> <span class="p">[],</span> <span class="s2">&quot;eval&quot;</span><span class="p">:</span> <span class="p">[]}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">num_examples</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;train&quot;</span><span class="p">:</span> <span class="p">[],</span> <span class="s2">&quot;eval&quot;</span><span class="p">:</span> <span class="p">[]}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">shuffle_buffer</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;train&quot;</span><span class="p">:</span> <span class="p">[],</span> <span class="s2">&quot;eval&quot;</span><span class="p">:</span> <span class="p">[]}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">feature_name</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;train&quot;</span><span class="p">:</span> <span class="p">[],</span> <span class="s2">&quot;eval&quot;</span><span class="p">:</span> <span class="p">[]}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">extracted_dataset</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">transformed_dataset</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dataset_schedule</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">all_output_keys</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+        <span class="c1"># TFrecord only</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">summary_file</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">feature_dtype</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;train&quot;</span><span class="p">:</span> <span class="p">[],</span> <span class="s2">&quot;eval&quot;</span><span class="p">:</span> <span class="p">[]}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">record_feature_shape</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;train&quot;</span><span class="p">:</span> <span class="p">[],</span> <span class="s2">&quot;eval&quot;</span><span class="p">:</span> <span class="p">[]}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">compression</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;train&quot;</span><span class="p">:</span> <span class="p">[],</span> <span class="s2">&quot;eval&quot;</span><span class="p">:</span> <span class="p">[]}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">file_names</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;train&quot;</span><span class="p">:</span> <span class="p">[],</span> <span class="s2">&quot;eval&quot;</span><span class="p">:</span> <span class="p">[]}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">global_batch_multiplier</span> <span class="o">=</span> <span class="mi">1</span>
+
+<div class="viewcode-block" id="Pipeline.prepare"><a class="viewcode-back" href="../../api.html#fastestimator.pipeline.Pipeline.prepare">[docs]</a>    <span class="k">def</span> <span class="nf">prepare</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">distribute_strategy</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Create the dataset used by the pipeline by running all the ops specified.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            distribute_strategy: Type of strategy to be used for multi GPU setup.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_get_numpy_config</span><span class="p">()</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="p">(</span><span class="n">RecordWriter</span><span class="p">,</span> <span class="nb">str</span><span class="p">)):</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">RecordWriter</span><span class="p">):</span>
+                <span class="n">data_path</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">save_dir</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">data_path</span><span class="p">)</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">data_path</span><span class="p">):</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">write</span><span class="p">()</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">data_path</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;FastEstimator: Reading non-empty directory: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">data_path</span><span class="p">))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_get_tfrecord_config</span><span class="p">(</span><span class="n">data_path</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;data must be one of the following: dictionary, RecordWriter or record path&quot;</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">mode</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">mode_list</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_get_feature_name</span><span class="p">(</span><span class="n">mode</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_extract_dataset</span><span class="p">(</span><span class="n">mode</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_transform_dataset</span><span class="p">(</span><span class="n">mode</span><span class="p">,</span> <span class="n">distribute_strategy</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">all_output_keys</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">all_output_keys</span> <span class="o">|</span> <span class="nb">set</span><span class="p">(</span><span class="n">flatten_list</span><span class="p">(</span><span class="n">flatten_list</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">feature_name</span><span class="o">.</span><span class="n">values</span><span class="p">()))))</span> <span class="o">-</span> <span class="p">{</span><span class="kc">None</span><span class="p">}</span></div>
+
+    <span class="k">def</span> <span class="nf">_get_numpy_config</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">mode</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">possible_mode</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">mode</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">mode_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">mode</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">all_features</span><span class="p">[</span><span class="n">mode</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">mode</span><span class="p">])</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_get_numpy_config_mode</span><span class="p">(</span><span class="n">mode</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_get_numpy_config_mode</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mode</span><span class="p">):</span>
+        <span class="n">num_examples_list</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">mode</span><span class="p">]</span>
+        <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+            <span class="n">feature_data</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
+            <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">feature_data</span><span class="p">)</span> <span class="ow">is</span> <span class="nb">list</span><span class="p">:</span>
+                <span class="n">num_examples_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">feature_data</span><span class="p">))</span>
+            <span class="k">elif</span> <span class="nb">type</span><span class="p">(</span><span class="n">feature_data</span><span class="p">)</span> <span class="ow">is</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+                <span class="n">num_examples_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">feature_data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;the feature only supports list or numpy array&quot;</span><span class="p">)</span>
+        <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span>
+            <span class="n">num_examples_list</span><span class="p">))</span> <span class="o">==</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;inconsistent number of data found during </span><span class="si">{}</span><span class="s2">, please check the data&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">mode</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">num_examples</span><span class="p">[</span><span class="n">mode</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">num_examples_list</span><span class="p">)</span><span class="o">.</span><span class="n">pop</span><span class="p">())</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">shuffle_buffer</span><span class="p">[</span><span class="n">mode</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">num_examples_list</span><span class="p">)</span><span class="o">.</span><span class="n">pop</span><span class="p">())</span>
+
+    <span class="k">def</span> <span class="nf">_get_tfrecord_config</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data_path</span><span class="p">):</span>
+        <span class="n">found_data</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="k">for</span> <span class="n">mode</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">possible_mode</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">summary_file</span><span class="p">[</span><span class="n">mode</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span>
+                <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">data_path</span><span class="p">,</span> <span class="n">f</span><span class="p">)</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">data_path</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">f</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">&quot;.json&quot;</span><span class="p">)</span> <span class="ow">and</span> <span class="n">f</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%s</span><span class="s2">_summary&quot;</span> <span class="o">%</span> <span class="n">mode</span><span class="p">)</span>
+            <span class="p">]</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">summary_file</span><span class="p">[</span><span class="n">mode</span><span class="p">])</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">mode_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">mode</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_get_tfrecord_config_mode</span><span class="p">(</span><span class="n">data_path</span><span class="p">,</span> <span class="n">mode</span><span class="p">)</span>
+                <span class="n">found_data</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="k">assert</span> <span class="n">found_data</span><span class="p">,</span> <span class="s2">&quot;could not find data summary file in </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">data_path</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_get_tfrecord_config_mode</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data_path</span><span class="p">,</span> <span class="n">mode</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">json_file</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">summary_file</span><span class="p">[</span><span class="n">mode</span><span class="p">]:</span>
+            <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">json_file</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fp</span><span class="p">:</span>
+                <span class="n">summary</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">fp</span><span class="p">)</span>
+            <span class="n">file_names</span> <span class="o">=</span> <span class="p">[</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">data_path</span><span class="p">,</span> <span class="n">f</span><span class="p">)</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">summary</span><span class="p">[</span><span class="s2">&quot;file_names&quot;</span><span class="p">]]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">file_names</span><span class="p">[</span><span class="n">mode</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">file_names</span><span class="p">)</span>
+            <span class="n">num_examples</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">summary</span><span class="p">[</span><span class="s2">&quot;num_examples&quot;</span><span class="p">])</span>
+            <span class="n">example_size_mb</span> <span class="o">=</span> <span class="n">summary</span><span class="p">[</span><span class="s2">&quot;example_size_mb&quot;</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">num_examples</span><span class="p">[</span><span class="n">mode</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">num_examples</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">feature_dtype</span><span class="p">[</span><span class="n">mode</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">summary</span><span class="p">[</span><span class="s2">&quot;feature_dtype&quot;</span><span class="p">])</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">record_feature_shape</span><span class="p">[</span><span class="n">mode</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">summary</span><span class="p">[</span><span class="s2">&quot;feature_shape&quot;</span><span class="p">])</span>
+            <span class="k">if</span> <span class="s2">&quot;compression&quot;</span> <span class="ow">in</span> <span class="n">summary</span><span class="p">:</span>
+                <span class="n">compression</span> <span class="o">=</span> <span class="n">summary</span><span class="p">[</span><span class="s2">&quot;compression&quot;</span><span class="p">]</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">compression</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">compression</span><span class="p">[</span><span class="n">mode</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">compression</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">all_features</span><span class="p">[</span><span class="n">mode</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">get_features</span><span class="p">(</span><span class="n">file_names</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">compression</span><span class="o">=</span><span class="n">compression</span><span class="p">))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">shuffle_buffer</span><span class="p">[</span><span class="n">mode</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="nb">min</span><span class="p">(</span><span class="n">num_examples</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_shuffle_buffer_mb</span> <span class="o">//</span> <span class="n">example_size_mb</span><span class="p">)))</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;FastEstimator: Found </span><span class="si">%d</span><span class="s2"> examples for </span><span class="si">%s</span><span class="s2"> in </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">num_examples</span><span class="p">),</span> <span class="n">mode</span><span class="p">,</span> <span class="n">json_file</span><span class="p">))</span>
+
+    <span class="k">def</span> <span class="nf">_get_feature_name</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mode</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">all_features</span><span class="p">[</span><span class="n">mode</span><span class="p">])</span> <span class="o">&gt;</span> <span class="mi">1</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">read_feature</span><span class="p">:</span>
+            <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">read_feature</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">),</span> <span class="s2">&quot;read feature must be a tuple for unpaired feature set&quot;</span>
+            <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">read_feature</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">all_features</span><span class="p">[</span><span class="n">mode</span><span class="p">]),</span> <span class="s2">&quot;the tuple should be consistent between read_feature and data&quot;</span>
+        <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">feature</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">all_features</span><span class="p">[</span><span class="n">mode</span><span class="p">]):</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">read_feature</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">feature_name</span><span class="p">[</span><span class="n">mode</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">feature</span><span class="o">.</span><span class="n">keys</span><span class="p">()))</span>
+            <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">read_feature</span><span class="p">[</span><span class="n">idx</span><span class="p">],</span> <span class="nb">dict</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">feature_name</span><span class="p">[</span><span class="n">mode</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">read_feature</span><span class="p">[</span><span class="n">idx</span><span class="p">][</span><span class="n">mode</span><span class="p">])</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">feature_name</span><span class="p">[</span><span class="n">mode</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">read_feature</span><span class="p">[</span><span class="n">idx</span><span class="p">])</span>
+
+    <span class="k">def</span> <span class="nf">_extract_dataset</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mode</span><span class="p">):</span>
+        <span class="n">ds_tuple</span> <span class="o">=</span> <span class="p">()</span>
+        <span class="c1"># Data Reading</span>
+        <span class="k">for</span> <span class="n">idx</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">all_features</span><span class="p">[</span><span class="n">mode</span><span class="p">])):</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+                <span class="n">ds</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">Dataset</span><span class="o">.</span><span class="n">from_tensor_slices</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">all_features</span><span class="p">[</span><span class="n">mode</span><span class="p">][</span><span class="n">idx</span><span class="p">])</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">mode</span> <span class="o">==</span> <span class="s2">&quot;train&quot;</span><span class="p">:</span>
+                    <span class="n">ds</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">Dataset</span><span class="o">.</span><span class="n">from_tensor_slices</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">file_names</span><span class="p">[</span><span class="n">mode</span><span class="p">][</span><span class="n">idx</span><span class="p">])</span>
+                    <span class="n">ds</span> <span class="o">=</span> <span class="n">ds</span><span class="o">.</span><span class="n">shuffle</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">file_names</span><span class="p">[</span><span class="n">mode</span><span class="p">][</span><span class="n">idx</span><span class="p">]))</span>
+                    <span class="n">ds</span> <span class="o">=</span> <span class="n">ds</span><span class="o">.</span><span class="n">interleave</span><span class="p">(</span>
+                        <span class="k">lambda</span> <span class="n">ds_lam</span><span class="p">:</span> <span class="n">tf</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">TFRecordDataset</span><span class="p">(</span><span class="n">ds_lam</span><span class="p">,</span> <span class="n">compression_type</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">compression</span><span class="p">[</span><span class="n">mode</span><span class="p">][</span><span class="n">idx</span><span class="p">]),</span>
+                        <span class="n">cycle_length</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">num_core</span><span class="p">,</span>
+                        <span class="n">block_length</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">ds</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">TFRecordDataset</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">file_names</span><span class="p">[</span><span class="n">mode</span><span class="p">][</span><span class="n">idx</span><span class="p">],</span>
+                                                 <span class="n">compression_type</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">compression</span><span class="p">[</span><span class="n">mode</span><span class="p">][</span><span class="n">idx</span><span class="p">])</span>
+                <span class="n">ds</span> <span class="o">=</span> <span class="n">ds</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">ds_lam</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_decode_records</span><span class="p">(</span><span class="n">ds_lam</span><span class="p">,</span> <span class="n">mode</span><span class="p">,</span> <span class="n">idx</span><span class="p">),</span> <span class="n">num_parallel_calls</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">num_core</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">mode</span> <span class="o">==</span> <span class="s2">&quot;train&quot;</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">eval_shuffle</span><span class="p">:</span>
+                <span class="n">ds</span> <span class="o">=</span> <span class="n">ds</span><span class="o">.</span><span class="n">shuffle</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">shuffle_buffer</span><span class="p">[</span><span class="n">mode</span><span class="p">][</span><span class="n">idx</span><span class="p">])</span>
+            <span class="n">ds</span> <span class="o">=</span> <span class="n">ds</span><span class="o">.</span><span class="n">repeat</span><span class="p">()</span>
+            <span class="n">ds_tuple</span> <span class="o">+=</span> <span class="n">ds</span><span class="p">,</span>
+        <span class="c1"># Combine dataset from different unpaired feature sets</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">all_features</span><span class="p">[</span><span class="n">mode</span><span class="p">])</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">dataset</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">Dataset</span><span class="o">.</span><span class="n">zip</span><span class="p">(</span><span class="n">ds_tuple</span><span class="p">)</span>
+            <span class="n">dataset</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_combine_dataset</span><span class="p">,</span> <span class="n">num_parallel_calls</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">num_core</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">dataset</span> <span class="o">=</span> <span class="n">ds_tuple</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">extracted_dataset</span><span class="p">[</span><span class="n">mode</span><span class="p">]</span> <span class="o">=</span> <span class="n">dataset</span>
+
+    <span class="k">def</span> <span class="nf">_transform_dataset</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mode</span><span class="p">,</span> <span class="n">distribute_strategy</span><span class="p">):</span>
+        <span class="n">all_output_keys</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">signature_epoch</span><span class="p">,</span> <span class="n">mode_ops</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_signature_epoch</span><span class="p">(</span><span class="n">mode</span><span class="p">)</span>
+        <span class="n">extracted_ds</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">extracted_dataset</span><span class="p">[</span><span class="n">mode</span><span class="p">]</span>
+        <span class="n">state</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;mode&quot;</span><span class="p">:</span> <span class="n">mode</span><span class="p">}</span>
+        <span class="n">dataset_map</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">epoch</span> <span class="ow">in</span> <span class="n">signature_epoch</span><span class="p">:</span>
+            <span class="n">epoch_ops_all</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="n">forward_ops_epoch</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="n">filter_ops_epoch</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="n">forward_ops_between_filter</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="c1"># get batch size for the epoch</span>
+            <span class="n">global_batch_size</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_global_batch_size</span><span class="p">(</span><span class="n">epoch</span><span class="p">)</span>
+            <span class="c1"># generate ops for specific mode and epoch</span>
+            <span class="k">for</span> <span class="n">op</span> <span class="ow">in</span> <span class="n">mode_ops</span><span class="p">:</span>
+                <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">op</span><span class="p">,</span> <span class="n">Scheduler</span><span class="p">):</span>
+                    <span class="n">scheduled_op</span> <span class="o">=</span> <span class="n">op</span><span class="o">.</span><span class="n">get_current_value</span><span class="p">(</span><span class="n">epoch</span><span class="p">)</span>
+                    <span class="k">if</span> <span class="n">scheduled_op</span><span class="p">:</span>
+                        <span class="n">epoch_ops_all</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">scheduled_op</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">epoch_ops_all</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">op</span><span class="p">)</span>
+            <span class="c1"># check the ops</span>
+            <span class="n">epoch_ops_without_filter</span> <span class="o">=</span> <span class="p">[</span><span class="n">op</span> <span class="k">for</span> <span class="n">op</span> <span class="ow">in</span> <span class="n">epoch_ops_all</span> <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">op</span><span class="p">,</span> <span class="n">TensorFilter</span><span class="p">)]</span>
+            <span class="n">verify_ops</span><span class="p">(</span><span class="n">epoch_ops_without_filter</span><span class="p">,</span> <span class="s2">&quot;Pipeline&quot;</span><span class="p">)</span>
+            <span class="c1"># arrange operation according to filter location</span>
+            <span class="k">for</span> <span class="n">op</span> <span class="ow">in</span> <span class="n">epoch_ops_all</span><span class="p">:</span>
+                <span class="n">all_output_keys</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">op</span><span class="o">.</span><span class="n">outputs</span><span class="p">)</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">op</span><span class="p">,</span> <span class="n">TensorFilter</span><span class="p">):</span>
+                    <span class="n">forward_ops_between_filter</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">op</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">forward_ops_epoch</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">forward_ops_between_filter</span><span class="p">)</span>
+                    <span class="n">filter_ops_epoch</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">op</span><span class="p">)</span>
+                    <span class="n">forward_ops_between_filter</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="n">forward_ops_epoch</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">forward_ops_between_filter</span><span class="p">)</span>
+            <span class="c1"># execute the operations</span>
+            <span class="n">dataset</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_execute_ops</span><span class="p">(</span><span class="n">extracted_ds</span><span class="p">,</span> <span class="n">forward_ops_epoch</span><span class="p">,</span> <span class="n">filter_ops_epoch</span><span class="p">,</span> <span class="n">state</span><span class="p">)</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">expand_dims</span><span class="p">:</span>
+                <span class="n">dataset</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">flat_map</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">Dataset</span><span class="o">.</span><span class="n">from_tensor_slices</span><span class="p">)</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">padded_batch</span><span class="p">:</span>
+                <span class="n">_</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_get_padded_shape</span><span class="p">)</span>
+                <span class="n">dataset</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">padded_batch</span><span class="p">(</span><span class="n">global_batch_size</span><span class="p">,</span> <span class="n">padded_shapes</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">padded_shape</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">dataset</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">batch</span><span class="p">(</span><span class="n">global_batch_size</span><span class="p">)</span>
+            <span class="n">dataset</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">prefetch</span><span class="p">(</span><span class="n">buffer_size</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">distribute_strategy</span><span class="p">:</span>
+                <span class="n">dataset</span> <span class="o">=</span> <span class="n">distribute_strategy</span><span class="o">.</span><span class="n">experimental_distribute_dataset</span><span class="p">(</span><span class="n">dataset</span><span class="p">)</span>
+            <span class="n">dataset_map</span><span class="p">[</span><span class="n">epoch</span><span class="p">]</span> <span class="o">=</span> <span class="nb">iter</span><span class="p">(</span><span class="n">dataset</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dataset_schedule</span><span class="p">[</span><span class="n">mode</span><span class="p">]</span> <span class="o">=</span> <span class="n">Scheduler</span><span class="p">(</span><span class="n">epoch_dict</span><span class="o">=</span><span class="n">dataset_map</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">all_output_keys</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">all_output_keys</span> <span class="o">|</span> <span class="nb">set</span><span class="p">(</span><span class="n">flatten_list</span><span class="p">(</span><span class="n">all_output_keys</span><span class="p">))</span>
+
+    <span class="k">def</span> <span class="nf">_get_padded_shape</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dataset</span><span class="p">):</span>
+        <span class="n">padded_shape</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">dataset</span><span class="p">:</span>
+            <span class="n">padded_shape</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">dataset</span><span class="p">[</span><span class="n">key</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">padded_shape</span> <span class="o">=</span> <span class="n">padded_shape</span>
+        <span class="k">return</span> <span class="n">dataset</span>
+
+    <span class="k">def</span> <span class="nf">_execute_ops</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dataset</span><span class="p">,</span> <span class="n">forward_ops_epoch</span><span class="p">,</span> <span class="n">filter_ops_epoch</span><span class="p">,</span> <span class="n">state</span><span class="p">):</span>
+        <span class="n">num_filters</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">filter_ops_epoch</span><span class="p">)</span>
+        <span class="n">forward_ops</span> <span class="o">=</span> <span class="n">forward_ops_epoch</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">dataset</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">ds</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_preprocess_fn</span><span class="p">(</span><span class="n">ds</span><span class="p">,</span> <span class="n">forward_ops</span><span class="p">,</span> <span class="n">state</span><span class="p">),</span> <span class="n">num_parallel_calls</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">num_core</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">num_filters</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">filter_op</span><span class="p">,</span> <span class="n">forward_ops</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">filter_ops_epoch</span><span class="p">,</span> <span class="n">forward_ops_epoch</span><span class="p">[</span><span class="mi">1</span><span class="p">:]):</span>
+                <span class="n">dataset</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">ds</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_filter_fn</span><span class="p">(</span><span class="n">ds</span><span class="p">,</span> <span class="n">filter_op</span><span class="p">,</span> <span class="n">state</span><span class="p">))</span>
+                <span class="n">dataset</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">ds</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_preprocess_fn</span><span class="p">(</span><span class="n">ds</span><span class="p">,</span> <span class="n">forward_ops</span><span class="p">,</span> <span class="n">state</span><span class="p">),</span>
+                                      <span class="n">num_parallel_calls</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">num_core</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">dataset</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">_filter_fn</span><span class="p">(</span><span class="n">feature</span><span class="p">,</span> <span class="n">filter_op</span><span class="p">,</span> <span class="n">state</span><span class="p">):</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">get_inputs_by_key</span><span class="p">(</span><span class="n">feature</span><span class="p">,</span> <span class="n">filter_op</span><span class="o">.</span><span class="n">inputs</span><span class="p">)</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">filter_op</span><span class="o">.</span><span class="n">forward</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">state</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">data</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">_preprocess_fn</span><span class="p">(</span><span class="n">feature</span><span class="p">,</span> <span class="n">forward_ops</span><span class="p">,</span> <span class="n">state</span><span class="p">):</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">for</span> <span class="n">op</span> <span class="ow">in</span> <span class="n">forward_ops</span><span class="p">:</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="n">get_inputs_by_op</span><span class="p">(</span><span class="n">op</span><span class="p">,</span> <span class="n">feature</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="n">op</span><span class="o">.</span><span class="n">forward</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">state</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">op</span><span class="o">.</span><span class="n">outputs</span><span class="p">:</span>
+                <span class="n">feature</span> <span class="o">=</span> <span class="n">write_outputs_by_key</span><span class="p">(</span><span class="n">feature</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">op</span><span class="o">.</span><span class="n">outputs</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">feature</span>
+
+    <span class="k">def</span> <span class="nf">_get_signature_epoch</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mode</span><span class="p">):</span>
+        <span class="n">signature_epoch</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">batch_size</span><span class="p">,</span> <span class="n">Scheduler</span><span class="p">):</span>
+            <span class="n">signature_epoch</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">batch_size</span><span class="o">.</span><span class="n">keys</span><span class="p">)</span>
+        <span class="n">mode_ops</span> <span class="o">=</span> <span class="n">get_op_from_mode</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ops</span><span class="p">,</span> <span class="n">mode</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">op</span> <span class="ow">in</span> <span class="n">mode_ops</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">op</span><span class="p">,</span> <span class="n">Scheduler</span><span class="p">):</span>
+                <span class="n">signature_epoch</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">op</span><span class="o">.</span><span class="n">keys</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">signature_epoch</span><span class="p">)),</span> <span class="n">mode_ops</span>
+
+    <span class="k">def</span> <span class="nf">_decode_records</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dataset</span><span class="p">,</span> <span class="n">mode</span><span class="p">,</span> <span class="n">idx</span><span class="p">):</span>
+        <span class="n">decoded_data</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">all_data</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">parse_single_example</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">features</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">all_features</span><span class="p">[</span><span class="n">mode</span><span class="p">][</span><span class="n">idx</span><span class="p">])</span>
+        <span class="k">for</span> <span class="n">feature</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">feature_name</span><span class="p">[</span><span class="n">mode</span><span class="p">][</span><span class="n">idx</span><span class="p">]:</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="n">all_data</span><span class="p">[</span><span class="n">feature</span><span class="p">]</span>
+            <span class="k">if</span> <span class="s2">&quot;str&quot;</span> <span class="ow">in</span> <span class="nb">str</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span> <span class="ow">and</span> <span class="s2">&quot;str&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">feature_dtype</span><span class="p">[</span><span class="n">mode</span><span class="p">][</span><span class="n">idx</span><span class="p">][</span><span class="n">feature</span><span class="p">]:</span>
+                <span class="n">data</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">decode_raw</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">convert_tf_dtype</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">feature_dtype</span><span class="p">[</span><span class="n">mode</span><span class="p">][</span><span class="n">idx</span><span class="p">][</span><span class="n">feature</span><span class="p">]))</span>
+                <span class="n">data</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">record_feature_shape</span><span class="p">[</span><span class="n">mode</span><span class="p">][</span><span class="n">idx</span><span class="p">][</span><span class="n">feature</span><span class="p">])</span>
+            <span class="k">if</span> <span class="s2">&quot;int&quot;</span> <span class="ow">in</span> <span class="nb">str</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">dtype</span><span class="p">):</span>
+                <span class="n">data</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">cast</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">tf</span><span class="o">.</span><span class="n">int32</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="s2">&quot;str&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">feature_dtype</span><span class="p">[</span><span class="n">mode</span><span class="p">][</span><span class="n">idx</span><span class="p">][</span><span class="n">feature</span><span class="p">]:</span>
+                <span class="n">data</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">cast</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">tf</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+            <span class="n">decoded_data</span><span class="p">[</span><span class="n">feature</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span>
+        <span class="k">return</span> <span class="n">decoded_data</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">_combine_dataset</span><span class="p">(</span><span class="o">*</span><span class="n">dataset</span><span class="p">):</span>
+        <span class="n">combined_dict</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">ds</span> <span class="ow">in</span> <span class="n">dataset</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">ds</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+                <span class="k">assert</span> <span class="n">key</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">combined_dict</span><span class="p">,</span> <span class="s2">&quot;found duplicated key </span><span class="si">{}</span><span class="s2"> in unpaird feature sets&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+                <span class="n">combined_dict</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">ds</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">combined_dict</span>
+
+<div class="viewcode-block" id="Pipeline.get_global_batch_size"><a class="viewcode-back" href="../../api.html#fastestimator.pipeline.Pipeline.get_global_batch_size">[docs]</a>    <span class="k">def</span> <span class="nf">get_global_batch_size</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">epoch</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Gets the global batch size for the current epoch. Batch size changes if there is a schedule which specifies a</span>
+<span class="sd">        change for the given epoch.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            epoch: The epoch number in the training</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">batch_per_device</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">batch_size</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">batch_per_device</span><span class="p">,</span> <span class="n">Scheduler</span><span class="p">):</span>
+            <span class="n">batch_per_device</span> <span class="o">=</span> <span class="n">batch_per_device</span><span class="o">.</span><span class="n">get_current_value</span><span class="p">(</span><span class="n">epoch</span><span class="p">)</span>
+        <span class="n">global_batch_size</span> <span class="o">=</span> <span class="n">batch_per_device</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">global_batch_multiplier</span>
+        <span class="k">return</span> <span class="n">global_batch_size</span></div>
+
+<div class="viewcode-block" id="Pipeline.show_results"><a class="viewcode-back" href="../../api.html#fastestimator.pipeline.Pipeline.show_results">[docs]</a>    <span class="k">def</span> <span class="nf">show_results</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;train&quot;</span><span class="p">,</span> <span class="n">num_steps</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">current_epoch</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Processes the pipeline ops on the given input data.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            mode: can be either &quot;train&quot; or &quot;eval&quot;.</span>
+<span class="sd">            num_steps: the number of steps for the pipeline to run.</span>
+<span class="sd">            current_epoch: to specify the current epoch in the training. This is useful if you are using a schedule to</span>
+<span class="sd">                change the pipeline during training.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">global_batch_multiplier</span> <span class="o">=</span> <span class="n">get_num_devices</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">prepare</span><span class="p">()</span>
+        <span class="n">ds_iter</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataset_schedule</span><span class="p">[</span><span class="n">mode</span><span class="p">]</span><span class="o">.</span><span class="n">get_current_value</span><span class="p">(</span><span class="n">current_epoch</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_steps</span><span class="p">):</span>
+            <span class="n">data</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">next</span><span class="p">(</span><span class="n">ds_iter</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_reset</span><span class="p">()</span>
+
+        <span class="k">return</span> <span class="n">data</span></div>
+
+<div class="viewcode-block" id="Pipeline.benchmark"><a class="viewcode-back" href="../../api.html#fastestimator.pipeline.Pipeline.benchmark">[docs]</a>    <span class="k">def</span> <span class="nf">benchmark</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;train&quot;</span><span class="p">,</span> <span class="n">num_steps</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">log_interval</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">current_epoch</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Runs benchmarks for the current epoch.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            mode: can be either &quot;train&quot; or &quot;eval&quot;.</span>
+<span class="sd">            num_steps: the number of steps to show the results for.</span>
+<span class="sd">            log_interval:</span>
+<span class="sd">            current_epoch: to specify the current epoch in the training.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">global_batch_multiplier</span> <span class="o">=</span> <span class="n">get_num_devices</span><span class="p">()</span>
+        <span class="n">global_batch_size</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_global_batch_size</span><span class="p">(</span><span class="n">current_epoch</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">prepare</span><span class="p">()</span>
+        <span class="n">ds_iter</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataset_schedule</span><span class="p">[</span><span class="n">mode</span><span class="p">]</span><span class="o">.</span><span class="n">get_current_value</span><span class="p">(</span><span class="n">current_epoch</span><span class="p">)</span>
+        <span class="n">start</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">perf_counter</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">idx</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_steps</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+            <span class="n">_</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">ds_iter</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">idx</span> <span class="o">%</span> <span class="n">log_interval</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">idx</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="n">start</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">perf_counter</span><span class="p">()</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">duration</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">perf_counter</span><span class="p">()</span> <span class="o">-</span> <span class="n">start</span>
+                    <span class="n">example_per_sec</span> <span class="o">=</span> <span class="n">log_interval</span> <span class="o">*</span> <span class="n">global_batch_size</span> <span class="o">/</span> <span class="n">duration</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;FastEstimator: Step: </span><span class="si">%d</span><span class="s2">, Epoch: </span><span class="si">%d</span><span class="s2">, Batch Size </span><span class="si">%d</span><span class="s2">, Example/sec </span><span class="si">%.2f</span><span class="s2">&quot;</span> <span class="o">%</span>
+                          <span class="p">(</span><span class="n">idx</span><span class="p">,</span> <span class="n">current_epoch</span><span class="p">,</span> <span class="n">global_batch_size</span><span class="p">,</span> <span class="n">example_per_sec</span><span class="p">))</span>
+                    <span class="n">start</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">perf_counter</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_reset</span><span class="p">()</span></div></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, GEHC DataScience
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

@@ -1,0 +1,958 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Horse to Zebra Unpaired Image Translation with CycleGAN in FastEstimator &mdash; FastEstimator 0.0.1 documentation</title>
+  
+
+  
+  
+    <link rel="shortcut icon" href="../../../_static/favicon.ico"/>
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../../_static/language_data.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="DCGAN Example with MNIST Dataset" href="../dcgan_mnist/dcgan_mnist.html" />
+    <link rel="prev" title="Convolutional Variational Autoencoder example using MNIST dataset" href="../cvae_mnist/cvae_mnist.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> FastEstimator
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0a0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../../install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../learn.html">Learn</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../../apphub.html">Example</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../NLP.html">NLP</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../image_classification.html">Image Classification</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../../image_generation.html">Image Generation</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../cvae_mnist/cvae_mnist.html">Convolutional Variational Autoencoder example using MNIST dataset</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Horse to Zebra Unpaired Image Translation with CycleGAN in FastEstimator</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#Step-1:-Defining-Input-Pipeline">Step 1: Defining Input Pipeline</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Step-2:-Defining-Model-Architectures">Step 2: Defining Model Architectures</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Loss-functions">Loss functions</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../dcgan_mnist/dcgan_mnist.html">DCGAN Example with MNIST Dataset</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../image_segmentation.html">Image Segmentation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../image_styletransfer.html">Image Style Transfer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../tabular.html">Tabular</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api.html">API</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">FastEstimator</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../../apphub.html">Example</a> &raquo;</li>
+        
+          <li><a href="../../image_generation.html">Image Generation</a> &raquo;</li>
+        
+      <li>Horse to Zebra Unpaired Image Translation with CycleGAN in FastEstimator</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../../_sources/apphub/image_generation/cyclegan_horse2zebra/cyclegan.ipynb.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  
+<style>
+/* CSS for nbsphinx extension */
+
+/* remove conflicting styling from Sphinx themes */
+div.nbinput,
+div.nbinput div.prompt,
+div.nbinput div.input_area,
+div.nbinput div[class*=highlight],
+div.nbinput div[class*=highlight] pre,
+div.nboutput,
+div.nbinput div.prompt,
+div.nbinput div.output_area,
+div.nboutput div[class*=highlight],
+div.nboutput div[class*=highlight] pre {
+    background: none;
+    border: none;
+    padding: 0 0;
+    margin: 0;
+    box-shadow: none;
+}
+
+/* avoid gaps between output lines */
+div.nboutput div[class*=highlight] pre {
+    line-height: normal;
+}
+
+/* input/output containers */
+div.nbinput,
+div.nboutput {
+    display: -webkit-flex;
+    display: flex;
+    align-items: flex-start;
+    margin: 0;
+    width: 100%;
+}
+@media (max-width: 540px) {
+    div.nbinput,
+    div.nboutput {
+        flex-direction: column;
+    }
+}
+
+/* input container */
+div.nbinput {
+    padding-top: 5px;
+}
+
+/* last container */
+div.nblast {
+    padding-bottom: 5px;
+}
+
+/* input prompt */
+div.nbinput div.prompt pre {
+    color: #307FC1;
+}
+
+/* output prompt */
+div.nboutput div.prompt pre {
+    color: #BF5B3D;
+}
+
+/* all prompts */
+div.nbinput div.prompt,
+div.nboutput div.prompt {
+    min-width: 5ex;
+    padding-top: 0.4em;
+    padding-right: 0.4em;
+    text-align: right;
+    flex: 0;
+}
+@media (max-width: 540px) {
+    div.nbinput div.prompt,
+    div.nboutput div.prompt {
+        text-align: left;
+        padding: 0.4em;
+    }
+    div.nboutput div.prompt.empty {
+        padding: 0;
+    }
+}
+
+/* disable scrollbars on prompts */
+div.nbinput div.prompt pre,
+div.nboutput div.prompt pre {
+    overflow: hidden;
+}
+
+/* input/output area */
+div.nbinput div.input_area,
+div.nboutput div.output_area {
+    padding: 0.4em;
+    -webkit-flex: 1;
+    flex: 1;
+    overflow: auto;
+}
+@media (max-width: 540px) {
+    div.nbinput div.input_area,
+    div.nboutput div.output_area {
+        width: 100%;
+    }
+}
+
+/* input area */
+div.nbinput div.input_area {
+    border: 1px solid #e0e0e0;
+    border-radius: 2px;
+    background: #f5f5f5;
+}
+
+/* override MathJax center alignment in output cells */
+div.nboutput div[class*=MathJax] {
+    text-align: left !important;
+}
+
+/* override sphinx.ext.imgmath center alignment in output cells */
+div.nboutput div.math p {
+    text-align: left;
+}
+
+/* standard error */
+div.nboutput div.output_area.stderr {
+    background: #fdd;
+}
+
+/* ANSI colors */
+.ansi-black-fg { color: #3E424D; }
+.ansi-black-bg { background-color: #3E424D; }
+.ansi-black-intense-fg { color: #282C36; }
+.ansi-black-intense-bg { background-color: #282C36; }
+.ansi-red-fg { color: #E75C58; }
+.ansi-red-bg { background-color: #E75C58; }
+.ansi-red-intense-fg { color: #B22B31; }
+.ansi-red-intense-bg { background-color: #B22B31; }
+.ansi-green-fg { color: #00A250; }
+.ansi-green-bg { background-color: #00A250; }
+.ansi-green-intense-fg { color: #007427; }
+.ansi-green-intense-bg { background-color: #007427; }
+.ansi-yellow-fg { color: #DDB62B; }
+.ansi-yellow-bg { background-color: #DDB62B; }
+.ansi-yellow-intense-fg { color: #B27D12; }
+.ansi-yellow-intense-bg { background-color: #B27D12; }
+.ansi-blue-fg { color: #208FFB; }
+.ansi-blue-bg { background-color: #208FFB; }
+.ansi-blue-intense-fg { color: #0065CA; }
+.ansi-blue-intense-bg { background-color: #0065CA; }
+.ansi-magenta-fg { color: #D160C4; }
+.ansi-magenta-bg { background-color: #D160C4; }
+.ansi-magenta-intense-fg { color: #A03196; }
+.ansi-magenta-intense-bg { background-color: #A03196; }
+.ansi-cyan-fg { color: #60C6C8; }
+.ansi-cyan-bg { background-color: #60C6C8; }
+.ansi-cyan-intense-fg { color: #258F8F; }
+.ansi-cyan-intense-bg { background-color: #258F8F; }
+.ansi-white-fg { color: #C5C1B4; }
+.ansi-white-bg { background-color: #C5C1B4; }
+.ansi-white-intense-fg { color: #A1A6B2; }
+.ansi-white-intense-bg { background-color: #A1A6B2; }
+
+.ansi-default-inverse-fg { color: #FFFFFF; }
+.ansi-default-inverse-bg { background-color: #000000; }
+
+.ansi-bold { font-weight: bold; }
+.ansi-underline { text-decoration: underline; }
+
+/* Some additional styling taken form the Jupyter notebook CSS */
+div.rendered_html table {
+  border: none;
+  border-collapse: collapse;
+  border-spacing: 0;
+  color: black;
+  font-size: 12px;
+  table-layout: fixed;
+}
+div.rendered_html thead {
+  border-bottom: 1px solid black;
+  vertical-align: bottom;
+}
+div.rendered_html tr,
+div.rendered_html th,
+div.rendered_html td {
+  text-align: right;
+  vertical-align: middle;
+  padding: 0.5em 0.5em;
+  line-height: normal;
+  white-space: normal;
+  max-width: none;
+  border: none;
+}
+div.rendered_html th {
+  font-weight: bold;
+}
+div.rendered_html tbody tr:nth-child(odd) {
+  background: #f5f5f5;
+}
+div.rendered_html tbody tr:hover {
+  background: rgba(66, 165, 245, 0.2);
+}
+
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast,
+.nboutput.nblast {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast + .nbinput {
+    margin-top: -19px;
+}
+
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+
+/* Fix math alignment, see https://github.com/rtfd/sphinx_rtd_theme/pull/686 */
+.math {
+    text-align: unset;
+}
+</style>
+<div class="section" id="Horse-to-Zebra-Unpaired-Image-Translation-with-CycleGAN-in-FastEstimator">
+<h1>Horse to Zebra Unpaired Image Translation with CycleGAN in FastEstimator<a class="headerlink" href="#Horse-to-Zebra-Unpaired-Image-Translation-with-CycleGAN-in-FastEstimator" title="Permalink to this headline">¶</a></h1>
+<p>This notebook demonstrates how to perform an unpaired image to image translation using CycleGAN in FastEstimator. The details of the method is found in <a class="reference external" href="https://arxiv.org/abs/1703.10593">Unpaired Image-to-Image Translation using Cycle-Consistent Adversarial Networks</a>. We will specifically look at the problem of translating horse images to zebra images.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">cv2</span>
+<span class="kn">import</span> <span class="nn">time</span>
+
+<span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
+<span class="kn">import</span> <span class="nn">fastestimator</span> <span class="k">as</span> <span class="nn">fe</span>
+
+<span class="kn">import</span> <span class="nn">matplotlib</span>
+<span class="kn">from</span> <span class="nn">matplotlib</span> <span class="k">import</span> <span class="n">pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="Step-1:-Defining-Input-Pipeline">
+<h2>Step 1: Defining Input Pipeline<a class="headerlink" href="#Step-1:-Defining-Input-Pipeline" title="Permalink to this headline">¶</a></h2>
+<p>First, we will download the dataset of horses and zebras via our dataset API. The images will be first downloaded from <a class="reference external" href="https://people.eecs.berkeley.edu/~taesung_park/CycleGAN/datasets/">here</a>. Then, two csv files containing relative paths to these images as <em>trainA.csv</em> and <em>trainB.csv</em>. The root path of the downloaded images will be <em>parent_path</em>.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">fastestimator.dataset.horse2zebra</span> <span class="k">import</span> <span class="n">load_data</span>
+<span class="n">trainA_csv</span><span class="p">,</span> <span class="n">trainB_csv</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">parent_path</span> <span class="o">=</span> <span class="n">load_data</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<p>Once the images are downloaded, we will create <em>tfrecords</em> that will be used extensively by <em>Pipeline</em>. <em>RecordWriter</em> will create tfrecords using the csv files as an input; <em>ImageReader</em> operator will take each row in the csv file to read images. The tfrecords will be saved under a folder named <em>FEdata</em>.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">fastestimator.record.preprocess</span> <span class="k">import</span> <span class="n">ImageReader</span>
+
+<span class="n">tfr_save_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">parent_path</span><span class="p">,</span> <span class="s1">&#39;FEdata&#39;</span><span class="p">)</span>
+<span class="n">writer</span> <span class="o">=</span> <span class="n">fe</span><span class="o">.</span><span class="n">RecordWriter</span><span class="p">(</span>
+    <span class="n">train_data</span><span class="o">=</span><span class="p">(</span><span class="n">trainA_csv</span><span class="p">,</span> <span class="n">trainB_csv</span><span class="p">),</span>
+    <span class="n">save_dir</span><span class="o">=</span><span class="n">tfr_save_dir</span><span class="p">,</span>
+    <span class="n">ops</span><span class="o">=</span><span class="p">([</span><span class="n">ImageReader</span><span class="p">(</span><span class="n">inputs</span><span class="o">=</span><span class="s2">&quot;imgA&quot;</span><span class="p">,</span> <span class="n">outputs</span><span class="o">=</span><span class="s2">&quot;imgA&quot;</span><span class="p">,</span> <span class="n">parent_path</span><span class="o">=</span><span class="n">parent_path</span><span class="p">)],</span>
+         <span class="p">[</span><span class="n">ImageReader</span><span class="p">(</span><span class="n">inputs</span><span class="o">=</span><span class="s2">&quot;imgB&quot;</span><span class="p">,</span> <span class="n">outputs</span><span class="o">=</span><span class="s2">&quot;imgB&quot;</span><span class="p">,</span> <span class="n">parent_path</span><span class="o">=</span><span class="n">parent_path</span><span class="p">)]))</span>
+</pre></div>
+</div>
+</div>
+<p>We need to define two custom operators to preprocess input images: 1. Rescaling the pixel values to be between -1 and 1 2. Random image augmentation applying a random jitter followed by a random horizontal flip as described in the <a class="reference external" href="https://arxiv.org/abs/1703.10593">paper</a>. Each operator is defined by inheriting from base class <code class="docutils literal notranslate"><span class="pre">fastestimator.util.op.TensorOp</span></code>. The data transform function is defined within <code class="docutils literal notranslate"><span class="pre">forward</span></code> method.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">fastestimator.util.op</span> <span class="k">import</span> <span class="n">TensorOp</span>
+
+<span class="k">class</span> <span class="nc">Myrescale</span><span class="p">(</span><span class="n">TensorOp</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">state</span><span class="p">):</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">cast</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">tf</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="p">(</span><span class="n">data</span> <span class="o">-</span> <span class="mf">127.5</span><span class="p">)</span> <span class="o">/</span> <span class="mf">127.5</span>
+        <span class="k">return</span> <span class="n">data</span>
+
+<span class="k">class</span> <span class="nc">RandomAug</span><span class="p">(</span><span class="n">TensorOp</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">state</span><span class="p">):</span>
+        <span class="c1"># resizing to 286 x 286 x 3</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">resize</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="p">[</span><span class="mi">286</span><span class="p">,</span> <span class="mi">286</span><span class="p">],</span> <span class="n">method</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">ResizeMethod</span><span class="o">.</span><span class="n">NEAREST_NEIGHBOR</span><span class="p">)</span>
+
+        <span class="c1"># randomly cropping to 256 x 256 x 3</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">random_crop</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="p">[</span><span class="mi">256</span><span class="p">,</span> <span class="mi">256</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
+
+        <span class="c1"># random mirroring</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">random_flip_left_right</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">data</span>
+</pre></div>
+</div>
+</div>
+<p>Given these operators and <em>tfrecord</em> writer, we can now define <code class="docutils literal notranslate"><span class="pre">Pipeline</span></code> object.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">pipeline</span> <span class="o">=</span> <span class="n">fe</span><span class="o">.</span><span class="n">Pipeline</span><span class="p">(</span>
+    <span class="n">data</span><span class="o">=</span><span class="n">writer</span><span class="p">,</span>
+    <span class="n">batch_size</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">ops</span><span class="o">=</span><span class="p">[</span>
+        <span class="n">Myrescale</span><span class="p">(</span><span class="n">inputs</span><span class="o">=</span><span class="s2">&quot;imgA&quot;</span><span class="p">,</span> <span class="n">outputs</span><span class="o">=</span><span class="s2">&quot;imgA&quot;</span><span class="p">),</span>
+        <span class="n">RandomAug</span><span class="p">(</span><span class="n">inputs</span><span class="o">=</span><span class="s2">&quot;imgA&quot;</span><span class="p">,</span> <span class="n">outputs</span><span class="o">=</span><span class="s2">&quot;real_A&quot;</span><span class="p">),</span>
+        <span class="n">Myrescale</span><span class="p">(</span><span class="n">inputs</span><span class="o">=</span><span class="s2">&quot;imgB&quot;</span><span class="p">,</span> <span class="n">outputs</span><span class="o">=</span><span class="s2">&quot;imgB&quot;</span><span class="p">),</span>
+        <span class="n">RandomAug</span><span class="p">(</span><span class="n">inputs</span><span class="o">=</span><span class="s2">&quot;imgB&quot;</span><span class="p">,</span> <span class="n">outputs</span><span class="o">=</span><span class="s2">&quot;real_B&quot;</span><span class="p">)</span>
+    <span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<p>We can visualize sample images from the <code class="docutils literal notranslate"><span class="pre">pipeline</span></code> using <code class="docutils literal notranslate"><span class="pre">show_results</span></code> method. <code class="docutils literal notranslate"><span class="pre">show_results</span></code> returns a list of batch data. By default, it only returns only one batch of data.</p>
+<p>For visualization purpose only, we normalize the pixel values to between 0 and 1. Because <code class="docutils literal notranslate"><span class="pre">ImageReader</span></code> operator internally uses <code class="docutils literal notranslate"><span class="pre">cv2.imread</span></code>, we need to perform color transformation for proper visualization.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="k">def</span> <span class="nf">normalize_and_convert_color</span><span class="p">(</span><span class="n">img</span><span class="p">):</span>
+    <span class="n">img</span> <span class="o">=</span> <span class="n">img</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span>
+    <span class="n">img</span> <span class="o">=</span> <span class="p">(</span><span class="n">img</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="mf">0.5</span>
+    <span class="n">img</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">cvtColor</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="n">cv2</span><span class="o">.</span><span class="n">COLOR_BGR2RGB</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">img</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">sample_batch</span> <span class="o">=</span> <span class="n">pipeline</span><span class="o">.</span><span class="n">show_results</span><span class="p">()</span>
+<span class="n">horse_img</span> <span class="o">=</span> <span class="n">sample_batch</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s2">&quot;real_A&quot;</span><span class="p">]</span>
+<span class="n">horse_img</span> <span class="o">=</span> <span class="n">normalize_and_convert_color</span><span class="p">(</span><span class="n">horse_img</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+
+<span class="n">zebra_img</span> <span class="o">=</span> <span class="n">sample_batch</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s2">&quot;real_B&quot;</span><span class="p">]</span>
+<span class="n">zebra_img</span> <span class="o">=</span> <span class="n">normalize_and_convert_color</span><span class="p">(</span><span class="n">zebra_img</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">121</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Sample Horse Image&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">horse_img</span><span class="p">);</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;off&#39;</span><span class="p">);</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">122</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Sample Zebra Image&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">zebra_img</span><span class="p">);</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;off&#39;</span><span class="p">);</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+FastEstimator: Reading non-empty directory: /tmp/.fe/HORSE2ZEBRA/FEdata
+FastEstimator: Found 1334 examples for train in /tmp/.fe/HORSE2ZEBRA/FEdata/train_summary1.json
+FastEstimator: Found 1067 examples for train in /tmp/.fe/HORSE2ZEBRA/FEdata/train_summary0.json
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../../_images/apphub_image_generation_cyclegan_horse2zebra_cyclegan_13_1.png" src="../../../_images/apphub_image_generation_cyclegan_horse2zebra_cyclegan_13_1.png" />
+</div>
+</div>
+</div>
+<div class="section" id="Step-2:-Defining-Model-Architectures">
+<h2>Step 2: Defining Model Architectures<a class="headerlink" href="#Step-2:-Defining-Model-Architectures" title="Permalink to this headline">¶</a></h2>
+<p>In CycleGAN, there are 2 generators and 2 discriminators being trained. * Generator <code class="docutils literal notranslate"><span class="pre">g_AtoB</span></code> learns to map horse images to zebra images * Generator <code class="docutils literal notranslate"><span class="pre">g_BtoA</span></code> learns to map zebra images to horse images * Discriminator <code class="docutils literal notranslate"><span class="pre">d_A</span></code> learns to differentiate between real hores images and fake horse images produced by <code class="docutils literal notranslate"><span class="pre">g_BtoA</span></code> * Discriminator <code class="docutils literal notranslate"><span class="pre">d_B</span></code> learns to differentiate between image zebra and fake zebra images produced by <code class="docutils literal notranslate"><span class="pre">g_AtoB</span></code></p>
+<p>We first create <code class="docutils literal notranslate"><span class="pre">FEModel</span></code> instances for each model by specifying the following: * model definition * model name * loss name * optimizer</p>
+<p>The architecture of generator is a modified resnet, and the architecture of discriminator is a PatchGAN.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">fastestimator.architecture.cyclegan</span> <span class="k">import</span> <span class="n">build_generator</span><span class="p">,</span> <span class="n">build_discriminator</span>
+<span class="kn">from</span> <span class="nn">fastestimator.network.model</span> <span class="k">import</span> <span class="n">FEModel</span>
+<span class="n">g_AtoB</span> <span class="o">=</span> <span class="n">FEModel</span><span class="p">(</span><span class="n">model_def</span><span class="o">=</span><span class="n">build_generator</span><span class="p">,</span>
+                 <span class="n">model_name</span><span class="o">=</span><span class="s2">&quot;g_AtoB&quot;</span><span class="p">,</span>
+                 <span class="n">loss_name</span><span class="o">=</span><span class="s2">&quot;g_AtoB_loss&quot;</span><span class="p">,</span>
+                 <span class="n">optimizer</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">optimizers</span><span class="o">.</span><span class="n">Adam</span><span class="p">(</span><span class="mf">2e-4</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">))</span>
+
+<span class="n">g_BtoA</span> <span class="o">=</span> <span class="n">FEModel</span><span class="p">(</span><span class="n">model_def</span><span class="o">=</span><span class="n">build_generator</span><span class="p">,</span>
+                 <span class="n">model_name</span><span class="o">=</span><span class="s2">&quot;g_BtoA&quot;</span><span class="p">,</span>
+                 <span class="n">loss_name</span><span class="o">=</span><span class="s2">&quot;g_BtoA_loss&quot;</span><span class="p">,</span>
+                 <span class="n">optimizer</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">optimizers</span><span class="o">.</span><span class="n">Adam</span><span class="p">(</span><span class="mf">2e-4</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">))</span>
+
+<span class="n">d_A</span> <span class="o">=</span> <span class="n">FEModel</span><span class="p">(</span><span class="n">model_def</span><span class="o">=</span><span class="n">build_discriminator</span><span class="p">,</span>
+              <span class="n">model_name</span><span class="o">=</span><span class="s2">&quot;d_A&quot;</span><span class="p">,</span>
+              <span class="n">loss_name</span><span class="o">=</span><span class="s2">&quot;d_A_loss&quot;</span><span class="p">,</span>
+              <span class="n">optimizer</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">optimizers</span><span class="o">.</span><span class="n">Adam</span><span class="p">(</span><span class="mf">2e-4</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">))</span>
+
+<span class="n">d_B</span> <span class="o">=</span> <span class="n">FEModel</span><span class="p">(</span><span class="n">model_def</span><span class="o">=</span><span class="n">build_discriminator</span><span class="p">,</span>
+              <span class="n">model_name</span><span class="o">=</span><span class="s2">&quot;d_B&quot;</span><span class="p">,</span>
+              <span class="n">loss_name</span><span class="o">=</span><span class="s2">&quot;d_B_loss&quot;</span><span class="p">,</span>
+              <span class="n">optimizer</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">optimizers</span><span class="o">.</span><span class="n">Adam</span><span class="p">(</span><span class="mf">2e-4</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="Loss-functions">
+<h2>Loss functions<a class="headerlink" href="#Loss-functions" title="Permalink to this headline">¶</a></h2>
+<p>With <code class="docutils literal notranslate"><span class="pre">FEModel</span></code> being defined for each network, we need to define associated losses. We provide <code class="docutils literal notranslate"><span class="pre">Loss</span></code> class from which users can derive to express necessary logics for calculating the loss. In FastEstimator, the computation of loss is yet another <code class="docutils literal notranslate"><span class="pre">TensorOp</span></code>; therefore, the final loss value needs to be returned in <code class="docutils literal notranslate"><span class="pre">forward</span></code> method.</p>
+<p>Because horse images and zebra images are unpaired, the loss of generator is quite complex. The generator’s loss is composed of tree terms: 1) adversarial; 2) cycle-consistency; 3) identity. The cycle-consistency term and identity term are weighted by a parameter <code class="docutils literal notranslate"><span class="pre">LAMBDA</span></code>. In the paper the authors used 10 for <code class="docutils literal notranslate"><span class="pre">LAMBDA</span></code>.</p>
+<p>Let’s consider computing the loss for <code class="docutils literal notranslate"><span class="pre">g_AtoB</span></code> which translates horses to zebras. 1. Adversarial term that is computed as binary cross entropy between 1s and <code class="docutils literal notranslate"><span class="pre">d_A</span></code>’s prediction on the translated images 2. Cycle consistency term is computed with mean absolute error between original <em>horse</em> images and the cycled horse images that are translated <em>forward</em> by <code class="docutils literal notranslate"><span class="pre">g_AtoB</span></code> and then <em>backward</em> by <code class="docutils literal notranslate"><span class="pre">g_BtoA</span></code>. 3. Identity term that is computed with the mean absolute error between original <em>zebra</em>
+and the output of <code class="docutils literal notranslate"><span class="pre">g_AtoB</span></code> on these images.</p>
+<p>The discriminator’s loss is the standard adversarial loss that is computed as binary cross entropy between: * 1s and real images * 0s and fake images</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">fastestimator.network.loss</span> <span class="k">import</span> <span class="n">Loss</span>
+<span class="n">LAMBDA</span> <span class="o">=</span> <span class="mi">10</span>
+<span class="k">class</span> <span class="nc">GLoss</span><span class="p">(</span><span class="n">Loss</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">inputs</span><span class="p">,</span> <span class="n">weight</span><span class="p">,</span> <span class="n">outputs</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">inputs</span><span class="o">=</span><span class="n">inputs</span><span class="p">,</span> <span class="n">outputs</span><span class="o">=</span><span class="n">outputs</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="n">mode</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cross_entropy</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">losses</span><span class="o">.</span><span class="n">BinaryCrossentropy</span><span class="p">(</span><span class="n">from_logits</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                                                                <span class="n">reduction</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">losses</span><span class="o">.</span><span class="n">Reduction</span><span class="o">.</span><span class="n">NONE</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">LAMBDA</span> <span class="o">=</span> <span class="n">weight</span>
+
+    <span class="k">def</span> <span class="nf">_adversarial_loss</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fake_img</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">tf</span><span class="o">.</span><span class="n">reduce_mean</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cross_entropy</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">ones_like</span><span class="p">(</span><span class="n">fake_img</span><span class="p">),</span> <span class="n">fake_img</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+
+    <span class="k">def</span> <span class="nf">_identity_loss</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">real_img</span><span class="p">,</span> <span class="n">same_img</span><span class="p">):</span>
+        <span class="k">return</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">LAMBDA</span> <span class="o">*</span> <span class="n">tf</span><span class="o">.</span><span class="n">reduce_mean</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">real_img</span> <span class="o">-</span> <span class="n">same_img</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+
+    <span class="k">def</span> <span class="nf">_cycle_loss</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">real_img</span><span class="p">,</span> <span class="n">cycled_img</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">LAMBDA</span> <span class="o">*</span> <span class="n">tf</span><span class="o">.</span><span class="n">reduce_mean</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">real_img</span> <span class="o">-</span> <span class="n">cycled_img</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+
+    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">state</span><span class="p">):</span>
+        <span class="n">real_img</span><span class="p">,</span> <span class="n">fake_img</span><span class="p">,</span> <span class="n">cycled_img</span><span class="p">,</span> <span class="n">same_img</span> <span class="o">=</span> <span class="n">data</span>
+        <span class="n">total_loss</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_adversarial_loss</span><span class="p">(</span><span class="n">fake_img</span><span class="p">)</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_identity_loss</span><span class="p">(</span><span class="n">real_img</span><span class="p">,</span> <span class="n">same_img</span><span class="p">)</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cycle_loss</span><span class="p">(</span>
+            <span class="n">real_img</span><span class="p">,</span> <span class="n">cycled_img</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">total_loss</span>
+
+<span class="k">class</span> <span class="nc">DLoss</span><span class="p">(</span><span class="n">Loss</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">inputs</span><span class="p">,</span> <span class="n">outputs</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">inputs</span><span class="o">=</span><span class="n">inputs</span><span class="p">,</span> <span class="n">outputs</span><span class="o">=</span><span class="n">outputs</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="n">mode</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cross_entropy</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">losses</span><span class="o">.</span><span class="n">BinaryCrossentropy</span><span class="p">(</span><span class="n">from_logits</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                                                                <span class="n">reduction</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">losses</span><span class="o">.</span><span class="n">Reduction</span><span class="o">.</span><span class="n">NONE</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">state</span><span class="p">):</span>
+        <span class="n">real_img</span><span class="p">,</span> <span class="n">fake_img</span> <span class="o">=</span> <span class="n">data</span>
+        <span class="n">real_img_loss</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">reduce_mean</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cross_entropy</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">ones_like</span><span class="p">(</span><span class="n">real_img</span><span class="p">),</span> <span class="n">real_img</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+        <span class="n">fake_img_loss</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">reduce_mean</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cross_entropy</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">real_img</span><span class="p">),</span> <span class="n">fake_img</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+        <span class="n">total_loss</span> <span class="o">=</span> <span class="n">real_img_loss</span> <span class="o">+</span> <span class="n">fake_img_loss</span>
+        <span class="k">return</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">total_loss</span>
+
+</pre></div>
+</div>
+</div>
+<p>Once associated losses are defined, we now have to define <code class="docutils literal notranslate"><span class="pre">Network</span></code> object which contains a sequence of operators <code class="docutils literal notranslate"><span class="pre">ModelOp</span></code>. This chain of <code class="docutils literal notranslate"><span class="pre">ModelOp</span></code>s followed by <code class="docutils literal notranslate"><span class="pre">Loss</span></code> defines a forward pass of batch of data throughout networks.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">fastestimator.network.model</span> <span class="k">import</span> <span class="n">ModelOp</span>
+
+<span class="n">network</span> <span class="o">=</span> <span class="n">fe</span><span class="o">.</span><span class="n">Network</span><span class="p">(</span><span class="n">ops</span><span class="o">=</span><span class="p">[</span>
+    <span class="n">ModelOp</span><span class="p">(</span><span class="n">inputs</span><span class="o">=</span><span class="s2">&quot;real_A&quot;</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">g_AtoB</span><span class="p">,</span> <span class="n">outputs</span><span class="o">=</span><span class="s2">&quot;fake_B&quot;</span><span class="p">),</span>
+    <span class="n">ModelOp</span><span class="p">(</span><span class="n">inputs</span><span class="o">=</span><span class="s2">&quot;real_B&quot;</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">g_BtoA</span><span class="p">,</span> <span class="n">outputs</span><span class="o">=</span><span class="s2">&quot;fake_A&quot;</span><span class="p">),</span>
+    <span class="n">ModelOp</span><span class="p">(</span><span class="n">inputs</span><span class="o">=</span><span class="s2">&quot;real_A&quot;</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">d_A</span><span class="p">,</span> <span class="n">outputs</span><span class="o">=</span><span class="s2">&quot;d_real_A&quot;</span><span class="p">),</span>
+    <span class="n">ModelOp</span><span class="p">(</span><span class="n">inputs</span><span class="o">=</span><span class="s2">&quot;fake_A&quot;</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">d_A</span><span class="p">,</span> <span class="n">outputs</span><span class="o">=</span><span class="s2">&quot;d_fake_A&quot;</span><span class="p">),</span>
+    <span class="n">ModelOp</span><span class="p">(</span><span class="n">inputs</span><span class="o">=</span><span class="s2">&quot;real_B&quot;</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">d_B</span><span class="p">,</span> <span class="n">outputs</span><span class="o">=</span><span class="s2">&quot;d_real_B&quot;</span><span class="p">),</span>
+    <span class="n">ModelOp</span><span class="p">(</span><span class="n">inputs</span><span class="o">=</span><span class="s2">&quot;fake_B&quot;</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">d_B</span><span class="p">,</span> <span class="n">outputs</span><span class="o">=</span><span class="s2">&quot;d_fake_B&quot;</span><span class="p">),</span>
+    <span class="n">ModelOp</span><span class="p">(</span><span class="n">inputs</span><span class="o">=</span><span class="s2">&quot;real_A&quot;</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">g_BtoA</span><span class="p">,</span> <span class="n">outputs</span><span class="o">=</span><span class="s2">&quot;same_A&quot;</span><span class="p">),</span>
+    <span class="n">ModelOp</span><span class="p">(</span><span class="n">inputs</span><span class="o">=</span><span class="s2">&quot;fake_B&quot;</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">g_BtoA</span><span class="p">,</span> <span class="n">outputs</span><span class="o">=</span><span class="s2">&quot;cycled_A&quot;</span><span class="p">),</span>
+    <span class="n">ModelOp</span><span class="p">(</span><span class="n">inputs</span><span class="o">=</span><span class="s2">&quot;real_B&quot;</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">g_AtoB</span><span class="p">,</span> <span class="n">outputs</span><span class="o">=</span><span class="s2">&quot;same_B&quot;</span><span class="p">),</span>
+    <span class="n">ModelOp</span><span class="p">(</span><span class="n">inputs</span><span class="o">=</span><span class="s2">&quot;fake_A&quot;</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">g_AtoB</span><span class="p">,</span> <span class="n">outputs</span><span class="o">=</span><span class="s2">&quot;cycled_B&quot;</span><span class="p">),</span>
+    <span class="n">GLoss</span><span class="p">(</span><span class="n">inputs</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;real_A&quot;</span><span class="p">,</span> <span class="s2">&quot;d_fake_B&quot;</span><span class="p">,</span> <span class="s2">&quot;cycled_A&quot;</span><span class="p">,</span> <span class="s2">&quot;same_A&quot;</span><span class="p">),</span> <span class="n">weight</span><span class="o">=</span><span class="n">LAMBDA</span><span class="p">,</span> <span class="n">outputs</span><span class="o">=</span><span class="s2">&quot;g_AtoB_loss&quot;</span><span class="p">),</span>
+    <span class="n">GLoss</span><span class="p">(</span><span class="n">inputs</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;real_B&quot;</span><span class="p">,</span> <span class="s2">&quot;d_fake_A&quot;</span><span class="p">,</span> <span class="s2">&quot;cycled_B&quot;</span><span class="p">,</span> <span class="s2">&quot;same_B&quot;</span><span class="p">),</span> <span class="n">weight</span><span class="o">=</span><span class="n">LAMBDA</span><span class="p">,</span> <span class="n">outputs</span><span class="o">=</span><span class="s2">&quot;g_BtoA_loss&quot;</span><span class="p">),</span>
+    <span class="n">DLoss</span><span class="p">(</span><span class="n">inputs</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;d_real_A&quot;</span><span class="p">,</span> <span class="s2">&quot;d_fake_A&quot;</span><span class="p">),</span> <span class="n">outputs</span><span class="o">=</span><span class="s2">&quot;d_A_loss&quot;</span><span class="p">),</span>
+    <span class="n">DLoss</span><span class="p">(</span><span class="n">inputs</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;d_real_B&quot;</span><span class="p">,</span> <span class="s2">&quot;d_fake_B&quot;</span><span class="p">),</span> <span class="n">outputs</span><span class="o">=</span><span class="s2">&quot;d_B_loss&quot;</span><span class="p">)</span>
+<span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<p>In this example we will also use <code class="docutils literal notranslate"><span class="pre">ModelSaver</span></code> traces to save the two generators <code class="docutils literal notranslate"><span class="pre">g_AtoB</span></code> and <code class="docutils literal notranslate"><span class="pre">g_BtoA</span></code> throughout training. For illustration purpose, we will save these models in temporary directory</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">fastestimator.estimator.trace</span> <span class="k">import</span> <span class="n">ModelSaver</span>
+<span class="n">model_dir</span><span class="o">=</span><span class="s1">&#39;/tmp/.fe/cycleGAN/ModelSaver/&#39;</span>
+<span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">model_dir</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">traces</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">ModelSaver</span><span class="p">(</span><span class="n">model_name</span><span class="o">=</span><span class="s2">&quot;g_AtoB&quot;</span><span class="p">,</span> <span class="n">save_dir</span><span class="o">=</span><span class="n">model_dir</span><span class="p">,</span> <span class="n">save_freq</span><span class="o">=</span><span class="mi">10</span><span class="p">),</span>
+    <span class="n">ModelSaver</span><span class="p">(</span><span class="n">model_name</span><span class="o">=</span><span class="s2">&quot;g_BtoA&quot;</span><span class="p">,</span> <span class="n">save_dir</span><span class="o">=</span><span class="n">model_dir</span><span class="p">,</span> <span class="n">save_freq</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<p>Finally, we are ready to define <code class="docutils literal notranslate"><span class="pre">Estimator</span></code> object and then call <code class="docutils literal notranslate"><span class="pre">fit</span></code> method to start the training. Just for the sake of demo purpose, we would only run 50 epochs.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">epochs</span> <span class="o">=</span> <span class="mi">50</span>
+<span class="n">estimator</span> <span class="o">=</span> <span class="n">fe</span><span class="o">.</span><span class="n">Estimator</span><span class="p">(</span><span class="n">network</span><span class="o">=</span><span class="n">network</span><span class="p">,</span> <span class="n">pipeline</span><span class="o">=</span><span class="n">pipeline</span><span class="p">,</span> <span class="n">epochs</span><span class="o">=</span><span class="n">epochs</span><span class="p">,</span> <span class="n">traces</span><span class="o">=</span><span class="n">traces</span><span class="p">)</span>
+<span class="n">estimator</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+    ______           __  ______     __  _                 __
+   / ____/___ ______/ /_/ ____/____/ /_(_)___ ___  ____ _/ /_____  _____
+  / /_  / __ `/ ___/ __/ __/ / ___/ __/ / __ `__ \/ __ `/ __/ __ \/ ___/
+ / __/ / /_/ (__  ) /_/ /___(__  ) /_/ / / / / / / /_/ / /_/ /_/ / /
+/_/    \__,_/____/\__/_____/____/\__/_/_/ /_/ /_/\__,_/\__/\____/_/
+
+
+FastEstimator: Reading non-empty directory: /tmp/.fe/HORSE2ZEBRA/FEdata
+FastEstimator: Found 1334 examples for train in /tmp/.fe/HORSE2ZEBRA/FEdata/train_summary1.json
+FastEstimator: Found 1067 examples for train in /tmp/.fe/HORSE2ZEBRA/FEdata/train_summary0.json
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+WARNING: Logging before flag parsing goes to stderr.
+W0918 00:29:09.752380 140463795902272 deprecation.py:323] From /usr/local/lib/python3.6/dist-packages/tensorflow/python/ops/nn_impl.py:182: add_dispatch_support.&lt;locals&gt;.wrapper (from tensorflow.python.ops.array_ops) is deprecated and will be removed in a future version.
+Instructions for updating:
+Use tf.where in 2.0, which has the same broadcast rule as np.where
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+FastEstimator-Start: step: 0; g_AtoB_lr: 0.0002; g_BtoA_lr: 0.0002; d_A_lr: 0.0002; d_B_lr: 0.0002;
+FastEstimator-Train: step: 0; g_AtoB_loss: 5.5895715; g_BtoA_loss: 5.03853; d_A_loss: 0.6931089; d_B_loss: 0.6932924;
+FastEstimator-Train: step: 100; g_AtoB_loss: 7.5192347; g_BtoA_loss: 7.591574; d_A_loss: 0.69328564; d_B_loss: 0.29681087; examples/sec: 5.91;
+FastEstimator-Train: step: 200; g_AtoB_loss: 8.573614; g_BtoA_loss: 7.2645173; d_A_loss: 0.66912574; d_B_loss: 0.35650814; examples/sec: 5.9;
+FastEstimator-Train: step: 300; g_AtoB_loss: 8.826971; g_BtoA_loss: 7.9960012; d_A_loss: 0.46921527; d_B_loss: 0.29466796; examples/sec: 5.9;
+FastEstimator-Train: step: 400; g_AtoB_loss: 5.500558; g_BtoA_loss: 4.833166; d_A_loss: 0.8040427; d_B_loss: 0.94001734; examples/sec: 5.9;
+FastEstimator-Train: step: 500; g_AtoB_loss: 6.8725734; g_BtoA_loss: 4.4871063; d_A_loss: 0.2752611; d_B_loss: 0.6190263; examples/sec: 5.9;
+FastEstimator-Train: step: 600; g_AtoB_loss: 5.8693876; g_BtoA_loss: 6.6127596; d_A_loss: 0.35847452; d_B_loss: 0.48241672; examples/sec: 5.89;
+FastEstimator-Train: step: 700; g_AtoB_loss: 7.0556426; g_BtoA_loss: 6.5676484; d_A_loss: 0.9089033; d_B_loss: 0.9365783; examples/sec: 5.89;
+FastEstimator-Train: step: 800; g_AtoB_loss: 4.781005; g_BtoA_loss: 6.1062975; d_A_loss: 0.3886703; d_B_loss: 0.5393965; examples/sec: 5.89;
+FastEstimator-Train: step: 900; g_AtoB_loss: 3.5951195; g_BtoA_loss: 5.478469; d_A_loss: 0.32735568; d_B_loss: 0.6041003; examples/sec: 5.89;
+FastEstimator-Train: step: 1000; g_AtoB_loss: 5.3085585; g_BtoA_loss: 4.40178; d_A_loss: 0.6382775; d_B_loss: 0.52962697; examples/sec: 5.9;
+FastEstimator-ModelSaver: Saving model to /tmp/.fe/cycleGAN/ModelSaver/g_AtoB_epoch_0_step_1067.h5
+FastEstimator-ModelSaver: Saving model to /tmp/.fe/cycleGAN/ModelSaver/g_BtoA_epoch_0_step_1067.h5
+FastEstimator-Train: step: 1100; g_AtoB_loss: 4.093704; g_BtoA_loss: 4.5307817; d_A_loss: 0.6515746; d_B_loss: 0.50382894; examples/sec: 5.9;
+FastEstimator-Train: step: 1200; g_AtoB_loss: 4.0568447; g_BtoA_loss: 5.314137; d_A_loss: 0.5966438; d_B_loss: 0.68488693; examples/sec: 5.9;
+FastEstimator-Train: step: 1300; g_AtoB_loss: 5.4960585; g_BtoA_loss: 4.6229534; d_A_loss: 0.7173431; d_B_loss: 0.5207196; examples/sec: 5.9;
+FastEstimator-Train: step: 1400; g_AtoB_loss: 4.2803426; g_BtoA_loss: 7.175994; d_A_loss: 0.5590535; d_B_loss: 0.52762854; examples/sec: 5.9;
+FastEstimator-Train: step: 1500; g_AtoB_loss: 6.6628075; g_BtoA_loss: 5.271804; d_A_loss: 0.8094717; d_B_loss: 0.47037047; examples/sec: 5.9;
+FastEstimator-Train: step: 1600; g_AtoB_loss: 6.6350937; g_BtoA_loss: 4.539509; d_A_loss: 0.79379314; d_B_loss: 0.754763; examples/sec: 5.9;
+FastEstimator-Train: step: 1700; g_AtoB_loss: 4.7949524; g_BtoA_loss: 5.109895; d_A_loss: 0.6200392; d_B_loss: 0.5141392; examples/sec: 5.9;
+FastEstimator-Train: step: 1800; g_AtoB_loss: 4.1420736; g_BtoA_loss: 5.897221; d_A_loss: 0.6280315; d_B_loss: 0.7178945; examples/sec: 5.9;
+FastEstimator-Train: step: 1900; g_AtoB_loss: 5.0237026; g_BtoA_loss: 4.1935415; d_A_loss: 0.4692207; d_B_loss: 0.6271359; examples/sec: 5.9;
+FastEstimator-Train: step: 2000; g_AtoB_loss: 5.3473043; g_BtoA_loss: 6.218999; d_A_loss: 0.6473489; d_B_loss: 0.60274094; examples/sec: 5.9;
+FastEstimator-Train: step: 2100; g_AtoB_loss: 6.4258127; g_BtoA_loss: 5.917567; d_A_loss: 0.5681592; d_B_loss: 0.9312596; examples/sec: 5.9;
+FastEstimator-Train: step: 2200; g_AtoB_loss: 4.692746; g_BtoA_loss: 5.8216496; d_A_loss: 0.3949685; d_B_loss: 0.33050093; examples/sec: 5.9;
+FastEstimator-Train: step: 2300; g_AtoB_loss: 4.615589; g_BtoA_loss: 4.755107; d_A_loss: 0.6983201; d_B_loss: 0.483441; examples/sec: 5.9;
+FastEstimator-Train: step: 2400; g_AtoB_loss: 4.860137; g_BtoA_loss: 5.9330873; d_A_loss: 1.0122266; d_B_loss: 1.0103854; examples/sec: 5.9;
+FastEstimator-Train: step: 2500; g_AtoB_loss: 5.195891; g_BtoA_loss: 6.2849627; d_A_loss: 0.25722772; d_B_loss: 0.56351334; examples/sec: 5.9;
+FastEstimator-Train: step: 2600; g_AtoB_loss: 3.589823; g_BtoA_loss: 5.0474615; d_A_loss: 0.46732348; d_B_loss: 0.6863114; examples/sec: 5.9;
+FastEstimator-Train: step: 2700; g_AtoB_loss: 4.7531815; g_BtoA_loss: 7.326192; d_A_loss: 0.6674131; d_B_loss: 0.49830848; examples/sec: 5.9;
+FastEstimator-Train: step: 2800; g_AtoB_loss: 4.7586584; g_BtoA_loss: 5.2324944; d_A_loss: 0.7141288; d_B_loss: 0.60945696; examples/sec: 5.9;
+FastEstimator-Train: step: 2900; g_AtoB_loss: 4.293207; g_BtoA_loss: 4.1010695; d_A_loss: 0.5783023; d_B_loss: 0.66379994; examples/sec: 5.9;
+FastEstimator-Train: step: 3000; g_AtoB_loss: 5.8260684; g_BtoA_loss: 5.288901; d_A_loss: 0.7073561; d_B_loss: 0.75226927; examples/sec: 5.9;
+FastEstimator-Train: step: 3100; g_AtoB_loss: 3.5657785; g_BtoA_loss: 5.823337; d_A_loss: 0.51567835; d_B_loss: 0.62845147; examples/sec: 5.9;
+FastEstimator-Train: step: 3200; g_AtoB_loss: 3.8887882; g_BtoA_loss: 5.9242907; d_A_loss: 0.6955508; d_B_loss: 0.6422512; examples/sec: 5.9;
+FastEstimator-Train: step: 3300; g_AtoB_loss: 5.215355; g_BtoA_loss: 5.2484617; d_A_loss: 0.39284933; d_B_loss: 0.71412504; examples/sec: 5.9;
+FastEstimator-Train: step: 3400; g_AtoB_loss: 4.4343324; g_BtoA_loss: 5.065133; d_A_loss: 0.6280445; d_B_loss: 0.5202183; examples/sec: 5.9;
+FastEstimator-Train: step: 3500; g_AtoB_loss: 5.425496; g_BtoA_loss: 5.493728; d_A_loss: 0.5604454; d_B_loss: 0.61029124; examples/sec: 5.9;
+FastEstimator-Train: step: 3600; g_AtoB_loss: 5.0989738; g_BtoA_loss: 5.456192; d_A_loss: 0.36967072; d_B_loss: 0.43261236; examples/sec: 5.9;
+FastEstimator-Train: step: 3700; g_AtoB_loss: 5.2808065; g_BtoA_loss: 6.088393; d_A_loss: 0.7755152; d_B_loss: 1.1682837; examples/sec: 5.9;
+FastEstimator-Train: step: 3800; g_AtoB_loss: 3.6323261; g_BtoA_loss: 4.0593557; d_A_loss: 0.63782454; d_B_loss: 0.7042208; examples/sec: 5.9;
+FastEstimator-Train: step: 3900; g_AtoB_loss: 5.9770236; g_BtoA_loss: 4.3064456; d_A_loss: 0.4683748; d_B_loss: 0.66400355; examples/sec: 5.9;
+FastEstimator-Train: step: 4000; g_AtoB_loss: 6.409398; g_BtoA_loss: 7.596576; d_A_loss: 0.4955753; d_B_loss: 0.5656176; examples/sec: 5.9;
+FastEstimator-Train: step: 4100; g_AtoB_loss: 7.3328867; g_BtoA_loss: 5.635963; d_A_loss: 0.6893528; d_B_loss: 0.38606644; examples/sec: 5.9;
+FastEstimator-Train: step: 4200; g_AtoB_loss: 3.5733361; g_BtoA_loss: 8.004387; d_A_loss: 0.71761537; d_B_loss: 0.62546015; examples/sec: 5.9;
+FastEstimator-Train: step: 4300; g_AtoB_loss: 5.7992187; g_BtoA_loss: 4.8825583; d_A_loss: 0.29337615; d_B_loss: 0.42961013; examples/sec: 5.9;
+FastEstimator-Train: step: 4400; g_AtoB_loss: 3.9956143; g_BtoA_loss: 4.1837406; d_A_loss: 0.54820335; d_B_loss: 0.63142276; examples/sec: 5.9;
+FastEstimator-Train: step: 4500; g_AtoB_loss: 3.4793353; g_BtoA_loss: 5.016128; d_A_loss: 0.74472207; d_B_loss: 0.6098941; examples/sec: 5.9;
+FastEstimator-Train: step: 4600; g_AtoB_loss: 6.113803; g_BtoA_loss: 3.709007; d_A_loss: 0.27624452; d_B_loss: 0.7424112; examples/sec: 5.9;
+FastEstimator-Train: step: 4700; g_AtoB_loss: 3.9704175; g_BtoA_loss: 4.7414665; d_A_loss: 0.8029627; d_B_loss: 0.51648486; examples/sec: 5.9;
+FastEstimator-Train: step: 4800; g_AtoB_loss: 3.8876657; g_BtoA_loss: 5.109604; d_A_loss: 1.0040146; d_B_loss: 0.48700657; examples/sec: 5.9;
+FastEstimator-Train: step: 4900; g_AtoB_loss: 7.762594; g_BtoA_loss: 4.0924444; d_A_loss: 0.5185249; d_B_loss: 0.62563586; examples/sec: 5.9;
+FastEstimator-Train: step: 5000; g_AtoB_loss: 5.3199925; g_BtoA_loss: 4.0312977; d_A_loss: 0.6561091; d_B_loss: 0.63520837; examples/sec: 5.9;
+FastEstimator-Train: step: 5100; g_AtoB_loss: 4.381301; g_BtoA_loss: 5.478528; d_A_loss: 0.34826577; d_B_loss: 0.74811274; examples/sec: 5.9;
+FastEstimator-Train: step: 5200; g_AtoB_loss: 4.4944334; g_BtoA_loss: 4.0589952; d_A_loss: 0.62649286; d_B_loss: 0.6840222; examples/sec: 5.9;
+FastEstimator-Train: step: 5300; g_AtoB_loss: 4.5253487; g_BtoA_loss: 3.8375664; d_A_loss: 0.74272704; d_B_loss: 0.6842847; examples/sec: 5.9;
+FastEstimator-Train: step: 5400; g_AtoB_loss: 5.2257605; g_BtoA_loss: 4.584778; d_A_loss: 0.51301837; d_B_loss: 0.69447404; examples/sec: 5.9;
+FastEstimator-Train: step: 5500; g_AtoB_loss: 4.7214704; g_BtoA_loss: 5.177311; d_A_loss: 0.5271849; d_B_loss: 0.5463633; examples/sec: 5.9;
+FastEstimator-Train: step: 5600; g_AtoB_loss: 4.2478514; g_BtoA_loss: 6.297331; d_A_loss: 0.6139961; d_B_loss: 0.7090563; examples/sec: 5.9;
+FastEstimator-Train: step: 5700; g_AtoB_loss: 8.802335; g_BtoA_loss: 9.305782; d_A_loss: 0.4046494; d_B_loss: 0.18144208; examples/sec: 5.9;
+FastEstimator-Train: step: 5800; g_AtoB_loss: 3.7753057; g_BtoA_loss: 3.567153; d_A_loss: 0.58789575; d_B_loss: 0.87019444; examples/sec: 5.9;
+FastEstimator-Train: step: 5900; g_AtoB_loss: 6.2304273; g_BtoA_loss: 4.8859043; d_A_loss: 0.54844415; d_B_loss: 0.6405486; examples/sec: 5.9;
+FastEstimator-Train: step: 6000; g_AtoB_loss: 3.8786306; g_BtoA_loss: 5.153497; d_A_loss: 0.7200626; d_B_loss: 0.6916679; examples/sec: 5.9;
+FastEstimator-Train: step: 6100; g_AtoB_loss: 4.602748; g_BtoA_loss: 3.822098; d_A_loss: 0.59274274; d_B_loss: 0.72974324; examples/sec: 5.9;
+FastEstimator-Train: step: 6200; g_AtoB_loss: 4.495246; g_BtoA_loss: 5.164136; d_A_loss: 0.7751205; d_B_loss: 0.6086675; examples/sec: 5.9;
+FastEstimator-Train: step: 6300; g_AtoB_loss: 4.343574; g_BtoA_loss: 5.426504; d_A_loss: 0.48319587; d_B_loss: 0.55651265; examples/sec: 5.9;
+FastEstimator-Train: step: 6400; g_AtoB_loss: 4.142007; g_BtoA_loss: 4.9133673; d_A_loss: 0.7720053; d_B_loss: 0.5680244; examples/sec: 5.9;
+FastEstimator-Train: step: 6500; g_AtoB_loss: 5.1648855; g_BtoA_loss: 5.709886; d_A_loss: 0.4425188; d_B_loss: 0.6017281; examples/sec: 5.9;
+FastEstimator-Train: step: 6600; g_AtoB_loss: 5.5793223; g_BtoA_loss: 5.0153484; d_A_loss: 0.50256735; d_B_loss: 0.5631943; examples/sec: 5.9;
+FastEstimator-Train: step: 6700; g_AtoB_loss: 5.898325; g_BtoA_loss: 3.655759; d_A_loss: 0.379413; d_B_loss: 0.71517545; examples/sec: 5.9;
+FastEstimator-Train: step: 6800; g_AtoB_loss: 7.337842; g_BtoA_loss: 5.5705695; d_A_loss: 0.5433119; d_B_loss: 0.83854055; examples/sec: 5.9;
+FastEstimator-Train: step: 6900; g_AtoB_loss: 5.42457; g_BtoA_loss: 5.6520147; d_A_loss: 0.6539277; d_B_loss: 0.36526948; examples/sec: 5.9;
+FastEstimator-Train: step: 7000; g_AtoB_loss: 4.7201185; g_BtoA_loss: 5.242405; d_A_loss: 0.5297283; d_B_loss: 0.994391; examples/sec: 5.9;
+FastEstimator-Train: step: 7100; g_AtoB_loss: 4.926862; g_BtoA_loss: 4.3998547; d_A_loss: 0.6488215; d_B_loss: 0.8497728; examples/sec: 5.9;
+FastEstimator-Train: step: 7200; g_AtoB_loss: 5.4651737; g_BtoA_loss: 6.3148265; d_A_loss: 0.40676236; d_B_loss: 0.46938232; examples/sec: 5.9;
+FastEstimator-Train: step: 7300; g_AtoB_loss: 5.452815; g_BtoA_loss: 5.1313214; d_A_loss: 0.49037758; d_B_loss: 0.7377558; examples/sec: 5.9;
+FastEstimator-Train: step: 7400; g_AtoB_loss: 5.0701647; g_BtoA_loss: 5.23016; d_A_loss: 0.5855367; d_B_loss: 0.516928; examples/sec: 5.9;
+FastEstimator-Train: step: 7500; g_AtoB_loss: 4.033262; g_BtoA_loss: 4.575545; d_A_loss: 0.63583636; d_B_loss: 0.61139655; examples/sec: 5.9;
+FastEstimator-Train: step: 7600; g_AtoB_loss: 7.554325; g_BtoA_loss: 4.2564716; d_A_loss: 0.80584276; d_B_loss: 0.48364428; examples/sec: 5.9;
+FastEstimator-Train: step: 7700; g_AtoB_loss: 5.3613944; g_BtoA_loss: 5.182125; d_A_loss: 0.5956919; d_B_loss: 0.3624996; examples/sec: 5.9;
+FastEstimator-Train: step: 7800; g_AtoB_loss: 4.345959; g_BtoA_loss: 5.0412292; d_A_loss: 0.6506859; d_B_loss: 1.1927354; examples/sec: 5.9;
+FastEstimator-Train: step: 7900; g_AtoB_loss: 4.348189; g_BtoA_loss: 4.3373866; d_A_loss: 0.6165432; d_B_loss: 0.36613774; examples/sec: 5.9;
+FastEstimator-Train: step: 8000; g_AtoB_loss: 3.9222085; g_BtoA_loss: 5.7510576; d_A_loss: 0.8119758; d_B_loss: 0.49364483; examples/sec: 5.9;
+FastEstimator-Train: step: 8100; g_AtoB_loss: 5.1799574; g_BtoA_loss: 5.2005796; d_A_loss: 0.5202576; d_B_loss: 0.29812163; examples/sec: 5.9;
+FastEstimator-Train: step: 8200; g_AtoB_loss: 4.9062834; g_BtoA_loss: 5.193774; d_A_loss: 0.62360036; d_B_loss: 0.5128255; examples/sec: 5.9;
+FastEstimator-Train: step: 8300; g_AtoB_loss: 5.878261; g_BtoA_loss: 4.0169764; d_A_loss: 0.7505914; d_B_loss: 0.25711843; examples/sec: 5.9;
+FastEstimator-Train: step: 8400; g_AtoB_loss: 4.7565136; g_BtoA_loss: 3.5570822; d_A_loss: 0.5297624; d_B_loss: 1.2436658; examples/sec: 5.9;
+FastEstimator-Train: step: 8500; g_AtoB_loss: 3.747726; g_BtoA_loss: 3.6715114; d_A_loss: 1.5454528; d_B_loss: 0.26488632; examples/sec: 5.9;
+FastEstimator-Train: step: 8600; g_AtoB_loss: 12.726184; g_BtoA_loss: 5.917493; d_A_loss: 0.53397655; d_B_loss: 0.17625129; examples/sec: 5.9;
+FastEstimator-Train: step: 8700; g_AtoB_loss: 5.5202184; g_BtoA_loss: 4.8640356; d_A_loss: 0.37425178; d_B_loss: 0.4202308; examples/sec: 5.9;
+FastEstimator-Train: step: 8800; g_AtoB_loss: 4.2678576; g_BtoA_loss: 3.8919885; d_A_loss: 0.6356655; d_B_loss: 0.9115385; examples/sec: 5.9;
+FastEstimator-Train: step: 8900; g_AtoB_loss: 4.8036356; g_BtoA_loss: 5.071637; d_A_loss: 0.38007382; d_B_loss: 0.41950023; examples/sec: 5.9;
+FastEstimator-Train: step: 9000; g_AtoB_loss: 4.5950537; g_BtoA_loss: 4.564438; d_A_loss: 0.63072693; d_B_loss: 0.47248167; examples/sec: 5.9;
+FastEstimator-Train: step: 9100; g_AtoB_loss: 4.83654; g_BtoA_loss: 3.799251; d_A_loss: 0.66044784; d_B_loss: 0.5758841; examples/sec: 5.9;
+FastEstimator-Train: step: 9200; g_AtoB_loss: 4.8650894; g_BtoA_loss: 5.061773; d_A_loss: 0.54654294; d_B_loss: 0.17991793; examples/sec: 5.9;
+FastEstimator-Train: step: 9300; g_AtoB_loss: 5.0781183; g_BtoA_loss: 5.917148; d_A_loss: 0.43618613; d_B_loss: 0.56004953; examples/sec: 5.9;
+FastEstimator-Train: step: 9400; g_AtoB_loss: 4.0989685; g_BtoA_loss: 4.0646935; d_A_loss: 0.6623713; d_B_loss: 1.1921847; examples/sec: 5.9;
+FastEstimator-Train: step: 9500; g_AtoB_loss: 7.4833717; g_BtoA_loss: 4.0107956; d_A_loss: 0.7916292; d_B_loss: 0.6509473; examples/sec: 5.9;
+FastEstimator-Train: step: 9600; g_AtoB_loss: 6.4868784; g_BtoA_loss: 5.573224; d_A_loss: 0.49261558; d_B_loss: 0.22173142; examples/sec: 5.9;
+FastEstimator-Train: step: 9700; g_AtoB_loss: 3.9402993; g_BtoA_loss: 4.9662237; d_A_loss: 0.8663194; d_B_loss: 0.6250827; examples/sec: 5.9;
+FastEstimator-Train: step: 9800; g_AtoB_loss: 4.5108128; g_BtoA_loss: 6.4232073; d_A_loss: 0.91868895; d_B_loss: 1.1951771; examples/sec: 5.9;
+</pre></div></div>
+</div>
+<p>Below are infering results of the two generators.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[20]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">horse_img_t</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">convert_to_tensor</span><span class="p">(</span><span class="n">horse_img</span><span class="p">)</span>
+<span class="n">horse_img_t</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">expand_dims</span><span class="p">(</span><span class="n">horse_img_t</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">zebra_img_t</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">convert_to_tensor</span><span class="p">(</span><span class="n">zebra_img</span><span class="p">)</span>
+<span class="n">zebra_img_t</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">expand_dims</span><span class="p">(</span><span class="n">zebra_img_t</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">fake_zebra</span> <span class="o">=</span> <span class="n">estimator</span><span class="o">.</span><span class="n">network</span><span class="o">.</span><span class="n">model</span><span class="p">[</span><span class="s2">&quot;g_AtoB&quot;</span><span class="p">](</span><span class="n">horse_img_t</span><span class="p">)</span>
+<span class="n">fake_horse</span> <span class="o">=</span> <span class="n">estimator</span><span class="o">.</span><span class="n">network</span><span class="o">.</span><span class="n">model</span><span class="p">[</span><span class="s2">&quot;g_BtoA&quot;</span><span class="p">](</span><span class="n">zebra_img_t</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[27]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">221</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">horse_img</span><span class="p">);</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Real Horse Image&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;off&#39;</span><span class="p">);</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">222</span><span class="p">)</span>
+<span class="n">fake_zebra_display</span> <span class="o">=</span> <span class="n">normalize_and_convert_color</span><span class="p">(</span><span class="n">fake_zebra</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">fake_zebra_display</span><span class="p">);</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Translated Zebra Image&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;off&#39;</span><span class="p">);</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">223</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">zebra_img</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Real Zebra Image&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;off&#39;</span><span class="p">);</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">224</span><span class="p">)</span>
+<span class="n">fake_horse_display</span> <span class="o">=</span> <span class="n">normalize_and_convert_color</span><span class="p">(</span><span class="n">fake_horse</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">fake_horse_display</span><span class="p">);</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Translated Horse Image&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;off&#39;</span><span class="p">);</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../../_images/apphub_image_generation_cyclegan_horse2zebra_cyclegan_28_0.png" src="../../../_images/apphub_image_generation_cyclegan_horse2zebra_cyclegan_28_0.png" />
+</div>
+</div>
+<p>Note the addition of zebra-like stripe texture on top of horses when translating from horses to zebras. When translating zebras to horses, we can observe that generator removes the stripe texture from zebras.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<p>—</p>
+<p><a class="reference external" href="https://github.com/fastestimator/fastestimator/blob/master/apphub/image_generation/cyclegan_horse2zebra/cyclegan.ipynb">Link to GitHub</a></p>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../dcgan_mnist/dcgan_mnist.html" class="btn btn-neutral float-right" title="DCGAN Example with MNIST Dataset" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="../cvae_mnist/cvae_mnist.html" class="btn btn-neutral float-left" title="Convolutional Variational Autoencoder example using MNIST dataset" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, GEHC DataScience
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

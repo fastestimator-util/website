@@ -1,0 +1,828 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Image Segmation: Caltech-UCSD Birds 200 Dataset &mdash; FastEstimator 0.0.1 documentation</title>
+  
+
+  
+  
+    <link rel="shortcut icon" href="../../../_static/favicon.ico"/>
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../../_static/language_data.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="Lung Segmentation - Montgomery Dataset" href="../unet_montgomery/unet_montgomery.html" />
+    <link rel="prev" title="Image Segmentation" href="../../image_segmentation.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> FastEstimator
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0a0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../../install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../learn.html">Learn</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../../apphub.html">Example</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../NLP.html">NLP</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../image_classification.html">Image Classification</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../image_generation.html">Image Generation</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../../image_segmentation.html">Image Segmentation</a><ul class="current">
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Image Segmation: Caltech-UCSD Birds 200 Dataset</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#Download-and-prepare-the-CUB200-dataset">Download and prepare the CUB200 dataset</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Create-data-pipeline">Create data pipeline</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Create-network">Create network</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Create-Estimator">Create Estimator</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Start-traininig">Start traininig</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Inference">Inference</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../unet_montgomery/unet_montgomery.html">Lung Segmentation - Montgomery Dataset</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../unet_montgomery/unet_montgomery.html#Download-and-prepare-the-montgomery-dataset">Download and prepare the montgomery dataset</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../unet_montgomery/unet_montgomery.html#Create-TF-Records-from-input-image-and-mask">Create TF Records from input image and mask</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../unet_montgomery/unet_montgomery.html#Create-data-pipeline">Create data pipeline</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../unet_montgomery/unet_montgomery.html#Check-the-results-of-preprocessing">Check the results of preprocessing</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../unet_montgomery/unet_montgomery.html#Creation-of-the-network">Creation of the network</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../unet_montgomery/unet_montgomery.html#Let’s-do-Inference">Let’s do Inference</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../image_styletransfer.html">Image Style Transfer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../tabular.html">Tabular</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api.html">API</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">FastEstimator</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../../apphub.html">Example</a> &raquo;</li>
+        
+          <li><a href="../../image_segmentation.html">Image Segmentation</a> &raquo;</li>
+        
+      <li>Image Segmation: Caltech-UCSD Birds 200 Dataset</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../../_sources/apphub/image_segmentation/unet_cub200/unet_cub200.ipynb.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  
+<style>
+/* CSS for nbsphinx extension */
+
+/* remove conflicting styling from Sphinx themes */
+div.nbinput,
+div.nbinput div.prompt,
+div.nbinput div.input_area,
+div.nbinput div[class*=highlight],
+div.nbinput div[class*=highlight] pre,
+div.nboutput,
+div.nbinput div.prompt,
+div.nbinput div.output_area,
+div.nboutput div[class*=highlight],
+div.nboutput div[class*=highlight] pre {
+    background: none;
+    border: none;
+    padding: 0 0;
+    margin: 0;
+    box-shadow: none;
+}
+
+/* avoid gaps between output lines */
+div.nboutput div[class*=highlight] pre {
+    line-height: normal;
+}
+
+/* input/output containers */
+div.nbinput,
+div.nboutput {
+    display: -webkit-flex;
+    display: flex;
+    align-items: flex-start;
+    margin: 0;
+    width: 100%;
+}
+@media (max-width: 540px) {
+    div.nbinput,
+    div.nboutput {
+        flex-direction: column;
+    }
+}
+
+/* input container */
+div.nbinput {
+    padding-top: 5px;
+}
+
+/* last container */
+div.nblast {
+    padding-bottom: 5px;
+}
+
+/* input prompt */
+div.nbinput div.prompt pre {
+    color: #307FC1;
+}
+
+/* output prompt */
+div.nboutput div.prompt pre {
+    color: #BF5B3D;
+}
+
+/* all prompts */
+div.nbinput div.prompt,
+div.nboutput div.prompt {
+    min-width: 5ex;
+    padding-top: 0.4em;
+    padding-right: 0.4em;
+    text-align: right;
+    flex: 0;
+}
+@media (max-width: 540px) {
+    div.nbinput div.prompt,
+    div.nboutput div.prompt {
+        text-align: left;
+        padding: 0.4em;
+    }
+    div.nboutput div.prompt.empty {
+        padding: 0;
+    }
+}
+
+/* disable scrollbars on prompts */
+div.nbinput div.prompt pre,
+div.nboutput div.prompt pre {
+    overflow: hidden;
+}
+
+/* input/output area */
+div.nbinput div.input_area,
+div.nboutput div.output_area {
+    padding: 0.4em;
+    -webkit-flex: 1;
+    flex: 1;
+    overflow: auto;
+}
+@media (max-width: 540px) {
+    div.nbinput div.input_area,
+    div.nboutput div.output_area {
+        width: 100%;
+    }
+}
+
+/* input area */
+div.nbinput div.input_area {
+    border: 1px solid #e0e0e0;
+    border-radius: 2px;
+    background: #f5f5f5;
+}
+
+/* override MathJax center alignment in output cells */
+div.nboutput div[class*=MathJax] {
+    text-align: left !important;
+}
+
+/* override sphinx.ext.imgmath center alignment in output cells */
+div.nboutput div.math p {
+    text-align: left;
+}
+
+/* standard error */
+div.nboutput div.output_area.stderr {
+    background: #fdd;
+}
+
+/* ANSI colors */
+.ansi-black-fg { color: #3E424D; }
+.ansi-black-bg { background-color: #3E424D; }
+.ansi-black-intense-fg { color: #282C36; }
+.ansi-black-intense-bg { background-color: #282C36; }
+.ansi-red-fg { color: #E75C58; }
+.ansi-red-bg { background-color: #E75C58; }
+.ansi-red-intense-fg { color: #B22B31; }
+.ansi-red-intense-bg { background-color: #B22B31; }
+.ansi-green-fg { color: #00A250; }
+.ansi-green-bg { background-color: #00A250; }
+.ansi-green-intense-fg { color: #007427; }
+.ansi-green-intense-bg { background-color: #007427; }
+.ansi-yellow-fg { color: #DDB62B; }
+.ansi-yellow-bg { background-color: #DDB62B; }
+.ansi-yellow-intense-fg { color: #B27D12; }
+.ansi-yellow-intense-bg { background-color: #B27D12; }
+.ansi-blue-fg { color: #208FFB; }
+.ansi-blue-bg { background-color: #208FFB; }
+.ansi-blue-intense-fg { color: #0065CA; }
+.ansi-blue-intense-bg { background-color: #0065CA; }
+.ansi-magenta-fg { color: #D160C4; }
+.ansi-magenta-bg { background-color: #D160C4; }
+.ansi-magenta-intense-fg { color: #A03196; }
+.ansi-magenta-intense-bg { background-color: #A03196; }
+.ansi-cyan-fg { color: #60C6C8; }
+.ansi-cyan-bg { background-color: #60C6C8; }
+.ansi-cyan-intense-fg { color: #258F8F; }
+.ansi-cyan-intense-bg { background-color: #258F8F; }
+.ansi-white-fg { color: #C5C1B4; }
+.ansi-white-bg { background-color: #C5C1B4; }
+.ansi-white-intense-fg { color: #A1A6B2; }
+.ansi-white-intense-bg { background-color: #A1A6B2; }
+
+.ansi-default-inverse-fg { color: #FFFFFF; }
+.ansi-default-inverse-bg { background-color: #000000; }
+
+.ansi-bold { font-weight: bold; }
+.ansi-underline { text-decoration: underline; }
+
+/* Some additional styling taken form the Jupyter notebook CSS */
+div.rendered_html table {
+  border: none;
+  border-collapse: collapse;
+  border-spacing: 0;
+  color: black;
+  font-size: 12px;
+  table-layout: fixed;
+}
+div.rendered_html thead {
+  border-bottom: 1px solid black;
+  vertical-align: bottom;
+}
+div.rendered_html tr,
+div.rendered_html th,
+div.rendered_html td {
+  text-align: right;
+  vertical-align: middle;
+  padding: 0.5em 0.5em;
+  line-height: normal;
+  white-space: normal;
+  max-width: none;
+  border: none;
+}
+div.rendered_html th {
+  font-weight: bold;
+}
+div.rendered_html tbody tr:nth-child(odd) {
+  background: #f5f5f5;
+}
+div.rendered_html tbody tr:hover {
+  background: rgba(66, 165, 245, 0.2);
+}
+
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast,
+.nboutput.nblast {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast + .nbinput {
+    margin-top: -19px;
+}
+
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+
+/* Fix math alignment, see https://github.com/rtfd/sphinx_rtd_theme/pull/686 */
+.math {
+    text-align: unset;
+}
+</style>
+<div class="section" id="Image-Segmation:-Caltech-UCSD-Birds-200-Dataset">
+<h1>Image Segmation: Caltech-UCSD Birds 200 Dataset<a class="headerlink" href="#Image-Segmation:-Caltech-UCSD-Birds-200-Dataset" title="Permalink to this headline">¶</a></h1>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">tempfile</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
+<span class="kn">from</span> <span class="nn">matplotlib</span> <span class="k">import</span> <span class="n">pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+<span class="kn">from</span> <span class="nn">tensorflow.keras.models</span> <span class="k">import</span> <span class="n">load_model</span>
+
+<span class="kn">import</span> <span class="nn">fastestimator</span> <span class="k">as</span> <span class="nn">fe</span>
+<span class="kn">from</span> <span class="nn">fastestimator.architecture.unet</span> <span class="k">import</span> <span class="n">UNet</span>
+<span class="kn">from</span> <span class="nn">fastestimator.dataset</span> <span class="k">import</span> <span class="n">cub200</span>
+<span class="kn">from</span> <span class="nn">fastestimator.estimator.trace</span> <span class="k">import</span> <span class="n">Dice</span><span class="p">,</span> <span class="n">ModelSaver</span>
+<span class="kn">from</span> <span class="nn">fastestimator.network.loss</span> <span class="k">import</span> <span class="n">BinaryCrossentropy</span>
+<span class="kn">from</span> <span class="nn">fastestimator.network.model</span> <span class="k">import</span> <span class="n">FEModel</span><span class="p">,</span> <span class="n">ModelOp</span>
+<span class="kn">from</span> <span class="nn">fastestimator.pipeline.processing</span> <span class="k">import</span> <span class="n">Minmax</span>
+<span class="kn">from</span> <span class="nn">fastestimator.record.preprocess</span> <span class="k">import</span> <span class="n">ImageReader</span><span class="p">,</span> <span class="n">MatReader</span><span class="p">,</span> <span class="n">Reshape</span><span class="p">,</span> <span class="n">Resize</span>
+<span class="kn">from</span> <span class="nn">fastestimator.util.op</span> <span class="k">import</span> <span class="n">NumpyOp</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="Download-and-prepare-the-CUB200-dataset">
+<h2>Download and prepare the CUB200 dataset<a class="headerlink" href="#Download-and-prepare-the-CUB200-dataset" title="Permalink to this headline">¶</a></h2>
+<p>The cub200 dataset API will generate a summary CSV file for the data. The path of the csv file is returned as <code class="docutils literal notranslate"><span class="pre">csv_path</span></code>. The dataset path is returned as <code class="docutils literal notranslate"><span class="pre">path</span></code>. Inside the CSV file, the file paths are all relative to <code class="docutils literal notranslate"><span class="pre">path</span></code>.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">csv_path</span><span class="p">,</span> <span class="n">path</span> <span class="o">=</span> <span class="n">cub200</span><span class="o">.</span><span class="n">load_data</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="Create-data-pipeline">
+<h2>Create data pipeline<a class="headerlink" href="#Create-data-pipeline" title="Permalink to this headline">¶</a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">RecordWriter</span></code> will convert the data into TFRecord. You can specify your data preprocessing with the <code class="docutils literal notranslate"><span class="pre">Preprocess</span></code> ops before saving into TFRecord.</p>
+<p>Here the main task is to resize the images and masks into 128 by 128 pixels. The image and mask preprocessings are</p>
+<ul>
+<li><div class="line-block">
+<div class="line"><strong>image</strong></div>
+<div class="line">ImageReader → Resize</div>
+</div>
+</li>
+<li><div class="line-block">
+<div class="line"><strong>mask</strong></div>
+<div class="line">MatReader → SelectDictKey (select only the mask info from MAT) → Resize → Reshape (add extra dimension)</div>
+</div>
+</li>
+</ul>
+<p>We read the JPG images with <code class="docutils literal notranslate"><span class="pre">ImageReader</span></code>, the masks stored in MAT file with <code class="docutils literal notranslate"><span class="pre">MatReader</span></code>. There is other information stored in the MAT file, so we use the custom <code class="docutils literal notranslate"><span class="pre">SelectDictKey</span></code> op to retrieve the mask only.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="k">class</span> <span class="nc">SelectDictKey</span><span class="p">(</span><span class="n">NumpyOp</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">state</span><span class="p">):</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;seg&#39;</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">data</span>
+</pre></div>
+</div>
+</div>
+<p>For each op, if the <code class="docutils literal notranslate"><span class="pre">inputs</span></code> argument is not provided, it defaults to output from the previous op. Similarly, if the <code class="docutils literal notranslate"><span class="pre">outputs</span></code> argument is not provided, it defaults to the input of current op.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">writer</span> <span class="o">=</span> <span class="n">fe</span><span class="o">.</span><span class="n">RecordWriter</span><span class="p">(</span>
+    <span class="n">save_dir</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s2">&quot;FEdata&quot;</span><span class="p">),</span>
+    <span class="n">train_data</span><span class="o">=</span><span class="n">csv_path</span><span class="p">,</span>
+    <span class="n">validation_data</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span>
+    <span class="n">ops</span><span class="o">=</span><span class="p">[</span>
+        <span class="n">ImageReader</span><span class="p">(</span><span class="n">inputs</span><span class="o">=</span><span class="s1">&#39;image&#39;</span><span class="p">,</span> <span class="n">parent_path</span><span class="o">=</span><span class="n">path</span><span class="p">),</span>
+        <span class="n">Resize</span><span class="p">(</span><span class="n">target_size</span><span class="o">=</span><span class="p">(</span><span class="mi">128</span><span class="p">,</span> <span class="mi">128</span><span class="p">),</span> <span class="n">keep_ratio</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">outputs</span><span class="o">=</span><span class="s1">&#39;image&#39;</span><span class="p">),</span>
+        <span class="n">MatReader</span><span class="p">(</span><span class="n">inputs</span><span class="o">=</span><span class="s1">&#39;annotation&#39;</span><span class="p">,</span> <span class="n">parent_path</span><span class="o">=</span><span class="n">path</span><span class="p">),</span>
+        <span class="n">SelectDictKey</span><span class="p">(),</span>
+        <span class="n">Resize</span><span class="p">((</span><span class="mi">128</span><span class="p">,</span> <span class="mi">128</span><span class="p">),</span> <span class="n">keep_ratio</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
+        <span class="n">Reshape</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="mi">128</span><span class="p">,</span> <span class="mi">128</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="n">outputs</span><span class="o">=</span><span class="s2">&quot;annotation&quot;</span><span class="p">)</span>
+    <span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<p>We can send this <code class="docutils literal notranslate"><span class="pre">RecordWriter</span></code> instance to <code class="docutils literal notranslate"><span class="pre">Pipeline</span></code>. <code class="docutils literal notranslate"><span class="pre">Pipeline</span></code> reads the TFRecord generated from <code class="docutils literal notranslate"><span class="pre">RecordWriter</span></code> and applies further transformation specified in the <code class="docutils literal notranslate"><span class="pre">ops</span></code> argument. In this case we read TFRecords and apply <code class="docutils literal notranslate"><span class="pre">Minmax</span></code> normalization to each image.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">pipeline</span> <span class="o">=</span> <span class="n">fe</span><span class="o">.</span><span class="n">Pipeline</span><span class="p">(</span><span class="n">batch_size</span><span class="o">=</span><span class="mi">64</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">writer</span><span class="p">,</span> <span class="n">ops</span><span class="o">=</span><span class="n">Minmax</span><span class="p">(</span><span class="n">inputs</span><span class="o">=</span><span class="s1">&#39;image&#39;</span><span class="p">,</span> <span class="n">outputs</span><span class="o">=</span><span class="s1">&#39;image&#39;</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="Visualize-data-from-pipeline">
+<h3>Visualize data from pipeline<a class="headerlink" href="#Visualize-data-from-pipeline" title="Permalink to this headline">¶</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">Pipeline.show_results()</span></code> is useful for pipeline debugging. This method returns a list of batch data.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">sample_data</span> <span class="o">=</span> <span class="n">pipeline</span><span class="o">.</span><span class="n">show_results</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+FastEstimator: Reading non-empty directory: /tmp/.fe/CUB200/FEdata
+FastEstimator: Found 4827 examples for train in /tmp/.fe/CUB200/FEdata/train_summary0.json
+FastEstimator: Found 1206 examples for eval in /tmp/.fe/CUB200/FEdata/eval_summary0.json
+</pre></div></div>
+</div>
+<p>Let’s convert the tensor into numpy array and plot the image and mask.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">img_batch</span> <span class="o">=</span> <span class="n">sample_data</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;image&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span>
+<span class="n">mask_batch</span> <span class="o">=</span> <span class="n">sample_data</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;annotation&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">img_batch</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(</span><span class="n">mask_batch</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+</pre></div>
+</div>
+<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
+<span></span>&lt;matplotlib.image.AxesImage at 0x7f8f5415dba8&gt;
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../../_images/apphub_image_segmentation_unet_cub200_unet_cub200_17_1.png" src="../../../_images/apphub_image_segmentation_unet_cub200_unet_cub200_17_1.png" />
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="Create-network">
+<h2>Create network<a class="headerlink" href="#Create-network" title="Permalink to this headline">¶</a></h2>
+<p>First, the <code class="docutils literal notranslate"><span class="pre">tf.keras.Model</span></code> and <code class="docutils literal notranslate"><span class="pre">tf.optimizers</span></code> are put together as <code class="docutils literal notranslate"><span class="pre">FEModel</span></code>.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">model</span> <span class="o">=</span> <span class="n">FEModel</span><span class="p">(</span><span class="n">model_def</span><span class="o">=</span><span class="n">UNet</span><span class="p">,</span> <span class="n">model_name</span><span class="o">=</span><span class="s2">&quot;unet_cub&quot;</span><span class="p">,</span> <span class="n">optimizer</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">optimizers</span><span class="o">.</span><span class="n">Adam</span><span class="p">(</span><span class="n">lr</span><span class="o">=</span><span class="mf">0.001</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<p>Then we combine the <code class="docutils literal notranslate"><span class="pre">FEModel</span></code> and <code class="docutils literal notranslate"><span class="pre">Loss</span></code> together as <code class="docutils literal notranslate"><span class="pre">Network</span></code>.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">network</span> <span class="o">=</span> <span class="n">fe</span><span class="o">.</span><span class="n">Network</span><span class="p">(</span><span class="n">ops</span><span class="o">=</span><span class="p">[</span>
+    <span class="n">ModelOp</span><span class="p">(</span><span class="n">inputs</span><span class="o">=</span><span class="s1">&#39;image&#39;</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">,</span> <span class="n">outputs</span><span class="o">=</span><span class="s1">&#39;mask_pred&#39;</span><span class="p">),</span>
+    <span class="n">BinaryCrossentropy</span><span class="p">(</span><span class="n">y_true</span><span class="o">=</span><span class="s1">&#39;annotation&#39;</span><span class="p">,</span> <span class="n">y_pred</span><span class="o">=</span><span class="s1">&#39;mask_pred&#39;</span><span class="p">)</span>
+<span class="p">])</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="Create-Estimator">
+<h2>Create Estimator<a class="headerlink" href="#Create-Estimator" title="Permalink to this headline">¶</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">Trace</span></code> is similar to callbacks in <code class="docutils literal notranslate"><span class="pre">tf.keras</span></code>. You can specify the metrics you would like to use. In this example we use Dice score. To save your model, you can use the <code class="docutils literal notranslate"><span class="pre">ModelSaver</span></code>. We will save our model in the <code class="docutils literal notranslate"><span class="pre">save_dir</span></code> folder.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">save_dir</span> <span class="o">=</span> <span class="n">tempfile</span><span class="o">.</span><span class="n">mkdtemp</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">traces</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">Dice</span><span class="p">(</span><span class="n">true_key</span><span class="o">=</span><span class="s2">&quot;annotation&quot;</span><span class="p">,</span> <span class="n">pred_key</span><span class="o">=</span><span class="s1">&#39;mask_pred&#39;</span><span class="p">),</span>
+    <span class="n">ModelSaver</span><span class="p">(</span><span class="n">model_name</span><span class="o">=</span><span class="s2">&quot;unet_cub&quot;</span><span class="p">,</span> <span class="n">save_dir</span><span class="o">=</span><span class="n">save_dir</span><span class="p">,</span> <span class="n">save_best</span><span class="o">=</span><span class="s1">&#39;dice&#39;</span><span class="p">,</span> <span class="n">save_best_mode</span><span class="o">=</span><span class="s1">&#39;max&#39;</span><span class="p">)</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<p>After combining everything into <code class="docutils literal notranslate"><span class="pre">Estimator</span></code> we can start training!</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">estimator</span> <span class="o">=</span> <span class="n">fe</span><span class="o">.</span><span class="n">Estimator</span><span class="p">(</span><span class="n">network</span><span class="o">=</span><span class="n">network</span><span class="p">,</span> <span class="n">pipeline</span><span class="o">=</span><span class="n">pipeline</span><span class="p">,</span> <span class="n">traces</span><span class="o">=</span><span class="n">traces</span><span class="p">,</span> <span class="n">epochs</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="Start-traininig">
+<h2>Start traininig<a class="headerlink" href="#Start-traininig" title="Permalink to this headline">¶</a></h2>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">estimator</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+    ______           __  ______     __  _                 __
+   / ____/___ ______/ /_/ ____/____/ /_(_)___ ___  ____ _/ /_____  _____
+  / /_  / __ `/ ___/ __/ __/ / ___/ __/ / __ `__ \/ __ `/ __/ __ \/ ___/
+ / __/ / /_/ (__  ) /_/ /___(__  ) /_/ / / / / / / /_/ / /_/ /_/ / /
+/_/    \__,_/____/\__/_____/____/\__/_/_/ /_/ /_/\__,_/\__/\____/_/
+
+
+FastEstimator: Reading non-empty directory: /tmp/.fe/CUB200/FEdata
+FastEstimator: Found 4827 examples for train in /tmp/.fe/CUB200/FEdata/train_summary0.json
+FastEstimator: Found 1206 examples for eval in /tmp/.fe/CUB200/FEdata/eval_summary0.json
+FastEstimator-Start: step: 0; unet_cub_lr: 0.001;
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+WARNING: Logging before flag parsing goes to stderr.
+W0918 16:07:27.013855 140255972329216 deprecation.py:323] From /data/hsiming/virtualenv/tf2.0.0b_py36_hsiming/lib/python3.6/site-packages/tensorflow/python/ops/nn_impl.py:182: add_dispatch_support.&lt;locals&gt;.wrapper (from tensorflow.python.ops.array_ops) is deprecated and will be removed in a future version.
+Instructions for updating:
+Use tf.where in 2.0, which has the same broadcast rule as np.where
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+FastEstimator-Train: step: 0; loss: 0.7021471;
+FastEstimator-ModelSaver: Saving model to /tmp/tmpduzk8yc3/unet_cub_best_dice.h5
+FastEstimator-Eval: step: 75; epoch: 0; loss: 0.24989241; min_loss: 0.24989241; since_best_loss: 0; dice: 7.588908961103451e-11;
+FastEstimator-Train: step: 100; loss: 0.2297919; examples/sec: 33.8;
+FastEstimator-ModelSaver: Saving model to /tmp/tmpduzk8yc3/unet_cub_best_dice.h5
+FastEstimator-Eval: step: 150; epoch: 1; loss: 0.22817911; min_loss: 0.22817911; since_best_loss: 0; dice: 7.592279165819584e-11;
+FastEstimator-Train: step: 200; loss: 0.2402322; examples/sec: 33.45;
+FastEstimator-ModelSaver: Saving model to /tmp/tmpduzk8yc3/unet_cub_best_dice.h5
+FastEstimator-Eval: step: 225; epoch: 2; loss: 0.23342162; min_loss: 0.22817911; since_best_loss: 1; dice: 0.6237118417721643;
+FastEstimator-ModelSaver: Saving model to /tmp/tmpduzk8yc3/unet_cub_best_dice.h5
+FastEstimator-Eval: step: 300; epoch: 3; loss: 0.19668888; min_loss: 0.19668888; since_best_loss: 0; dice: 0.6436488961176047;
+FastEstimator-Train: step: 300; loss: 0.19313718; examples/sec: 33.78;
+FastEstimator-ModelSaver: Saving model to /tmp/tmpduzk8yc3/unet_cub_best_dice.h5
+FastEstimator-Eval: step: 375; epoch: 4; loss: 0.2016371; min_loss: 0.19668888; since_best_loss: 1; dice: 0.6683820302901747;
+FastEstimator-Train: step: 400; loss: 0.19688112; examples/sec: 33.44;
+FastEstimator-ModelSaver: Saving model to /tmp/tmpduzk8yc3/unet_cub_best_dice.h5
+FastEstimator-Eval: step: 450; epoch: 5; loss: 0.19194138; min_loss: 0.19194138; since_best_loss: 0; dice: 0.683110421035852;
+FastEstimator-Train: step: 500; loss: 0.19712263; examples/sec: 33.45;
+FastEstimator-Eval: step: 525; epoch: 6; loss: 0.18441439; min_loss: 0.18441439; since_best_loss: 0; dice: 0.6646862244318998;
+FastEstimator-ModelSaver: Saving model to /tmp/tmpduzk8yc3/unet_cub_best_dice.h5
+FastEstimator-Eval: step: 600; epoch: 7; loss: 0.19884615; min_loss: 0.18441439; since_best_loss: 1; dice: 0.7026447325321867;
+FastEstimator-Train: step: 600; loss: 0.18655884; examples/sec: 33.76;
+FastEstimator-Eval: step: 675; epoch: 8; loss: 0.17825502; min_loss: 0.17825502; since_best_loss: 0; dice: 0.6815177652540123;
+FastEstimator-Train: step: 700; loss: 0.16645324; examples/sec: 33.43;
+FastEstimator-ModelSaver: Saving model to /tmp/tmpduzk8yc3/unet_cub_best_dice.h5
+FastEstimator-Eval: step: 750; epoch: 9; loss: 0.17107953; min_loss: 0.17107953; since_best_loss: 0; dice: 0.720796747138494;
+FastEstimator-Finish: step: 750; total_time: 1584.28 sec; unet_cub_lr: 0.001;
+</pre></div></div>
+</div>
+</div>
+<div class="section" id="Inference">
+<h2>Inference<a class="headerlink" href="#Inference" title="Permalink to this headline">¶</a></h2>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">model</span> <span class="o">=</span> <span class="n">load_model</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">save_dir</span><span class="p">,</span> <span class="s1">&#39;unet_cub_best_dice.h5&#39;</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+W0918 16:41:14.391707 140255972329216 hdf5_format.py:171] No training configuration found in save file: the model was *not* compiled. Compile it manually.
+</pre></div></div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[20]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">predicted_mask</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">img_batch</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[41]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">batch_index</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">img_batch</span><span class="p">[</span><span class="n">batch_index</span><span class="p">])</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;off&#39;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;original image&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=-</span><span class="mf">0.3</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(</span><span class="n">mask_batch</span><span class="p">[</span><span class="n">batch_index</span><span class="p">]),</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;off&#39;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;groundtruth&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=-</span><span class="mf">0.3</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(</span><span class="n">predicted_mask</span><span class="p">[</span><span class="n">batch_index</span><span class="p">]),</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;off&#39;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;segmentation mask&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=-</span><span class="mf">0.3</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[41]:
+</pre></div>
+</div>
+<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
+<span></span>Text(0.5, -0.3, &#39;segmentation mask&#39;)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../../_images/apphub_image_segmentation_unet_cub200_unet_cub200_34_1.png" src="../../../_images/apphub_image_segmentation_unet_cub200_unet_cub200_34_1.png" />
+</div>
+</div>
+</div>
+</div>
+<p>—</p>
+<p><a class="reference external" href="https://github.com/fastestimator/fastestimator/blob/master/apphub/image_segmentation/unet_cub200/unet_cub200.ipynb">Link to GitHub</a></p>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../unet_montgomery/unet_montgomery.html" class="btn btn-neutral float-right" title="Lung Segmentation - Montgomery Dataset" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="../../image_segmentation.html" class="btn btn-neutral float-left" title="Image Segmentation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, GEHC DataScience
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

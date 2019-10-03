@@ -1,0 +1,327 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>fastestimator.summary.logs.log_parse &mdash; FastEstimator 0.0.1 documentation</title>
+  
+
+  
+  
+    <link rel="shortcut icon" href="../../../../_static/favicon.ico"/>
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../../" src="../../../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../../../_static/language_data.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
+    
+    <script type="text/javascript" src="../../../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../../index.html" class="icon icon-home"> FastEstimator
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0a0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../learn.html">Learn</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../apphub.html">Example</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../api.html">API</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">FastEstimator</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../../index.html">Module code</a> &raquo;</li>
+        
+      <li>fastestimator.summary.logs.log_parse</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for fastestimator.summary.logs.log_parse</h1><div class="highlight"><pre>
+<span></span><span class="c1"># Copyright 2019 The FastEstimator Authors. All Rights Reserved.</span>
+<span class="c1">#</span>
+<span class="c1"># Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);</span>
+<span class="c1"># you may not use this file except in compliance with the License.</span>
+<span class="c1"># You may obtain a copy of the License at</span>
+<span class="c1">#</span>
+<span class="c1">#     http://www.apache.org/licenses/LICENSE-2.0</span>
+<span class="c1">#</span>
+<span class="c1"># Unless required by applicable law or agreed to in writing, software</span>
+<span class="c1"># distributed under the License is distributed on an &quot;AS IS&quot; BASIS,</span>
+<span class="c1"># WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span>
+<span class="c1"># See the License for the specific language governing permissions and</span>
+<span class="c1"># limitations under the License.</span>
+<span class="c1"># ==============================================================================</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">re</span>
+
+<span class="kn">from</span> <span class="nn">fastestimator.summary</span> <span class="k">import</span> <span class="n">Summary</span>
+<span class="kn">from</span> <span class="nn">fastestimator.util.loader</span> <span class="k">import</span> <span class="n">PathLoader</span>
+<span class="kn">from</span> <span class="nn">fastestimator.util.util</span> <span class="k">import</span> <span class="n">strip_suffix</span>
+<span class="kn">from</span> <span class="nn">fastestimator.summary.logs</span> <span class="k">import</span> <span class="n">visualize_logs</span>
+
+
+<span class="k">def</span> <span class="nf">_parse_file</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span> <span class="n">file_extension</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;A function which will parse log files into a dictionary of metrics</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        file_path (str): The path to a log file</span>
+<span class="sd">        file_extension (str): The extension of the log file</span>
+<span class="sd">    Returns:</span>
+<span class="sd">        An experiment summarizing the given log file</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># TODO: need to handle multi-line output like confusion matrix</span>
+    <span class="n">experiment</span> <span class="o">=</span> <span class="n">Summary</span><span class="p">(</span><span class="n">strip_suffix</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">file_path</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">(),</span> <span class="n">file_extension</span><span class="p">))</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">file_path</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">file</span><span class="p">:</span>
+            <span class="n">mode</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="k">if</span> <span class="n">line</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;FastEstimator-Train&quot;</span><span class="p">):</span>
+                <span class="n">mode</span> <span class="o">=</span> <span class="s2">&quot;train&quot;</span>
+            <span class="k">elif</span> <span class="n">line</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;FastEstimator-Eval&quot;</span><span class="p">):</span>
+                <span class="n">mode</span> <span class="o">=</span> <span class="s2">&quot;eval&quot;</span>
+            <span class="k">if</span> <span class="n">mode</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">continue</span>
+            <span class="n">parsed_line</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;([^:^;\s]+):[\s]*([-]?[0-9]+[.]?[0-9]*);&quot;</span><span class="p">,</span> <span class="n">line</span><span class="p">)</span>
+            <span class="n">step</span> <span class="o">=</span> <span class="n">parsed_line</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="k">assert</span> <span class="n">step</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;step&quot;</span><span class="p">,</span> \
+                <span class="s2">&quot;Log file (</span><span class="si">%s</span><span class="s2">) seems to be missing step information, or step is not listed first&quot;</span> <span class="o">%</span> <span class="n">file</span>
+            <span class="k">for</span> <span class="n">metric</span> <span class="ow">in</span> <span class="n">parsed_line</span><span class="p">[</span><span class="mi">1</span><span class="p">:]:</span>
+                <span class="n">experiment</span><span class="o">.</span><span class="n">history</span><span class="p">[</span><span class="n">mode</span><span class="p">][</span><span class="n">metric</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="nb">int</span><span class="p">(</span><span class="n">step</span><span class="p">[</span><span class="mi">1</span><span class="p">]):</span> <span class="nb">float</span><span class="p">(</span><span class="n">metric</span><span class="p">[</span><span class="mi">1</span><span class="p">])})</span>
+    <span class="k">return</span> <span class="n">experiment</span>
+
+
+<div class="viewcode-block" id="parse_log_files"><a class="viewcode-back" href="../../../../fastestimator.summary.logs.html#fastestimator.summary.logs.log_parse.parse_log_files">[docs]</a><span class="k">def</span> <span class="nf">parse_log_files</span><span class="p">(</span><span class="n">file_paths</span><span class="p">,</span>
+                    <span class="n">log_extension</span><span class="o">=</span><span class="s1">&#39;.txt&#39;</span><span class="p">,</span>
+                    <span class="n">smooth_factor</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+                    <span class="n">save</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                    <span class="n">save_path</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                    <span class="n">ignore_metrics</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                    <span class="n">share_legend</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                    <span class="n">pretty_names</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;A function which will iterate through the given log file paths, parse them to extract metrics, remove any</span>
+<span class="sd">    metrics which are blacklisted, and then pass the necessary information on the graphing function</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        file_paths: A list of paths to various log files</span>
+<span class="sd">        log_extension: The extension of the log files</span>
+<span class="sd">        smooth_factor: A non-negative float representing the magnitude of gaussian smoothing to apply (zero for none)</span>
+<span class="sd">        save: Whether to save (true) or display (false) the generated graph</span>
+<span class="sd">        save_path: Where to save the image if save is true. Defaults to dir_path if not provided</span>
+<span class="sd">        ignore_metrics: Any metrics within the log files which will not be visualized</span>
+<span class="sd">        share_legend: Whether to have one legend across all graphs (true) or one legend per graph (false)</span>
+<span class="sd">        pretty_names: Whether to modify the metric names in graph titles (true) or leave them alone (false)</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        None</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">file_paths</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="nb">len</span><span class="p">(</span><span class="n">file_paths</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">AssertionError</span><span class="p">(</span><span class="s2">&quot;must provide at least one log file&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">save</span> <span class="ow">and</span> <span class="n">save_path</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">save_path</span> <span class="o">=</span> <span class="n">file_paths</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+    <span class="n">experiments</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">file_path</span> <span class="ow">in</span> <span class="n">file_paths</span><span class="p">:</span>
+        <span class="n">experiments</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">_parse_file</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span> <span class="n">log_extension</span><span class="p">))</span>
+    <span class="n">visualize_logs</span><span class="p">(</span><span class="n">experiments</span><span class="p">,</span>
+                   <span class="n">save_path</span><span class="o">=</span><span class="n">save_path</span><span class="p">,</span>
+                   <span class="n">smooth_factor</span><span class="o">=</span><span class="n">smooth_factor</span><span class="p">,</span>
+                   <span class="n">share_legend</span><span class="o">=</span><span class="n">share_legend</span><span class="p">,</span>
+                   <span class="n">pretty_names</span><span class="o">=</span><span class="n">pretty_names</span><span class="p">,</span>
+                   <span class="n">ignore_metrics</span><span class="o">=</span><span class="n">ignore_metrics</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="parse_log_dir"><a class="viewcode-back" href="../../../../fastestimator.summary.logs.html#fastestimator.summary.logs.log_parse.parse_log_dir">[docs]</a><span class="k">def</span> <span class="nf">parse_log_dir</span><span class="p">(</span><span class="n">dir_path</span><span class="p">,</span>
+                  <span class="n">log_extension</span><span class="o">=</span><span class="s1">&#39;.txt&#39;</span><span class="p">,</span>
+                  <span class="n">recursive_search</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                  <span class="n">smooth_factor</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+                  <span class="n">save</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                  <span class="n">save_path</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                  <span class="n">ignore_metrics</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                  <span class="n">share_legend</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                  <span class="n">pretty_names</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;A function which will gather all log files within a given folder and pass them along for visualization</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        dir_path: The path to a directory containing log files</span>
+<span class="sd">        log_extension: The extension of the log files</span>
+<span class="sd">        recursive_search: Whether to recursively search sub-directories for log files</span>
+<span class="sd">        smooth_factor: A non-negative float representing the magnitude of gaussian smoothing to apply(zero for none)</span>
+<span class="sd">        save: Whether to save (true) or display (false) the generated graph</span>
+<span class="sd">        save_path: Where to save the image if save is true. Defaults to dir_path if not provided</span>
+<span class="sd">        ignore_metrics: Any metrics within the log files which will not be visualized</span>
+<span class="sd">        share_legend: Whether to have one legend across all graphs (true) or one legend per graph (false)</span>
+<span class="sd">        pretty_names: Whether to modify the metric names in graph titles (true) or leave them alone (false)</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        None</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">loader</span> <span class="o">=</span> <span class="n">PathLoader</span><span class="p">(</span><span class="n">dir_path</span><span class="p">,</span> <span class="n">input_extension</span><span class="o">=</span><span class="n">log_extension</span><span class="p">,</span> <span class="n">recursive_search</span><span class="o">=</span><span class="n">recursive_search</span><span class="p">)</span>
+    <span class="n">file_paths</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">loader</span><span class="o">.</span><span class="n">path_pairs</span><span class="p">]</span>
+
+    <span class="n">parse_log_files</span><span class="p">(</span><span class="n">file_paths</span><span class="p">,</span>
+                    <span class="n">log_extension</span><span class="p">,</span>
+                    <span class="n">smooth_factor</span><span class="p">,</span>
+                    <span class="n">save</span><span class="p">,</span>
+                    <span class="n">save_path</span><span class="p">,</span>
+                    <span class="n">ignore_metrics</span><span class="p">,</span>
+                    <span class="n">share_legend</span><span class="p">,</span>
+                    <span class="n">pretty_names</span><span class="p">)</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, GEHC DataScience
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

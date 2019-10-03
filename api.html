@@ -1,0 +1,608 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>API &mdash; FastEstimator 0.0.1 documentation</title>
+  
+
+  
+  
+    <link rel="shortcut icon" href="_static/favicon.ico"/>
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="architecture" href="fastestimator.architecture.html" />
+    <link rel="prev" title="Boston housing price predictor (regression) using DNN" href="apphub/tabular/dnn_housing/dnn_housing.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> FastEstimator
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0a0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="learn.html">Learn</a></li>
+<li class="toctree-l1"><a class="reference internal" href="apphub.html">Example</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">API</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="fastestimator.architecture.html">architecture</a></li>
+<li class="toctree-l2"><a class="reference internal" href="fastestimator.cli.html">cli</a></li>
+<li class="toctree-l2"><a class="reference internal" href="fastestimator.dataset.html">dataset</a></li>
+<li class="toctree-l2"><a class="reference internal" href="fastestimator.interpretation.html">interpretation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="fastestimator.layers.html">layers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="fastestimator.op.html">op</a></li>
+<li class="toctree-l2"><a class="reference internal" href="fastestimator.schedule.html">schedule</a></li>
+<li class="toctree-l2"><a class="reference internal" href="fastestimator.summary.html">summary</a></li>
+<li class="toctree-l2"><a class="reference internal" href="fastestimator.trace.html">trace</a></li>
+<li class="toctree-l2"><a class="reference internal" href="fastestimator.util.html">util</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-fastestimator.estimator">estimator</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-fastestimator.network">network</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-fastestimator.pipeline">pipeline</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">FastEstimator</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>API</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/api.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  
+<style>
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast,
+.nboutput.nblast {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast + .nbinput {
+    margin-top: -19px;
+}
+
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+
+/* Fix math alignment, see https://github.com/rtfd/sphinx_rtd_theme/pull/686 */
+.math {
+    text-align: unset;
+}
+</style>
+<div class="section" id="module-fastestimator">
+<span id="api"></span><h1>API<a class="headerlink" href="#module-fastestimator" title="Permalink to this headline">¶</a></h1>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="fastestimator.architecture.html">architecture</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="fastestimator.architecture.html#module-fastestimator.architecture.cyclegan">cyclegan</a></li>
+<li class="toctree-l2"><a class="reference internal" href="fastestimator.architecture.html#module-fastestimator.architecture.lenet">lenet</a></li>
+<li class="toctree-l2"><a class="reference internal" href="fastestimator.architecture.html#module-fastestimator.architecture.retinanet">retinanet</a></li>
+<li class="toctree-l2"><a class="reference internal" href="fastestimator.architecture.html#module-fastestimator.architecture.stnet">stnet</a></li>
+<li class="toctree-l2"><a class="reference internal" href="fastestimator.architecture.html#module-fastestimator.architecture.unet">unet</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="fastestimator.cli.html">cli</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="fastestimator.cli.html#module-fastestimator.cli.cli_util">cli_util</a></li>
+<li class="toctree-l2"><a class="reference internal" href="fastestimator.cli.html#module-fastestimator.cli.predict">predict</a></li>
+<li class="toctree-l2"><a class="reference internal" href="fastestimator.cli.html#module-fastestimator.cli.train">train</a></li>
+<li class="toctree-l2"><a class="reference internal" href="fastestimator.cli.html#module-fastestimator.cli.visualize">visualize</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="fastestimator.dataset.html">dataset</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="fastestimator.dataset.html#module-fastestimator.dataset.cub200">cub200</a></li>
+<li class="toctree-l2"><a class="reference internal" href="fastestimator.dataset.html#module-fastestimator.dataset.horse2zebra">horse2zebra</a></li>
+<li class="toctree-l2"><a class="reference internal" href="fastestimator.dataset.html#module-fastestimator.dataset.mendeley">mendeley</a></li>
+<li class="toctree-l2"><a class="reference internal" href="fastestimator.dataset.html#module-fastestimator.dataset.mnist">mnist</a></li>
+<li class="toctree-l2"><a class="reference internal" href="fastestimator.dataset.html#module-fastestimator.dataset.montgomery">montgomery</a></li>
+<li class="toctree-l2"><a class="reference internal" href="fastestimator.dataset.html#module-fastestimator.dataset.mscoco">mscoco</a></li>
+<li class="toctree-l2"><a class="reference internal" href="fastestimator.dataset.html#module-fastestimator.dataset.svhn">svhn</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="fastestimator.interpretation.html">interpretation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="fastestimator.interpretation.util.html">util</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="fastestimator.interpretation.util.html#module-fastestimator.interpretation.util.color_util">color_util</a></li>
+<li class="toctree-l3"><a class="reference internal" href="fastestimator.interpretation.util.html#module-fastestimator.interpretation.util.fft_util">fft_util</a></li>
+<li class="toctree-l3"><a class="reference internal" href="fastestimator.interpretation.util.html#module-fastestimator.interpretation.util.saliency_util">saliency_util</a></li>
+<li class="toctree-l3"><a class="reference internal" href="fastestimator.interpretation.util.html#module-fastestimator.interpretation.util.umap_util">umap_util</a></li>
+<li class="toctree-l3"><a class="reference internal" href="fastestimator.interpretation.util.html#module-fastestimator.interpretation.util.vis_util">vis_util</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="fastestimator.interpretation.html#module-fastestimator.interpretation.caricature">caricature</a></li>
+<li class="toctree-l2"><a class="reference internal" href="fastestimator.interpretation.html#module-fastestimator.interpretation.saliency">saliency</a></li>
+<li class="toctree-l2"><a class="reference internal" href="fastestimator.interpretation.html#module-fastestimator.interpretation.umaps">umaps</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="fastestimator.layers.html">layers</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="fastestimator.layers.html#module-fastestimator.layers.instance_norm">instance_norm</a></li>
+<li class="toctree-l2"><a class="reference internal" href="fastestimator.layers.html#module-fastestimator.layers.reflection_padding_2d">reflection_padding_2d</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="fastestimator.op.html">op</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="fastestimator.op.numpyop.html">numpyop</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="fastestimator.op.numpyop.html#module-fastestimator.op.numpyop.image_reader">image_reader</a></li>
+<li class="toctree-l3"><a class="reference internal" href="fastestimator.op.numpyop.html#module-fastestimator.op.numpyop.mat_reader">mat_reader</a></li>
+<li class="toctree-l3"><a class="reference internal" href="fastestimator.op.numpyop.html#module-fastestimator.op.numpyop.minmax">minmax</a></li>
+<li class="toctree-l3"><a class="reference internal" href="fastestimator.op.numpyop.html#module-fastestimator.op.numpyop.reshape">reshape</a></li>
+<li class="toctree-l3"><a class="reference internal" href="fastestimator.op.numpyop.html#module-fastestimator.op.numpyop.resize">resize</a></li>
+<li class="toctree-l3"><a class="reference internal" href="fastestimator.op.numpyop.html#module-fastestimator.op.numpyop.scale">scale</a></li>
+<li class="toctree-l3"><a class="reference internal" href="fastestimator.op.numpyop.html#module-fastestimator.op.numpyop.z_score">z_score</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="fastestimator.op.tensorop.html">tensorop</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="fastestimator.op.tensorop.augmentation.html">augmentation</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="fastestimator.op.tensorop.augmentation.html#module-fastestimator.op.tensorop.augmentation.adversarial_sample">adversarial_sample</a></li>
+<li class="toctree-l4"><a class="reference internal" href="fastestimator.op.tensorop.augmentation.html#module-fastestimator.op.tensorop.augmentation.augmentation_2d">augmentation_2d</a></li>
+<li class="toctree-l4"><a class="reference internal" href="fastestimator.op.tensorop.augmentation.html#module-fastestimator.op.tensorop.augmentation.mixup_batch">mixup_batch</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="fastestimator.op.tensorop.filter.html">filter</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="fastestimator.op.tensorop.filter.html#id1">filter</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="fastestimator.op.tensorop.loss.html">loss</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="fastestimator.op.tensorop.loss.html#module-fastestimator.op.tensorop.loss.binary_crossentropy">binary_crossentropy</a></li>
+<li class="toctree-l4"><a class="reference internal" href="fastestimator.op.tensorop.loss.html#id1">loss</a></li>
+<li class="toctree-l4"><a class="reference internal" href="fastestimator.op.tensorop.loss.html#module-fastestimator.op.tensorop.loss.mean_squared_error">mean_squared_error</a></li>
+<li class="toctree-l4"><a class="reference internal" href="fastestimator.op.tensorop.loss.html#module-fastestimator.op.tensorop.loss.mixup_loss">mixup_loss</a></li>
+<li class="toctree-l4"><a class="reference internal" href="fastestimator.op.tensorop.loss.html#module-fastestimator.op.tensorop.loss.sparse_categorical_crossentropy">sparse_categorical_crossentropy</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="fastestimator.op.tensorop.model.html">model</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="fastestimator.op.tensorop.model.html#id1">model</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="fastestimator.op.tensorop.html#module-fastestimator.op.tensorop.average">average</a></li>
+<li class="toctree-l3"><a class="reference internal" href="fastestimator.op.tensorop.html#module-fastestimator.op.tensorop.binarize">binarize</a></li>
+<li class="toctree-l3"><a class="reference internal" href="fastestimator.op.tensorop.html#module-fastestimator.op.tensorop.minmax">minmax</a></li>
+<li class="toctree-l3"><a class="reference internal" href="fastestimator.op.tensorop.html#module-fastestimator.op.tensorop.onehot">onehot</a></li>
+<li class="toctree-l3"><a class="reference internal" href="fastestimator.op.tensorop.html#module-fastestimator.op.tensorop.reshape">reshape</a></li>
+<li class="toctree-l3"><a class="reference internal" href="fastestimator.op.tensorop.html#module-fastestimator.op.tensorop.resize">resize</a></li>
+<li class="toctree-l3"><a class="reference internal" href="fastestimator.op.tensorop.html#module-fastestimator.op.tensorop.scale">scale</a></li>
+<li class="toctree-l3"><a class="reference internal" href="fastestimator.op.tensorop.html#module-fastestimator.op.tensorop.z_score">z_score</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="fastestimator.op.html#id1">op</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="fastestimator.schedule.html">schedule</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="fastestimator.schedule.html#module-fastestimator.schedule.epoch_scheduler">epoch_scheduler</a></li>
+<li class="toctree-l2"><a class="reference internal" href="fastestimator.schedule.html#module-fastestimator.schedule.lr_scheduler">lr_scheduler</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="fastestimator.summary.html">summary</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="fastestimator.summary.logs.html">logs</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="fastestimator.summary.logs.html#module-fastestimator.summary.logs.log_parse">log_parse</a></li>
+<li class="toctree-l3"><a class="reference internal" href="fastestimator.summary.logs.html#module-fastestimator.summary.logs.log_plot">log_plot</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="fastestimator.summary.html#id1">summary</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="fastestimator.trace.html">trace</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="fastestimator.trace.adapt.html">adapt</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="fastestimator.trace.adapt.html#module-fastestimator.trace.adapt.early_stopping">early_stopping</a></li>
+<li class="toctree-l3"><a class="reference internal" href="fastestimator.trace.adapt.html#module-fastestimator.trace.adapt.lr_controller">lr_controller</a></li>
+<li class="toctree-l3"><a class="reference internal" href="fastestimator.trace.adapt.html#module-fastestimator.trace.adapt.terminate_on_nan">terminate_on_nan</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="fastestimator.trace.io.html">io</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="fastestimator.trace.io.html#module-fastestimator.trace.io.caricature">caricature</a></li>
+<li class="toctree-l3"><a class="reference internal" href="fastestimator.trace.io.html#module-fastestimator.trace.io.csv_logger">csv_logger</a></li>
+<li class="toctree-l3"><a class="reference internal" href="fastestimator.trace.io.html#module-fastestimator.trace.io.logger">logger</a></li>
+<li class="toctree-l3"><a class="reference internal" href="fastestimator.trace.io.html#module-fastestimator.trace.io.model_saver">model_saver</a></li>
+<li class="toctree-l3"><a class="reference internal" href="fastestimator.trace.io.html#module-fastestimator.trace.io.saliency">saliency</a></li>
+<li class="toctree-l3"><a class="reference internal" href="fastestimator.trace.io.html#module-fastestimator.trace.io.tensorboard">tensorboard</a></li>
+<li class="toctree-l3"><a class="reference internal" href="fastestimator.trace.io.html#module-fastestimator.trace.io.umap">umap</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="fastestimator.trace.metric.html">metric</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="fastestimator.trace.metric.html#module-fastestimator.trace.metric.accuracy">accuracy</a></li>
+<li class="toctree-l3"><a class="reference internal" href="fastestimator.trace.metric.html#module-fastestimator.trace.metric.confusion_matrix">confusion_matrix</a></li>
+<li class="toctree-l3"><a class="reference internal" href="fastestimator.trace.metric.html#module-fastestimator.trace.metric.dice">dice</a></li>
+<li class="toctree-l3"><a class="reference internal" href="fastestimator.trace.metric.html#module-fastestimator.trace.metric.f1_score">f1_score</a></li>
+<li class="toctree-l3"><a class="reference internal" href="fastestimator.trace.metric.html#module-fastestimator.trace.metric.precision">precision</a></li>
+<li class="toctree-l3"><a class="reference internal" href="fastestimator.trace.metric.html#module-fastestimator.trace.metric.recall">recall</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="fastestimator.trace.html#id1">trace</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="fastestimator.util.html">util</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="fastestimator.util.html#module-fastestimator.util.loader">loader</a></li>
+<li class="toctree-l2"><a class="reference internal" href="fastestimator.util.html#module-fastestimator.util.record_writer">record_writer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="fastestimator.util.html#module-fastestimator.util.tfrecord">tfrecord</a></li>
+<li class="toctree-l2"><a class="reference internal" href="fastestimator.util.html#id1">util</a></li>
+<li class="toctree-l2"><a class="reference internal" href="fastestimator.util.html#module-fastestimator.util.util_test">util_test</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<hr class="docutils" />
+<div class="section" id="module-fastestimator.estimator">
+<span id="estimator"></span><h2>estimator<a class="headerlink" href="#module-fastestimator.estimator" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="fastestimator.estimator.Estimator">
+<em class="property">class </em><code class="sig-prename descclassname">fastestimator.estimator.</code><code class="sig-name descname">Estimator</code><span class="sig-paren">(</span><em class="sig-param">pipeline</em>, <em class="sig-param">network</em>, <em class="sig-param">epochs</em>, <em class="sig-param">steps_per_epoch=None</em>, <em class="sig-param">validation_steps=None</em>, <em class="sig-param">traces=None</em>, <em class="sig-param">log_steps=100</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/estimator.html#Estimator"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.estimator.Estimator" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Estimator is the highest level class that user can directly use for traning a model (estimator.fit). It wraps
+up <cite>Pipeline</cite>, <cite>Network</cite>, <cite>Trace</cite> objects together and defines the whole optimization process with other training
+necessary information.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>pipeline</strong> (<em>obj</em>) – Pipeline object that defines the data processing workflow. It should be an instance of
+<cite>fastestimator.pipepline.pipeline.Pipeline</cite></p></li>
+<li><p><strong>network</strong> (<em>obj</em>) – Network object that defines models and their external connection. It should be an instance of
+<cite>fastestimator.network.network.Network</cite></p></li>
+<li><p><strong>epochs</strong> (<em>int</em>) – Number of epooch to run.</p></li>
+<li><p><strong>steps_per_epoch</strong> (<em>[</em><em>type</em><em>]</em><em>, </em><em>optional</em>) – Number of steps to run for each training session. If None, this will be the
+training example number divided by batch_size. (round down). Defaults to None.</p></li>
+<li><p><strong>validation_steps</strong> (<em>[</em><em>type</em><em>]</em><em>, </em><em>optional</em>) – Number of steps to run for each evaluation session, If None, this will be
+the evaluation example number divided by batch_size (round down). Defaults to None.</p></li>
+<li><p><strong>traces</strong> (<em>list</em><em>, </em><em>optional</em>) – List of the traces objects to run during training. If None, there will be only basic
+traces.</p></li>
+<li><p><strong>log_steps</strong> (<em>int</em><em>, </em><em>optional</em>) – Interval steps of logging. Defaults to 100.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="method">
+<dt id="fastestimator.estimator.Estimator.fit">
+<code class="sig-name descname">fit</code><span class="sig-paren">(</span><em class="sig-param">summary=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/estimator.html#Estimator.fit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.estimator.Estimator.fit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function to perform training on the estimator.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>summary</strong> (<em>str</em><em>, </em><em>optional</em>) – Experiment name to return. If None, it won’t return anything. Defaults to None.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Experiment object.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<hr class="docutils" />
+<div class="section" id="module-fastestimator.network">
+<span id="network"></span><h2>network<a class="headerlink" href="#module-fastestimator.network" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="fastestimator.network.Network">
+<em class="property">class </em><code class="sig-prename descclassname">fastestimator.network.</code><code class="sig-name descname">Network</code><span class="sig-paren">(</span><em class="sig-param">ops</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/network.html#Network"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.network.Network" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>A class representing network operations for FastEstimator model training.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>ops</strong> – Specifies the series of operations for training model</p>
+</dd>
+</dl>
+<dl class="method">
+<dt id="fastestimator.network.Network.prepare">
+<code class="sig-name descname">prepare</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/network.html#Network.prepare"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.network.Network.prepare" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function constructs the model specified in model definition and create replica of model
+for distributed training across multiple devices if there are multiple GPU available.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="fastestimator.network.Network.load_epoch">
+<code class="sig-name descname">load_epoch</code><span class="sig-paren">(</span><em class="sig-param">epoch</em>, <em class="sig-param">mode</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/network.html#Network.load_epoch"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.network.Network.load_epoch" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function loads stable computational graph for the current epoch.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>epoch</strong> – Training epoch number</p></li>
+<li><p><strong>mode</strong> – ‘train’ or ‘eval’</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>list of the models, epoch losses</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="fastestimator.network.Network.run_step">
+<code class="sig-name descname">run_step</code><span class="sig-paren">(</span><em class="sig-param">batch</em>, <em class="sig-param">ops</em>, <em class="sig-param">model_list</em>, <em class="sig-param">epoch_losses</em>, <em class="sig-param">state</em>, <em class="sig-param">warm_up=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/network.html#Network.run_step"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.network.Network.run_step" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function that calculates the loss and gradients for curent step in training. It also constructs the higher
+level computational graph between the models before the training.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>batch</strong> – dictionary that contains batch data and predictions from last epoch</p></li>
+<li><p><strong>ops</strong> – Model operation dictionary that contains ‘Inputs’,’Mode’, and ‘Outputs’</p></li>
+<li><p><strong>model_list</strong> – List of the models</p></li>
+<li><p><strong>epoch_losses</strong> – List of epoch losses.</p></li>
+<li><p><strong>state</strong> – run time dictionary that contains following keys ‘mode’ and ‘batch size’</p></li>
+<li><p><strong>warm_up</strong> (<em>bool</em><em>, </em><em>optional</em>) – Specifies if it’s in warm up phase or not. Defaults to False.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>dictionary containing the predictions of current epoch</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="fastestimator.network.build">
+<code class="sig-prename descclassname">fastestimator.network.</code><code class="sig-name descname">build</code><span class="sig-paren">(</span><em class="sig-param">model_def</em>, <em class="sig-param">model_name</em>, <em class="sig-param">optimizer</em>, <em class="sig-param">loss_name</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/network.html#build"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.network.build" title="Permalink to this definition">¶</a></dt>
+<dd><p>build keras model instance in FastEstimator</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>model_def</strong> (<em>function</em>) – function definition of tf.keras model</p></li>
+<li><p><strong>model_name</strong> (<em>str</em><em>, </em><em>list</em><em>, </em><em>tuple</em>) – model name(s)</p></li>
+<li><p><strong>optimizer</strong> (<em>str</em><em>, </em><em>optimizer</em><em>, </em><em>list</em><em>, </em><em>tuple</em>) – optimizer(s)</p></li>
+<li><p><strong>loss_name</strong> (<em>str</em><em>, </em><em>list</em><em>, </em><em>tuple</em>) – loss name(s)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>model(s) compiled by FastEstimator</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>model</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<hr class="docutils" />
+<div class="section" id="module-fastestimator.pipeline">
+<span id="pipeline"></span><h2>pipeline<a class="headerlink" href="#module-fastestimator.pipeline" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="fastestimator.pipeline.Pipeline">
+<em class="property">class </em><code class="sig-prename descclassname">fastestimator.pipeline.</code><code class="sig-name descname">Pipeline</code><span class="sig-paren">(</span><em class="sig-param">data</em>, <em class="sig-param">batch_size</em>, <em class="sig-param">ops=None</em>, <em class="sig-param">read_feature=None</em>, <em class="sig-param">padded_batch=False</em>, <em class="sig-param">expand_dims=False</em>, <em class="sig-param">max_shuffle_buffer_mb=3000</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/pipeline.html#Pipeline"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.pipeline.Pipeline" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Class representing the data pipeline required for fastestimator</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> – The input for the pipeline. This can be either a dictionary, a tfrecord path or a RecordWriter.</p></li>
+<li><p><strong>batch_size</strong> – Integer representing the batch size per device for training the model.</p></li>
+<li><p><strong>ops</strong> – List of fastestimator operations that needs to be applied on the data in the pipeline.</p></li>
+<li><p><strong>read_feature</strong> – List of features that should be used in training. If None all the features available are used.</p></li>
+<li><p><strong>padded_batch</strong> – Boolean representing if a batch should be padded or not.</p></li>
+<li><p><strong>expand_dims</strong> – Boolean representing if a batch dimensions should be expanded or not.</p></li>
+<li><p><strong>max_shuffle_buffer_mb</strong> – Maximum buffer size to shuffle data. This is used only if the number of examples are
+more than that could fit in the buffer. Defaults to 3000.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="method">
+<dt id="fastestimator.pipeline.Pipeline.prepare">
+<code class="sig-name descname">prepare</code><span class="sig-paren">(</span><em class="sig-param">distribute_strategy=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/pipeline.html#Pipeline.prepare"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.pipeline.Pipeline.prepare" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create the dataset used by the pipeline by running all the ops specified.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>distribute_strategy</strong> – Type of strategy to be used for multi GPU setup.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="fastestimator.pipeline.Pipeline.get_global_batch_size">
+<code class="sig-name descname">get_global_batch_size</code><span class="sig-paren">(</span><em class="sig-param">epoch</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/pipeline.html#Pipeline.get_global_batch_size"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.pipeline.Pipeline.get_global_batch_size" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets the global batch size for the current epoch. Batch size changes if there is a schedule which specifies a
+change for the given epoch.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>epoch</strong> – The epoch number in the training</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="fastestimator.pipeline.Pipeline.show_results">
+<code class="sig-name descname">show_results</code><span class="sig-paren">(</span><em class="sig-param">mode='train'</em>, <em class="sig-param">num_steps=1</em>, <em class="sig-param">current_epoch=0</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/pipeline.html#Pipeline.show_results"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.pipeline.Pipeline.show_results" title="Permalink to this definition">¶</a></dt>
+<dd><p>Processes the pipeline ops on the given input data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>mode</strong> – can be either “train” or “eval”.</p></li>
+<li><p><strong>num_steps</strong> – the number of steps for the pipeline to run.</p></li>
+<li><p><strong>current_epoch</strong> – to specify the current epoch in the training. This is useful if you are using a schedule to
+change the pipeline during training.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="fastestimator.pipeline.Pipeline.benchmark">
+<code class="sig-name descname">benchmark</code><span class="sig-paren">(</span><em class="sig-param">mode='train'</em>, <em class="sig-param">num_steps=1000</em>, <em class="sig-param">log_interval=100</em>, <em class="sig-param">current_epoch=0</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/pipeline.html#Pipeline.benchmark"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.pipeline.Pipeline.benchmark" title="Permalink to this definition">¶</a></dt>
+<dd><p>Runs benchmarks for the current epoch.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>mode</strong> – can be either “train” or “eval”.</p></li>
+<li><p><strong>num_steps</strong> – the number of steps to show the results for.</p></li>
+<li><p><strong>log_interval</strong> – </p></li>
+<li><p><strong>current_epoch</strong> – to specify the current epoch in the training.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="fastestimator.architecture.html" class="btn btn-neutral float-right" title="architecture" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="apphub/tabular/dnn_housing/dnn_housing.html" class="btn btn-neutral float-left" title="Boston housing price predictor (regression) using DNN" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, GEHC DataScience
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

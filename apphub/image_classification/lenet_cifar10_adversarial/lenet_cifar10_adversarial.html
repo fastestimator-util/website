@@ -1,0 +1,1090 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>CIFAR10 Image Classification Using LeNet &mdash; FastEstimator 0.0.1 documentation</title>
+  
+
+  
+  
+    <link rel="shortcut icon" href="../../../_static/favicon.ico"/>
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../../_static/language_data.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="CIFAR10 Image Classification Using LeNet" href="../lenet_cifar10_mixup/lenet_cifar10_mixup.html" />
+    <link rel="prev" title="Cifar10 Image Classification Using DenseNet-121" href="../densenet121_cifar10/densenet121_cifar10.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> FastEstimator
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0a0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../../install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../learn.html">Learn</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../../apphub.html">Example</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../NLP.html">NLP</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../../image_classification.html">Image Classification</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../densenet121_cifar10/densenet121_cifar10.html">Cifar10 Image Classification Using DenseNet-121</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">CIFAR10 Image Classification Using LeNet</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#Step-1:-Prepare-training-and-evaluation-dataset,-create-FastEstimator-Pipeline">Step 1: Prepare training and evaluation dataset, create FastEstimator <code class="docutils literal notranslate"><span class="pre">Pipeline</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Step-2:-Prepare-model,-create-FastEstimator-Network">Step 2: Prepare model, create FastEstimator <code class="docutils literal notranslate"><span class="pre">Network</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Step-3:-Configure-training,-create-Estimator">Step 3: Configure training, create <code class="docutils literal notranslate"><span class="pre">Estimator</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Step-4:-Training">Step 4: Training</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Step-5:-Inferencing-and-Adversarial-Attacks">Step 5: Inferencing and Adversarial Attacks</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../lenet_cifar10_mixup/lenet_cifar10_mixup.html">CIFAR10 Image Classification Using LeNet</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../lenet_mnist/lenet_mnist.html">MNIST Image Classification Using LeNet</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../lenet_mnist/lenet_mnist.html#Step-3:-Configure-training,-create-Estimator">Step 3: Configure training, create <code class="docutils literal notranslate"><span class="pre">Estimator</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../lenet_mnist/lenet_mnist.html#Start-Training">Start Training</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../image_generation.html">Image Generation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../image_segmentation.html">Image Segmentation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../image_styletransfer.html">Image Style Transfer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../tabular.html">Tabular</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api.html">API</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">FastEstimator</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../../apphub.html">Example</a> &raquo;</li>
+        
+          <li><a href="../../image_classification.html">Image Classification</a> &raquo;</li>
+        
+      <li>CIFAR10 Image Classification Using LeNet</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../../_sources/apphub/image_classification/lenet_cifar10_adversarial/lenet_cifar10_adversarial.ipynb.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  
+<style>
+/* CSS for nbsphinx extension */
+
+/* remove conflicting styling from Sphinx themes */
+div.nbinput,
+div.nbinput div.prompt,
+div.nbinput div.input_area,
+div.nbinput div[class*=highlight],
+div.nbinput div[class*=highlight] pre,
+div.nboutput,
+div.nbinput div.prompt,
+div.nbinput div.output_area,
+div.nboutput div[class*=highlight],
+div.nboutput div[class*=highlight] pre {
+    background: none;
+    border: none;
+    padding: 0 0;
+    margin: 0;
+    box-shadow: none;
+}
+
+/* avoid gaps between output lines */
+div.nboutput div[class*=highlight] pre {
+    line-height: normal;
+}
+
+/* input/output containers */
+div.nbinput,
+div.nboutput {
+    display: -webkit-flex;
+    display: flex;
+    align-items: flex-start;
+    margin: 0;
+    width: 100%;
+}
+@media (max-width: 540px) {
+    div.nbinput,
+    div.nboutput {
+        flex-direction: column;
+    }
+}
+
+/* input container */
+div.nbinput {
+    padding-top: 5px;
+}
+
+/* last container */
+div.nblast {
+    padding-bottom: 5px;
+}
+
+/* input prompt */
+div.nbinput div.prompt pre {
+    color: #307FC1;
+}
+
+/* output prompt */
+div.nboutput div.prompt pre {
+    color: #BF5B3D;
+}
+
+/* all prompts */
+div.nbinput div.prompt,
+div.nboutput div.prompt {
+    min-width: 5ex;
+    padding-top: 0.4em;
+    padding-right: 0.4em;
+    text-align: right;
+    flex: 0;
+}
+@media (max-width: 540px) {
+    div.nbinput div.prompt,
+    div.nboutput div.prompt {
+        text-align: left;
+        padding: 0.4em;
+    }
+    div.nboutput div.prompt.empty {
+        padding: 0;
+    }
+}
+
+/* disable scrollbars on prompts */
+div.nbinput div.prompt pre,
+div.nboutput div.prompt pre {
+    overflow: hidden;
+}
+
+/* input/output area */
+div.nbinput div.input_area,
+div.nboutput div.output_area {
+    padding: 0.4em;
+    -webkit-flex: 1;
+    flex: 1;
+    overflow: auto;
+}
+@media (max-width: 540px) {
+    div.nbinput div.input_area,
+    div.nboutput div.output_area {
+        width: 100%;
+    }
+}
+
+/* input area */
+div.nbinput div.input_area {
+    border: 1px solid #e0e0e0;
+    border-radius: 2px;
+    background: #f5f5f5;
+}
+
+/* override MathJax center alignment in output cells */
+div.nboutput div[class*=MathJax] {
+    text-align: left !important;
+}
+
+/* override sphinx.ext.imgmath center alignment in output cells */
+div.nboutput div.math p {
+    text-align: left;
+}
+
+/* standard error */
+div.nboutput div.output_area.stderr {
+    background: #fdd;
+}
+
+/* ANSI colors */
+.ansi-black-fg { color: #3E424D; }
+.ansi-black-bg { background-color: #3E424D; }
+.ansi-black-intense-fg { color: #282C36; }
+.ansi-black-intense-bg { background-color: #282C36; }
+.ansi-red-fg { color: #E75C58; }
+.ansi-red-bg { background-color: #E75C58; }
+.ansi-red-intense-fg { color: #B22B31; }
+.ansi-red-intense-bg { background-color: #B22B31; }
+.ansi-green-fg { color: #00A250; }
+.ansi-green-bg { background-color: #00A250; }
+.ansi-green-intense-fg { color: #007427; }
+.ansi-green-intense-bg { background-color: #007427; }
+.ansi-yellow-fg { color: #DDB62B; }
+.ansi-yellow-bg { background-color: #DDB62B; }
+.ansi-yellow-intense-fg { color: #B27D12; }
+.ansi-yellow-intense-bg { background-color: #B27D12; }
+.ansi-blue-fg { color: #208FFB; }
+.ansi-blue-bg { background-color: #208FFB; }
+.ansi-blue-intense-fg { color: #0065CA; }
+.ansi-blue-intense-bg { background-color: #0065CA; }
+.ansi-magenta-fg { color: #D160C4; }
+.ansi-magenta-bg { background-color: #D160C4; }
+.ansi-magenta-intense-fg { color: #A03196; }
+.ansi-magenta-intense-bg { background-color: #A03196; }
+.ansi-cyan-fg { color: #60C6C8; }
+.ansi-cyan-bg { background-color: #60C6C8; }
+.ansi-cyan-intense-fg { color: #258F8F; }
+.ansi-cyan-intense-bg { background-color: #258F8F; }
+.ansi-white-fg { color: #C5C1B4; }
+.ansi-white-bg { background-color: #C5C1B4; }
+.ansi-white-intense-fg { color: #A1A6B2; }
+.ansi-white-intense-bg { background-color: #A1A6B2; }
+
+.ansi-default-inverse-fg { color: #FFFFFF; }
+.ansi-default-inverse-bg { background-color: #000000; }
+
+.ansi-bold { font-weight: bold; }
+.ansi-underline { text-decoration: underline; }
+
+/* Some additional styling taken form the Jupyter notebook CSS */
+div.rendered_html table {
+  border: none;
+  border-collapse: collapse;
+  border-spacing: 0;
+  color: black;
+  font-size: 12px;
+  table-layout: fixed;
+}
+div.rendered_html thead {
+  border-bottom: 1px solid black;
+  vertical-align: bottom;
+}
+div.rendered_html tr,
+div.rendered_html th,
+div.rendered_html td {
+  text-align: right;
+  vertical-align: middle;
+  padding: 0.5em 0.5em;
+  line-height: normal;
+  white-space: normal;
+  max-width: none;
+  border: none;
+}
+div.rendered_html th {
+  font-weight: bold;
+}
+div.rendered_html tbody tr:nth-child(odd) {
+  background: #f5f5f5;
+}
+div.rendered_html tbody tr:hover {
+  background: rgba(66, 165, 245, 0.2);
+}
+
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast,
+.nboutput.nblast {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast + .nbinput {
+    margin-top: -19px;
+}
+
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+
+/* Fix math alignment, see https://github.com/rtfd/sphinx_rtd_theme/pull/686 */
+.math {
+    text-align: unset;
+}
+</style>
+<div class="section" id="CIFAR10-Image-Classification-Using-LeNet">
+<h1>CIFAR10 Image Classification Using LeNet<a class="headerlink" href="#CIFAR10-Image-Classification-Using-LeNet" title="Permalink to this headline">¶</a></h1>
+<p>In this tutorial, we are going to walk through the logic in <code class="docutils literal notranslate"><span class="pre">lenet_cifar10_adversarial.py</span></code> shown below and provide step-by-step instructions.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="o">!</span>cat lenet_cifar10_adversarial.py
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+# Copyright 2019 The FastEstimator Authors. All Rights Reserved.
+#
+# Licensed under the Apache License, Version 2.0 (the &#34;License&#34;);
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an &#34;AS IS&#34; BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+# ==============================================================================
+import tempfile
+
+import tensorflow as tf
+
+from fastestimator import Estimator, Network, Pipeline
+from fastestimator.architecture import LeNet
+from fastestimator.estimator.trace import Accuracy, ConfusionMatrix, ModelSaver
+from fastestimator.network.loss import SparseCategoricalCrossentropy
+from fastestimator.network.model import FEModel, ModelOp
+from fastestimator.pipeline.augmentation import AdversarialSample, Average
+from fastestimator.pipeline.processing import Minmax
+from fastestimator.util.schedule import Scheduler
+
+
+def get_estimator(epochs=10, batch_size=32, epsilon=0.01, warmup=0, model_dir=tempfile.mkdtemp()):
+    (x_train, y_train), (x_eval, y_eval) = tf.keras.datasets.cifar10.load_data()
+    data = {&#34;train&#34;: {&#34;x&#34;: x_train, &#34;y&#34;: y_train}, &#34;eval&#34;: {&#34;x&#34;: x_eval, &#34;y&#34;: y_eval}}
+    num_classes = 10
+
+    pipeline = Pipeline(batch_size=batch_size, data=data, ops=Minmax(inputs=&#34;x&#34;, outputs=&#34;x&#34;))
+
+    model = FEModel(model_def=lambda: LeNet(input_shape=x_train.shape[1:], classes=num_classes),
+                    model_name=&#34;LeNet&#34;,
+                    optimizer=&#34;adam&#34;)
+
+    adv_img = {warmup: AdversarialSample(inputs=(&#34;loss&#34;, &#34;x&#34;), outputs=&#34;x_adverse&#34;, epsilon=epsilon, mode=&#34;train&#34;)}
+    adv_eval = {warmup: ModelOp(inputs=&#34;x_adverse&#34;, model=model, outputs=&#34;y_pred_adverse&#34;, mode=&#34;train&#34;)}
+    adv_loss = {
+        warmup: SparseCategoricalCrossentropy(y_true=&#34;y&#34;, y_pred=&#34;y_pred_adverse&#34;, outputs=&#34;adverse_loss&#34;, mode=&#34;train&#34;)
+    }
+    adv_avg = {warmup: Average(inputs=(&#34;loss&#34;, &#34;adverse_loss&#34;), outputs=&#34;loss&#34;, mode=&#34;train&#34;)}
+
+    network = Network(ops=[
+        ModelOp(inputs=&#34;x&#34;, model=model, outputs=&#34;y_pred&#34;, track_input=True),
+        SparseCategoricalCrossentropy(y_true=&#34;y&#34;, y_pred=&#34;y_pred&#34;, outputs=&#34;loss&#34;),
+        Scheduler(adv_img),
+        Scheduler(adv_eval),
+        Scheduler(adv_loss),
+        Scheduler(adv_avg)
+    ])
+
+    traces = [
+        Accuracy(true_key=&#34;y&#34;, pred_key=&#34;y_pred&#34;),
+        ConfusionMatrix(true_key=&#34;y&#34;, pred_key=&#34;y_pred&#34;, num_classes=num_classes),
+        ModelSaver(model_name=&#34;LeNet&#34;, save_dir=model_dir, save_freq=2)
+    ]
+
+    estimator = Estimator(network=network, pipeline=pipeline, epochs=epochs, traces=traces)
+
+    return estimator
+
+
+if __name__ == &#34;__main__&#34;:
+    est = get_estimator()
+    est.fit()
+</pre></div></div>
+</div>
+<div class="section" id="Step-1:-Prepare-training-and-evaluation-dataset,-create-FastEstimator-Pipeline">
+<h2>Step 1: Prepare training and evaluation dataset, create FastEstimator <code class="docutils literal notranslate"><span class="pre">Pipeline</span></code><a class="headerlink" href="#Step-1:-Prepare-training-and-evaluation-dataset,-create-FastEstimator-Pipeline" title="Permalink to this headline">¶</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">Pipeline</span></code> can take both data in memory and data in disk. In this example, we are going to use data in memory by loading data with <code class="docutils literal notranslate"><span class="pre">tf.keras.datasets.cifar10</span></code></p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
+
+<span class="p">(</span><span class="n">x_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">),</span> <span class="p">(</span><span class="n">x_eval</span><span class="p">,</span> <span class="n">y_eval</span><span class="p">)</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">cifar10</span><span class="o">.</span><span class="n">load_data</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;train image shape is </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">x_train</span><span class="o">.</span><span class="n">shape</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;train label shape is </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">y_train</span><span class="o">.</span><span class="n">shape</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;eval image shape is </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">x_eval</span><span class="o">.</span><span class="n">shape</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;eval label shape is </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">y_eval</span><span class="o">.</span><span class="n">shape</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+train image shape is (50000, 32, 32, 3)
+train label shape is (50000, 1)
+eval image shape is (10000, 32, 32, 3)
+eval label shape is (10000, 1)
+</pre></div></div>
+</div>
+<p>For in-memory data in <code class="docutils literal notranslate"><span class="pre">Pipeline</span></code>, the data format should be a nested dictionary like: {“mode1”: {“feature1”: numpy_array, “feature2”: numpy_array, …}, …}. Each <code class="docutils literal notranslate"><span class="pre">mode</span></code> can be either <code class="docutils literal notranslate"><span class="pre">train</span></code> or <code class="docutils literal notranslate"><span class="pre">eval</span></code>, in our case, we have both <code class="docutils literal notranslate"><span class="pre">train</span></code> and <code class="docutils literal notranslate"><span class="pre">eval</span></code>. <code class="docutils literal notranslate"><span class="pre">feature</span></code> is the feature name, in our case, we have <code class="docutils literal notranslate"><span class="pre">x</span></code> and <code class="docutils literal notranslate"><span class="pre">y</span></code>.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;train&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;x&quot;</span><span class="p">:</span> <span class="n">x_train</span><span class="p">,</span> <span class="s2">&quot;y&quot;</span><span class="p">:</span> <span class="n">y_train</span><span class="p">},</span> <span class="s2">&quot;eval&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;x&quot;</span><span class="p">:</span> <span class="n">x_eval</span><span class="p">,</span> <span class="s2">&quot;y&quot;</span><span class="p">:</span> <span class="n">y_eval</span><span class="p">}}</span>
+</pre></div>
+</div>
+</div>
+<p>Now we are ready to define <code class="docutils literal notranslate"><span class="pre">Pipeline</span></code>, we want to apply a <code class="docutils literal notranslate"><span class="pre">Minmax</span></code> online preprocessing to the image feature <code class="docutils literal notranslate"><span class="pre">x</span></code> for both training and evaluation:</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">fastestimator</span> <span class="k">as</span> <span class="nn">fe</span>
+<span class="kn">from</span> <span class="nn">fastestimator.pipeline.processing</span> <span class="k">import</span> <span class="n">Minmax</span>
+
+<span class="n">pipeline</span> <span class="o">=</span> <span class="n">fe</span><span class="o">.</span><span class="n">Pipeline</span><span class="p">(</span><span class="n">batch_size</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">ops</span><span class="o">=</span><span class="n">Minmax</span><span class="p">(</span><span class="n">inputs</span><span class="o">=</span><span class="s2">&quot;x&quot;</span><span class="p">,</span> <span class="n">outputs</span><span class="o">=</span><span class="s2">&quot;x&quot;</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="Step-2:-Prepare-model,-create-FastEstimator-Network">
+<h2>Step 2: Prepare model, create FastEstimator <code class="docutils literal notranslate"><span class="pre">Network</span></code><a class="headerlink" href="#Step-2:-Prepare-model,-create-FastEstimator-Network" title="Permalink to this headline">¶</a></h2>
+<p>First, we have to define the network architecture in <code class="docutils literal notranslate"><span class="pre">tf.keras.Model</span></code> or <code class="docutils literal notranslate"><span class="pre">tf.keras.Sequential</span></code>, for a popular architecture like LeNet, FastEstimator has it implemented already in <a class="reference external" href="https://github.com/fastestimator/fastestimator/blob/master/fastestimator/architecture/lenet.py">fastestimator.architecture.lenet</a>. After defining the architecture, users are expected to feed the architecture definition and its associated model name, optimizer and loss name (default to be ‘loss’) to <code class="docutils literal notranslate"><span class="pre">FEModel</span></code>.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">fastestimator.architecture</span> <span class="k">import</span> <span class="n">LeNet</span>
+<span class="kn">from</span> <span class="nn">fastestimator.network.model</span> <span class="k">import</span> <span class="n">FEModel</span>
+
+<span class="n">model</span> <span class="o">=</span> <span class="n">FEModel</span><span class="p">(</span><span class="n">model_def</span><span class="o">=</span><span class="k">lambda</span><span class="p">:</span> <span class="n">LeNet</span><span class="p">(</span><span class="n">input_shape</span><span class="o">=</span><span class="n">x_train</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">:],</span> <span class="n">classes</span><span class="o">=</span><span class="mi">10</span><span class="p">),</span> <span class="n">model_name</span><span class="o">=</span><span class="s2">&quot;LeNet&quot;</span><span class="p">,</span> <span class="n">optimizer</span><span class="o">=</span><span class="s2">&quot;adam&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>We can now define a simple <code class="docutils literal notranslate"><span class="pre">Network</span></code>: given with a batch data with key <code class="docutils literal notranslate"><span class="pre">x</span></code> and <code class="docutils literal notranslate"><span class="pre">y</span></code>, we have to work our way to <code class="docutils literal notranslate"><span class="pre">loss</span></code> with series of operators. <code class="docutils literal notranslate"><span class="pre">ModelOp</span></code> is an operator that contains a model.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">fastestimator.network.model</span> <span class="k">import</span> <span class="n">ModelOp</span>
+<span class="kn">from</span> <span class="nn">fastestimator.network.loss</span> <span class="k">import</span> <span class="n">SparseCategoricalCrossentropy</span>
+
+<span class="n">simple_network</span> <span class="o">=</span> <span class="n">fe</span><span class="o">.</span><span class="n">Network</span><span class="p">(</span><span class="n">ops</span><span class="o">=</span><span class="p">[</span><span class="n">ModelOp</span><span class="p">(</span><span class="n">inputs</span><span class="o">=</span><span class="s2">&quot;x&quot;</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">,</span> <span class="n">outputs</span><span class="o">=</span><span class="s2">&quot;y_pred&quot;</span><span class="p">),</span>
+                                 <span class="n">SparseCategoricalCrossentropy</span><span class="p">(</span><span class="n">y_pred</span><span class="o">=</span><span class="s2">&quot;y_pred&quot;</span><span class="p">,</span> <span class="n">y_true</span><span class="o">=</span><span class="s2">&quot;y&quot;</span><span class="p">,</span> <span class="n">outputs</span><span class="o">=</span><span class="s2">&quot;loss&quot;</span><span class="p">)])</span>
+</pre></div>
+</div>
+</div>
+<p>One advantage of <code class="docutils literal notranslate"><span class="pre">FastEstimator</span></code>, though, is that it is easy to construct much more complicated graphs. In this example, we want to conduct training by generating adversarially perturbed images and training against them, since this has been shown to make neural networks more robust against future <a class="reference external" href="https://arxiv.org/abs/1412.6572">attacks</a>. To achieve this in <code class="docutils literal notranslate"><span class="pre">FastEstimator</span></code>, we start by running the input through the model op and computing loss as before, but this time the <code class="docutils literal notranslate"><span class="pre">ModelOp</span></code> has
+the track_input flag set to <code class="docutils literal notranslate"><span class="pre">True</span></code> in order to indicate that gradients should be computed with respect to the input image in addition to the model weights. The network then generates an adversarial sample image using the <code class="docutils literal notranslate"><span class="pre">AdversarialSample</span></code> augmentation module, and runs that image through the model. Finally, the model is trained using an average of the raw loss and adversarial loss. Note that the adversarial part of the process needs only be done during training (not evaluation) and so the
+<code class="docutils literal notranslate"><span class="pre">mode</span></code> of these final four operations is set to ‘train’.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">fastestimator.pipeline.augmentation</span> <span class="k">import</span> <span class="n">AdversarialSample</span><span class="p">,</span> <span class="n">Average</span>
+
+<span class="n">pipeline2</span> <span class="o">=</span> <span class="n">fe</span><span class="o">.</span><span class="n">Pipeline</span><span class="p">(</span><span class="n">batch_size</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">ops</span><span class="o">=</span><span class="n">Minmax</span><span class="p">(</span><span class="n">inputs</span><span class="o">=</span><span class="s2">&quot;x&quot;</span><span class="p">,</span> <span class="n">outputs</span><span class="o">=</span><span class="s2">&quot;x&quot;</span><span class="p">))</span>
+<span class="n">model2</span> <span class="o">=</span> <span class="n">FEModel</span><span class="p">(</span><span class="n">model_def</span><span class="o">=</span><span class="k">lambda</span><span class="p">:</span> <span class="n">LeNet</span><span class="p">(</span><span class="n">input_shape</span><span class="o">=</span><span class="n">x_train</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">:],</span> <span class="n">classes</span><span class="o">=</span><span class="mi">10</span><span class="p">),</span> <span class="n">model_name</span><span class="o">=</span><span class="s2">&quot;LeNet&quot;</span><span class="p">,</span> <span class="n">optimizer</span><span class="o">=</span><span class="s2">&quot;adam&quot;</span><span class="p">)</span>
+
+<span class="n">adversarial_network</span> <span class="o">=</span> <span class="n">fe</span><span class="o">.</span><span class="n">Network</span><span class="p">(</span><span class="n">ops</span><span class="o">=</span><span class="p">[</span>
+        <span class="n">ModelOp</span><span class="p">(</span><span class="n">inputs</span><span class="o">=</span><span class="s2">&quot;x&quot;</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">model2</span><span class="p">,</span> <span class="n">outputs</span><span class="o">=</span><span class="s2">&quot;y_pred&quot;</span><span class="p">,</span> <span class="n">track_input</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
+        <span class="n">SparseCategoricalCrossentropy</span><span class="p">(</span><span class="n">y_true</span><span class="o">=</span><span class="s2">&quot;y&quot;</span><span class="p">,</span> <span class="n">y_pred</span><span class="o">=</span><span class="s2">&quot;y_pred&quot;</span><span class="p">,</span> <span class="n">outputs</span><span class="o">=</span><span class="s2">&quot;loss&quot;</span><span class="p">),</span>
+        <span class="n">AdversarialSample</span><span class="p">(</span><span class="n">inputs</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;loss&quot;</span><span class="p">,</span> <span class="s2">&quot;x&quot;</span><span class="p">),</span> <span class="n">outputs</span><span class="o">=</span><span class="s2">&quot;x_adverse&quot;</span><span class="p">,</span> <span class="n">epsilon</span><span class="o">=</span><span class="mf">0.01</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;train&quot;</span><span class="p">),</span>
+        <span class="n">ModelOp</span><span class="p">(</span><span class="n">inputs</span><span class="o">=</span><span class="s2">&quot;x_adverse&quot;</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">model2</span><span class="p">,</span> <span class="n">outputs</span><span class="o">=</span><span class="s2">&quot;y_pred_adverse&quot;</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;train&quot;</span><span class="p">),</span>
+        <span class="n">SparseCategoricalCrossentropy</span><span class="p">(</span><span class="n">y_true</span><span class="o">=</span><span class="s2">&quot;y&quot;</span><span class="p">,</span> <span class="n">y_pred</span><span class="o">=</span><span class="s2">&quot;y_pred_adverse&quot;</span><span class="p">,</span> <span class="n">outputs</span><span class="o">=</span><span class="s2">&quot;adverse_loss&quot;</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;train&quot;</span><span class="p">),</span>
+        <span class="n">Average</span><span class="p">(</span><span class="n">inputs</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;loss&quot;</span><span class="p">,</span> <span class="s2">&quot;adverse_loss&quot;</span><span class="p">),</span> <span class="n">outputs</span><span class="o">=</span><span class="s2">&quot;loss&quot;</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;train&quot;</span><span class="p">)</span>
+    <span class="p">])</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="Step-3:-Configure-training,-create-Estimator">
+<h2>Step 3: Configure training, create <code class="docutils literal notranslate"><span class="pre">Estimator</span></code><a class="headerlink" href="#Step-3:-Configure-training,-create-Estimator" title="Permalink to this headline">¶</a></h2>
+<p>During the training loop, we want to: 1) measure accuracy for data data 2) save the model with lowest valdiation loss. The <code class="docutils literal notranslate"><span class="pre">Trace</span></code> class is used for anything related to the training loop, and we will need to import the <code class="docutils literal notranslate"><span class="pre">Accuracy</span></code> and <code class="docutils literal notranslate"><span class="pre">ModelSaver</span></code> traces.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">tempfile</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">from</span> <span class="nn">fastestimator.estimator.trace</span> <span class="k">import</span> <span class="n">Accuracy</span><span class="p">,</span> <span class="n">ModelSaver</span>
+
+<span class="n">base_dir</span> <span class="o">=</span> <span class="n">tempfile</span><span class="o">.</span><span class="n">mkdtemp</span><span class="p">()</span>
+<span class="n">simple_save_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">base_dir</span><span class="p">,</span> <span class="s1">&#39;simple&#39;</span><span class="p">)</span>
+<span class="n">adversarial_save_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">base_dir</span><span class="p">,</span> <span class="s1">&#39;adverse&#39;</span><span class="p">)</span>
+
+<span class="n">simple_traces</span> <span class="o">=</span> <span class="p">[</span><span class="n">Accuracy</span><span class="p">(</span><span class="n">true_key</span><span class="o">=</span><span class="s2">&quot;y&quot;</span><span class="p">,</span> <span class="n">pred_key</span><span class="o">=</span><span class="s2">&quot;y_pred&quot;</span><span class="p">,</span> <span class="n">output_name</span><span class="o">=</span><span class="s1">&#39;acc&#39;</span><span class="p">),</span>
+                 <span class="n">ModelSaver</span><span class="p">(</span><span class="n">model_name</span><span class="o">=</span><span class="s2">&quot;LeNet&quot;</span><span class="p">,</span> <span class="n">save_dir</span><span class="o">=</span><span class="n">simple_save_dir</span><span class="p">,</span> <span class="n">save_best</span><span class="o">=</span><span class="kc">True</span><span class="p">)]</span>
+
+<span class="n">adversarial_traces</span> <span class="o">=</span> <span class="p">[</span><span class="n">Accuracy</span><span class="p">(</span><span class="n">true_key</span><span class="o">=</span><span class="s2">&quot;y&quot;</span><span class="p">,</span> <span class="n">pred_key</span><span class="o">=</span><span class="s2">&quot;y_pred&quot;</span><span class="p">,</span> <span class="n">output_name</span><span class="o">=</span><span class="s1">&#39;acc&#39;</span><span class="p">),</span>
+                      <span class="n">ModelSaver</span><span class="p">(</span><span class="n">model_name</span><span class="o">=</span><span class="s2">&quot;LeNet&quot;</span><span class="p">,</span> <span class="n">save_dir</span><span class="o">=</span><span class="n">adversarial_save_dir</span><span class="p">,</span> <span class="n">save_best</span><span class="o">=</span><span class="kc">True</span><span class="p">)]</span>
+</pre></div>
+</div>
+</div>
+<p>Now we can define the <code class="docutils literal notranslate"><span class="pre">Estimator</span></code> and specify the training configuation. We will create estimators for both the simple and adversarial networks in order to compare their performances.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">simple_estimator</span> <span class="o">=</span> <span class="n">fe</span><span class="o">.</span><span class="n">Estimator</span><span class="p">(</span><span class="n">network</span><span class="o">=</span><span class="n">simple_network</span><span class="p">,</span> <span class="n">pipeline</span><span class="o">=</span><span class="n">pipeline</span><span class="p">,</span> <span class="n">epochs</span><span class="o">=</span><span class="mi">15</span><span class="p">,</span> <span class="n">traces</span><span class="o">=</span><span class="n">simple_traces</span><span class="p">,</span> <span class="n">log_steps</span><span class="o">=</span><span class="mi">500</span><span class="p">)</span>
+<span class="n">adversarial_estimator</span> <span class="o">=</span> <span class="n">fe</span><span class="o">.</span><span class="n">Estimator</span><span class="p">(</span><span class="n">network</span><span class="o">=</span><span class="n">adversarial_network</span><span class="p">,</span> <span class="n">pipeline</span><span class="o">=</span><span class="n">pipeline2</span><span class="p">,</span> <span class="n">epochs</span><span class="o">=</span><span class="mi">15</span><span class="p">,</span> <span class="n">traces</span><span class="o">=</span><span class="n">adversarial_traces</span><span class="p">,</span> <span class="n">log_steps</span><span class="o">=</span><span class="mi">500</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="Step-4:-Training">
+<h2>Step 4: Training<a class="headerlink" href="#Step-4:-Training" title="Permalink to this headline">¶</a></h2>
+<p>We’ll start by training the regular network (takes about 7.7 minutes on a 2015 MacBookPro CPU - 2.5 GHz Intel Core i7). The network should attain an evaluation accuracy around 71%</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">simple_estimator</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+    ______           __  ______     __  _                 __
+   / ____/___ ______/ /_/ ____/____/ /_(_)___ ___  ____ _/ /_____  _____
+  / /_  / __ `/ ___/ __/ __/ / ___/ __/ / __ `__ \/ __ `/ __/ __ \/ ___/
+ / __/ / /_/ (__  ) /_/ /___(__  ) /_/ / / / / / / /_/ / /_/ /_/ / /
+/_/    \__,_/____/\__/_____/____/\__/_/_/ /_/ /_/\__,_/\__/\____/_/
+
+
+FastEstimator-Start: step: 0; LeNet_lr: 0.001;
+FastEstimator-Train: step: 0; loss: 2.3124847;
+FastEstimator-Train: step: 500; loss: 1.3299917; examples/sec: 1847.16;
+FastEstimator-ModelSaver: Saving model to /var/folders/sg/pck0wj4d27j2rwzg88n70trj5ysk83/T/tmpx1ir1w6d/simple/LeNet_best_loss.h5
+FastEstimator-Eval: step: 1000; epoch: 0; loss: 1.2784046; min_loss: 1.2784046; since_best_loss: 0; acc: 0.5462;
+FastEstimator-Train: step: 1000; loss: 1.1689698; examples/sec: 1830.1;
+FastEstimator-Train: step: 1500; loss: 0.9811843; examples/sec: 1720.13;
+FastEstimator-ModelSaver: Saving model to /var/folders/sg/pck0wj4d27j2rwzg88n70trj5ysk83/T/tmpx1ir1w6d/simple/LeNet_best_loss.h5
+FastEstimator-Eval: step: 2000; epoch: 1; loss: 1.1417769; min_loss: 1.1417769; since_best_loss: 0; acc: 0.5909;
+FastEstimator-Train: step: 2000; loss: 1.0079716; examples/sec: 1698.99;
+FastEstimator-Train: step: 2500; loss: 1.0714738; examples/sec: 1750.12;
+FastEstimator-ModelSaver: Saving model to /var/folders/sg/pck0wj4d27j2rwzg88n70trj5ysk83/T/tmpx1ir1w6d/simple/LeNet_best_loss.h5
+FastEstimator-Eval: step: 3000; epoch: 2; loss: 0.99537677; min_loss: 0.99537677; since_best_loss: 0; acc: 0.6561;
+FastEstimator-Train: step: 3000; loss: 0.7733082; examples/sec: 1729.18;
+FastEstimator-Train: step: 3500; loss: 1.190587; examples/sec: 1673.79;
+FastEstimator-ModelSaver: Saving model to /var/folders/sg/pck0wj4d27j2rwzg88n70trj5ysk83/T/tmpx1ir1w6d/simple/LeNet_best_loss.h5
+FastEstimator-Eval: step: 4000; epoch: 3; loss: 0.91380256; min_loss: 0.91380256; since_best_loss: 0; acc: 0.685;
+FastEstimator-Train: step: 4000; loss: 0.9403234; examples/sec: 1684.85;
+FastEstimator-Train: step: 4500; loss: 0.62326366; examples/sec: 1706.17;
+FastEstimator-ModelSaver: Saving model to /var/folders/sg/pck0wj4d27j2rwzg88n70trj5ysk83/T/tmpx1ir1w6d/simple/LeNet_best_loss.h5
+FastEstimator-Eval: step: 5000; epoch: 4; loss: 0.86766493; min_loss: 0.86766493; since_best_loss: 0; acc: 0.7058;
+FastEstimator-Train: step: 5000; loss: 0.8455601; examples/sec: 1755.24;
+FastEstimator-Train: step: 5500; loss: 0.7533429; examples/sec: 1833.41;
+FastEstimator-ModelSaver: Saving model to /var/folders/sg/pck0wj4d27j2rwzg88n70trj5ysk83/T/tmpx1ir1w6d/simple/LeNet_best_loss.h5
+FastEstimator-Eval: step: 6000; epoch: 5; loss: 0.8614862; min_loss: 0.8614862; since_best_loss: 0; acc: 0.7006;
+FastEstimator-Train: step: 6000; loss: 0.7912862; examples/sec: 1781.59;
+FastEstimator-Train: step: 6500; loss: 0.6456658; examples/sec: 1811.63;
+FastEstimator-ModelSaver: Saving model to /var/folders/sg/pck0wj4d27j2rwzg88n70trj5ysk83/T/tmpx1ir1w6d/simple/LeNet_best_loss.h5
+FastEstimator-Eval: step: 7000; epoch: 6; loss: 0.832827; min_loss: 0.832827; since_best_loss: 0; acc: 0.7111;
+FastEstimator-Train: step: 7000; loss: 0.7045235; examples/sec: 1815.67;
+FastEstimator-Train: step: 7500; loss: 0.60166085; examples/sec: 1803.84;
+FastEstimator-ModelSaver: Saving model to /var/folders/sg/pck0wj4d27j2rwzg88n70trj5ysk83/T/tmpx1ir1w6d/simple/LeNet_best_loss.h5
+FastEstimator-Eval: step: 8000; epoch: 7; loss: 0.8273749; min_loss: 0.8273749; since_best_loss: 0; acc: 0.7172;
+FastEstimator-Train: step: 8000; loss: 0.5240156; examples/sec: 1816.28;
+FastEstimator-Train: step: 8500; loss: 0.81156284; examples/sec: 1831.59;
+FastEstimator-Eval: step: 9000; epoch: 8; loss: 0.86673; min_loss: 0.8273749; since_best_loss: 1; acc: 0.7035;
+FastEstimator-Train: step: 9000; loss: 0.47957656; examples/sec: 1774.34;
+FastEstimator-Train: step: 9500; loss: 0.669713; examples/sec: 1849.93;
+FastEstimator-Eval: step: 10000; epoch: 9; loss: 0.8331488; min_loss: 0.8273749; since_best_loss: 2; acc: 0.7181;
+FastEstimator-Train: step: 10000; loss: 0.55527467; examples/sec: 1816.82;
+FastEstimator-Train: step: 10500; loss: 0.3248125; examples/sec: 1795.44;
+FastEstimator-Eval: step: 11000; epoch: 10; loss: 0.84305024; min_loss: 0.8273749; since_best_loss: 3; acc: 0.7199;
+FastEstimator-Train: step: 11000; loss: 0.33691522; examples/sec: 1811.95;
+FastEstimator-Train: step: 11500; loss: 0.62278694; examples/sec: 1789.95;
+FastEstimator-Eval: step: 12000; epoch: 11; loss: 0.8414785; min_loss: 0.8273749; since_best_loss: 4; acc: 0.7229;
+FastEstimator-Train: step: 12000; loss: 0.34771734; examples/sec: 1720.8;
+FastEstimator-Train: step: 12500; loss: 0.55076885; examples/sec: 1802.76;
+FastEstimator-Eval: step: 13000; epoch: 12; loss: 0.8628442; min_loss: 0.8273749; since_best_loss: 5; acc: 0.7194;
+FastEstimator-Train: step: 13000; loss: 0.6016948; examples/sec: 1805.11;
+FastEstimator-Train: step: 13500; loss: 0.6511101; examples/sec: 1803.58;
+FastEstimator-Eval: step: 14000; epoch: 13; loss: 0.9127908; min_loss: 0.8273749; since_best_loss: 6; acc: 0.7141;
+FastEstimator-Train: step: 14000; loss: 0.3643375; examples/sec: 1809.73;
+FastEstimator-Train: step: 14500; loss: 0.3428252; examples/sec: 1804.71;
+FastEstimator-Eval: step: 15000; epoch: 14; loss: 0.93758285; min_loss: 0.8273749; since_best_loss: 7; acc: 0.7161;
+FastEstimator-Finish: step: 15000; total_time: 443.17 sec; LeNet_lr: 0.001;
+</pre></div></div>
+</div>
+<p>Next we train the network adversarially. This process takes longer (about 17 minutes) since it requires two different gradient computations and model evaluations per forward step rather than one. It is also slower to converge since the training process is more difficult, though should also get to around 71% evaluation accuracy.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">adversarial_estimator</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+    ______           __  ______     __  _                 __
+   / ____/___ ______/ /_/ ____/____/ /_(_)___ ___  ____ _/ /_____  _____
+  / /_  / __ `/ ___/ __/ __/ / ___/ __/ / __ `__ \/ __ `/ __/ __ \/ ___/
+ / __/ / /_/ (__  ) /_/ /___(__  ) /_/ / / / / / / /_/ / /_/ /_/ / /
+/_/    \__,_/____/\__/_____/____/\__/_/_/ /_/ /_/\__,_/\__/\____/_/
+
+
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+WARNING: Logging before flag parsing goes to stderr.
+W0918 14:54:45.685590 4569220544 deprecation.py:323] From /Users/212582149/Development/Healthcare/FE/fastestimator/venv/lib/python3.6/site-packages/tensorflow/python/ops/math_grad.py:1220: add_dispatch_support.&lt;locals&gt;.wrapper (from tensorflow.python.ops.array_ops) is deprecated and will be removed in a future version.
+Instructions for updating:
+Use tf.where in 2.0, which has the same broadcast rule as np.where
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+FastEstimator-Start: step: 0; LeNet_lr: 0.001;
+FastEstimator-Train: step: 0; loss: 2.3298383;
+FastEstimator-Train: step: 500; loss: 1.8669537; examples/sec: 738.15;
+FastEstimator-ModelSaver: Saving model to /var/folders/sg/pck0wj4d27j2rwzg88n70trj5ysk83/T/tmpx1ir1w6d/adverse/LeNet_best_loss.h5
+FastEstimator-Eval: step: 1000; epoch: 0; loss: 1.4251435; min_loss: 1.4251435; since_best_loss: 0; acc: 0.482;
+FastEstimator-Train: step: 1000; loss: 1.8473295; examples/sec: 744.19;
+FastEstimator-Train: step: 1500; loss: 1.313486; examples/sec: 749.07;
+FastEstimator-ModelSaver: Saving model to /var/folders/sg/pck0wj4d27j2rwzg88n70trj5ysk83/T/tmpx1ir1w6d/adverse/LeNet_best_loss.h5
+FastEstimator-Eval: step: 2000; epoch: 1; loss: 1.2645028; min_loss: 1.2645028; since_best_loss: 0; acc: 0.5524;
+FastEstimator-Train: step: 2000; loss: 1.3079686; examples/sec: 759.75;
+FastEstimator-Train: step: 2500; loss: 1.3571646; examples/sec: 763.29;
+FastEstimator-ModelSaver: Saving model to /var/folders/sg/pck0wj4d27j2rwzg88n70trj5ysk83/T/tmpx1ir1w6d/adverse/LeNet_best_loss.h5
+FastEstimator-Eval: step: 3000; epoch: 2; loss: 1.1651436; min_loss: 1.1651436; since_best_loss: 0; acc: 0.5905;
+FastEstimator-Train: step: 3000; loss: 1.2703502; examples/sec: 754.89;
+FastEstimator-Train: step: 3500; loss: 1.4007244; examples/sec: 733.63;
+FastEstimator-ModelSaver: Saving model to /var/folders/sg/pck0wj4d27j2rwzg88n70trj5ysk83/T/tmpx1ir1w6d/adverse/LeNet_best_loss.h5
+FastEstimator-Eval: step: 4000; epoch: 3; loss: 1.1271737; min_loss: 1.1271737; since_best_loss: 0; acc: 0.6068;
+FastEstimator-Train: step: 4000; loss: 1.2630974; examples/sec: 722.0;
+FastEstimator-Train: step: 4500; loss: 1.4327785; examples/sec: 766.81;
+FastEstimator-ModelSaver: Saving model to /var/folders/sg/pck0wj4d27j2rwzg88n70trj5ysk83/T/tmpx1ir1w6d/adverse/LeNet_best_loss.h5
+FastEstimator-Eval: step: 5000; epoch: 4; loss: 1.0583675; min_loss: 1.0583675; since_best_loss: 0; acc: 0.6394;
+FastEstimator-Train: step: 5000; loss: 1.3867052; examples/sec: 756.03;
+FastEstimator-Train: step: 5500; loss: 1.0347433; examples/sec: 766.97;
+FastEstimator-ModelSaver: Saving model to /var/folders/sg/pck0wj4d27j2rwzg88n70trj5ysk83/T/tmpx1ir1w6d/adverse/LeNet_best_loss.h5
+FastEstimator-Eval: step: 6000; epoch: 5; loss: 1.0550991; min_loss: 1.0550991; since_best_loss: 0; acc: 0.6393;
+FastEstimator-Train: step: 6000; loss: 1.1663153; examples/sec: 764.42;
+FastEstimator-Train: step: 6500; loss: 1.2889416; examples/sec: 760.0;
+FastEstimator-ModelSaver: Saving model to /var/folders/sg/pck0wj4d27j2rwzg88n70trj5ysk83/T/tmpx1ir1w6d/adverse/LeNet_best_loss.h5
+FastEstimator-Eval: step: 7000; epoch: 6; loss: 1.0088823; min_loss: 1.0088823; since_best_loss: 0; acc: 0.655;
+FastEstimator-Train: step: 7000; loss: 1.0789413; examples/sec: 775.44;
+FastEstimator-Train: step: 7500; loss: 1.1665716; examples/sec: 771.88;
+FastEstimator-ModelSaver: Saving model to /var/folders/sg/pck0wj4d27j2rwzg88n70trj5ysk83/T/tmpx1ir1w6d/adverse/LeNet_best_loss.h5
+FastEstimator-Eval: step: 8000; epoch: 7; loss: 0.97106534; min_loss: 0.97106534; since_best_loss: 0; acc: 0.6716;
+FastEstimator-Train: step: 8000; loss: 1.5145048; examples/sec: 762.8;
+FastEstimator-Train: step: 8500; loss: 1.1087632; examples/sec: 772.82;
+FastEstimator-ModelSaver: Saving model to /var/folders/sg/pck0wj4d27j2rwzg88n70trj5ysk83/T/tmpx1ir1w6d/adverse/LeNet_best_loss.h5
+FastEstimator-Eval: step: 9000; epoch: 8; loss: 0.933372; min_loss: 0.933372; since_best_loss: 0; acc: 0.6769;
+FastEstimator-Train: step: 9000; loss: 1.1353444; examples/sec: 767.31;
+FastEstimator-Train: step: 9500; loss: 1.1008227; examples/sec: 774.61;
+FastEstimator-ModelSaver: Saving model to /var/folders/sg/pck0wj4d27j2rwzg88n70trj5ysk83/T/tmpx1ir1w6d/adverse/LeNet_best_loss.h5
+FastEstimator-Eval: step: 10000; epoch: 9; loss: 0.9333347; min_loss: 0.9333347; since_best_loss: 0; acc: 0.6796;
+FastEstimator-Train: step: 10000; loss: 1.350434; examples/sec: 774.85;
+FastEstimator-Train: step: 10500; loss: 1.1387297; examples/sec: 759.93;
+FastEstimator-ModelSaver: Saving model to /var/folders/sg/pck0wj4d27j2rwzg88n70trj5ysk83/T/tmpx1ir1w6d/adverse/LeNet_best_loss.h5
+FastEstimator-Eval: step: 11000; epoch: 10; loss: 0.9186048; min_loss: 0.9186048; since_best_loss: 0; acc: 0.6813;
+FastEstimator-Train: step: 11000; loss: 0.95713496; examples/sec: 738.36;
+FastEstimator-Train: step: 11500; loss: 1.1092968; examples/sec: 724.17;
+FastEstimator-ModelSaver: Saving model to /var/folders/sg/pck0wj4d27j2rwzg88n70trj5ysk83/T/tmpx1ir1w6d/adverse/LeNet_best_loss.h5
+FastEstimator-Eval: step: 12000; epoch: 11; loss: 0.90238357; min_loss: 0.90238357; since_best_loss: 0; acc: 0.6892;
+FastEstimator-Train: step: 12000; loss: 0.76909673; examples/sec: 715.33;
+FastEstimator-Train: step: 12500; loss: 1.0057844; examples/sec: 703.6;
+FastEstimator-ModelSaver: Saving model to /var/folders/sg/pck0wj4d27j2rwzg88n70trj5ysk83/T/tmpx1ir1w6d/adverse/LeNet_best_loss.h5
+FastEstimator-Eval: step: 13000; epoch: 12; loss: 0.8966954; min_loss: 0.8966954; since_best_loss: 0; acc: 0.6912;
+FastEstimator-Train: step: 13000; loss: 0.9696936; examples/sec: 675.94;
+FastEstimator-Train: step: 13500; loss: 1.2691981; examples/sec: 722.76;
+FastEstimator-ModelSaver: Saving model to /var/folders/sg/pck0wj4d27j2rwzg88n70trj5ysk83/T/tmpx1ir1w6d/adverse/LeNet_best_loss.h5
+FastEstimator-Eval: step: 14000; epoch: 13; loss: 0.87242967; min_loss: 0.87242967; since_best_loss: 0; acc: 0.6991;
+FastEstimator-Train: step: 14000; loss: 0.79431325; examples/sec: 732.54;
+FastEstimator-Train: step: 14500; loss: 1.0098355; examples/sec: 723.51;
+FastEstimator-Eval: step: 15000; epoch: 14; loss: 0.88332766; min_loss: 0.87242967; since_best_loss: 1; acc: 0.701;
+FastEstimator-Finish: step: 15000; total_time: 1026.6 sec; LeNet_lr: 0.001;
+</pre></div></div>
+</div>
+</div>
+<div class="section" id="Step-5:-Inferencing-and-Adversarial-Attacks">
+<h2>Step 5: Inferencing and Adversarial Attacks<a class="headerlink" href="#Step-5:-Inferencing-and-Adversarial-Attacks" title="Permalink to this headline">¶</a></h2>
+<p>After training, the model is saved to a temporary folder. We can load the model from file and do inferencing on a sample image.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">simple_model_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">simple_save_dir</span><span class="p">,</span> <span class="s1">&#39;LeNet_best_loss.h5&#39;</span><span class="p">)</span>
+<span class="n">simple_model</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">models</span><span class="o">.</span><span class="n">load_model</span><span class="p">(</span><span class="n">simple_model_path</span><span class="p">,</span> <span class="nb">compile</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+<span class="n">adversarial_model_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">adversarial_save_dir</span><span class="p">,</span> <span class="s1">&#39;LeNet_best_loss.h5&#39;</span><span class="p">)</span>
+<span class="n">adversarial_model</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">models</span><span class="o">.</span><span class="n">load_model</span><span class="p">(</span><span class="n">adversarial_model_path</span><span class="p">,</span> <span class="nb">compile</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>Lets consider a few images from the evaluation dataset and see how the networks respond to adversarial attacks</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[20]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">fastestimator.util.vis_util</span> <span class="k">import</span> <span class="n">show_image</span>
+<span class="kn">from</span> <span class="nn">fastestimator.pipeline.processing</span> <span class="k">import</span> <span class="n">Minmax</span>
+
+<span class="n">minmax</span> <span class="o">=</span> <span class="n">Minmax</span><span class="p">()</span>
+<span class="n">num_vis</span> <span class="o">=</span> <span class="mi">10</span>
+<span class="n">num_samples</span> <span class="o">=</span> <span class="mi">10000</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">axis</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">num_vis</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">21</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+<span class="n">sample_images</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">stack</span><span class="p">([</span><span class="n">minmax</span><span class="o">.</span><span class="n">forward</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">constant</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="p">{})</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">x_eval</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="n">num_samples</span><span class="p">]])</span>
+<span class="n">sample_labels</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">constant</span><span class="p">(</span><span class="n">y_eval</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="n">num_samples</span><span class="p">])</span>
+<span class="k">for</span> <span class="n">idx</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_vis</span><span class="p">):</span>
+    <span class="n">show_image</span><span class="p">(</span><span class="n">axis</span><span class="p">[</span><span class="n">idx</span><span class="p">],</span> <span class="n">sample_images</span><span class="p">[</span><span class="n">idx</span><span class="p">])</span>
+
+<span class="n">class_dictionary</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="mi">0</span><span class="p">:</span> <span class="s2">&quot;airplane&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">:</span> <span class="s2">&quot;car&quot;</span><span class="p">,</span> <span class="mi">2</span><span class="p">:</span> <span class="s2">&quot;bird&quot;</span><span class="p">,</span> <span class="mi">3</span><span class="p">:</span> <span class="s2">&quot;cat&quot;</span><span class="p">,</span> <span class="mi">4</span><span class="p">:</span> <span class="s2">&quot;deer&quot;</span><span class="p">,</span> <span class="mi">5</span><span class="p">:</span> <span class="s2">&quot;dog&quot;</span><span class="p">,</span> <span class="mi">6</span><span class="p">:</span> <span class="s2">&quot;frog&quot;</span><span class="p">,</span> <span class="mi">7</span><span class="p">:</span> <span class="s2">&quot;horse&quot;</span><span class="p">,</span> <span class="mi">8</span><span class="p">:</span> <span class="s2">&quot;ship&quot;</span><span class="p">,</span> <span class="mi">9</span><span class="p">:</span> <span class="s2">&quot;truck&quot;</span>
+<span class="p">}</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;True Labels:                [</span><span class="si">{}</span><span class="s2">]&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+    <span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="s1">&#39;</span><span class="si">{:&lt;8}</span><span class="s1">&#39;</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_vis</span><span class="p">)]))</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">*</span><span class="p">[</span><span class="n">class_dictionary</span><span class="p">[</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">numpy</span><span class="p">()]</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">sample_labels</span><span class="p">][</span><span class="mi">0</span><span class="p">:</span><span class="n">num_vis</span><span class="p">]))</span>
+<span class="n">simple_prediction_score</span> <span class="o">=</span> <span class="n">simple_model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">sample_images</span><span class="p">)</span>
+<span class="n">simple_accuracy</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">not_equal</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">simple_prediction_score</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span> <span class="n">tf</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">sample_labels</span><span class="p">,</span> <span class="p">(</span><span class="n">num_samples</span><span class="p">,))))</span> <span class="o">/</span> <span class="n">num_samples</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Simple Model Predicts:      [</span><span class="si">{}</span><span class="s2">] (</span><span class="si">{:2.1%}</span><span class="s2"> accuracy over </span><span class="si">{}</span><span class="s2"> images)&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+    <span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="s1">&#39;</span><span class="si">{:&lt;8}</span><span class="s1">&#39;</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_vis</span><span class="p">)]),</span> <span class="n">simple_accuracy</span><span class="p">,</span> <span class="n">num_samples</span><span class="p">)</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+    <span class="o">*</span><span class="p">[</span><span class="n">class_dictionary</span><span class="p">[</span><span class="n">x</span><span class="p">]</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">simple_prediction_score</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)][</span><span class="mi">0</span><span class="p">:</span><span class="n">num_vis</span><span class="p">]))</span>
+<span class="n">adversarial_prediction_score</span> <span class="o">=</span> <span class="n">adversarial_model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">sample_images</span><span class="p">)</span>
+<span class="n">adversarial_accuracy</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">not_equal</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">adversarial_prediction_score</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span> <span class="n">tf</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">sample_labels</span><span class="p">,</span> <span class="p">(</span><span class="n">num_samples</span><span class="p">,))))</span> <span class="o">/</span> <span class="n">num_samples</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Adversarial Model Predicts: [</span><span class="si">{}</span><span class="s2">] (</span><span class="si">{:2.1%}</span><span class="s2"> accuracy over </span><span class="si">{}</span><span class="s2"> images)&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+    <span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="s1">&#39;</span><span class="si">{:&lt;8}</span><span class="s1">&#39;</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_vis</span><span class="p">)]),</span> <span class="n">adversarial_accuracy</span><span class="p">,</span> <span class="n">num_samples</span><span class="p">)</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+    <span class="o">*</span><span class="p">[</span><span class="n">class_dictionary</span><span class="p">[</span><span class="n">x</span><span class="p">]</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">adversarial_prediction_score</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)][</span><span class="mi">0</span><span class="p">:</span><span class="n">num_vis</span><span class="p">]))</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+True Labels:                [cat     , ship    , ship    , airplane, frog    , frog    , car     , frog    , cat     , car     ]
+Simple Model Predicts:      [cat     , ship    , ship    , airplane, frog    , frog    , car     , frog    , cat     , car     ] (71.7% accuracy over 10000 images)
+Adversarial Model Predicts: [cat     , ship    , ship    , airplane, frog    , frog    , car     , deer    , cat     , car     ] (69.9% accuracy over 10000 images)
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../../_images/apphub_image_classification_lenet_cifar10_adversarial_lenet_cifar10_adversarial_31_1.png" src="../../../_images/apphub_image_classification_lenet_cifar10_adversarial_lenet_cifar10_adversarial_31_1.png" />
+</div>
+</div>
+<p>As we can see, both the simple model and the one trained against adversarial samples correctly identify a majority of the evaluation images, with a population accuracy around 70% each. Now, to create the adversarial versions of the images, we’ll simulate the adversarial augmentation object</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="k">def</span> <span class="nf">attack</span><span class="p">(</span><span class="n">images</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">ground_truth</span><span class="p">,</span> <span class="n">epsilon</span><span class="p">):</span>
+    <span class="n">loss_obj</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">losses</span><span class="o">.</span><span class="n">SparseCategoricalCrossentropy</span><span class="p">(</span><span class="n">reduction</span><span class="o">=</span><span class="s1">&#39;none&#39;</span><span class="p">)</span>
+    <span class="k">with</span> <span class="n">tf</span><span class="o">.</span><span class="n">GradientTape</span><span class="p">()</span> <span class="k">as</span> <span class="n">tape</span><span class="p">:</span>
+        <span class="n">tape</span><span class="o">.</span><span class="n">watch</span><span class="p">(</span><span class="n">images</span><span class="p">)</span>
+        <span class="n">pred</span> <span class="o">=</span> <span class="n">model</span><span class="p">(</span><span class="n">images</span><span class="p">,</span> <span class="n">training</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+        <span class="n">loss</span> <span class="o">=</span> <span class="n">loss_obj</span><span class="p">(</span><span class="n">ground_truth</span><span class="p">,</span> <span class="n">pred</span><span class="p">)</span>
+    <span class="n">gradients</span> <span class="o">=</span> <span class="n">tape</span><span class="o">.</span><span class="n">gradient</span><span class="p">(</span><span class="n">loss</span><span class="p">,</span> <span class="n">images</span><span class="p">)</span>
+    <span class="n">adverse_images</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">clip_by_value</span><span class="p">(</span><span class="n">images</span> <span class="o">+</span> <span class="n">epsilon</span> <span class="o">*</span> <span class="n">tf</span><span class="o">.</span><span class="n">sign</span><span class="p">(</span><span class="n">gradients</span><span class="p">),</span>
+                                      <span class="n">tf</span><span class="o">.</span><span class="n">reduce_min</span><span class="p">(</span><span class="n">images</span><span class="p">),</span>
+                                      <span class="n">tf</span><span class="o">.</span><span class="n">reduce_max</span><span class="p">(</span><span class="n">images</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">adverse_images</span>
+</pre></div>
+</div>
+</div>
+<p>First we will generate adversarial images by inspecting the gradients of the simple model, and see how well the two models can resist the attack</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[21]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">adverse_images</span> <span class="o">=</span> <span class="n">attack</span><span class="p">(</span><span class="n">sample_images</span><span class="p">,</span> <span class="n">simple_model</span><span class="p">,</span> <span class="n">sample_labels</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">)</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">axis</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">num_vis</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">21</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+<span class="k">for</span> <span class="n">idx</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_vis</span><span class="p">):</span>
+    <span class="n">show_image</span><span class="p">(</span><span class="n">axis</span><span class="p">[</span><span class="n">idx</span><span class="p">],</span> <span class="n">adverse_images</span><span class="p">[</span><span class="n">idx</span><span class="p">])</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;True Labels:                [</span><span class="si">{}</span><span class="s2">]&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+    <span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="s1">&#39;</span><span class="si">{:&lt;8}</span><span class="s1">&#39;</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_vis</span><span class="p">)]))</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">*</span><span class="p">[</span><span class="n">class_dictionary</span><span class="p">[</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">numpy</span><span class="p">()]</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">sample_labels</span><span class="p">][</span><span class="mi">0</span><span class="p">:</span><span class="n">num_vis</span><span class="p">]))</span>
+<span class="n">simple_prediction_score</span> <span class="o">=</span> <span class="n">simple_model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">adverse_images</span><span class="p">)</span>
+<span class="n">simple_accuracy_w</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">not_equal</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">simple_prediction_score</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span> <span class="n">tf</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">sample_labels</span><span class="p">,</span> <span class="p">(</span><span class="n">num_samples</span><span class="p">,))))</span> <span class="o">/</span> <span class="n">num_samples</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Simple Model Predicts:      [</span><span class="si">{}</span><span class="s2">] (</span><span class="si">{:2.1%}</span><span class="s2"> accuracy over </span><span class="si">{}</span><span class="s2"> images)&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+    <span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="s1">&#39;</span><span class="si">{:&lt;8}</span><span class="s1">&#39;</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_vis</span><span class="p">)]),</span> <span class="n">simple_accuracy_w</span><span class="p">,</span> <span class="n">num_samples</span><span class="p">)</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+    <span class="o">*</span><span class="p">[</span><span class="n">class_dictionary</span><span class="p">[</span><span class="n">x</span><span class="p">]</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">simple_prediction_score</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)][</span><span class="mi">0</span><span class="p">:</span><span class="n">num_vis</span><span class="p">]))</span>
+<span class="n">adversarial_prediction_score</span> <span class="o">=</span> <span class="n">adversarial_model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">adverse_images</span><span class="p">)</span>
+<span class="n">adversarial_accuracy_b</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">not_equal</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">adversarial_prediction_score</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span> <span class="n">tf</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">sample_labels</span><span class="p">,</span> <span class="p">(</span><span class="n">num_samples</span><span class="p">,))))</span> <span class="o">/</span> <span class="n">num_samples</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Adversarial Model Predicts: [</span><span class="si">{}</span><span class="s2">] (</span><span class="si">{:2.1%}</span><span class="s2"> accuracy over </span><span class="si">{}</span><span class="s2"> images)&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+    <span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="s1">&#39;</span><span class="si">{:&lt;8}</span><span class="s1">&#39;</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_vis</span><span class="p">)]),</span> <span class="n">adversarial_accuracy_b</span><span class="p">,</span> <span class="n">num_samples</span><span class="p">)</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+    <span class="o">*</span><span class="p">[</span><span class="n">class_dictionary</span><span class="p">[</span><span class="n">x</span><span class="p">]</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">adversarial_prediction_score</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)][</span><span class="mi">0</span><span class="p">:</span><span class="n">num_vis</span><span class="p">]))</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+True Labels:                [cat     , ship    , ship    , airplane, frog    , frog    , car     , frog    , cat     , car     ]
+Simple Model Predicts:      [frog    , ship    , truck   , ship    , deer    , frog    , airplane, deer    , bird    , truck   ] (31.9% accuracy over 10000 images)
+Adversarial Model Predicts: [cat     , ship    , ship    , airplane, deer    , frog    , truck   , deer    , cat     , car     ] (65.2% accuracy over 10000 images)
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../../_images/apphub_image_classification_lenet_cifar10_adversarial_lenet_cifar10_adversarial_35_1.png" src="../../../_images/apphub_image_classification_lenet_cifar10_adversarial_lenet_cifar10_adversarial_35_1.png" />
+</div>
+</div>
+<p>Even though these adversarially attacked images look basically the same as the original images, the accuracy of the traditionally trained model has dropped to 31.9%. The adversarially trained model also sees a reduction in accuracy, but only to 65.2%. It is, however, an incomplete/unfair comparison since the attack is white-box against the simple network but black-box against the adversarially trained network. Let’s now generate adversarial images using the adversarially trainined network
+instead and see how well the models resist the attack</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[22]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">adverse_images</span> <span class="o">=</span> <span class="n">attack</span><span class="p">(</span><span class="n">sample_images</span><span class="p">,</span> <span class="n">adversarial_model</span><span class="p">,</span> <span class="n">sample_labels</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">)</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">axis</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">num_vis</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">21</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+<span class="k">for</span> <span class="n">idx</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_vis</span><span class="p">):</span>
+    <span class="n">show_image</span><span class="p">(</span><span class="n">axis</span><span class="p">[</span><span class="n">idx</span><span class="p">],</span> <span class="n">adverse_images</span><span class="p">[</span><span class="n">idx</span><span class="p">])</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;True Labels:                [</span><span class="si">{}</span><span class="s2">]&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+    <span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="s1">&#39;</span><span class="si">{:&lt;8}</span><span class="s1">&#39;</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_vis</span><span class="p">)]))</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">*</span><span class="p">[</span><span class="n">class_dictionary</span><span class="p">[</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">numpy</span><span class="p">()]</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">sample_labels</span><span class="p">][</span><span class="mi">0</span><span class="p">:</span><span class="n">num_vis</span><span class="p">]))</span>
+<span class="n">simple_prediction_score</span> <span class="o">=</span> <span class="n">simple_model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">adverse_images</span><span class="p">)</span>
+<span class="n">simple_accuracy_b</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">not_equal</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">simple_prediction_score</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span> <span class="n">tf</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">sample_labels</span><span class="p">,</span> <span class="p">(</span><span class="n">num_samples</span><span class="p">,))))</span> <span class="o">/</span> <span class="n">num_samples</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Simple Model Predicts:      [</span><span class="si">{}</span><span class="s2">] (</span><span class="si">{:2.1%}</span><span class="s2"> accuracy over </span><span class="si">{}</span><span class="s2"> images)&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+    <span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="s1">&#39;</span><span class="si">{:&lt;8}</span><span class="s1">&#39;</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_vis</span><span class="p">)]),</span> <span class="n">simple_accuracy_b</span><span class="p">,</span> <span class="n">num_samples</span><span class="p">)</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+    <span class="o">*</span><span class="p">[</span><span class="n">class_dictionary</span><span class="p">[</span><span class="n">x</span><span class="p">]</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">simple_prediction_score</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)][</span><span class="mi">0</span><span class="p">:</span><span class="n">num_vis</span><span class="p">]))</span>
+<span class="n">adversarial_prediction_score</span> <span class="o">=</span> <span class="n">adversarial_model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">adverse_images</span><span class="p">)</span>
+<span class="n">adversarial_accuracy_w</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">not_equal</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">adversarial_prediction_score</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span> <span class="n">tf</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">sample_labels</span><span class="p">,</span> <span class="p">(</span><span class="n">num_samples</span><span class="p">,))))</span> <span class="o">/</span> <span class="n">num_samples</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Adversarial Model Predicts: [</span><span class="si">{}</span><span class="s2">] (</span><span class="si">{:2.1%}</span><span class="s2"> accuracy over </span><span class="si">{}</span><span class="s2"> images)&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+    <span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="s1">&#39;</span><span class="si">{:&lt;8}</span><span class="s1">&#39;</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_vis</span><span class="p">)]),</span> <span class="n">adversarial_accuracy_w</span><span class="p">,</span> <span class="n">num_samples</span><span class="p">)</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+    <span class="o">*</span><span class="p">[</span><span class="n">class_dictionary</span><span class="p">[</span><span class="n">x</span><span class="p">]</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">adversarial_prediction_score</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)][</span><span class="mi">0</span><span class="p">:</span><span class="n">num_vis</span><span class="p">]))</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+True Labels:                [cat     , ship    , ship    , airplane, frog    , frog    , car     , frog    , cat     , car     ]
+Simple Model Predicts:      [cat     , ship    , ship    , airplane, deer    , frog    , car     , deer    , cat     , car     ] (61.6% accuracy over 10000 images)
+Adversarial Model Predicts: [cat     , ship    , airplane, airplane, deer    , frog    , truck   , deer    , cat     , truck   ] (49.1% accuracy over 10000 images)
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../../_images/apphub_image_classification_lenet_cifar10_adversarial_lenet_cifar10_adversarial_37_1.png" src="../../../_images/apphub_image_classification_lenet_cifar10_adversarial_lenet_cifar10_adversarial_37_1.png" />
+</div>
+</div>
+<p>Under this attack, the accuracy of the traditionally trained model has dropped to 61.6%. The adversarially trained model meanwhile has its performance reduced to 49.1%. While the raw adversarial accuracy here is now lower than the simple model, the performance loss is significantly less than it was for the simple model in the previous attack. To properly compare the models, the white-box and black-box attacks should be compared pairwise against one another:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[27]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;White box attack vs simple network:      </span><span class="si">{:2.2%}</span><span class="s2"> accuracy&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">simple_accuracy_w</span> <span class="o">-</span> <span class="n">simple_accuracy</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;White box attack vs adversarial network: </span><span class="si">{:2.2%}</span><span class="s2"> accuracy&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">adversarial_accuracy_w</span> <span class="o">-</span> <span class="n">simple_accuracy</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Black box attack vs simple network:      </span><span class="si">{:2.2%}</span><span class="s2"> accuracy&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">simple_accuracy_b</span> <span class="o">-</span> <span class="n">simple_accuracy</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Black box attack vs adversarial network: </span><span class="si">{:2.2%}</span><span class="s2"> accuracy&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">adversarial_accuracy_b</span> <span class="o">-</span> <span class="n">simple_accuracy</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+White box attack vs simple network:      -39.78% accuracy
+White box attack vs adversarial network: -22.67% accuracy
+
+Black box attack vs simple network:      -10.09% accuracy
+Black box attack vs adversarial network: -6.51% accuracy
+</pre></div></div>
+</div>
+<p>Adversarially attacking the simple network using white-box gradient analysis cost nearly 40 percentage points of accuracy. The same attack conducted against the adversarially trained network cost only around 23 percentage points. Likewise, a blackbox attack against the simple network cost 10 percentage points versus 6.5 against the adversarial network. This shows that the adversarial training process makes a network approximately twice as robust against future adversarial attacks. Whether such
+benefits are worth the increased training time would, of course, depend on the model deployment use-case.</p>
+</div>
+</div>
+<p>—</p>
+<p><a class="reference external" href="https://github.com/fastestimator/fastestimator/blob/master/apphub/image_classification/lenet_cifar10_adversarial/lenet_cifar10_adversarial.ipynb">Link to GitHub</a></p>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../lenet_cifar10_mixup/lenet_cifar10_mixup.html" class="btn btn-neutral float-right" title="CIFAR10 Image Classification Using LeNet" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="../densenet121_cifar10/densenet121_cifar10.html" class="btn btn-neutral float-left" title="Cifar10 Image Classification Using DenseNet-121" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, GEHC DataScience
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

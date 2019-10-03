@@ -1,0 +1,911 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>DCGAN Example with MNIST Dataset &mdash; FastEstimator 0.0.1 documentation</title>
+  
+
+  
+  
+    <link rel="shortcut icon" href="../../../_static/favicon.ico"/>
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../../_static/language_data.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="Image Segmentation" href="../../image_segmentation.html" />
+    <link rel="prev" title="Horse to Zebra Unpaired Image Translation with CycleGAN in FastEstimator" href="../cyclegan_horse2zebra/cyclegan.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> FastEstimator
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0a0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../../install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../learn.html">Learn</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../../apphub.html">Example</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../NLP.html">NLP</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../image_classification.html">Image Classification</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../../image_generation.html">Image Generation</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../cvae_mnist/cvae_mnist.html">Convolutional Variational Autoencoder example using MNIST dataset</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../cyclegan_horse2zebra/cyclegan.html">Horse to Zebra Unpaired Image Translation with CycleGAN in FastEstimator</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">DCGAN Example with MNIST Dataset</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#Prepare-data">Prepare data</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Create-network">Create network</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Create-estimator">Create estimator</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Start-Training">Start Training</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Generate-images-from-random-noise">Generate images from random noise</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../image_segmentation.html">Image Segmentation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../image_styletransfer.html">Image Style Transfer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../tabular.html">Tabular</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api.html">API</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">FastEstimator</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../../apphub.html">Example</a> &raquo;</li>
+        
+          <li><a href="../../image_generation.html">Image Generation</a> &raquo;</li>
+        
+      <li>DCGAN Example with MNIST Dataset</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../../_sources/apphub/image_generation/dcgan_mnist/dcgan_mnist.ipynb.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  
+<style>
+/* CSS for nbsphinx extension */
+
+/* remove conflicting styling from Sphinx themes */
+div.nbinput,
+div.nbinput div.prompt,
+div.nbinput div.input_area,
+div.nbinput div[class*=highlight],
+div.nbinput div[class*=highlight] pre,
+div.nboutput,
+div.nbinput div.prompt,
+div.nbinput div.output_area,
+div.nboutput div[class*=highlight],
+div.nboutput div[class*=highlight] pre {
+    background: none;
+    border: none;
+    padding: 0 0;
+    margin: 0;
+    box-shadow: none;
+}
+
+/* avoid gaps between output lines */
+div.nboutput div[class*=highlight] pre {
+    line-height: normal;
+}
+
+/* input/output containers */
+div.nbinput,
+div.nboutput {
+    display: -webkit-flex;
+    display: flex;
+    align-items: flex-start;
+    margin: 0;
+    width: 100%;
+}
+@media (max-width: 540px) {
+    div.nbinput,
+    div.nboutput {
+        flex-direction: column;
+    }
+}
+
+/* input container */
+div.nbinput {
+    padding-top: 5px;
+}
+
+/* last container */
+div.nblast {
+    padding-bottom: 5px;
+}
+
+/* input prompt */
+div.nbinput div.prompt pre {
+    color: #307FC1;
+}
+
+/* output prompt */
+div.nboutput div.prompt pre {
+    color: #BF5B3D;
+}
+
+/* all prompts */
+div.nbinput div.prompt,
+div.nboutput div.prompt {
+    min-width: 5ex;
+    padding-top: 0.4em;
+    padding-right: 0.4em;
+    text-align: right;
+    flex: 0;
+}
+@media (max-width: 540px) {
+    div.nbinput div.prompt,
+    div.nboutput div.prompt {
+        text-align: left;
+        padding: 0.4em;
+    }
+    div.nboutput div.prompt.empty {
+        padding: 0;
+    }
+}
+
+/* disable scrollbars on prompts */
+div.nbinput div.prompt pre,
+div.nboutput div.prompt pre {
+    overflow: hidden;
+}
+
+/* input/output area */
+div.nbinput div.input_area,
+div.nboutput div.output_area {
+    padding: 0.4em;
+    -webkit-flex: 1;
+    flex: 1;
+    overflow: auto;
+}
+@media (max-width: 540px) {
+    div.nbinput div.input_area,
+    div.nboutput div.output_area {
+        width: 100%;
+    }
+}
+
+/* input area */
+div.nbinput div.input_area {
+    border: 1px solid #e0e0e0;
+    border-radius: 2px;
+    background: #f5f5f5;
+}
+
+/* override MathJax center alignment in output cells */
+div.nboutput div[class*=MathJax] {
+    text-align: left !important;
+}
+
+/* override sphinx.ext.imgmath center alignment in output cells */
+div.nboutput div.math p {
+    text-align: left;
+}
+
+/* standard error */
+div.nboutput div.output_area.stderr {
+    background: #fdd;
+}
+
+/* ANSI colors */
+.ansi-black-fg { color: #3E424D; }
+.ansi-black-bg { background-color: #3E424D; }
+.ansi-black-intense-fg { color: #282C36; }
+.ansi-black-intense-bg { background-color: #282C36; }
+.ansi-red-fg { color: #E75C58; }
+.ansi-red-bg { background-color: #E75C58; }
+.ansi-red-intense-fg { color: #B22B31; }
+.ansi-red-intense-bg { background-color: #B22B31; }
+.ansi-green-fg { color: #00A250; }
+.ansi-green-bg { background-color: #00A250; }
+.ansi-green-intense-fg { color: #007427; }
+.ansi-green-intense-bg { background-color: #007427; }
+.ansi-yellow-fg { color: #DDB62B; }
+.ansi-yellow-bg { background-color: #DDB62B; }
+.ansi-yellow-intense-fg { color: #B27D12; }
+.ansi-yellow-intense-bg { background-color: #B27D12; }
+.ansi-blue-fg { color: #208FFB; }
+.ansi-blue-bg { background-color: #208FFB; }
+.ansi-blue-intense-fg { color: #0065CA; }
+.ansi-blue-intense-bg { background-color: #0065CA; }
+.ansi-magenta-fg { color: #D160C4; }
+.ansi-magenta-bg { background-color: #D160C4; }
+.ansi-magenta-intense-fg { color: #A03196; }
+.ansi-magenta-intense-bg { background-color: #A03196; }
+.ansi-cyan-fg { color: #60C6C8; }
+.ansi-cyan-bg { background-color: #60C6C8; }
+.ansi-cyan-intense-fg { color: #258F8F; }
+.ansi-cyan-intense-bg { background-color: #258F8F; }
+.ansi-white-fg { color: #C5C1B4; }
+.ansi-white-bg { background-color: #C5C1B4; }
+.ansi-white-intense-fg { color: #A1A6B2; }
+.ansi-white-intense-bg { background-color: #A1A6B2; }
+
+.ansi-default-inverse-fg { color: #FFFFFF; }
+.ansi-default-inverse-bg { background-color: #000000; }
+
+.ansi-bold { font-weight: bold; }
+.ansi-underline { text-decoration: underline; }
+
+/* Some additional styling taken form the Jupyter notebook CSS */
+div.rendered_html table {
+  border: none;
+  border-collapse: collapse;
+  border-spacing: 0;
+  color: black;
+  font-size: 12px;
+  table-layout: fixed;
+}
+div.rendered_html thead {
+  border-bottom: 1px solid black;
+  vertical-align: bottom;
+}
+div.rendered_html tr,
+div.rendered_html th,
+div.rendered_html td {
+  text-align: right;
+  vertical-align: middle;
+  padding: 0.5em 0.5em;
+  line-height: normal;
+  white-space: normal;
+  max-width: none;
+  border: none;
+}
+div.rendered_html th {
+  font-weight: bold;
+}
+div.rendered_html tbody tr:nth-child(odd) {
+  background: #f5f5f5;
+}
+div.rendered_html tbody tr:hover {
+  background: rgba(66, 165, 245, 0.2);
+}
+
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast,
+.nboutput.nblast {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast + .nbinput {
+    margin-top: -19px;
+}
+
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+
+/* Fix math alignment, see https://github.com/rtfd/sphinx_rtd_theme/pull/686 */
+.math {
+    text-align: unset;
+}
+</style>
+<div class="section" id="DCGAN-Example-with-MNIST-Dataset">
+<h1>DCGAN Example with MNIST Dataset<a class="headerlink" href="#DCGAN-Example-with-MNIST-Dataset" title="Permalink to this headline">¶</a></h1>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">tempfile</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
+<span class="kn">from</span> <span class="nn">matplotlib</span> <span class="k">import</span> <span class="n">pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+<span class="kn">from</span> <span class="nn">tensorflow.keras.models</span> <span class="k">import</span> <span class="n">load_model</span>
+<span class="kn">from</span> <span class="nn">tensorflow.python.keras</span> <span class="k">import</span> <span class="n">layers</span>
+
+<span class="kn">import</span> <span class="nn">fastestimator</span> <span class="k">as</span> <span class="nn">fe</span>
+<span class="kn">from</span> <span class="nn">fastestimator.estimator.trace</span> <span class="k">import</span> <span class="n">ModelSaver</span>
+<span class="kn">from</span> <span class="nn">fastestimator.network.loss</span> <span class="k">import</span> <span class="n">Loss</span>
+<span class="kn">from</span> <span class="nn">fastestimator.network.model</span> <span class="k">import</span> <span class="n">FEModel</span><span class="p">,</span> <span class="n">ModelOp</span>
+<span class="kn">from</span> <span class="nn">fastestimator.util.op</span> <span class="k">import</span> <span class="n">TensorOp</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">BATCH_SIZE</span> <span class="o">=</span> <span class="mi">256</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="Prepare-data">
+<h2>Prepare data<a class="headerlink" href="#Prepare-data" title="Permalink to this headline">¶</a></h2>
+<p>We create <code class="docutils literal notranslate"><span class="pre">Pipeline</span></code> with MNIST data. With the help of <code class="docutils literal notranslate"><span class="pre">Myrescale</span></code> op, each image is normalized to between -1 and 1.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="k">class</span> <span class="nc">Myrescale</span><span class="p">(</span><span class="n">TensorOp</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Scale image values from uint8 to float32 between -1 and 1.&quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">state</span><span class="p">):</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">cast</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">tf</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="p">(</span><span class="n">data</span> <span class="o">-</span> <span class="mf">127.5</span><span class="p">)</span> <span class="o">/</span> <span class="mf">127.5</span>
+        <span class="k">return</span> <span class="n">data</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="p">(</span><span class="n">x_train</span><span class="p">,</span> <span class="n">_</span><span class="p">),</span> <span class="p">(</span><span class="n">_</span><span class="p">,</span> <span class="n">_</span><span class="p">)</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">mnist</span><span class="o">.</span><span class="n">load_data</span><span class="p">()</span>
+<span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;train&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;x&quot;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">expand_dims</span><span class="p">(</span><span class="n">x_train</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)}}</span>
+<span class="n">pipeline</span> <span class="o">=</span> <span class="n">fe</span><span class="o">.</span><span class="n">Pipeline</span><span class="p">(</span><span class="n">batch_size</span><span class="o">=</span><span class="n">BATCH_SIZE</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">ops</span><span class="o">=</span><span class="n">Myrescale</span><span class="p">(</span><span class="n">inputs</span><span class="o">=</span><span class="s2">&quot;x&quot;</span><span class="p">,</span> <span class="n">outputs</span><span class="o">=</span><span class="s2">&quot;x&quot;</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="Create-network">
+<h2>Create network<a class="headerlink" href="#Create-network" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="Keras-models">
+<h3>Keras models<a class="headerlink" href="#Keras-models" title="Permalink to this headline">¶</a></h3>
+<p>First we create <code class="docutils literal notranslate"><span class="pre">tf.keras</span></code> models for generator and discriminator.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="k">def</span> <span class="nf">make_generator_model</span><span class="p">():</span>
+    <span class="n">model</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">Sequential</span><span class="p">()</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">layers</span><span class="o">.</span><span class="n">Dense</span><span class="p">(</span><span class="mi">7</span> <span class="o">*</span> <span class="mi">7</span> <span class="o">*</span> <span class="mi">256</span><span class="p">,</span> <span class="n">use_bias</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">input_shape</span><span class="o">=</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="p">)))</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">layers</span><span class="o">.</span><span class="n">BatchNormalization</span><span class="p">())</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">layers</span><span class="o">.</span><span class="n">LeakyReLU</span><span class="p">())</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">layers</span><span class="o">.</span><span class="n">Reshape</span><span class="p">((</span><span class="mi">7</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">256</span><span class="p">)))</span>
+    <span class="k">assert</span> <span class="n">model</span><span class="o">.</span><span class="n">output_shape</span> <span class="o">==</span> <span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">256</span><span class="p">)</span>  <span class="c1"># Note: None is the batch size</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">layers</span><span class="o">.</span><span class="n">Conv2DTranspose</span><span class="p">(</span><span class="mi">128</span><span class="p">,</span> <span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span> <span class="n">strides</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="n">padding</span><span class="o">=</span><span class="s1">&#39;same&#39;</span><span class="p">,</span> <span class="n">use_bias</span><span class="o">=</span><span class="kc">False</span><span class="p">))</span>
+    <span class="k">assert</span> <span class="n">model</span><span class="o">.</span><span class="n">output_shape</span> <span class="o">==</span> <span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">128</span><span class="p">)</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">layers</span><span class="o">.</span><span class="n">BatchNormalization</span><span class="p">())</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">layers</span><span class="o">.</span><span class="n">LeakyReLU</span><span class="p">())</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">layers</span><span class="o">.</span><span class="n">Conv2DTranspose</span><span class="p">(</span><span class="mi">64</span><span class="p">,</span> <span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span> <span class="n">strides</span><span class="o">=</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="n">padding</span><span class="o">=</span><span class="s1">&#39;same&#39;</span><span class="p">,</span> <span class="n">use_bias</span><span class="o">=</span><span class="kc">False</span><span class="p">))</span>
+    <span class="k">assert</span> <span class="n">model</span><span class="o">.</span><span class="n">output_shape</span> <span class="o">==</span> <span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="mi">14</span><span class="p">,</span> <span class="mi">14</span><span class="p">,</span> <span class="mi">64</span><span class="p">)</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">layers</span><span class="o">.</span><span class="n">BatchNormalization</span><span class="p">())</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">layers</span><span class="o">.</span><span class="n">LeakyReLU</span><span class="p">())</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">layers</span><span class="o">.</span><span class="n">Conv2DTranspose</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span> <span class="n">strides</span><span class="o">=</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="n">padding</span><span class="o">=</span><span class="s1">&#39;same&#39;</span><span class="p">,</span> <span class="n">use_bias</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="s1">&#39;tanh&#39;</span><span class="p">))</span>
+    <span class="k">assert</span> <span class="n">model</span><span class="o">.</span><span class="n">output_shape</span> <span class="o">==</span> <span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="mi">28</span><span class="p">,</span> <span class="mi">28</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">model</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="k">def</span> <span class="nf">make_discriminator_model</span><span class="p">():</span>
+    <span class="n">model</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">Sequential</span><span class="p">()</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">layers</span><span class="o">.</span><span class="n">Conv2D</span><span class="p">(</span><span class="mi">64</span><span class="p">,</span> <span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span> <span class="n">strides</span><span class="o">=</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="n">padding</span><span class="o">=</span><span class="s1">&#39;same&#39;</span><span class="p">,</span> <span class="n">input_shape</span><span class="o">=</span><span class="p">[</span><span class="mi">28</span><span class="p">,</span> <span class="mi">28</span><span class="p">,</span> <span class="mi">1</span><span class="p">]))</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">layers</span><span class="o">.</span><span class="n">LeakyReLU</span><span class="p">())</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">layers</span><span class="o">.</span><span class="n">Dropout</span><span class="p">(</span><span class="mf">0.3</span><span class="p">))</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">layers</span><span class="o">.</span><span class="n">Conv2D</span><span class="p">(</span><span class="mi">128</span><span class="p">,</span> <span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span> <span class="n">strides</span><span class="o">=</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="n">padding</span><span class="o">=</span><span class="s1">&#39;same&#39;</span><span class="p">))</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">layers</span><span class="o">.</span><span class="n">LeakyReLU</span><span class="p">())</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">layers</span><span class="o">.</span><span class="n">Dropout</span><span class="p">(</span><span class="mf">0.3</span><span class="p">))</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">layers</span><span class="o">.</span><span class="n">Flatten</span><span class="p">())</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">layers</span><span class="o">.</span><span class="n">Dense</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">model</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="FEModel">
+<h3>FEModel<a class="headerlink" href="#FEModel" title="Permalink to this headline">¶</a></h3>
+<p>Next, we group the <code class="docutils literal notranslate"><span class="pre">tf.keras</span></code> models with <code class="docutils literal notranslate"><span class="pre">tf.optimizers</span></code> into <code class="docutils literal notranslate"><span class="pre">FEModel</span></code>.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">g_femodel</span> <span class="o">=</span> <span class="n">FEModel</span><span class="p">(</span><span class="n">model_def</span><span class="o">=</span><span class="n">make_generator_model</span><span class="p">,</span>
+                    <span class="n">model_name</span><span class="o">=</span><span class="s2">&quot;gen&quot;</span><span class="p">,</span>
+                    <span class="n">loss_name</span><span class="o">=</span><span class="s2">&quot;gloss&quot;</span><span class="p">,</span>
+                    <span class="n">optimizer</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">optimizers</span><span class="o">.</span><span class="n">Adam</span><span class="p">(</span><span class="mf">1e-4</span><span class="p">))</span>
+<span class="n">d_femodel</span> <span class="o">=</span> <span class="n">FEModel</span><span class="p">(</span><span class="n">model_def</span><span class="o">=</span><span class="n">make_discriminator_model</span><span class="p">,</span>
+                    <span class="n">model_name</span><span class="o">=</span><span class="s2">&quot;disc&quot;</span><span class="p">,</span>
+                    <span class="n">loss_name</span><span class="o">=</span><span class="s2">&quot;dloss&quot;</span><span class="p">,</span>
+                    <span class="n">optimizer</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">optimizers</span><span class="o">.</span><span class="n">Adam</span><span class="p">(</span><span class="mf">1e-4</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">FEModel</span></code> and <code class="docutils literal notranslate"><span class="pre">Loss</span></code> will be grouped into <code class="docutils literal notranslate"><span class="pre">Network</span></code>. Let’s define the loss functions.</p>
+</div>
+<div class="section" id="Loss-functions">
+<h3>Loss functions<a class="headerlink" href="#Loss-functions" title="Permalink to this headline">¶</a></h3>
+<p>We define the generator and discriminator loss. <code class="docutils literal notranslate"><span class="pre">Loss</span></code> can have multiple inputs and outputs.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="k">class</span> <span class="nc">GLoss</span><span class="p">(</span><span class="n">Loss</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Compute generator loss.&quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">inputs</span><span class="p">,</span> <span class="n">outputs</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">inputs</span><span class="o">=</span><span class="n">inputs</span><span class="p">,</span> <span class="n">outputs</span><span class="o">=</span><span class="n">outputs</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="n">mode</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cross_entropy</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">losses</span><span class="o">.</span><span class="n">BinaryCrossentropy</span><span class="p">(</span><span class="n">from_logits</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                                                                <span class="n">reduction</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">losses</span><span class="o">.</span><span class="n">Reduction</span><span class="o">.</span><span class="n">NONE</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">state</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">cross_entropy</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">ones_like</span><span class="p">(</span><span class="n">data</span><span class="p">),</span> <span class="n">data</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="k">class</span> <span class="nc">DLoss</span><span class="p">(</span><span class="n">Loss</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Compute discriminator loss.&quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">inputs</span><span class="p">,</span> <span class="n">outputs</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">inputs</span><span class="o">=</span><span class="n">inputs</span><span class="p">,</span> <span class="n">outputs</span><span class="o">=</span><span class="n">outputs</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="n">mode</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cross_entropy</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">losses</span><span class="o">.</span><span class="n">BinaryCrossentropy</span><span class="p">(</span><span class="n">from_logits</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                                                                <span class="n">reduction</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">losses</span><span class="o">.</span><span class="n">Reduction</span><span class="o">.</span><span class="n">NONE</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">state</span><span class="p">):</span>
+        <span class="n">true</span><span class="p">,</span> <span class="n">fake</span> <span class="o">=</span> <span class="n">data</span>
+        <span class="n">real_loss</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cross_entropy</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">ones_like</span><span class="p">(</span><span class="n">true</span><span class="p">),</span> <span class="n">true</span><span class="p">)</span>
+        <span class="n">fake_loss</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cross_entropy</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">fake</span><span class="p">),</span> <span class="n">fake</span><span class="p">)</span>
+        <span class="n">total_loss</span> <span class="o">=</span> <span class="n">real_loss</span> <span class="o">+</span> <span class="n">fake_loss</span>
+        <span class="k">return</span> <span class="n">total_loss</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="Network">
+<h3>Network<a class="headerlink" href="#Network" title="Permalink to this headline">¶</a></h3>
+<p>Once loss functions are defined, we group <code class="docutils literal notranslate"><span class="pre">FEModel</span></code> and loss functions into <code class="docutils literal notranslate"><span class="pre">Network</span></code>.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">network</span> <span class="o">=</span> <span class="n">fe</span><span class="o">.</span><span class="n">Network</span><span class="p">(</span><span class="n">ops</span><span class="o">=</span><span class="p">[</span>
+    <span class="n">ModelOp</span><span class="p">(</span><span class="n">inputs</span><span class="o">=</span><span class="k">lambda</span><span class="p">:</span> <span class="n">tf</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">([</span><span class="n">BATCH_SIZE</span><span class="p">,</span> <span class="mi">100</span><span class="p">]),</span> <span class="n">model</span><span class="o">=</span><span class="n">g_femodel</span><span class="p">),</span>
+    <span class="n">ModelOp</span><span class="p">(</span><span class="n">model</span><span class="o">=</span><span class="n">d_femodel</span><span class="p">,</span> <span class="n">outputs</span><span class="o">=</span><span class="s2">&quot;pred_fake&quot;</span><span class="p">),</span>
+    <span class="n">ModelOp</span><span class="p">(</span><span class="n">inputs</span><span class="o">=</span><span class="s2">&quot;x&quot;</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">d_femodel</span><span class="p">,</span> <span class="n">outputs</span><span class="o">=</span><span class="s2">&quot;pred_true&quot;</span><span class="p">),</span>
+    <span class="n">GLoss</span><span class="p">(</span><span class="n">inputs</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;pred_fake&quot;</span><span class="p">),</span> <span class="n">outputs</span><span class="o">=</span><span class="s2">&quot;gloss&quot;</span><span class="p">),</span>
+    <span class="n">DLoss</span><span class="p">(</span><span class="n">inputs</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;pred_true&quot;</span><span class="p">,</span> <span class="s2">&quot;pred_fake&quot;</span><span class="p">),</span> <span class="n">outputs</span><span class="o">=</span><span class="s2">&quot;dloss&quot;</span><span class="p">)</span>
+<span class="p">])</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="Create-estimator">
+<h2>Create estimator<a class="headerlink" href="#Create-estimator" title="Permalink to this headline">¶</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">Trace</span></code> is similar to callbacks in <code class="docutils literal notranslate"><span class="pre">tf.keras</span></code>. Here we use <code class="docutils literal notranslate"><span class="pre">ModelSaver</span></code> to save the training models to <code class="docutils literal notranslate"><span class="pre">save_dir</span></code>.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">save_dir</span><span class="o">=</span><span class="n">tempfile</span><span class="o">.</span><span class="n">mkdtemp</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">traces</span> <span class="o">=</span> <span class="p">[</span><span class="n">ModelSaver</span><span class="p">(</span><span class="n">model_name</span><span class="o">=</span><span class="s1">&#39;gen&#39;</span><span class="p">,</span> <span class="n">save_dir</span><span class="o">=</span><span class="n">save_dir</span><span class="p">,</span> <span class="n">save_freq</span><span class="o">=</span><span class="mi">5</span><span class="p">)]</span>
+</pre></div>
+</div>
+</div>
+<p>Once everything is combined into <code class="docutils literal notranslate"><span class="pre">Estimator</span></code>, we can start traniing!</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">estimator</span> <span class="o">=</span> <span class="n">fe</span><span class="o">.</span><span class="n">Estimator</span><span class="p">(</span><span class="n">network</span><span class="o">=</span><span class="n">network</span><span class="p">,</span> <span class="n">pipeline</span><span class="o">=</span><span class="n">pipeline</span><span class="p">,</span> <span class="n">epochs</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">traces</span><span class="o">=</span><span class="n">traces</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="Start-Training">
+<h2>Start Training<a class="headerlink" href="#Start-Training" title="Permalink to this headline">¶</a></h2>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">estimator</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+    ______           __  ______     __  _                 __
+   / ____/___ ______/ /_/ ____/____/ /_(_)___ ___  ____ _/ /_____  _____
+  / /_  / __ `/ ___/ __/ __/ / ___/ __/ / __ `__ \/ __ `/ __/ __ \/ ___/
+ / __/ / /_/ (__  ) /_/ /___(__  ) /_/ / / / / / / /_/ / /_/ /_/ / /
+/_/    \__,_/____/\__/_____/____/\__/_/_/ /_/ /_/\__,_/\__/\____/_/
+
+
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+WARNING: Logging before flag parsing goes to stderr.
+W0918 17:48:19.117184 140658123323136 deprecation.py:323] From /data/hsiming/virtualenv/tf2.0.0b_py36_hsiming/lib/python3.6/site-packages/tensorflow/python/ops/nn_impl.py:182: add_dispatch_support.&lt;locals&gt;.wrapper (from tensorflow.python.ops.array_ops) is deprecated and will be removed in a future version.
+Instructions for updating:
+Use tf.where in 2.0, which has the same broadcast rule as np.where
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+FastEstimator-Start: step: 0; gen_lr: 1e-04; disc_lr: 1e-04;
+FastEstimator-Train: step: 0; gloss: 0.69595134; dloss: 1.3530326;
+FastEstimator-Train: step: 100; gloss: 0.6908619; dloss: 1.0262341; examples/sec: 2572.28;
+FastEstimator-Train: step: 200; gloss: 0.84497017; dloss: 1.2118433; examples/sec: 2543.57;
+FastEstimator-ModelSaver: Saving model to /tmp/tmpzdhf6mjv/gen_epoch_0_step_234.h5
+FastEstimator-Train: step: 300; gloss: 0.926353; dloss: 1.0300479; examples/sec: 2575.34;
+FastEstimator-Train: step: 400; gloss: 0.7339307; dloss: 1.419587; examples/sec: 2547.12;
+FastEstimator-Train: step: 500; gloss: 1.1053416; dloss: 0.86561346; examples/sec: 2546.57;
+FastEstimator-Train: step: 600; gloss: 1.7596653; dloss: 0.52021855; examples/sec: 2525.99;
+FastEstimator-Train: step: 700; gloss: 0.9018482; dloss: 1.1085627; examples/sec: 2524.2;
+FastEstimator-Train: step: 800; gloss: 0.70425224; dloss: 1.4143591; examples/sec: 2520.55;
+FastEstimator-Train: step: 900; gloss: 0.83074707; dloss: 1.2864329; examples/sec: 2518.58;
+FastEstimator-Train: step: 1000; gloss: 0.8636123; dloss: 1.3568431; examples/sec: 2515.48;
+FastEstimator-Train: step: 1100; gloss: 0.7479536; dloss: 1.5826471; examples/sec: 2512.93;
+FastEstimator-Train: step: 1200; gloss: 0.7905136; dloss: 1.5097691; examples/sec: 2508.08;
+FastEstimator-Train: step: 1300; gloss: 0.7463613; dloss: 1.3998778; examples/sec: 2506.92;
+FastEstimator-Train: step: 1400; gloss: 0.8919745; dloss: 1.1551933; examples/sec: 2502.64;
+FastEstimator-ModelSaver: Saving model to /tmp/tmpzdhf6mjv/gen_epoch_5_step_1404.h5
+FastEstimator-Train: step: 1500; gloss: 0.99319625; dloss: 1.0736455; examples/sec: 2528.45;
+FastEstimator-Train: step: 1600; gloss: 0.7286755; dloss: 1.5559127; examples/sec: 2503.4;
+FastEstimator-Train: step: 1700; gloss: 0.9155165; dloss: 1.1608633; examples/sec: 2504.74;
+FastEstimator-Train: step: 1800; gloss: 0.7434776; dloss: 1.3083016; examples/sec: 2511.11;
+FastEstimator-Train: step: 1900; gloss: 0.8758374; dloss: 1.3348733; examples/sec: 2503.19;
+FastEstimator-Train: step: 2000; gloss: 0.8166124; dloss: 1.2299441; examples/sec: 2508.8;
+FastEstimator-Train: step: 2100; gloss: 0.7107069; dloss: 1.4950066; examples/sec: 2510.15;
+FastEstimator-Train: step: 2200; gloss: 0.9786562; dloss: 1.0765682; examples/sec: 2509.23;
+FastEstimator-Train: step: 2300; gloss: 0.90990275; dloss: 1.3727658; examples/sec: 2510.82;
+FastEstimator-Train: step: 2400; gloss: 1.091837; dloss: 0.9914036; examples/sec: 2507.73;
+FastEstimator-Train: step: 2500; gloss: 0.84776753; dloss: 1.4775909; examples/sec: 2512.6;
+FastEstimator-ModelSaver: Saving model to /tmp/tmpzdhf6mjv/gen_epoch_10_step_2574.h5
+FastEstimator-Train: step: 2600; gloss: 0.9051596; dloss: 1.2369817; examples/sec: 2530.37;
+FastEstimator-Train: step: 2700; gloss: 1.0139004; dloss: 1.1593926; examples/sec: 2499.25;
+FastEstimator-Train: step: 2800; gloss: 0.88000095; dloss: 1.294114; examples/sec: 2501.75;
+FastEstimator-Train: step: 2900; gloss: 1.0820124; dloss: 1.2039725; examples/sec: 2505.4;
+FastEstimator-Train: step: 3000; gloss: 1.3538215; dloss: 0.8107094; examples/sec: 2512.37;
+FastEstimator-Train: step: 3100; gloss: 0.95700437; dloss: 1.234808; examples/sec: 2508.88;
+FastEstimator-Train: step: 3200; gloss: 1.1537837; dloss: 1.12163; examples/sec: 2513.07;
+FastEstimator-Train: step: 3300; gloss: 0.9400153; dloss: 1.2380682; examples/sec: 2508.47;
+FastEstimator-Train: step: 3400; gloss: 1.1326759; dloss: 0.9954937; examples/sec: 2512.64;
+FastEstimator-Train: step: 3500; gloss: 1.120005; dloss: 1.0653719; examples/sec: 2506.08;
+FastEstimator-Train: step: 3600; gloss: 1.0102966; dloss: 1.1714345; examples/sec: 2510.13;
+FastEstimator-Train: step: 3700; gloss: 0.9641124; dloss: 1.1828768; examples/sec: 2511.86;
+FastEstimator-ModelSaver: Saving model to /tmp/tmpzdhf6mjv/gen_epoch_15_step_3744.h5
+FastEstimator-Train: step: 3800; gloss: 1.1241753; dloss: 1.1056703; examples/sec: 2537.43;
+FastEstimator-Train: step: 3900; gloss: 1.2800107; dloss: 0.87076414; examples/sec: 2513.6;
+FastEstimator-Train: step: 4000; gloss: 1.0173273; dloss: 1.2648131; examples/sec: 2515.4;
+FastEstimator-Train: step: 4100; gloss: 1.2626874; dloss: 0.96767735; examples/sec: 2512.22;
+FastEstimator-Train: step: 4200; gloss: 1.0998651; dloss: 1.3161542; examples/sec: 2514.09;
+FastEstimator-Train: step: 4300; gloss: 1.1622956; dloss: 1.0845126; examples/sec: 2510.16;
+FastEstimator-Train: step: 4400; gloss: 1.8857236; dloss: 0.61238563; examples/sec: 2514.08;
+FastEstimator-Train: step: 4500; gloss: 1.4766601; dloss: 0.91755694; examples/sec: 2509.08;
+FastEstimator-Train: step: 4600; gloss: 1.0801171; dloss: 1.2520044; examples/sec: 2512.96;
+FastEstimator-Train: step: 4700; gloss: 1.136924; dloss: 1.0787942; examples/sec: 2510.29;
+FastEstimator-Train: step: 4800; gloss: 1.1364374; dloss: 0.9225644; examples/sec: 2511.47;
+FastEstimator-Train: step: 4900; gloss: 0.98714125; dloss: 1.234557; examples/sec: 2509.48;
+FastEstimator-ModelSaver: Saving model to /tmp/tmpzdhf6mjv/gen_epoch_20_step_4914.h5
+FastEstimator-Train: step: 5000; gloss: 1.2132232; dloss: 1.0075278; examples/sec: 2535.8;
+FastEstimator-Train: step: 5100; gloss: 1.2478071; dloss: 0.9712628; examples/sec: 2509.19;
+FastEstimator-Train: step: 5200; gloss: 1.0746053; dloss: 1.1861095; examples/sec: 2510.04;
+FastEstimator-Train: step: 5300; gloss: 1.156363; dloss: 1.0273391; examples/sec: 2511.7;
+FastEstimator-Train: step: 5400; gloss: 1.2215666; dloss: 1.0596297; examples/sec: 2509.72;
+FastEstimator-Train: step: 5500; gloss: 1.1053557; dloss: 1.1561103; examples/sec: 2511.24;
+FastEstimator-Train: step: 5600; gloss: 1.137301; dloss: 1.0941685; examples/sec: 2511.83;
+FastEstimator-Train: step: 5700; gloss: 1.6252682; dloss: 0.77302194; examples/sec: 2510.78;
+FastEstimator-Train: step: 5800; gloss: 1.1551921; dloss: 1.0950768; examples/sec: 2512.56;
+FastEstimator-Train: step: 5900; gloss: 0.8808057; dloss: 1.3883932; examples/sec: 2512.7;
+FastEstimator-Train: step: 6000; gloss: 1.4769766; dloss: 0.88300925; examples/sec: 2514.09;
+FastEstimator-ModelSaver: Saving model to /tmp/tmpzdhf6mjv/gen_epoch_25_step_6084.h5
+FastEstimator-Train: step: 6100; gloss: 1.5844681; dloss: 0.97752; examples/sec: 2539.13;
+FastEstimator-Train: step: 6200; gloss: 1.4207733; dloss: 1.009416; examples/sec: 2514.43;
+FastEstimator-Train: step: 6300; gloss: 1.5112205; dloss: 0.89121306; examples/sec: 2507.89;
+FastEstimator-Train: step: 6400; gloss: 1.5947648; dloss: 0.84250724; examples/sec: 2511.99;
+FastEstimator-Train: step: 6500; gloss: 1.1048834; dloss: 1.1508973; examples/sec: 2507.87;
+FastEstimator-Train: step: 6600; gloss: 1.1830401; dloss: 1.1891085; examples/sec: 2493.49;
+FastEstimator-Train: step: 6700; gloss: 1.2354956; dloss: 1.0502173; examples/sec: 2526.42;
+FastEstimator-Train: step: 6800; gloss: 1.2081039; dloss: 0.98759186; examples/sec: 2510.29;
+FastEstimator-Train: step: 6900; gloss: 1.1010578; dloss: 1.1570222; examples/sec: 2512.99;
+FastEstimator-Train: step: 7000; gloss: 1.102396; dloss: 1.1259654; examples/sec: 2509.66;
+FastEstimator-Train: step: 7100; gloss: 1.0229583; dloss: 1.1374489; examples/sec: 2509.6;
+FastEstimator-Train: step: 7200; gloss: 1.0148576; dloss: 1.1703944; examples/sec: 2503.72;
+FastEstimator-ModelSaver: Saving model to /tmp/tmpzdhf6mjv/gen_epoch_30_step_7254.h5
+FastEstimator-Train: step: 7300; gloss: 0.98689145; dloss: 1.3194159; examples/sec: 2527.63;
+FastEstimator-Train: step: 7400; gloss: 0.9941745; dloss: 1.2021219; examples/sec: 2507.91;
+FastEstimator-Train: step: 7500; gloss: 1.1889787; dloss: 1.2863231; examples/sec: 2505.05;
+FastEstimator-Train: step: 7600; gloss: 0.940554; dloss: 1.201722; examples/sec: 2507.25;
+FastEstimator-Train: step: 7700; gloss: 1.2296163; dloss: 1.069271; examples/sec: 2506.61;
+FastEstimator-Train: step: 7800; gloss: 1.1145477; dloss: 1.0264305; examples/sec: 2507.93;
+FastEstimator-Train: step: 7900; gloss: 0.8749032; dloss: 1.3487043; examples/sec: 2502.44;
+FastEstimator-Train: step: 8000; gloss: 1.1489267; dloss: 1.2460017; examples/sec: 2494.68;
+FastEstimator-Train: step: 8100; gloss: 1.0383592; dloss: 1.2838305; examples/sec: 2501.11;
+FastEstimator-Train: step: 8200; gloss: 1.0881394; dloss: 1.1826886; examples/sec: 2504.92;
+FastEstimator-Train: step: 8300; gloss: 1.195807; dloss: 1.1842307; examples/sec: 2504.99;
+FastEstimator-Train: step: 8400; gloss: 1.2090687; dloss: 1.031111; examples/sec: 2506.24;
+FastEstimator-ModelSaver: Saving model to /tmp/tmpzdhf6mjv/gen_epoch_35_step_8424.h5
+FastEstimator-Train: step: 8500; gloss: 1.1117153; dloss: 1.1760783; examples/sec: 2525.56;
+FastEstimator-Train: step: 8600; gloss: 1.0358796; dloss: 1.1525894; examples/sec: 2502.79;
+FastEstimator-Train: step: 8700; gloss: 1.080224; dloss: 1.2292671; examples/sec: 2501.15;
+FastEstimator-Train: step: 8800; gloss: 0.93098855; dloss: 1.3154166; examples/sec: 2504.21;
+FastEstimator-Train: step: 8900; gloss: 1.0154734; dloss: 1.29711; examples/sec: 2509.68;
+FastEstimator-Train: step: 9000; gloss: 1.1050225; dloss: 1.2516804; examples/sec: 2511.56;
+FastEstimator-Train: step: 9100; gloss: 0.97036177; dloss: 1.1775709; examples/sec: 2516.14;
+FastEstimator-Train: step: 9200; gloss: 0.9703679; dloss: 1.1825461; examples/sec: 2511.75;
+FastEstimator-Train: step: 9300; gloss: 0.97972953; dloss: 1.1862504; examples/sec: 2517.75;
+FastEstimator-Train: step: 9400; gloss: 1.0387019; dloss: 1.2318416; examples/sec: 2515.34;
+FastEstimator-Train: step: 9500; gloss: 0.99222374; dloss: 1.1574038; examples/sec: 2513.03;
+FastEstimator-ModelSaver: Saving model to /tmp/tmpzdhf6mjv/gen_epoch_40_step_9594.h5
+FastEstimator-Train: step: 9600; gloss: 0.9064344; dloss: 1.4716201; examples/sec: 2539.71;
+FastEstimator-Train: step: 9700; gloss: 0.8087839; dloss: 1.3511995; examples/sec: 2510.16;
+FastEstimator-Train: step: 9800; gloss: 1.0436379; dloss: 1.3033727; examples/sec: 2514.61;
+FastEstimator-Train: step: 9900; gloss: 1.0533434; dloss: 1.1115111; examples/sec: 2509.67;
+FastEstimator-Train: step: 10000; gloss: 1.0845108; dloss: 0.9845184; examples/sec: 2515.79;
+FastEstimator-Train: step: 10100; gloss: 1.0451509; dloss: 1.1416662; examples/sec: 2515.34;
+FastEstimator-Train: step: 10200; gloss: 1.04123; dloss: 1.3000846; examples/sec: 2510.31;
+FastEstimator-Train: step: 10300; gloss: 1.0057669; dloss: 1.1370484; examples/sec: 2513.13;
+FastEstimator-Train: step: 10400; gloss: 0.9891538; dloss: 1.1220548; examples/sec: 2508.24;
+FastEstimator-Train: step: 10500; gloss: 0.9103876; dloss: 1.1989634; examples/sec: 2506.41;
+FastEstimator-Train: step: 10600; gloss: 0.8733444; dloss: 1.2306137; examples/sec: 2506.7;
+FastEstimator-Train: step: 10700; gloss: 0.8079326; dloss: 1.3260518; examples/sec: 2504.22;
+FastEstimator-ModelSaver: Saving model to /tmp/tmpzdhf6mjv/gen_epoch_45_step_10764.h5
+FastEstimator-Train: step: 10800; gloss: 0.9123037; dloss: 1.2398833; examples/sec: 2532.67;
+FastEstimator-Train: step: 10900; gloss: 0.8901875; dloss: 1.2088764; examples/sec: 2508.35;
+FastEstimator-Train: step: 11000; gloss: 0.91047853; dloss: 1.2530726; examples/sec: 2513.45;
+FastEstimator-Train: step: 11100; gloss: 0.9310628; dloss: 1.2619432; examples/sec: 2513.6;
+FastEstimator-Train: step: 11200; gloss: 1.0029485; dloss: 1.1431831; examples/sec: 2509.66;
+FastEstimator-Train: step: 11300; gloss: 1.0093205; dloss: 1.1072545; examples/sec: 2512.57;
+FastEstimator-Train: step: 11400; gloss: 1.095667; dloss: 1.0824221; examples/sec: 2508.67;
+FastEstimator-Train: step: 11500; gloss: 1.0731249; dloss: 1.1650423; examples/sec: 2513.0;
+FastEstimator-Train: step: 11600; gloss: 0.9874201; dloss: 1.2624488; examples/sec: 2511.64;
+FastEstimator-Finish: step: 11700; total_time: 1196.22 sec; gen_lr: 1e-04; disc_lr: 1e-04;
+</pre></div></div>
+</div>
+</div>
+<div class="section" id="Generate-images-from-random-noise">
+<h2>Generate images from random noise<a class="headerlink" href="#Generate-images-from-random-noise" title="Permalink to this headline">¶</a></h2>
+<p>We use the trained generator to generate images of digits.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">model</span> <span class="o">=</span> <span class="n">load_model</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">save_dir</span><span class="p">,</span> <span class="s1">&#39;gen_epoch_45_step_10764.h5&#39;</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+W0918 18:10:09.384269 140658123323136 hdf5_format.py:171] No training configuration found in save file: the model was *not* compiled. Compile it manually.
+</pre></div></div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[19]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">images</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span> <span class="mi">100</span><span class="p">)))</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[20]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+<span class="n">axes</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ravel</span><span class="p">(</span><span class="n">axes</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">images</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
+    <span class="n">axes</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;off&#39;</span><span class="p">)</span>
+    <span class="n">axes</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(</span><span class="n">images</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span> <span class="o">*</span> <span class="mf">127.5</span> <span class="o">+</span> <span class="mf">127.5</span><span class="p">),</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../../_images/apphub_image_generation_dcgan_mnist_dcgan_mnist_35_0.png" src="../../../_images/apphub_image_generation_dcgan_mnist_dcgan_mnist_35_0.png" />
+</div>
+</div>
+</div>
+</div>
+<p>—</p>
+<p><a class="reference external" href="https://github.com/fastestimator/fastestimator/blob/master/apphub/image_generation/dcgan_mnist/dcgan_mnist.ipynb">Link to GitHub</a></p>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../../image_segmentation.html" class="btn btn-neutral float-right" title="Image Segmentation" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="../cyclegan_horse2zebra/cyclegan.html" class="btn btn-neutral float-left" title="Horse to Zebra Unpaired Image Translation with CycleGAN in FastEstimator" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, GEHC DataScience
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

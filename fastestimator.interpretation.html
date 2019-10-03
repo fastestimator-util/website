@@ -1,0 +1,447 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>interpretation &mdash; FastEstimator 0.0.1 documentation</title>
+  
+
+  
+  
+    <link rel="shortcut icon" href="_static/favicon.ico"/>
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="util" href="fastestimator.interpretation.util.html" />
+    <link rel="prev" title="dataset" href="fastestimator.dataset.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> FastEstimator
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0a0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="learn.html">Learn</a></li>
+<li class="toctree-l1"><a class="reference internal" href="apphub.html">Example</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="api.html">API</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="fastestimator.architecture.html">architecture</a></li>
+<li class="toctree-l2"><a class="reference internal" href="fastestimator.cli.html">cli</a></li>
+<li class="toctree-l2"><a class="reference internal" href="fastestimator.dataset.html">dataset</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">interpretation</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="fastestimator.interpretation.util.html">util</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-fastestimator.interpretation.caricature">caricature</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-fastestimator.interpretation.saliency">saliency</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-fastestimator.interpretation.umaps">umaps</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="fastestimator.layers.html">layers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="fastestimator.op.html">op</a></li>
+<li class="toctree-l2"><a class="reference internal" href="fastestimator.schedule.html">schedule</a></li>
+<li class="toctree-l2"><a class="reference internal" href="fastestimator.summary.html">summary</a></li>
+<li class="toctree-l2"><a class="reference internal" href="fastestimator.trace.html">trace</a></li>
+<li class="toctree-l2"><a class="reference internal" href="fastestimator.util.html">util</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api.html#module-fastestimator.estimator">estimator</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api.html#module-fastestimator.network">network</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api.html#module-fastestimator.pipeline">pipeline</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">FastEstimator</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="api.html">API</a> &raquo;</li>
+        
+      <li>interpretation</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/fastestimator.interpretation.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  
+<style>
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast,
+.nboutput.nblast {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast + .nbinput {
+    margin-top: -19px;
+}
+
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+
+/* Fix math alignment, see https://github.com/rtfd/sphinx_rtd_theme/pull/686 */
+.math {
+    text-align: unset;
+}
+</style>
+<div class="section" id="module-fastestimator.interpretation">
+<span id="interpretation"></span><h1>interpretation<a class="headerlink" href="#module-fastestimator.interpretation" title="Permalink to this headline">¶</a></h1>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="fastestimator.interpretation.util.html">util</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="fastestimator.interpretation.util.html#module-fastestimator.interpretation.util.color_util">color_util</a></li>
+<li class="toctree-l2"><a class="reference internal" href="fastestimator.interpretation.util.html#module-fastestimator.interpretation.util.fft_util">fft_util</a></li>
+<li class="toctree-l2"><a class="reference internal" href="fastestimator.interpretation.util.html#module-fastestimator.interpretation.util.saliency_util">saliency_util</a></li>
+<li class="toctree-l2"><a class="reference internal" href="fastestimator.interpretation.util.html#module-fastestimator.interpretation.util.umap_util">umap_util</a></li>
+<li class="toctree-l2"><a class="reference internal" href="fastestimator.interpretation.util.html#module-fastestimator.interpretation.util.vis_util">vis_util</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<hr class="docutils" />
+<div class="section" id="module-fastestimator.interpretation.caricature">
+<span id="caricature"></span><h2>caricature<a class="headerlink" href="#module-fastestimator.interpretation.caricature" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="fastestimator.interpretation.caricature.generate_caricatures">
+<code class="sig-prename descclassname">fastestimator.interpretation.caricature.</code><code class="sig-name descname">generate_caricatures</code><span class="sig-paren">(</span><em class="sig-param">model</em>, <em class="sig-param">model_input</em>, <em class="sig-param">layer_id</em>, <em class="sig-param">n_steps=100</em>, <em class="sig-param">learning_rate=0.05</em>, <em class="sig-param">blur=1</em>, <em class="sig-param">cossim_pow=0.5</em>, <em class="sig-param">sd=0.01</em>, <em class="sig-param">fft=True</em>, <em class="sig-param">decorrelate=True</em>, <em class="sig-param">sigmoid=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/interpretation/caricature.html#generate_caricatures"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.interpretation.caricature.generate_caricatures" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>model</strong> (<em>model</em>) – The keras model to be inspected by the Caricature visualization</p></li>
+<li><p><strong>model_input</strong> (<em>tensor</em>) – The input images to be fed to the model</p></li>
+<li><p><strong>layer_id</strong> (<em>int</em>) – The layer of the model to be inspected by the Caricature visualization</p></li>
+<li><p><strong>n_steps</strong> (<em>int</em>) – How many steps of optimization to run when computing caricatures (quality vs time trade)</p></li>
+<li><p><strong>learning_rate</strong> (<em>float</em>) – The learning rate of the caricature optimizer. Should be higher than usual</p></li>
+<li><p><strong>blur</strong> (<em>float</em>) – How much blur to add to images during caricature generation</p></li>
+<li><p><strong>cossim_pow</strong> (<em>float</em>) – How much should similarity in form be valued versus creative license</p></li>
+<li><p><strong>sd</strong> (<em>float</em>) – The standard deviation of the noise used to seed the caricature</p></li>
+<li><p><strong>fft</strong> (<em>bool</em>) – Whether to use fft space (True) or image space (False) to create caricatures</p></li>
+<li><p><strong>decorrelate</strong> (<em>bool</em>) – Whether to use an ImageNet-derived color correlation matrix to de-correlate
+colors in the caricature. Parameter has no effect on grey scale images.</p></li>
+<li><p><strong>sigmoid</strong> (<em>bool</em>) – Whether to use sigmoid (True) or clipping (False) to bound the caricature pixel values</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="fastestimator.interpretation.caricature.plot_caricature">
+<code class="sig-prename descclassname">fastestimator.interpretation.caricature.</code><code class="sig-name descname">plot_caricature</code><span class="sig-paren">(</span><em class="sig-param">model</em>, <em class="sig-param">model_input</em>, <em class="sig-param">layer_ids=None</em>, <em class="sig-param">decode_dictionary=None</em>, <em class="sig-param">n_steps=512</em>, <em class="sig-param">learning_rate=0.05</em>, <em class="sig-param">blur=1</em>, <em class="sig-param">cossim_pow=0.5</em>, <em class="sig-param">sd=0.01</em>, <em class="sig-param">fft=True</em>, <em class="sig-param">decorrelate=True</em>, <em class="sig-param">sigmoid=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/interpretation/caricature.html#plot_caricature"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.interpretation.caricature.plot_caricature" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>model</strong> (<em>model</em>) – The keras model to be inspected by the Caricature visualization</p></li>
+<li><p><strong>model_input</strong> (<em>tensor</em>) – The input images to be fed to the model</p></li>
+<li><p><strong>layer_ids</strong> (<em>list</em>) – The layers of the model to be inspected by the Caricature visualization</p></li>
+<li><p><strong>decode_dictionary</strong> (<em>dict</em>) – A dictionary mapping model outputs to class names</p></li>
+<li><p><strong>n_steps</strong> (<em>int</em>) – How many steps of optimization to run when computing caricatures (quality vs time trade)</p></li>
+<li><p><strong>learning_rate</strong> (<em>float</em>) – The learning rate of the caricature optimizer. Should be higher than usual</p></li>
+<li><p><strong>blur</strong> (<em>float</em>) – How much blur to add to images during caricature generation</p></li>
+<li><p><strong>cossim_pow</strong> (<em>float</em>) – How much should similarity in form be valued versus creative license</p></li>
+<li><p><strong>sd</strong> (<em>float</em>) – The standard deviation of the noise used to seed the caricature</p></li>
+<li><p><strong>fft</strong> (<em>bool</em>) – Whether to use fft space (True) or image space (False) to create caricatures</p></li>
+<li><p><strong>decorrelate</strong> (<em>bool</em>) – Whether to use an ImageNet-derived color correlation matrix to de-correlate
+colors in the caricature. Parameter has no effect on grey scale images.</p></li>
+<li><p><strong>sigmoid</strong> (<em>bool</em>) – Whether to use sigmoid (True) or clipping (False) to bound the caricature pixel values</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="fastestimator.interpretation.caricature.visualize_caricature">
+<code class="sig-prename descclassname">fastestimator.interpretation.caricature.</code><code class="sig-name descname">visualize_caricature</code><span class="sig-paren">(</span><em class="sig-param">model</em>, <em class="sig-param">model_input</em>, <em class="sig-param">layer_ids=None</em>, <em class="sig-param">decode_dictionary=None</em>, <em class="sig-param">save_path='.'</em>, <em class="sig-param">n_steps=512</em>, <em class="sig-param">learning_rate=0.05</em>, <em class="sig-param">blur=1</em>, <em class="sig-param">cossim_pow=0.5</em>, <em class="sig-param">sd=0.01</em>, <em class="sig-param">fft=True</em>, <em class="sig-param">decorrelate=True</em>, <em class="sig-param">sigmoid=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/interpretation/caricature.html#visualize_caricature"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.interpretation.caricature.visualize_caricature" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>model</strong> (<em>model</em>) – The keras model to be inspected by the Caricature visualization</p></li>
+<li><p><strong>model_input</strong> (<em>tensor</em>) – The input images to be fed to the model</p></li>
+<li><p><strong>layer_ids</strong> (<em>list</em>) – The layers of the model to be inspected by the Caricature visualization</p></li>
+<li><p><strong>decode_dictionary</strong> (<em>dict</em>) – A dictionary mapping model outputs to class names</p></li>
+<li><p><strong>save_path</strong> (<em>str</em>) – The directory into which to save the caricature</p></li>
+<li><p><strong>n_steps</strong> (<em>int</em>) – How many steps of optimization to run when computing caricatures (quality vs time trade)</p></li>
+<li><p><strong>learning_rate</strong> (<em>float</em>) – The learning rate of the caricature optimizer. Should be higher than usual</p></li>
+<li><p><strong>blur</strong> (<em>float</em>) – How much blur to add to images during caricature generation</p></li>
+<li><p><strong>cossim_pow</strong> (<em>float</em>) – How much should similarity in form be valued versus creative license</p></li>
+<li><p><strong>sd</strong> (<em>float</em>) – The standard deviation of the noise used to seed the caricature</p></li>
+<li><p><strong>fft</strong> (<em>bool</em>) – Whether to use fft space (True) or image space (False) to create caricatures</p></li>
+<li><p><strong>decorrelate</strong> (<em>bool</em>) – Whether to use an ImageNet-derived color correlation matrix to de-correlate
+colors in the caricature. Parameter has no effect on grey scale images.</p></li>
+<li><p><strong>sigmoid</strong> (<em>bool</em>) – Whether to use sigmoid (True) or clipping (False) to bound the caricature pixel values</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<hr class="docutils" />
+<div class="section" id="module-fastestimator.interpretation.saliency">
+<span id="saliency"></span><h2>saliency<a class="headerlink" href="#module-fastestimator.interpretation.saliency" title="Permalink to this headline">¶</a></h2>
+<dl class="attribute">
+<dt id="fastestimator.interpretation.saliency.compute_percentile">
+<code class="sig-prename descclassname">fastestimator.interpretation.saliency.</code><code class="sig-name descname">compute_percentile</code><a class="reference internal" href="_modules/fastestimator/interpretation/saliency.html#compute_percentile"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.interpretation.saliency.compute_percentile" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>tensor</strong> – A tensor with batches on the zero axis. Shape (batch X …)</p></li>
+<li><p><strong>percentile</strong> – The percentile value to be computed for each batch in the tensor</p></li>
+<li><p><strong>keepdims</strong> – Whether to keep shape compatibility with the input tensor</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A tensor corresponding to the given percentile value within each batch of the input tensor</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="fastestimator.interpretation.saliency.convert_for_visualization">
+<code class="sig-prename descclassname">fastestimator.interpretation.saliency.</code><code class="sig-name descname">convert_for_visualization</code><a class="reference internal" href="_modules/fastestimator/interpretation/saliency.html#convert_for_visualization"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.interpretation.saliency.convert_for_visualization" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>batched_masks</strong> – Input masks, channel values to be reduced by absolute value summation</p></li>
+<li><p><strong>percentile</strong> – The percentile [0-100] used to set the max value of the image</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A (batch X width X height) image after visualization clipping is applied</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="fastestimator.interpretation.saliency.plot_saliency">
+<code class="sig-prename descclassname">fastestimator.interpretation.saliency.</code><code class="sig-name descname">plot_saliency</code><span class="sig-paren">(</span><em class="sig-param">model</em>, <em class="sig-param">model_input</em>, <em class="sig-param">baseline_input=None</em>, <em class="sig-param">decode_dictionary=None</em>, <em class="sig-param">color_map='inferno'</em>, <em class="sig-param">smooth=7</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/interpretation/saliency.html#plot_saliency"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.interpretation.saliency.plot_saliency" title="Permalink to this definition">¶</a></dt>
+<dd><p>Displays or saves a saliency mask interpretation of the given input</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>model</strong> – A model to evaluate. Should be a classifier which takes the 0th axis as the batch axis</p></li>
+<li><p><strong>model_input</strong> – Input tensor, shaped for the model ex. (1, 299, 299, 3)</p></li>
+<li><p><strong>baseline_input</strong> – An example of what a blank model input would be.
+Should be a tensor with the same shape as model_input</p></li>
+<li><p><strong>decode_dictionary</strong> – A dictionary of “class_idx” -&gt; “class_name” associations</p></li>
+<li><p><strong>color_map</strong> – The color map to use to visualize the saliency maps.
+Consider “Greys_r”, “plasma”, or “magma” as alternatives</p></li>
+<li><p><strong>smooth</strong> – The number of samples to use when generating a smoothed image</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="fastestimator.interpretation.saliency.visualize_saliency">
+<code class="sig-prename descclassname">fastestimator.interpretation.saliency.</code><code class="sig-name descname">visualize_saliency</code><span class="sig-paren">(</span><em class="sig-param">model</em>, <em class="sig-param">model_input</em>, <em class="sig-param">baseline_input=None</em>, <em class="sig-param">decode_dictionary=None</em>, <em class="sig-param">color_map='inferno'</em>, <em class="sig-param">smooth=7</em>, <em class="sig-param">save_path='.'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/interpretation/saliency.html#visualize_saliency"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.interpretation.saliency.visualize_saliency" title="Permalink to this definition">¶</a></dt>
+<dd><p>Displays or saves a saliency mask interpretation of the given input</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>model</strong> – A model to evaluate. Should be a classifier which takes the 0th axis as the batch axis</p></li>
+<li><p><strong>model_input</strong> – Input tensor, shaped for the model ex. (1, 299, 299, 3)</p></li>
+<li><p><strong>baseline_input</strong> – An example of what a blank model input would be.
+Should be a tensor with the same shape as model_input</p></li>
+<li><p><strong>decode_dictionary</strong> – A dictionary of “class_idx” -&gt; “class_name” associations</p></li>
+<li><p><strong>color_map</strong> – The color map to use to visualize the saliency maps.
+Consider “Greys_r”, “plasma”, or “magma” as alternatives</p></li>
+<li><p><strong>smooth</strong> – The number of samples to use when generating a smoothed image</p></li>
+<li><p><strong>save_path</strong> – Where to save the output, or None to display the output</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<hr class="docutils" />
+<div class="section" id="module-fastestimator.interpretation.umaps">
+<span id="umaps"></span><h2>umaps<a class="headerlink" href="#module-fastestimator.interpretation.umaps" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="fastestimator.interpretation.umaps.UmapPlotter">
+<em class="property">class </em><code class="sig-prename descclassname">fastestimator.interpretation.umaps.</code><code class="sig-name descname">UmapPlotter</code><span class="sig-paren">(</span><em class="sig-param">label_dict=None</em>, <em class="sig-param">**umap_parameters</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/interpretation/umaps.html#UmapPlotter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.interpretation.umaps.UmapPlotter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="method">
+<dt id="fastestimator.interpretation.umaps.UmapPlotter.plot_umap">
+<code class="sig-name descname">plot_umap</code><span class="sig-paren">(</span><em class="sig-param">data</em>, <em class="sig-param">labels=None</em>, <em class="sig-param">legend_loc='best'</em>, <em class="sig-param">title=None</em>, <em class="sig-param">fig_ax=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/interpretation/umaps.html#UmapPlotter.plot_umap"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.interpretation.umaps.UmapPlotter.plot_umap" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="fastestimator.interpretation.umaps.UmapPlotter.visualize_umap">
+<code class="sig-name descname">visualize_umap</code><span class="sig-paren">(</span><em class="sig-param">data</em>, <em class="sig-param">labels=None</em>, <em class="sig-param">legend_loc='best'</em>, <em class="sig-param">save_path=None</em>, <em class="sig-param">title=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/interpretation/umaps.html#UmapPlotter.visualize_umap"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.interpretation.umaps.UmapPlotter.visualize_umap" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="fastestimator.interpretation.util.html" class="btn btn-neutral float-right" title="util" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="fastestimator.dataset.html" class="btn btn-neutral float-left" title="dataset" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, GEHC DataScience
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

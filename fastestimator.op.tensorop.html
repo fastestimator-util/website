@@ -1,0 +1,576 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>tensorop &mdash; FastEstimator 0.0.1 documentation</title>
+  
+
+  
+  
+    <link rel="shortcut icon" href="_static/favicon.ico"/>
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="augmentation" href="fastestimator.op.tensorop.augmentation.html" />
+    <link rel="prev" title="numpyop" href="fastestimator.op.numpyop.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> FastEstimator
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0a0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="learn.html">Learn</a></li>
+<li class="toctree-l1"><a class="reference internal" href="apphub.html">Example</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="api.html">API</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="fastestimator.architecture.html">architecture</a></li>
+<li class="toctree-l2"><a class="reference internal" href="fastestimator.cli.html">cli</a></li>
+<li class="toctree-l2"><a class="reference internal" href="fastestimator.dataset.html">dataset</a></li>
+<li class="toctree-l2"><a class="reference internal" href="fastestimator.interpretation.html">interpretation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="fastestimator.layers.html">layers</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="fastestimator.op.html">op</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="fastestimator.op.numpyop.html">numpyop</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">tensorop</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="fastestimator.op.tensorop.augmentation.html">augmentation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="fastestimator.op.tensorop.filter.html">filter</a></li>
+<li class="toctree-l4"><a class="reference internal" href="fastestimator.op.tensorop.loss.html">loss</a></li>
+<li class="toctree-l4"><a class="reference internal" href="fastestimator.op.tensorop.model.html">model</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-fastestimator.op.tensorop.average">average</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-fastestimator.op.tensorop.binarize">binarize</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-fastestimator.op.tensorop.minmax">minmax</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-fastestimator.op.tensorop.onehot">onehot</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-fastestimator.op.tensorop.reshape">reshape</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-fastestimator.op.tensorop.resize">resize</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-fastestimator.op.tensorop.scale">scale</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-fastestimator.op.tensorop.z_score">z_score</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="fastestimator.op.html#id1">op</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="fastestimator.schedule.html">schedule</a></li>
+<li class="toctree-l2"><a class="reference internal" href="fastestimator.summary.html">summary</a></li>
+<li class="toctree-l2"><a class="reference internal" href="fastestimator.trace.html">trace</a></li>
+<li class="toctree-l2"><a class="reference internal" href="fastestimator.util.html">util</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api.html#module-fastestimator.estimator">estimator</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api.html#module-fastestimator.network">network</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api.html#module-fastestimator.pipeline">pipeline</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">FastEstimator</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="api.html">API</a> &raquo;</li>
+        
+          <li><a href="fastestimator.op.html">op</a> &raquo;</li>
+        
+      <li>tensorop</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/fastestimator.op.tensorop.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  
+<style>
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast,
+.nboutput.nblast {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast + .nbinput {
+    margin-top: -19px;
+}
+
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+
+/* Fix math alignment, see https://github.com/rtfd/sphinx_rtd_theme/pull/686 */
+.math {
+    text-align: unset;
+}
+</style>
+<div class="section" id="module-fastestimator.op.tensorop">
+<span id="tensorop"></span><h1>tensorop<a class="headerlink" href="#module-fastestimator.op.tensorop" title="Permalink to this headline">¶</a></h1>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="fastestimator.op.tensorop.augmentation.html">augmentation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="fastestimator.op.tensorop.augmentation.html#module-fastestimator.op.tensorop.augmentation.adversarial_sample">adversarial_sample</a></li>
+<li class="toctree-l2"><a class="reference internal" href="fastestimator.op.tensorop.augmentation.html#module-fastestimator.op.tensorop.augmentation.augmentation_2d">augmentation_2d</a></li>
+<li class="toctree-l2"><a class="reference internal" href="fastestimator.op.tensorop.augmentation.html#module-fastestimator.op.tensorop.augmentation.mixup_batch">mixup_batch</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="fastestimator.op.tensorop.filter.html">filter</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="fastestimator.op.tensorop.filter.html#id1">filter</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="fastestimator.op.tensorop.loss.html">loss</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="fastestimator.op.tensorop.loss.html#module-fastestimator.op.tensorop.loss.binary_crossentropy">binary_crossentropy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="fastestimator.op.tensorop.loss.html#id1">loss</a></li>
+<li class="toctree-l2"><a class="reference internal" href="fastestimator.op.tensorop.loss.html#module-fastestimator.op.tensorop.loss.mean_squared_error">mean_squared_error</a></li>
+<li class="toctree-l2"><a class="reference internal" href="fastestimator.op.tensorop.loss.html#module-fastestimator.op.tensorop.loss.mixup_loss">mixup_loss</a></li>
+<li class="toctree-l2"><a class="reference internal" href="fastestimator.op.tensorop.loss.html#module-fastestimator.op.tensorop.loss.sparse_categorical_crossentropy">sparse_categorical_crossentropy</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="fastestimator.op.tensorop.model.html">model</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="fastestimator.op.tensorop.model.html#id1">model</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<hr class="docutils" />
+<div class="section" id="module-fastestimator.op.tensorop.average">
+<span id="average"></span><h2>average<a class="headerlink" href="#module-fastestimator.op.tensorop.average" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="fastestimator.op.tensorop.average.Average">
+<em class="property">class </em><code class="sig-prename descclassname">fastestimator.op.tensorop.average.</code><code class="sig-name descname">Average</code><span class="sig-paren">(</span><em class="sig-param">inputs=None</em>, <em class="sig-param">outputs=None</em>, <em class="sig-param">mode=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/op/tensorop/average.html#Average"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.op.tensorop.average.Average" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="fastestimator.op.html#fastestimator.op.op.TensorOp" title="fastestimator.op.op.TensorOp"><code class="xref py py-class docutils literal notranslate"><span class="pre">fastestimator.op.op.TensorOp</span></code></a></p>
+<dl class="method">
+<dt id="fastestimator.op.tensorop.average.Average.forward">
+<code class="sig-name descname">forward</code><span class="sig-paren">(</span><em class="sig-param">data</em>, <em class="sig-param">state</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/op/tensorop/average.html#Average.forward"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.op.tensorop.average.Average.forward" title="Permalink to this definition">¶</a></dt>
+<dd><p>This class is to be used to compute the average of input data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> – input data to be averaged</p></li>
+<li><p><strong>state</strong> – Information about the current execution context.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Averaged input data</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<hr class="docutils" />
+<div class="section" id="module-fastestimator.op.tensorop.binarize">
+<span id="binarize"></span><h2>binarize<a class="headerlink" href="#module-fastestimator.op.tensorop.binarize" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="fastestimator.op.tensorop.binarize.Binarize">
+<em class="property">class </em><code class="sig-prename descclassname">fastestimator.op.tensorop.binarize.</code><code class="sig-name descname">Binarize</code><span class="sig-paren">(</span><em class="sig-param">threshold</em>, <em class="sig-param">inputs=None</em>, <em class="sig-param">outputs=None</em>, <em class="sig-param">mode=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/op/tensorop/binarize.html#Binarize"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.op.tensorop.binarize.Binarize" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="fastestimator.op.html#fastestimator.op.op.TensorOp" title="fastestimator.op.op.TensorOp"><code class="xref py py-class docutils literal notranslate"><span class="pre">fastestimator.op.op.TensorOp</span></code></a></p>
+<p>Binarize data based on threshold between 0 and 1.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>threshold</strong> – Threshold for binarizing.</p></li>
+<li><p><strong>inputs</strong> – Name of the key in the dataset that is to be filtered.</p></li>
+<li><p><strong>outputs</strong> – Name of the key to be created/used in the dataset to store the results.</p></li>
+<li><p><strong>mode</strong> – mode that the filter acts on.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="method">
+<dt id="fastestimator.op.tensorop.binarize.Binarize.forward">
+<code class="sig-name descname">forward</code><span class="sig-paren">(</span><em class="sig-param">data</em>, <em class="sig-param">state</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/op/tensorop/binarize.html#Binarize.forward"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.op.tensorop.binarize.Binarize.forward" title="Permalink to this definition">¶</a></dt>
+<dd><p>Transforms the image to binary based on threshold.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> – Data to be binarized.</p></li>
+<li><p><strong>state</strong> – Information about the current execution context.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Tensor containing binarized data.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<hr class="docutils" />
+<div class="section" id="module-fastestimator.op.tensorop.minmax">
+<span id="minmax"></span><h2>minmax<a class="headerlink" href="#module-fastestimator.op.tensorop.minmax" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="fastestimator.op.tensorop.minmax.Minmax">
+<em class="property">class </em><code class="sig-prename descclassname">fastestimator.op.tensorop.minmax.</code><code class="sig-name descname">Minmax</code><span class="sig-paren">(</span><em class="sig-param">inputs=None</em>, <em class="sig-param">outputs=None</em>, <em class="sig-param">mode=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/op/tensorop/minmax.html#Minmax"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.op.tensorop.minmax.Minmax" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="fastestimator.op.html#fastestimator.op.op.TensorOp" title="fastestimator.op.op.TensorOp"><code class="xref py py-class docutils literal notranslate"><span class="pre">fastestimator.op.op.TensorOp</span></code></a></p>
+<p>Normalize data using the minmax method.</p>
+<dl class="method">
+<dt id="fastestimator.op.tensorop.minmax.Minmax.forward">
+<code class="sig-name descname">forward</code><span class="sig-paren">(</span><em class="sig-param">data</em>, <em class="sig-param">state</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/op/tensorop/minmax.html#Minmax.forward"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.op.tensorop.minmax.Minmax.forward" title="Permalink to this definition">¶</a></dt>
+<dd><p>Normalizes the data tensor.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> – Data to be normalized.</p></li>
+<li><p><strong>state</strong> – Information about the current execution context.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Tensor after minmax.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<hr class="docutils" />
+<div class="section" id="module-fastestimator.op.tensorop.onehot">
+<span id="onehot"></span><h2>onehot<a class="headerlink" href="#module-fastestimator.op.tensorop.onehot" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="fastestimator.op.tensorop.onehot.Onehot">
+<em class="property">class </em><code class="sig-prename descclassname">fastestimator.op.tensorop.onehot.</code><code class="sig-name descname">Onehot</code><span class="sig-paren">(</span><em class="sig-param">num_dim</em>, <em class="sig-param">inputs=None</em>, <em class="sig-param">outputs=None</em>, <em class="sig-param">mode=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/op/tensorop/onehot.html#Onehot"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.op.tensorop.onehot.Onehot" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="fastestimator.op.html#fastestimator.op.op.TensorOp" title="fastestimator.op.op.TensorOp"><code class="xref py py-class docutils literal notranslate"><span class="pre">fastestimator.op.op.TensorOp</span></code></a></p>
+<p>Preprocessing class for converting categorical labels to onehot encoding.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>num_dim</strong> – Number of dimensions of the labels.</p></li>
+<li><p><strong>inputs</strong> – Name of the key in the dataset that is to be filtered.</p></li>
+<li><p><strong>outputs</strong> – Name of the key to be created/used in the dataset to store the results.</p></li>
+<li><p><strong>mode</strong> – mode that the filter acts on.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="method">
+<dt id="fastestimator.op.tensorop.onehot.Onehot.forward">
+<code class="sig-name descname">forward</code><span class="sig-paren">(</span><em class="sig-param">data</em>, <em class="sig-param">state</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/op/tensorop/onehot.html#Onehot.forward"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.op.tensorop.onehot.Onehot.forward" title="Permalink to this definition">¶</a></dt>
+<dd><p>Transforms categorical labels to onehot encodings.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> – Data to be preprocessed.</p></li>
+<li><p><strong>state</strong> – Information about the current execution context.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Transformed labels.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<hr class="docutils" />
+<div class="section" id="module-fastestimator.op.tensorop.reshape">
+<span id="reshape"></span><h2>reshape<a class="headerlink" href="#module-fastestimator.op.tensorop.reshape" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="fastestimator.op.tensorop.reshape.Reshape">
+<em class="property">class </em><code class="sig-prename descclassname">fastestimator.op.tensorop.reshape.</code><code class="sig-name descname">Reshape</code><span class="sig-paren">(</span><em class="sig-param">shape</em>, <em class="sig-param">inputs=None</em>, <em class="sig-param">outputs=None</em>, <em class="sig-param">mode=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/op/tensorop/reshape.html#Reshape"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.op.tensorop.reshape.Reshape" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="fastestimator.op.html#fastestimator.op.op.TensorOp" title="fastestimator.op.op.TensorOp"><code class="xref py py-class docutils literal notranslate"><span class="pre">fastestimator.op.op.TensorOp</span></code></a></p>
+<p>Preprocessing class for reshaping the data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>shape</strong> – target shape.</p></li>
+<li><p><strong>inputs</strong> – Name of the key in the dataset that is to be filtered.</p></li>
+<li><p><strong>outputs</strong> – Name of the key to be created/used in the dataset to store the results.</p></li>
+<li><p><strong>mode</strong> – mode that the filter acts on.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="method">
+<dt id="fastestimator.op.tensorop.reshape.Reshape.forward">
+<code class="sig-name descname">forward</code><span class="sig-paren">(</span><em class="sig-param">data</em>, <em class="sig-param">state</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/op/tensorop/reshape.html#Reshape.forward"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.op.tensorop.reshape.Reshape.forward" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reshapes data tensor.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> – Data to be reshaped.</p></li>
+<li><p><strong>state</strong> – Information about the current execution context.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Reshaped tensor.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<hr class="docutils" />
+<div class="section" id="module-fastestimator.op.tensorop.resize">
+<span id="resize"></span><h2>resize<a class="headerlink" href="#module-fastestimator.op.tensorop.resize" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="fastestimator.op.tensorop.resize.Resize">
+<em class="property">class </em><code class="sig-prename descclassname">fastestimator.op.tensorop.resize.</code><code class="sig-name descname">Resize</code><span class="sig-paren">(</span><em class="sig-param">size</em>, <em class="sig-param">resize_method='bilinear'</em>, <em class="sig-param">inputs=None</em>, <em class="sig-param">outputs=None</em>, <em class="sig-param">mode=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/op/tensorop/resize.html#Resize"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.op.tensorop.resize.Resize" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="fastestimator.op.html#fastestimator.op.op.TensorOp" title="fastestimator.op.op.TensorOp"><code class="xref py py-class docutils literal notranslate"><span class="pre">fastestimator.op.op.TensorOp</span></code></a></p>
+<p>Preprocessing class for resizing the images.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>size</strong> – Destination shape of the images.</p></li>
+<li><p><strong>resize_method</strong> – One of resize methods provided by tensorflow to be used.</p></li>
+<li><p><strong>inputs</strong> – Name of the key in the dataset that is to be filtered.</p></li>
+<li><p><strong>outputs</strong> – Name of the key to be created/used in the dataset to store the results.</p></li>
+<li><p><strong>mode</strong> – mode that the filter acts on.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="method">
+<dt id="fastestimator.op.tensorop.resize.Resize.forward">
+<code class="sig-name descname">forward</code><span class="sig-paren">(</span><em class="sig-param">data</em>, <em class="sig-param">state</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/op/tensorop/resize.html#Resize.forward"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.op.tensorop.resize.Resize.forward" title="Permalink to this definition">¶</a></dt>
+<dd><p>Resizes data tensor.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> – Tensor to be resized.</p></li>
+<li><p><strong>state</strong> – Information about the current execution context.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Resized tensor.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<hr class="docutils" />
+<div class="section" id="module-fastestimator.op.tensorop.scale">
+<span id="scale"></span><h2>scale<a class="headerlink" href="#module-fastestimator.op.tensorop.scale" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="fastestimator.op.tensorop.scale.Scale">
+<em class="property">class </em><code class="sig-prename descclassname">fastestimator.op.tensorop.scale.</code><code class="sig-name descname">Scale</code><span class="sig-paren">(</span><em class="sig-param">scalar</em>, <em class="sig-param">inputs=None</em>, <em class="sig-param">outputs=None</em>, <em class="sig-param">mode=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/op/tensorop/scale.html#Scale"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.op.tensorop.scale.Scale" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="fastestimator.op.html#fastestimator.op.op.TensorOp" title="fastestimator.op.op.TensorOp"><code class="xref py py-class docutils literal notranslate"><span class="pre">fastestimator.op.op.TensorOp</span></code></a></p>
+<p>Preprocessing class for scaling dataset.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>scalar</strong> – Scalar for scaling the data.</p></li>
+<li><p><strong>inputs</strong> – Name of the key in the dataset that is to be filtered.</p></li>
+<li><p><strong>outputs</strong> – Name of the key to be created/used in the dataset to store the results.</p></li>
+<li><p><strong>mode</strong> – mode that the filter acts on.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="method">
+<dt id="fastestimator.op.tensorop.scale.Scale.forward">
+<code class="sig-name descname">forward</code><span class="sig-paren">(</span><em class="sig-param">data</em>, <em class="sig-param">state</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/op/tensorop/scale.html#Scale.forward"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.op.tensorop.scale.Scale.forward" title="Permalink to this definition">¶</a></dt>
+<dd><p>Scales the data tensor.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> – Data to be scaled.</p></li>
+<li><p><strong>state</strong> – Information about the current execution context.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Scaled data tensor</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<hr class="docutils" />
+<div class="section" id="module-fastestimator.op.tensorop.z_score">
+<span id="z-score"></span><h2>z_score<a class="headerlink" href="#module-fastestimator.op.tensorop.z_score" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="fastestimator.op.tensorop.z_score.Zscore">
+<em class="property">class </em><code class="sig-prename descclassname">fastestimator.op.tensorop.z_score.</code><code class="sig-name descname">Zscore</code><span class="sig-paren">(</span><em class="sig-param">inputs=None</em>, <em class="sig-param">outputs=None</em>, <em class="sig-param">mode=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/op/tensorop/z_score.html#Zscore"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.op.tensorop.z_score.Zscore" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="fastestimator.op.html#fastestimator.op.op.TensorOp" title="fastestimator.op.op.TensorOp"><code class="xref py py-class docutils literal notranslate"><span class="pre">fastestimator.op.op.TensorOp</span></code></a></p>
+<p>Standardize data using zscore method.</p>
+<dl class="method">
+<dt id="fastestimator.op.tensorop.z_score.Zscore.forward">
+<code class="sig-name descname">forward</code><span class="sig-paren">(</span><em class="sig-param">data</em>, <em class="sig-param">state</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/op/tensorop/z_score.html#Zscore.forward"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.op.tensorop.z_score.Zscore.forward" title="Permalink to this definition">¶</a></dt>
+<dd><p>Standardizes the data tensor.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> – Data to be standardized.</p></li>
+<li><p><strong>state</strong> – Information about the current execution context.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Tensor containing standardized data.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="fastestimator.op.tensorop.augmentation.html" class="btn btn-neutral float-right" title="augmentation" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="fastestimator.op.numpyop.html" class="btn btn-neutral float-left" title="numpyop" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, GEHC DataScience
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

@@ -1,0 +1,21 @@
+summary
+=============================
+
+.. automodule:: fastestimator.summary
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+.. toctree::
+
+   fastestimator.summary.logs
+
+----------------------------------
+
+summary
+----------------------------------
+.. automodule:: fastestimator.summary.summary
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
