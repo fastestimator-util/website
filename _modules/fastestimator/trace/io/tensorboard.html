@@ -1,0 +1,432 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>fastestimator.trace.io.tensorboard &mdash; FastEstimator 0.0.1 documentation</title>
+  
+
+  
+  
+    <link rel="shortcut icon" href="../../../../_static/favicon.ico"/>
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../../" src="../../../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../../../_static/language_data.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
+    
+    <script type="text/javascript" src="../../../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../../index.html" class="icon icon-home"> FastEstimator
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0a0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../learn.html">Learn</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../apphub.html">Example</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../api.html">API</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">FastEstimator</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../../index.html">Module code</a> &raquo;</li>
+        
+      <li>fastestimator.trace.io.tensorboard</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for fastestimator.trace.io.tensorboard</h1><div class="highlight"><pre>
+<span></span><span class="c1"># Copyright 2019 The FastEstimator Authors. All Rights Reserved.</span>
+<span class="c1">#</span>
+<span class="c1"># Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);</span>
+<span class="c1"># you may not use this file except in compliance with the License.</span>
+<span class="c1"># You may obtain a copy of the License at</span>
+<span class="c1">#</span>
+<span class="c1">#     http://www.apache.org/licenses/LICENSE-2.0</span>
+<span class="c1">#</span>
+<span class="c1"># Unless required by applicable law or agreed to in writing, software</span>
+<span class="c1"># distributed under the License is distributed on an &quot;AS IS&quot; BASIS,</span>
+<span class="c1"># WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span>
+<span class="c1"># See the License for the specific language governing permissions and</span>
+<span class="c1"># limitations under the License.</span>
+<span class="c1"># ==============================================================================</span>
+<span class="sd">&quot;&quot;&quot;Trace contains metrics and other information users want to track.&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">datetime</span>
+<span class="kn">import</span> <span class="nn">os</span>
+
+<span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
+<span class="kn">from</span> <span class="nn">tensorflow.python.framework</span> <span class="k">import</span> <span class="n">ops</span> <span class="k">as</span> <span class="n">tfops</span>
+<span class="kn">from</span> <span class="nn">tensorflow.python.keras</span> <span class="k">import</span> <span class="n">backend</span>
+<span class="kn">from</span> <span class="nn">tensorflow.python.keras.layers</span> <span class="k">import</span> <span class="n">embeddings</span>
+<span class="kn">from</span> <span class="nn">tensorflow.python.ops</span> <span class="k">import</span> <span class="n">array_ops</span><span class="p">,</span> <span class="n">summary_ops_v2</span>
+
+<span class="kn">from</span> <span class="nn">fastestimator.trace</span> <span class="k">import</span> <span class="n">Trace</span>
+<span class="kn">from</span> <span class="nn">fastestimator.util.util</span> <span class="k">import</span> <span class="n">is_number</span>
+
+
+<div class="viewcode-block" id="TensorBoard"><a class="viewcode-back" href="../../../../fastestimator.trace.io.html#fastestimator.trace.io.tensorboard.TensorBoard">[docs]</a><span class="k">class</span> <span class="nc">TensorBoard</span><span class="p">(</span><span class="n">Trace</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Output data for use in TensorBoard.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        log_dir (str, optional): Path of the directory where to save the log files to be parsed by TensorBoard.</span>
+<span class="sd">            Defaults to &#39;logs&#39;.</span>
+<span class="sd">        histogram_freq (int, optional): Frequency (in epochs) at which to compute activation and weight histograms for</span>
+<span class="sd">            the layers of the model. If set to 0, histograms won&#39;t be computed. Defaults to 0.</span>
+<span class="sd">        write_graph (bool, optional): Whether to visualize the graph in TensorBoard. The log file can become quite large</span>
+<span class="sd">            when write_graph is set to True. Defaults to True.</span>
+<span class="sd">        write_images (bool, str, list, optional): If True will write model weights to visualize as an image in</span>
+<span class="sd">            TensorBoard. If a string or list of strings is provided, the corresponding keys will be written to</span>
+<span class="sd">            Tensorboard images. To get weights and specific keys use [True, &#39;key1&#39;, &#39;key2&#39;,...] Defaults to False.</span>
+<span class="sd">        update_freq (str, int, optional): &#39;batch&#39; or &#39;epoch&#39; or integer. When using &#39;batch&#39;, writes the losses and</span>
+<span class="sd">            metrics to TensorBoard after each batch. The same applies for &#39;epoch&#39;. If using an integer, let&#39;s say 1000,</span>
+<span class="sd">            the callback will write the metrics and losses to TensorBoard every 1000 samples. Note that writing too</span>
+<span class="sd">            frequently to TensorBoard can slow down your training. Defaults to &#39;epoch&#39;.</span>
+<span class="sd">        profile_batch (int, optional): Which batch to run profiling on. 0 to disable. Note that FE batch numbering</span>
+<span class="sd">            starts from 0 rather than 1. Defaults to 2.</span>
+<span class="sd">        embeddings_freq (int, optional): Frequency (in epochs) at which embedding layers will be visualized. If set to</span>
+<span class="sd">            0, embeddings won&#39;t be visualized.Defaults to 0.</span>
+<span class="sd">        embeddings_metadata (str, dict, optional): A dictionary which maps layer name to a file name in which metadata</span>
+<span class="sd">            for this embedding layer is saved. See the details about metadata files format. In case if the same</span>
+<span class="sd">            metadata file is used for all embedding layers, string can be passed. Defaults to None.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+                 <span class="n">log_dir</span><span class="o">=</span><span class="s1">&#39;logs&#39;</span><span class="p">,</span>
+                 <span class="n">histogram_freq</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+                 <span class="n">write_graph</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                 <span class="n">write_images</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                 <span class="n">update_freq</span><span class="o">=</span><span class="s1">&#39;epoch&#39;</span><span class="p">,</span>
+                 <span class="n">profile_batch</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+                 <span class="n">embeddings_freq</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+                 <span class="n">embeddings_metadata</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">inputs</span><span class="o">=</span><span class="s2">&quot;*&quot;</span><span class="p">)</span>
+        <span class="n">current_time</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%Y%m</span><span class="si">%d</span><span class="s2">-%H%M%S&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">train_log_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">log_dir</span><span class="p">,</span> <span class="n">current_time</span><span class="p">),</span> <span class="s1">&#39;train&#39;</span><span class="p">)</span>
+        <span class="n">eval_log_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">log_dir</span><span class="p">,</span> <span class="n">current_time</span><span class="p">),</span> <span class="s1">&#39;eval&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">summary_writers</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s1">&#39;train&#39;</span><span class="p">:</span> <span class="n">tf</span><span class="o">.</span><span class="n">summary</span><span class="o">.</span><span class="n">create_file_writer</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">train_log_dir</span><span class="p">),</span>
+            <span class="s1">&#39;eval&#39;</span><span class="p">:</span> <span class="n">tf</span><span class="o">.</span><span class="n">summary</span><span class="o">.</span><span class="n">create_file_writer</span><span class="p">(</span><span class="n">eval_log_dir</span><span class="p">)</span>
+        <span class="p">}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">update_freq</span> <span class="o">=</span> <span class="mi">1</span> <span class="k">if</span> <span class="n">update_freq</span> <span class="o">==</span> <span class="s1">&#39;batch&#39;</span> <span class="k">else</span> <span class="n">update_freq</span>
+        <span class="k">assert</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">update_freq</span> <span class="o">==</span> <span class="s1">&#39;epoch&#39;</span> <span class="ow">or</span> <span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">update_freq</span><span class="p">,</span> <span class="nb">int</span><span class="p">)</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">update_freq</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)),</span> \
+            <span class="s2">&quot;TensorBoard update_freq must be either &#39;epoch&#39;, &#39;batch&#39;, or a positive integer&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ignore_keys</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;mode&#39;</span><span class="p">,</span> <span class="s1">&#39;epoch&#39;</span><span class="p">,</span> <span class="s1">&#39;train_step&#39;</span><span class="p">,</span> <span class="s1">&#39;batch_idx&#39;</span><span class="p">,</span> <span class="s1">&#39;batch_size&#39;</span><span class="p">,</span> <span class="s1">&#39;batch&#39;</span><span class="p">}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">write_graph</span> <span class="o">=</span> <span class="n">write_graph</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">write_images</span> <span class="o">=</span> <span class="p">{</span><span class="n">write_images</span><span class="p">}</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">write_images</span><span class="p">,</span> <span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="nb">bool</span><span class="p">))</span> <span class="k">else</span> <span class="nb">set</span><span class="p">(</span><span class="n">write_images</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">histogram_freq</span> <span class="o">=</span> <span class="n">histogram_freq</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">profile_batch</span> <span class="o">=</span> <span class="n">profile_batch</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">is_tracing</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">embeddings_freq</span> <span class="o">=</span> <span class="n">embeddings_freq</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">embeddings_metadata</span> <span class="o">=</span> <span class="n">embeddings_metadata</span>
+
+    <span class="k">def</span> <span class="nf">on_begin</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">write_graph</span><span class="p">:</span>
+            <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">summary_writers</span><span class="p">[</span><span class="s1">&#39;train&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">as_default</span><span class="p">():</span>
+                <span class="k">with</span> <span class="n">summary_ops_v2</span><span class="o">.</span><span class="n">always_record_summaries</span><span class="p">():</span>
+                    <span class="n">summary_ops_v2</span><span class="o">.</span><span class="n">graph</span><span class="p">(</span><span class="n">backend</span><span class="o">.</span><span class="n">get_graph</span><span class="p">(),</span> <span class="n">step</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+                    <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">model</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">network</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                        <span class="n">summary_writable</span> <span class="o">=</span> <span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">_is_graph_network</span> <span class="ow">or</span> <span class="n">model</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;Sequential&#39;</span><span class="p">)</span>
+                        <span class="k">if</span> <span class="n">summary_writable</span><span class="p">:</span>
+                            <span class="n">summary_ops_v2</span><span class="o">.</span><span class="n">keras_model</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">embeddings_freq</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_configure_embeddings</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">on_batch_end</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">state</span><span class="p">[</span><span class="s1">&#39;mode&#39;</span><span class="p">]</span> <span class="o">!=</span> <span class="s1">&#39;train&#39;</span><span class="p">:</span>
+            <span class="k">return</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_tracing</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_log_trace</span><span class="p">(</span><span class="n">state</span><span class="p">[</span><span class="s1">&#39;train_step&#39;</span><span class="p">])</span>
+        <span class="k">elif</span> <span class="n">state</span><span class="p">[</span><span class="s1">&#39;train_step&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">profile_batch</span> <span class="o">-</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_enable_trace</span><span class="p">()</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">update_freq</span> <span class="o">==</span> <span class="s1">&#39;epoch&#39;</span> <span class="ow">or</span> <span class="n">state</span><span class="p">[</span><span class="s1">&#39;train_step&#39;</span><span class="p">]</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">update_freq</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span>
+        <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">summary_writers</span><span class="p">[</span><span class="n">state</span><span class="p">[</span><span class="s1">&#39;mode&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">as_default</span><span class="p">():</span>
+            <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">state</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">ignore_keys</span><span class="p">:</span>
+                <span class="n">val</span> <span class="o">=</span> <span class="n">state</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
+                <span class="k">if</span> <span class="n">is_number</span><span class="p">(</span><span class="n">val</span><span class="p">):</span>
+                    <span class="n">tf</span><span class="o">.</span><span class="n">summary</span><span class="o">.</span><span class="n">scalar</span><span class="p">(</span><span class="s2">&quot;batch_&quot;</span> <span class="o">+</span> <span class="n">key</span><span class="p">,</span> <span class="n">val</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="n">state</span><span class="p">[</span><span class="s1">&#39;train_step&#39;</span><span class="p">])</span>
+            <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">write_images</span> <span class="o">-</span> <span class="p">{</span><span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">}:</span>
+                <span class="n">data</span> <span class="o">=</span> <span class="n">state</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">data</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="n">tf</span><span class="o">.</span><span class="n">summary</span><span class="o">.</span><span class="n">image</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="n">state</span><span class="p">[</span><span class="s1">&#39;train_step&#39;</span><span class="p">])</span>
+
+    <span class="k">def</span> <span class="nf">on_epoch_end</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">):</span>
+        <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">summary_writers</span><span class="p">[</span><span class="n">state</span><span class="p">[</span><span class="s1">&#39;mode&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">as_default</span><span class="p">():</span>
+            <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">state</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">ignore_keys</span><span class="p">:</span>
+                <span class="n">val</span> <span class="o">=</span> <span class="n">state</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
+                <span class="k">if</span> <span class="n">is_number</span><span class="p">(</span><span class="n">val</span><span class="p">):</span>
+                    <span class="n">tf</span><span class="o">.</span><span class="n">summary</span><span class="o">.</span><span class="n">scalar</span><span class="p">(</span><span class="s2">&quot;epoch_&quot;</span> <span class="o">+</span> <span class="n">key</span><span class="p">,</span> <span class="n">val</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="n">state</span><span class="p">[</span><span class="s1">&#39;epoch&#39;</span><span class="p">])</span>
+            <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">write_images</span> <span class="o">-</span> <span class="p">{</span><span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">}:</span>
+                <span class="n">data</span> <span class="o">=</span> <span class="n">state</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">data</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="n">tf</span><span class="o">.</span><span class="n">summary</span><span class="o">.</span><span class="n">image</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="n">state</span><span class="p">[</span><span class="s1">&#39;epoch&#39;</span><span class="p">])</span>
+            <span class="k">if</span> <span class="n">state</span><span class="p">[</span><span class="s1">&#39;mode&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;train&#39;</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">histogram_freq</span> <span class="ow">and</span> <span class="n">state</span><span class="p">[</span><span class="s1">&#39;epoch&#39;</span><span class="p">]</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">histogram_freq</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_log_weights</span><span class="p">(</span><span class="n">epoch</span><span class="o">=</span><span class="n">state</span><span class="p">[</span><span class="s1">&#39;epoch&#39;</span><span class="p">])</span>
+            <span class="k">if</span> <span class="n">state</span><span class="p">[</span><span class="s1">&#39;mode&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;train&#39;</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">embeddings_freq</span> <span class="ow">and</span> <span class="n">state</span><span class="p">[</span><span class="s1">&#39;epoch&#39;</span><span class="p">]</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">embeddings_freq</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_log_embeddings</span><span class="p">(</span><span class="n">state</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">on_end</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_tracing</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_log_trace</span><span class="p">(</span><span class="n">state</span><span class="p">[</span><span class="s1">&#39;train_step&#39;</span><span class="p">])</span>
+        <span class="k">for</span> <span class="n">writer</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">summary_writers</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+            <span class="n">writer</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">_enable_trace</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">summary_ops_v2</span><span class="o">.</span><span class="n">trace_on</span><span class="p">(</span><span class="n">graph</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">profiler</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">is_tracing</span> <span class="o">=</span> <span class="kc">True</span>
+
+    <span class="k">def</span> <span class="nf">_log_trace</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">global_batch_idx</span><span class="p">):</span>
+        <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">summary_writers</span><span class="p">[</span><span class="s1">&#39;train&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">as_default</span><span class="p">(),</span> <span class="n">summary_ops_v2</span><span class="o">.</span><span class="n">always_record_summaries</span><span class="p">():</span>
+            <span class="n">summary_ops_v2</span><span class="o">.</span><span class="n">trace_export</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;batch_</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">global_batch_idx</span><span class="p">),</span>
+                                        <span class="n">step</span><span class="o">=</span><span class="n">global_batch_idx</span><span class="p">,</span>
+                                        <span class="n">profiler_outdir</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">train_log_dir</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">is_tracing</span> <span class="o">=</span> <span class="kc">False</span>
+
+    <span class="k">def</span> <span class="nf">_log_embeddings</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">model_name</span><span class="p">,</span> <span class="n">model</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">network</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="n">embeddings_ckpt</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">train_log_dir</span><span class="p">,</span>
+                                           <span class="s1">&#39;</span><span class="si">{}</span><span class="s1">_embedding.ckpt-</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">model_name</span><span class="p">,</span> <span class="n">state</span><span class="p">[</span><span class="s1">&#39;epoch&#39;</span><span class="p">]))</span>
+            <span class="n">model</span><span class="o">.</span><span class="n">save_weights</span><span class="p">(</span><span class="n">embeddings_ckpt</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_log_weights</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">epoch</span><span class="p">):</span>
+        <span class="c1"># Similar to TF implementation, but multiple models</span>
+        <span class="n">writer</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">summary_writers</span><span class="p">[</span><span class="s1">&#39;train&#39;</span><span class="p">]</span>
+        <span class="k">with</span> <span class="n">writer</span><span class="o">.</span><span class="n">as_default</span><span class="p">(),</span> <span class="n">summary_ops_v2</span><span class="o">.</span><span class="n">always_record_summaries</span><span class="p">():</span>
+            <span class="k">for</span> <span class="n">model_name</span><span class="p">,</span> <span class="n">model</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">network</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                <span class="k">for</span> <span class="n">layer</span> <span class="ow">in</span> <span class="n">model</span><span class="o">.</span><span class="n">layers</span><span class="p">:</span>
+                    <span class="k">for</span> <span class="n">weight</span> <span class="ow">in</span> <span class="n">layer</span><span class="o">.</span><span class="n">weights</span><span class="p">:</span>
+                        <span class="n">weight_name</span> <span class="o">=</span> <span class="n">weight</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;:&#39;</span><span class="p">,</span> <span class="s1">&#39;_&#39;</span><span class="p">)</span>
+                        <span class="n">weight_name</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">{}</span><span class="s2">_</span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">model_name</span><span class="p">,</span> <span class="n">weight_name</span><span class="p">)</span>
+                        <span class="k">with</span> <span class="n">tfops</span><span class="o">.</span><span class="n">init_scope</span><span class="p">():</span>
+                            <span class="n">weight</span> <span class="o">=</span> <span class="n">backend</span><span class="o">.</span><span class="n">get_value</span><span class="p">(</span><span class="n">weight</span><span class="p">)</span>
+                        <span class="n">summary_ops_v2</span><span class="o">.</span><span class="n">histogram</span><span class="p">(</span><span class="n">weight_name</span><span class="p">,</span> <span class="n">weight</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="n">epoch</span><span class="p">)</span>
+                        <span class="k">if</span> <span class="kc">True</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">write_images</span><span class="p">:</span>
+                            <span class="bp">self</span><span class="o">.</span><span class="n">_log_weight_as_image</span><span class="p">(</span><span class="n">weight</span><span class="p">,</span> <span class="n">weight_name</span><span class="p">,</span> <span class="n">epoch</span><span class="p">)</span>
+        <span class="n">writer</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">_log_weight_as_image</span><span class="p">(</span><span class="n">weight</span><span class="p">,</span> <span class="n">weight_name</span><span class="p">,</span> <span class="n">epoch</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Logs a weight as a TensorBoard image.</span>
+<span class="sd">            Implementation from tensorflow codebase, would have invoked theirs directly but they didn&#39;t make it a static</span>
+<span class="sd">            method</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">w_img</span> <span class="o">=</span> <span class="n">array_ops</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(</span><span class="n">weight</span><span class="p">)</span>
+        <span class="n">shape</span> <span class="o">=</span> <span class="n">backend</span><span class="o">.</span><span class="n">int_shape</span><span class="p">(</span><span class="n">w_img</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">shape</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>  <span class="c1"># Bias case</span>
+            <span class="n">w_img</span> <span class="o">=</span> <span class="n">array_ops</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">w_img</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+        <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">shape</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>  <span class="c1"># Dense layer kernel case</span>
+            <span class="k">if</span> <span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]:</span>
+                <span class="n">w_img</span> <span class="o">=</span> <span class="n">array_ops</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">w_img</span><span class="p">)</span>
+                <span class="n">shape</span> <span class="o">=</span> <span class="n">backend</span><span class="o">.</span><span class="n">int_shape</span><span class="p">(</span><span class="n">w_img</span><span class="p">)</span>
+            <span class="n">w_img</span> <span class="o">=</span> <span class="n">array_ops</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">w_img</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="mi">1</span><span class="p">])</span>
+        <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">shape</span><span class="p">)</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>  <span class="c1"># ConvNet case</span>
+            <span class="k">if</span> <span class="n">backend</span><span class="o">.</span><span class="n">image_data_format</span><span class="p">()</span> <span class="o">==</span> <span class="s1">&#39;channels_last&#39;</span><span class="p">:</span>
+                <span class="c1"># Switch to channels_first to display every kernel as a separate</span>
+                <span class="c1"># image.</span>
+                <span class="n">w_img</span> <span class="o">=</span> <span class="n">array_ops</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">w_img</span><span class="p">,</span> <span class="n">perm</span><span class="o">=</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+                <span class="n">shape</span> <span class="o">=</span> <span class="n">backend</span><span class="o">.</span><span class="n">int_shape</span><span class="p">(</span><span class="n">w_img</span><span class="p">)</span>
+            <span class="n">w_img</span> <span class="o">=</span> <span class="n">array_ops</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">w_img</span><span class="p">,</span> <span class="p">[</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">shape</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="mi">1</span><span class="p">])</span>
+        <span class="n">shape</span> <span class="o">=</span> <span class="n">backend</span><span class="o">.</span><span class="n">int_shape</span><span class="p">(</span><span class="n">w_img</span><span class="p">)</span>
+        <span class="c1"># Not possible to handle 3D convnets etc.</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">shape</span><span class="p">)</span> <span class="o">==</span> <span class="mi">4</span> <span class="ow">and</span> <span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">]:</span>
+            <span class="n">summary_ops_v2</span><span class="o">.</span><span class="n">image</span><span class="p">(</span><span class="n">weight_name</span><span class="p">,</span> <span class="n">w_img</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="n">epoch</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_configure_embeddings</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Configure the Projector for embeddings.</span>
+<span class="sd">        Implementation from tensorflow codebase, but supports multiple models</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="c1"># noinspection PyPackageRequirements</span>
+            <span class="kn">from</span> <span class="nn">tensorboard.plugins</span> <span class="k">import</span> <span class="n">projector</span>
+        <span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ImportError</span><span class="p">(</span><span class="s1">&#39;Failed to import TensorBoard. Please make sure that &#39;</span>
+                              <span class="s1">&#39;TensorBoard integration is complete.&quot;&#39;</span><span class="p">)</span>
+        <span class="n">config</span> <span class="o">=</span> <span class="n">projector</span><span class="o">.</span><span class="n">ProjectorConfig</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">model_name</span><span class="p">,</span> <span class="n">model</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">network</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">for</span> <span class="n">layer</span> <span class="ow">in</span> <span class="n">model</span><span class="o">.</span><span class="n">layers</span><span class="p">:</span>
+                <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">layer</span><span class="p">,</span> <span class="n">embeddings</span><span class="o">.</span><span class="n">Embedding</span><span class="p">):</span>
+                    <span class="n">embedding</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">embeddings</span><span class="o">.</span><span class="n">add</span><span class="p">()</span>
+                    <span class="n">embedding</span><span class="o">.</span><span class="n">tensor_name</span> <span class="o">=</span> <span class="n">layer</span><span class="o">.</span><span class="n">embeddings</span><span class="o">.</span><span class="n">name</span>
+
+                    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">embeddings_metadata</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">embeddings_metadata</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+                            <span class="n">embedding</span><span class="o">.</span><span class="n">metadata_path</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">embeddings_metadata</span>
+                        <span class="k">else</span><span class="p">:</span>
+                            <span class="k">if</span> <span class="n">layer</span><span class="o">.</span><span class="n">name</span> <span class="ow">in</span> <span class="n">embedding</span><span class="o">.</span><span class="n">metadata_path</span><span class="p">:</span>
+                                <span class="n">embedding</span><span class="o">.</span><span class="n">metadata_path</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">embeddings_metadata</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">layer</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">embeddings_metadata</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Unrecognized `Embedding` layer names passed to &#39;</span>
+                             <span class="s1">&#39;`keras.callbacks.TensorBoard` `embeddings_metadata` &#39;</span>
+                             <span class="s1">&#39;argument: &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">embeddings_metadata</span><span class="p">))</span>
+
+        <span class="k">class</span> <span class="nc">DummyWriter</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+            <span class="sd">&quot;&quot;&quot;Dummy writer to conform to `Projector` API.&quot;&quot;&quot;</span>
+            <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">logdir</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">logdir</span> <span class="o">=</span> <span class="n">logdir</span>
+
+            <span class="k">def</span> <span class="nf">get_logdir</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+                <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">logdir</span>
+
+        <span class="n">writer</span> <span class="o">=</span> <span class="n">DummyWriter</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">train_log_dir</span><span class="p">)</span>
+        <span class="n">projector</span><span class="o">.</span><span class="n">visualize_embeddings</span><span class="p">(</span><span class="n">writer</span><span class="p">,</span> <span class="n">config</span><span class="p">)</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, GEHC DataScience
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

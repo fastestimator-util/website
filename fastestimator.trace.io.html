@@ -1,0 +1,456 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>io &mdash; FastEstimator 0.0.1 documentation</title>
+  
+
+  
+  
+    <link rel="shortcut icon" href="_static/favicon.ico"/>
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="metric" href="fastestimator.trace.metric.html" />
+    <link rel="prev" title="adapt" href="fastestimator.trace.adapt.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> FastEstimator
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0a0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="learn.html">Learn</a></li>
+<li class="toctree-l1"><a class="reference internal" href="apphub.html">Example</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="api.html">API</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="fastestimator.architecture.html">architecture</a></li>
+<li class="toctree-l2"><a class="reference internal" href="fastestimator.cli.html">cli</a></li>
+<li class="toctree-l2"><a class="reference internal" href="fastestimator.dataset.html">dataset</a></li>
+<li class="toctree-l2"><a class="reference internal" href="fastestimator.interpretation.html">interpretation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="fastestimator.layers.html">layers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="fastestimator.op.html">op</a></li>
+<li class="toctree-l2"><a class="reference internal" href="fastestimator.schedule.html">schedule</a></li>
+<li class="toctree-l2"><a class="reference internal" href="fastestimator.summary.html">summary</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="fastestimator.trace.html">trace</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="fastestimator.trace.adapt.html">adapt</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">io</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#module-fastestimator.trace.io.caricature">caricature</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-fastestimator.trace.io.csv_logger">csv_logger</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-fastestimator.trace.io.logger">logger</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-fastestimator.trace.io.model_saver">model_saver</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-fastestimator.trace.io.saliency">saliency</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-fastestimator.trace.io.tensorboard">tensorboard</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-fastestimator.trace.io.umap">umap</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="fastestimator.trace.metric.html">metric</a></li>
+<li class="toctree-l3"><a class="reference internal" href="fastestimator.trace.html#id1">trace</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="fastestimator.util.html">util</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api.html#module-fastestimator.estimator">estimator</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api.html#module-fastestimator.network">network</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api.html#module-fastestimator.pipeline">pipeline</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">FastEstimator</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="api.html">API</a> &raquo;</li>
+        
+          <li><a href="fastestimator.trace.html">trace</a> &raquo;</li>
+        
+      <li>io</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/fastestimator.trace.io.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  
+<style>
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast,
+.nboutput.nblast {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast + .nbinput {
+    margin-top: -19px;
+}
+
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+
+/* Fix math alignment, see https://github.com/rtfd/sphinx_rtd_theme/pull/686 */
+.math {
+    text-align: unset;
+}
+</style>
+<div class="section" id="module-fastestimator.trace.io">
+<span id="io"></span><h1>io<a class="headerlink" href="#module-fastestimator.trace.io" title="Permalink to this headline">¶</a></h1>
+<hr class="docutils" />
+<div class="section" id="module-fastestimator.trace.io.caricature">
+<span id="caricature"></span><h2>caricature<a class="headerlink" href="#module-fastestimator.trace.io.caricature" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="fastestimator.trace.io.caricature.Caricature">
+<em class="property">class </em><code class="sig-prename descclassname">fastestimator.trace.io.caricature.</code><code class="sig-name descname">Caricature</code><span class="sig-paren">(</span><em class="sig-param">model_name</em>, <em class="sig-param">layer_ids</em>, <em class="sig-param">input_key</em>, <em class="sig-param">n_inputs=1</em>, <em class="sig-param">decode_dictionary=None</em>, <em class="sig-param">output_name=None</em>, <em class="sig-param">im_freq=1</em>, <em class="sig-param">n_steps=128</em>, <em class="sig-param">learning_rate=0.05</em>, <em class="sig-param">blur=1</em>, <em class="sig-param">cossim_pow=0.5</em>, <em class="sig-param">sd=0.01</em>, <em class="sig-param">fft=True</em>, <em class="sig-param">decorrelate=True</em>, <em class="sig-param">sigmoid=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/trace/io/caricature.html#Caricature"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.trace.io.caricature.Caricature" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="fastestimator.trace.html#fastestimator.trace.trace.Trace" title="fastestimator.trace.trace.Trace"><code class="xref py py-class docutils literal notranslate"><span class="pre">fastestimator.trace.trace.Trace</span></code></a></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>model_name</strong> (<em>str</em>) – The model to be inspected by the Caricature visualization</p></li>
+<li><p><strong>layer_ids</strong> (<em>int</em><em>, </em><em>list</em>) – The layer(s) of the model to be inspected by the Caricature visualization</p></li>
+<li><p><strong>input_key</strong> (<em>str</em>) – A string key corresponding to the tensor to be passed to the model</p></li>
+<li><p><strong>n_inputs</strong> (<em>int</em>) – How many samples should be drawn from the input_key tensor for visualization</p></li>
+<li><p><strong>decode_dictionary</strong> (<em>dict</em>) – A dictionary mapping model outputs to class names</p></li>
+<li><p><strong>output_name</strong> (<em>str</em>) – The key which the caricature image will be saved into within the state dictionary</p></li>
+<li><p><strong>im_freq</strong> (<em>int</em>) – Frequency (in epochs) during which visualizations should be generated</p></li>
+<li><p><strong>n_steps</strong> (<em>int</em>) – How many steps of optimization to run when computing caricatures (quality vs time trade)</p></li>
+<li><p><strong>learning_rate</strong> (<em>float</em>) – The learning rate of the caricature optimizer. Should be higher than usual</p></li>
+<li><p><strong>blur</strong> (<em>float</em>) – How much blur to add to images during caricature generation</p></li>
+<li><p><strong>cossim_pow</strong> (<em>float</em>) – How much should similarity in form be valued versus creative license</p></li>
+<li><p><strong>sd</strong> (<em>float</em>) – The standard deviation of the noise used to seed the caricature</p></li>
+<li><p><strong>fft</strong> (<em>bool</em>) – Whether to use fft space (True) or image space (False) to create caricatures</p></li>
+<li><p><strong>decorrelate</strong> (<em>bool</em>) – Whether to use an ImageNet-derived color correlation matrix to de-correlate colors in                             the caricature. Parameter has no effect on grey scale images.</p></li>
+<li><p><strong>sigmoid</strong> (<em>bool</em>) – Whether to use sigmoid (True) or clipping (False) to bound the caricature pixel values</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<hr class="docutils" />
+<div class="section" id="module-fastestimator.trace.io.csv_logger">
+<span id="csv-logger"></span><h2>csv_logger<a class="headerlink" href="#module-fastestimator.trace.io.csv_logger" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="fastestimator.trace.io.csv_logger.CSVLogger">
+<em class="property">class </em><code class="sig-prename descclassname">fastestimator.trace.io.csv_logger.</code><code class="sig-name descname">CSVLogger</code><span class="sig-paren">(</span><em class="sig-param">filename</em>, <em class="sig-param">monitor_names=None</em>, <em class="sig-param">separator='</em>, <em class="sig-param">'</em>, <em class="sig-param">append=False</em>, <em class="sig-param">mode='eval'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/trace/io/csv_logger.html#CSVLogger"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.trace.io.csv_logger.CSVLogger" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="fastestimator.trace.html#fastestimator.trace.trace.Trace" title="fastestimator.trace.trace.Trace"><code class="xref py py-class docutils literal notranslate"><span class="pre">fastestimator.trace.trace.Trace</span></code></a></p>
+<p>Log monitored quantity in CSV file manner</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>filename</strong> (<em>str</em>) – Output filename.</p></li>
+<li><p><strong>monitor_names</strong> (<em>list of str</em><em>, </em><em>optional</em>) – List of key names to monitor. The names can be {“mode”, “epoch”,
+“train_step”, or output names that other traces create}. If None, it will record all. Defaults to None.</p></li>
+<li><p><strong>separator</strong> (<em>str</em><em>, </em><em>optional</em>) – Seperator for numbers. Defaults to “, “.</p></li>
+<li><p><strong>append</strong> (<em>bool</em><em>, </em><em>optional</em>) – If true, it will write csv file in append mode. Otherwise, it will overwrite the
+existed file. Defaults to False.</p></li>
+<li><p><strong>mode</strong> (<em>str</em><em>, </em><em>optional</em>) – Restrict the trace to run only on given modes {‘train’, ‘eval’, ‘test’}. None will always
+execute. Defaults to ‘eval’.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<hr class="docutils" />
+<div class="section" id="module-fastestimator.trace.io.logger">
+<span id="logger"></span><h2>logger<a class="headerlink" href="#module-fastestimator.trace.io.logger" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="fastestimator.trace.io.logger.Logger">
+<em class="property">class </em><code class="sig-prename descclassname">fastestimator.trace.io.logger.</code><code class="sig-name descname">Logger</code><a class="reference internal" href="_modules/fastestimator/trace/io/logger.html#Logger"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.trace.io.logger.Logger" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="fastestimator.trace.html#fastestimator.trace.trace.Trace" title="fastestimator.trace.trace.Trace"><code class="xref py py-class docutils literal notranslate"><span class="pre">fastestimator.trace.trace.Trace</span></code></a></p>
+<p>Logger that prints log. Please don’t add this trace into an estimator manually. An estimators will add it
+automatically.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="fastestimator.trace.io.logger.VisLogger">
+<em class="property">class </em><code class="sig-prename descclassname">fastestimator.trace.io.logger.</code><code class="sig-name descname">VisLogger</code><span class="sig-paren">(</span><em class="sig-param">vis_steps</em>, <em class="sig-param">**plot_args</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/trace/io/logger.html#VisLogger"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.trace.io.logger.VisLogger" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#fastestimator.trace.io.logger.Logger" title="fastestimator.trace.io.logger.Logger"><code class="xref py py-class docutils literal notranslate"><span class="pre">fastestimator.trace.io.logger.Logger</span></code></a></p>
+<p>A Logger which visualizes to the screen during training</p>
+</dd></dl>
+
+</div>
+<hr class="docutils" />
+<div class="section" id="module-fastestimator.trace.io.model_saver">
+<span id="model-saver"></span><h2>model_saver<a class="headerlink" href="#module-fastestimator.trace.io.model_saver" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="fastestimator.trace.io.model_saver.ModelSaver">
+<em class="property">class </em><code class="sig-prename descclassname">fastestimator.trace.io.model_saver.</code><code class="sig-name descname">ModelSaver</code><span class="sig-paren">(</span><em class="sig-param">model_name</em>, <em class="sig-param">save_dir</em>, <em class="sig-param">save_best=False</em>, <em class="sig-param">save_best_mode='min'</em>, <em class="sig-param">save_freq=1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/trace/io/model_saver.html#ModelSaver"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.trace.io.model_saver.ModelSaver" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="fastestimator.trace.html#fastestimator.trace.trace.Trace" title="fastestimator.trace.trace.Trace"><code class="xref py py-class docutils literal notranslate"><span class="pre">fastestimator.trace.trace.Trace</span></code></a></p>
+<p>Save trained model in hdf5 format.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>model_name</strong> (<em>str</em>) – Name of FE model.</p></li>
+<li><p><strong>save_dir</strong> (<em>str</em>) – Directory to save the trained models.</p></li>
+<li><p><strong>save_best</strong> (<em>bool</em><em>, </em><em>str</em><em>, </em><em>optional</em>) – Best model saving monitor name. If True, the model loss is used. Defaults to
+False.</p></li>
+<li><p><strong>save_best_mode</strong> (<em>str</em><em>, </em><em>optional</em>) – Can be <cite>‘min’</cite>, <cite>‘max’</cite>, or <cite>‘auto’</cite>. Defaults to ‘min’.</p></li>
+<li><p><strong>save_freq</strong> (<em>int</em><em>, </em><em>optional</em>) – Number of epochs to save models. Cannot be used with <cite>save_best_only=True</cite>. Defaults
+to 1.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<hr class="docutils" />
+<div class="section" id="module-fastestimator.trace.io.saliency">
+<span id="saliency"></span><h2>saliency<a class="headerlink" href="#module-fastestimator.trace.io.saliency" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="fastestimator.trace.io.saliency.Saliency">
+<em class="property">class </em><code class="sig-prename descclassname">fastestimator.trace.io.saliency.</code><code class="sig-name descname">Saliency</code><span class="sig-paren">(</span><em class="sig-param">model_name</em>, <em class="sig-param">input_key</em>, <em class="sig-param">n_inputs=1</em>, <em class="sig-param">output_name=None</em>, <em class="sig-param">im_freq=1</em>, <em class="sig-param">baseline_constant=0</em>, <em class="sig-param">decode_dictionary=None</em>, <em class="sig-param">color_map='inferno'</em>, <em class="sig-param">smooth=7</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/trace/io/saliency.html#Saliency"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.trace.io.saliency.Saliency" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="fastestimator.trace.html#fastestimator.trace.trace.Trace" title="fastestimator.trace.trace.Trace"><code class="xref py py-class docutils literal notranslate"><span class="pre">fastestimator.trace.trace.Trace</span></code></a></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>model_name</strong> (<em>str</em>) – The model to be inspected by the Saliency visualization</p></li>
+<li><p><strong>input_key</strong> (<em>str</em>) – A string key corresponding to the tensor to be passed to the model</p></li>
+<li><p><strong>baseline_constant</strong> (<em>float</em>) – What constant value would a blank tensor have</p></li>
+<li><p><strong>decode_dictionary</strong> (<em>dict</em>) – A dictionary of “class_idx” -&gt; “class_name” associations</p></li>
+<li><p><strong>color_map</strong> (<em>str</em>) – The color map to use to visualize the saliency maps.
+Consider “Greys_r”, “plasma”, or “magma” as alternatives</p></li>
+<li><p><strong>smooth</strong> (<em>int</em>) – The number of samples to use when generating a smoothed image</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<hr class="docutils" />
+<div class="section" id="module-fastestimator.trace.io.tensorboard">
+<span id="tensorboard"></span><h2>tensorboard<a class="headerlink" href="#module-fastestimator.trace.io.tensorboard" title="Permalink to this headline">¶</a></h2>
+<p>Trace contains metrics and other information users want to track.</p>
+<dl class="class">
+<dt id="fastestimator.trace.io.tensorboard.TensorBoard">
+<em class="property">class </em><code class="sig-prename descclassname">fastestimator.trace.io.tensorboard.</code><code class="sig-name descname">TensorBoard</code><span class="sig-paren">(</span><em class="sig-param">log_dir='logs'</em>, <em class="sig-param">histogram_freq=0</em>, <em class="sig-param">write_graph=True</em>, <em class="sig-param">write_images=False</em>, <em class="sig-param">update_freq='epoch'</em>, <em class="sig-param">profile_batch=2</em>, <em class="sig-param">embeddings_freq=0</em>, <em class="sig-param">embeddings_metadata=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/trace/io/tensorboard.html#TensorBoard"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.trace.io.tensorboard.TensorBoard" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="fastestimator.trace.html#fastestimator.trace.trace.Trace" title="fastestimator.trace.trace.Trace"><code class="xref py py-class docutils literal notranslate"><span class="pre">fastestimator.trace.trace.Trace</span></code></a></p>
+<p>Output data for use in TensorBoard.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>log_dir</strong> (<em>str</em><em>, </em><em>optional</em>) – Path of the directory where to save the log files to be parsed by TensorBoard.
+Defaults to ‘logs’.</p></li>
+<li><p><strong>histogram_freq</strong> (<em>int</em><em>, </em><em>optional</em>) – Frequency (in epochs) at which to compute activation and weight histograms for
+the layers of the model. If set to 0, histograms won’t be computed. Defaults to 0.</p></li>
+<li><p><strong>write_graph</strong> (<em>bool</em><em>, </em><em>optional</em>) – Whether to visualize the graph in TensorBoard. The log file can become quite large
+when write_graph is set to True. Defaults to True.</p></li>
+<li><p><strong>write_images</strong> (<em>bool</em><em>, </em><em>str</em><em>, </em><em>list</em><em>, </em><em>optional</em>) – If True will write model weights to visualize as an image in
+TensorBoard. If a string or list of strings is provided, the corresponding keys will be written to
+Tensorboard images. To get weights and specific keys use [True, ‘key1’, ‘key2’,…] Defaults to False.</p></li>
+<li><p><strong>update_freq</strong> (<em>str</em><em>, </em><em>int</em><em>, </em><em>optional</em>) – ‘batch’ or ‘epoch’ or integer. When using ‘batch’, writes the losses and
+metrics to TensorBoard after each batch. The same applies for ‘epoch’. If using an integer, let’s say 1000,
+the callback will write the metrics and losses to TensorBoard every 1000 samples. Note that writing too
+frequently to TensorBoard can slow down your training. Defaults to ‘epoch’.</p></li>
+<li><p><strong>profile_batch</strong> (<em>int</em><em>, </em><em>optional</em>) – Which batch to run profiling on. 0 to disable. Note that FE batch numbering
+starts from 0 rather than 1. Defaults to 2.</p></li>
+<li><p><strong>embeddings_freq</strong> (<em>int</em><em>, </em><em>optional</em>) – Frequency (in epochs) at which embedding layers will be visualized. If set to
+0, embeddings won’t be visualized.Defaults to 0.</p></li>
+<li><p><strong>embeddings_metadata</strong> (<em>str</em><em>, </em><em>dict</em><em>, </em><em>optional</em>) – A dictionary which maps layer name to a file name in which metadata
+for this embedding layer is saved. See the details about metadata files format. In case if the same
+metadata file is used for all embedding layers, string can be passed. Defaults to None.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<hr class="docutils" />
+<div class="section" id="module-fastestimator.trace.io.umap">
+<span id="umap"></span><h2>umap<a class="headerlink" href="#module-fastestimator.trace.io.umap" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="fastestimator.trace.io.umap.UMap">
+<em class="property">class </em><code class="sig-prename descclassname">fastestimator.trace.io.umap.</code><code class="sig-name descname">UMap</code><span class="sig-paren">(</span><em class="sig-param">in_vector_key</em>, <em class="sig-param">label_vector_key=None</em>, <em class="sig-param">label_dict=None</em>, <em class="sig-param">output_name=None</em>, <em class="sig-param">legend_loc='best'</em>, <em class="sig-param">im_freq=1</em>, <em class="sig-param">**umap_parameters</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/trace/io/umap.html#UMap"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.trace.io.umap.UMap" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="fastestimator.trace.html#fastestimator.trace.trace.Trace" title="fastestimator.trace.trace.Trace"><code class="xref py py-class docutils literal notranslate"><span class="pre">fastestimator.trace.trace.Trace</span></code></a></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>in_vector_key</strong> – The key of the input to be fed into the umap algorithm</p></li>
+<li><p><strong>label_vector_key</strong> – The (optional) key of the classes corresponding to the inputs (used for coloring points)</p></li>
+<li><p><strong>label_dict</strong> – An (optional) dictionary mapping labels from the label vector to other representations
+(ex. {0:’dog’, 1:’cat’})</p></li>
+<li><p><strong>output_name</strong> – The key which the umap image will be saved into within the state dictionary</p></li>
+<li><p><strong>legend_loc</strong> – The location of the legend, or ‘off’ to disable figure legends</p></li>
+<li><p><strong>im_freq</strong> – Frequency (in epochs) during which visualizations should be generated</p></li>
+<li><p><strong>**umap_parameters</strong> – Extra parameters to be passed to the umap algorithm, ex. n_neighbors, n_epochs, etc.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="fastestimator.trace.metric.html" class="btn btn-neutral float-right" title="metric" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="fastestimator.trace.adapt.html" class="btn btn-neutral float-left" title="adapt" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, GEHC DataScience
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

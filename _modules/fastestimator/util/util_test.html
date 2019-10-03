@@ -1,0 +1,582 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>fastestimator.util.util_test &mdash; FastEstimator 0.0.1 documentation</title>
+  
+
+  
+  
+    <link rel="shortcut icon" href="../../../_static/favicon.ico"/>
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../../_static/language_data.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> FastEstimator
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0a0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../learn.html">Learn</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../apphub.html">Example</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api.html">API</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">FastEstimator</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>fastestimator.util.util_test</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for fastestimator.util.util_test</h1><div class="highlight"><pre>
+<span></span><span class="c1"># Copyright 2019 The FastEstimator Authors. All Rights Reserved.</span>
+<span class="c1">#</span>
+<span class="c1"># Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);</span>
+<span class="c1"># you may not use this file except in compliance with the License.</span>
+<span class="c1"># You may obtain a copy of the License at</span>
+<span class="c1">#</span>
+<span class="c1">#     http://www.apache.org/licenses/LICENSE-2.0</span>
+<span class="c1">#</span>
+<span class="c1"># Unless required by applicable law or agreed to in writing, software</span>
+<span class="c1"># distributed under the License is distributed on an &quot;AS IS&quot; BASIS,</span>
+<span class="c1"># WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span>
+<span class="c1"># See the License for the specific language governing permissions and</span>
+<span class="c1"># limitations under the License.</span>
+<span class="c1"># ==============================================================================</span>
+<span class="kn">import</span> <span class="nn">copy</span>
+<span class="kn">from</span> <span class="nn">unittest</span> <span class="k">import</span> <span class="n">TestCase</span>
+
+<span class="kn">from</span> <span class="nn">fastestimator.cli.cli_util</span> <span class="k">import</span> <span class="n">parse_cli_to_dictionary</span>
+<span class="kn">from</span> <span class="nn">.util</span> <span class="k">import</span> <span class="p">(</span><span class="n">get_num_devices</span><span class="p">,</span> <span class="n">parse_string_to_python</span><span class="p">,</span> <span class="n">prettify_metric_name</span><span class="p">,</span> <span class="n">remove_blacklist_keys</span><span class="p">,</span> <span class="n">strip_suffix</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="TestUtil"><a class="viewcode-back" href="../../../fastestimator.util.html#fastestimator.util.util_test.TestUtil">[docs]</a><span class="k">class</span> <span class="nc">TestUtil</span><span class="p">(</span><span class="n">TestCase</span><span class="p">):</span>
+    <span class="n">mock_good_parsed_result</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;train_loss&quot;</span><span class="p">:</span> <span class="p">[[</span><span class="mi">0</span><span class="p">,</span> <span class="mf">12.027558</span><span class="p">],</span> <span class="p">[</span><span class="mi">100</span><span class="p">,</span> <span class="mf">2.565781</span><span class="p">],</span> <span class="p">[</span><span class="mi">200</span><span class="p">,</span> <span class="mf">0.824913</span><span class="p">],</span> <span class="p">[</span><span class="mi">300</span><span class="p">,</span> <span class="mf">0.561318</span><span class="p">],</span> <span class="p">[</span><span class="mi">400</span><span class="p">,</span> <span class="mf">0.427389</span><span class="p">],</span>
+                       <span class="p">[</span><span class="mi">500</span><span class="p">,</span> <span class="mf">0.528405</span><span class="p">],</span> <span class="p">[</span><span class="mi">600</span><span class="p">,</span> <span class="mf">0.686736</span><span class="p">]],</span>
+        <span class="s2">&quot;lr&quot;</span><span class="p">:</span> <span class="p">[[</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.0002</span><span class="p">],</span> <span class="p">[</span><span class="mi">100</span><span class="p">,</span> <span class="mf">0.0002</span><span class="p">],</span> <span class="p">[</span><span class="mi">200</span><span class="p">,</span> <span class="mf">0.0002</span><span class="p">],</span> <span class="p">[</span><span class="mi">300</span><span class="p">,</span> <span class="mf">0.0002</span><span class="p">],</span> <span class="p">[</span><span class="mi">400</span><span class="p">,</span> <span class="mf">0.0002</span><span class="p">],</span> <span class="p">[</span><span class="mi">500</span><span class="p">,</span> <span class="mf">0.0002</span><span class="p">],</span> <span class="p">[</span><span class="mi">600</span><span class="p">,</span> <span class="mf">0.0002</span><span class="p">]],</span>
+        <span class="s2">&quot;example/sec&quot;</span><span class="p">:</span> <span class="p">[[</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">],</span> <span class="p">[</span><span class="mi">100</span><span class="p">,</span> <span class="mf">44.738688</span><span class="p">],</span> <span class="p">[</span><span class="mi">200</span><span class="p">,</span> <span class="mf">45.086421</span><span class="p">],</span> <span class="p">[</span><span class="mi">300</span><span class="p">,</span> <span class="mf">44.689092</span><span class="p">],</span> <span class="p">[</span><span class="mi">400</span><span class="p">,</span> <span class="mf">44.799198</span><span class="p">],</span>
+                        <span class="p">[</span><span class="mi">500</span><span class="p">,</span> <span class="mf">44.523727</span><span class="p">],</span> <span class="p">[</span><span class="mi">600</span><span class="p">,</span> <span class="mf">45.055799</span><span class="p">]],</span>
+        <span class="s2">&quot;val_loss&quot;</span><span class="p">:</span> <span class="p">[[</span><span class="mi">281</span><span class="p">,</span> <span class="mf">0.725258</span><span class="p">],</span> <span class="p">[</span><span class="mi">562</span><span class="p">,</span> <span class="mf">4.125795</span><span class="p">]],</span>
+        <span class="s2">&quot;min_val_loss&quot;</span><span class="p">:</span> <span class="p">[[</span><span class="mi">281</span><span class="p">,</span> <span class="mf">0.725258</span><span class="p">],</span> <span class="p">[</span><span class="mi">562</span><span class="p">,</span> <span class="mf">0.725258</span><span class="p">]],</span>
+        <span class="s2">&quot;since_best&quot;</span><span class="p">:</span> <span class="p">[[</span><span class="mi">281</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">],</span> <span class="p">[</span><span class="mi">562</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">]],</span>
+        <span class="s2">&quot;val_mask_raw_loss&quot;</span><span class="p">:</span> <span class="p">[[</span><span class="mi">281</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.007752625846316934</span><span class="p">],</span> <span class="p">[</span><span class="mi">562</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.15434368319272632</span><span class="p">]],</span>
+        <span class="s2">&quot;val_image_labels_loss&quot;</span><span class="p">:</span> <span class="p">[[</span><span class="mi">281</span><span class="p">,</span> <span class="mf">0.7330105359355609</span><span class="p">],</span> <span class="p">[</span><span class="mi">562</span><span class="p">,</span> <span class="mf">4.280138591821823</span><span class="p">]],</span>
+        <span class="s2">&quot;val_mask_raw_conditionalDice&quot;</span><span class="p">:</span> <span class="p">[[</span><span class="mi">281</span><span class="p">,</span> <span class="mf">0.007752625846316934</span><span class="p">],</span> <span class="p">[</span><span class="mi">562</span><span class="p">,</span> <span class="mf">0.15434368319272632</span><span class="p">]],</span>
+        <span class="s2">&quot;val_image_labels_my_binary_accuracy&quot;</span><span class="p">:</span> <span class="p">[[</span><span class="mi">281</span><span class="p">,</span> <span class="mf">0.5194444588075081</span><span class="p">],</span> <span class="p">[</span><span class="mi">562</span><span class="p">,</span> <span class="mf">0.5662698552840286</span><span class="p">]]</span>
+    <span class="p">}</span>
+
+    <span class="c1"># -------------------------------------------------------------------------------------------------------- #</span>
+    <span class="c1"># ---------------------------------------------- GPU Count ----------------------------------------------- #</span>
+    <span class="c1"># -------------------------------------------------------------------------------------------------------- #</span>
+
+<div class="viewcode-block" id="TestUtil.test_get_num_devices"><a class="viewcode-back" href="../../../fastestimator.util.html#fastestimator.util.util_test.TestUtil.test_get_num_devices">[docs]</a>    <span class="k">def</span> <span class="nf">test_get_num_devices</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">run</span><span class="p">([</span><span class="s1">&#39;nvidia-smi&#39;</span><span class="p">,</span> <span class="s1">&#39;-q&#39;</span><span class="p">],</span> <span class="n">stdout</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">PIPE</span><span class="p">)</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span>
+            <span class="n">lines</span> <span class="o">=</span> <span class="p">[</span><span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">()</span> <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">result</span><span class="o">.</span><span class="n">splitlines</span><span class="p">()</span> <span class="k">if</span> <span class="n">line</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;Attached GPUs&quot;</span><span class="p">)]</span>
+            <span class="n">devices</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">lines</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="n">devices</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="k">assert</span> <span class="n">devices</span> <span class="o">==</span> <span class="n">get_num_devices</span><span class="p">()</span></div>
+
+    <span class="c1"># -------------------------------------------------------------------------------------------------------- #</span>
+    <span class="c1"># ------------------------------------------- KEY Blacklisting ------------------------------------------- #</span>
+    <span class="c1"># -------------------------------------------------------------------------------------------------------- #</span>
+<div class="viewcode-block" id="TestUtil.test_remove_blacklist_keys_success"><a class="viewcode-back" href="../../../fastestimator.util.html#fastestimator.util.util_test.TestUtil.test_remove_blacklist_keys_success">[docs]</a>    <span class="k">def</span> <span class="nf">test_remove_blacklist_keys_success</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">expected</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;train_loss&quot;</span><span class="p">:</span> <span class="p">[[</span><span class="mi">0</span><span class="p">,</span> <span class="mf">12.027558</span><span class="p">],</span> <span class="p">[</span><span class="mi">100</span><span class="p">,</span> <span class="mf">2.565781</span><span class="p">],</span> <span class="p">[</span><span class="mi">200</span><span class="p">,</span> <span class="mf">0.824913</span><span class="p">],</span> <span class="p">[</span><span class="mi">300</span><span class="p">,</span> <span class="mf">0.561318</span><span class="p">],</span> <span class="p">[</span><span class="mi">400</span><span class="p">,</span> <span class="mf">0.427389</span><span class="p">],</span>
+                           <span class="p">[</span><span class="mi">500</span><span class="p">,</span> <span class="mf">0.528405</span><span class="p">],</span> <span class="p">[</span><span class="mi">600</span><span class="p">,</span> <span class="mf">0.686736</span><span class="p">]],</span>
+            <span class="s2">&quot;lr&quot;</span><span class="p">:</span> <span class="p">[[</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.0002</span><span class="p">],</span> <span class="p">[</span><span class="mi">100</span><span class="p">,</span> <span class="mf">0.0002</span><span class="p">],</span> <span class="p">[</span><span class="mi">200</span><span class="p">,</span> <span class="mf">0.0002</span><span class="p">],</span> <span class="p">[</span><span class="mi">300</span><span class="p">,</span> <span class="mf">0.0002</span><span class="p">],</span> <span class="p">[</span><span class="mi">400</span><span class="p">,</span> <span class="mf">0.0002</span><span class="p">],</span> <span class="p">[</span><span class="mi">500</span><span class="p">,</span> <span class="mf">0.0002</span><span class="p">],</span>
+                   <span class="p">[</span><span class="mi">600</span><span class="p">,</span> <span class="mf">0.0002</span><span class="p">]],</span>
+            <span class="s2">&quot;val_image_labels_loss&quot;</span><span class="p">:</span> <span class="p">[[</span><span class="mi">281</span><span class="p">,</span> <span class="mf">0.7330105359355609</span><span class="p">],</span> <span class="p">[</span><span class="mi">562</span><span class="p">,</span> <span class="mf">4.280138591821823</span><span class="p">]]</span>
+        <span class="p">}</span>
+        <span class="n">blacklist</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="s2">&quot;val_loss&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;since_best&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;example/sec&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;min_val_loss&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;val_mask_raw_loss&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;val_mask_raw_conditionalDice&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;val_image_labels_my_binary_accuracy&quot;</span>
+        <span class="p">]</span>
+        <span class="n">actual</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">mock_good_parsed_result</span><span class="p">)</span>
+        <span class="n">remove_blacklist_keys</span><span class="p">(</span><span class="n">actual</span><span class="p">,</span> <span class="n">blacklist</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertDictEqual</span><span class="p">(</span><span class="n">actual</span><span class="p">,</span> <span class="n">expected</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TestUtil.test_remove_blacklist_keys_none"><a class="viewcode-back" href="../../../fastestimator.util.html#fastestimator.util.util_test.TestUtil.test_remove_blacklist_keys_none">[docs]</a>    <span class="k">def</span> <span class="nf">test_remove_blacklist_keys_none</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">expected</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mock_good_parsed_result</span>
+        <span class="n">blacklist</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="n">actual</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">mock_good_parsed_result</span><span class="p">)</span>
+        <span class="n">remove_blacklist_keys</span><span class="p">(</span><span class="n">actual</span><span class="p">,</span> <span class="n">blacklist</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertDictEqual</span><span class="p">(</span><span class="n">actual</span><span class="p">,</span> <span class="n">expected</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TestUtil.test_remove_blacklist_keys_empty_list"><a class="viewcode-back" href="../../../fastestimator.util.html#fastestimator.util.util_test.TestUtil.test_remove_blacklist_keys_empty_list">[docs]</a>    <span class="k">def</span> <span class="nf">test_remove_blacklist_keys_empty_list</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">expected</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mock_good_parsed_result</span>
+        <span class="n">blacklist</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">actual</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">mock_good_parsed_result</span><span class="p">)</span>
+        <span class="n">remove_blacklist_keys</span><span class="p">(</span><span class="n">actual</span><span class="p">,</span> <span class="n">blacklist</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertDictEqual</span><span class="p">(</span><span class="n">actual</span><span class="p">,</span> <span class="n">expected</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TestUtil.test_remove_blacklist_keys_empty_set"><a class="viewcode-back" href="../../../fastestimator.util.html#fastestimator.util.util_test.TestUtil.test_remove_blacklist_keys_empty_set">[docs]</a>    <span class="k">def</span> <span class="nf">test_remove_blacklist_keys_empty_set</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">expected</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mock_good_parsed_result</span>
+        <span class="n">blacklist</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">actual</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">mock_good_parsed_result</span><span class="p">)</span>
+        <span class="n">remove_blacklist_keys</span><span class="p">(</span><span class="n">actual</span><span class="p">,</span> <span class="n">blacklist</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertDictEqual</span><span class="p">(</span><span class="n">actual</span><span class="p">,</span> <span class="n">expected</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TestUtil.test_remove_blacklist_keys_empty"><a class="viewcode-back" href="../../../fastestimator.util.html#fastestimator.util.util_test.TestUtil.test_remove_blacklist_keys_empty">[docs]</a>    <span class="k">def</span> <span class="nf">test_remove_blacklist_keys_empty</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">expected</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">blacklist</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;FAKE_KEY&quot;</span><span class="p">]</span>
+        <span class="n">actual</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">remove_blacklist_keys</span><span class="p">(</span><span class="n">actual</span><span class="p">,</span> <span class="n">blacklist</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertDictEqual</span><span class="p">(</span><span class="n">actual</span><span class="p">,</span> <span class="n">expected</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TestUtil.test_remove_blacklist_keys_missing"><a class="viewcode-back" href="../../../fastestimator.util.html#fastestimator.util.util_test.TestUtil.test_remove_blacklist_keys_missing">[docs]</a>    <span class="k">def</span> <span class="nf">test_remove_blacklist_keys_missing</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">expected</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;train_loss&quot;</span><span class="p">:</span> <span class="p">[[</span><span class="mi">0</span><span class="p">,</span> <span class="mf">12.027558</span><span class="p">],</span> <span class="p">[</span><span class="mi">100</span><span class="p">,</span> <span class="mf">2.565781</span><span class="p">],</span> <span class="p">[</span><span class="mi">200</span><span class="p">,</span> <span class="mf">0.824913</span><span class="p">],</span> <span class="p">[</span><span class="mi">300</span><span class="p">,</span> <span class="mf">0.561318</span><span class="p">],</span> <span class="p">[</span><span class="mi">400</span><span class="p">,</span> <span class="mf">0.427389</span><span class="p">],</span>
+                           <span class="p">[</span><span class="mi">500</span><span class="p">,</span> <span class="mf">0.528405</span><span class="p">],</span> <span class="p">[</span><span class="mi">600</span><span class="p">,</span> <span class="mf">0.686736</span><span class="p">]],</span>
+            <span class="s2">&quot;lr&quot;</span><span class="p">:</span> <span class="p">[[</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.0002</span><span class="p">],</span> <span class="p">[</span><span class="mi">100</span><span class="p">,</span> <span class="mf">0.0002</span><span class="p">],</span> <span class="p">[</span><span class="mi">200</span><span class="p">,</span> <span class="mf">0.0002</span><span class="p">],</span> <span class="p">[</span><span class="mi">300</span><span class="p">,</span> <span class="mf">0.0002</span><span class="p">],</span> <span class="p">[</span><span class="mi">400</span><span class="p">,</span> <span class="mf">0.0002</span><span class="p">],</span> <span class="p">[</span><span class="mi">500</span><span class="p">,</span> <span class="mf">0.0002</span><span class="p">],</span>
+                   <span class="p">[</span><span class="mi">600</span><span class="p">,</span> <span class="mf">0.0002</span><span class="p">]],</span>
+            <span class="s2">&quot;val_image_labels_loss&quot;</span><span class="p">:</span> <span class="p">[[</span><span class="mi">281</span><span class="p">,</span> <span class="mf">0.7330105359355609</span><span class="p">],</span> <span class="p">[</span><span class="mi">562</span><span class="p">,</span> <span class="mf">4.280138591821823</span><span class="p">]]</span>
+        <span class="p">}</span>
+        <span class="n">blacklist</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="s2">&quot;val_loss&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;since_best&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;example/sec&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;min_val_loss&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;val_mask_raw_loss&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;val_mask_raw_conditionalDice&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;val_image_labels_my_binary_accuracy&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;FAKE_KEY&quot;</span>
+        <span class="p">]</span>
+        <span class="n">actual</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">mock_good_parsed_result</span><span class="p">)</span>
+        <span class="n">remove_blacklist_keys</span><span class="p">(</span><span class="n">actual</span><span class="p">,</span> <span class="n">blacklist</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertDictEqual</span><span class="p">(</span><span class="n">actual</span><span class="p">,</span> <span class="n">expected</span><span class="p">)</span></div>
+
+    <span class="c1"># -------------------------------------------------------------------------------------------------------- #</span>
+    <span class="c1"># ------------------------------------------------ Suffix ------------------------------------------------ #</span>
+    <span class="c1"># -------------------------------------------------------------------------------------------------------- #</span>
+<div class="viewcode-block" id="TestUtil.test_strip_suffix"><a class="viewcode-back" href="../../../fastestimator.util.html#fastestimator.util.util_test.TestUtil.test_strip_suffix">[docs]</a>    <span class="k">def</span> <span class="nf">test_strip_suffix</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">base</span> <span class="o">=</span> <span class="s2">&quot;ImageNet.txt&quot;</span>
+        <span class="n">suffix</span> <span class="o">=</span> <span class="s2">&quot;.txt&quot;</span>
+        <span class="n">expected</span> <span class="o">=</span> <span class="s2">&quot;ImageNet&quot;</span>
+        <span class="n">actual</span> <span class="o">=</span> <span class="n">strip_suffix</span><span class="p">(</span><span class="n">base</span><span class="p">,</span> <span class="n">suffix</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">actual</span><span class="p">,</span> <span class="n">expected</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TestUtil.test_strip_suffix_empty"><a class="viewcode-back" href="../../../fastestimator.util.html#fastestimator.util.util_test.TestUtil.test_strip_suffix_empty">[docs]</a>    <span class="k">def</span> <span class="nf">test_strip_suffix_empty</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">base</span> <span class="o">=</span> <span class="s2">&quot;ImageNet.txt&quot;</span>
+        <span class="n">suffix</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+        <span class="n">expected</span> <span class="o">=</span> <span class="s2">&quot;ImageNet.txt&quot;</span>
+        <span class="n">actual</span> <span class="o">=</span> <span class="n">strip_suffix</span><span class="p">(</span><span class="n">base</span><span class="p">,</span> <span class="n">suffix</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">actual</span><span class="p">,</span> <span class="n">expected</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TestUtil.test_strip_suffix_none"><a class="viewcode-back" href="../../../fastestimator.util.html#fastestimator.util.util_test.TestUtil.test_strip_suffix_none">[docs]</a>    <span class="k">def</span> <span class="nf">test_strip_suffix_none</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">base</span> <span class="o">=</span> <span class="s2">&quot;ImageNet.txt&quot;</span>
+        <span class="n">suffix</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="n">expected</span> <span class="o">=</span> <span class="s2">&quot;ImageNet.txt&quot;</span>
+        <span class="n">actual</span> <span class="o">=</span> <span class="n">strip_suffix</span><span class="p">(</span><span class="n">base</span><span class="p">,</span> <span class="n">suffix</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">actual</span><span class="p">,</span> <span class="n">expected</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TestUtil.test_strip_suffix_full"><a class="viewcode-back" href="../../../fastestimator.util.html#fastestimator.util.util_test.TestUtil.test_strip_suffix_full">[docs]</a>    <span class="k">def</span> <span class="nf">test_strip_suffix_full</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">base</span> <span class="o">=</span> <span class="s2">&quot;ImageNet.txt&quot;</span>
+        <span class="n">suffix</span> <span class="o">=</span> <span class="s2">&quot;ImageNet.txt&quot;</span>
+        <span class="n">expected</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+        <span class="n">actual</span> <span class="o">=</span> <span class="n">strip_suffix</span><span class="p">(</span><span class="n">base</span><span class="p">,</span> <span class="n">suffix</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">actual</span><span class="p">,</span> <span class="n">expected</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TestUtil.test_strip_suffix_wrong_suffix"><a class="viewcode-back" href="../../../fastestimator.util.html#fastestimator.util.util_test.TestUtil.test_strip_suffix_wrong_suffix">[docs]</a>    <span class="k">def</span> <span class="nf">test_strip_suffix_wrong_suffix</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">base</span> <span class="o">=</span> <span class="s2">&quot;ImageNet.txt&quot;</span>
+        <span class="n">suffix</span> <span class="o">=</span> <span class="s2">&quot;.tzt&quot;</span>
+        <span class="n">expected</span> <span class="o">=</span> <span class="s2">&quot;ImageNet.txt&quot;</span>
+        <span class="n">actual</span> <span class="o">=</span> <span class="n">strip_suffix</span><span class="p">(</span><span class="n">base</span><span class="p">,</span> <span class="n">suffix</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">actual</span><span class="p">,</span> <span class="n">expected</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TestUtil.test_strip_suffix_super_suffix"><a class="viewcode-back" href="../../../fastestimator.util.html#fastestimator.util.util_test.TestUtil.test_strip_suffix_super_suffix">[docs]</a>    <span class="k">def</span> <span class="nf">test_strip_suffix_super_suffix</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">base</span> <span class="o">=</span> <span class="s2">&quot;ImageNet.txt&quot;</span>
+        <span class="n">suffix</span> <span class="o">=</span> <span class="s2">&quot;MImageNet.txt&quot;</span>
+        <span class="n">expected</span> <span class="o">=</span> <span class="s2">&quot;ImageNet.txt&quot;</span>
+        <span class="n">actual</span> <span class="o">=</span> <span class="n">strip_suffix</span><span class="p">(</span><span class="n">base</span><span class="p">,</span> <span class="n">suffix</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">actual</span><span class="p">,</span> <span class="n">expected</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TestUtil.test_strip_suffix_empty_base"><a class="viewcode-back" href="../../../fastestimator.util.html#fastestimator.util.util_test.TestUtil.test_strip_suffix_empty_base">[docs]</a>    <span class="k">def</span> <span class="nf">test_strip_suffix_empty_base</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">base</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+        <span class="n">suffix</span> <span class="o">=</span> <span class="s2">&quot;.txt&quot;</span>
+        <span class="n">expected</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+        <span class="n">actual</span> <span class="o">=</span> <span class="n">strip_suffix</span><span class="p">(</span><span class="n">base</span><span class="p">,</span> <span class="n">suffix</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">actual</span><span class="p">,</span> <span class="n">expected</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TestUtil.test_strip_suffix_no_base"><a class="viewcode-back" href="../../../fastestimator.util.html#fastestimator.util.util_test.TestUtil.test_strip_suffix_no_base">[docs]</a>    <span class="k">def</span> <span class="nf">test_strip_suffix_no_base</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">base</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="n">suffix</span> <span class="o">=</span> <span class="s2">&quot;.txt&quot;</span>
+        <span class="n">expected</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="n">actual</span> <span class="o">=</span> <span class="n">strip_suffix</span><span class="p">(</span><span class="n">base</span><span class="p">,</span> <span class="n">suffix</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">actual</span><span class="p">,</span> <span class="n">expected</span><span class="p">)</span></div>
+
+    <span class="c1"># -------------------------------------------------------------------------------------------------------- #</span>
+    <span class="c1"># ----------------------------------------------- Prettify ----------------------------------------------- #</span>
+    <span class="c1"># -------------------------------------------------------------------------------------------------------- #</span>
+<div class="viewcode-block" id="TestUtil.test_prettify_metric_name"><a class="viewcode-back" href="../../../fastestimator.util.html#fastestimator.util.util_test.TestUtil.test_prettify_metric_name">[docs]</a>    <span class="k">def</span> <span class="nf">test_prettify_metric_name</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">base</span> <span class="o">=</span> <span class="s2">&quot;val_mask_raw_conditionalDice&quot;</span>
+        <span class="n">expected</span> <span class="o">=</span> <span class="s2">&quot;Val Mask Raw Conditional Dice&quot;</span>
+        <span class="n">actual</span> <span class="o">=</span> <span class="n">prettify_metric_name</span><span class="p">(</span><span class="n">base</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">actual</span><span class="p">,</span> <span class="n">expected</span><span class="p">)</span></div>
+
+    <span class="c1"># -------------------------------------------------------------------------------------------------------- #</span>
+    <span class="c1"># --------------------------------------------- Parse String --------------------------------------------- #</span>
+    <span class="c1"># -------------------------------------------------------------------------------------------------------- #</span>
+<div class="viewcode-block" id="TestUtil.test_parse_string_to_python_none"><a class="viewcode-back" href="../../../fastestimator.util.html#fastestimator.util.util_test.TestUtil.test_parse_string_to_python_none">[docs]</a>    <span class="k">def</span> <span class="nf">test_parse_string_to_python_none</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">input_string</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="n">expected</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+        <span class="n">actual</span> <span class="o">=</span> <span class="n">parse_string_to_python</span><span class="p">(</span><span class="n">input_string</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">actual</span><span class="p">,</span> <span class="n">expected</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TestUtil.test_parse_string_to_python"><a class="viewcode-back" href="../../../fastestimator.util.html#fastestimator.util.util_test.TestUtil.test_parse_string_to_python">[docs]</a>    <span class="k">def</span> <span class="nf">test_parse_string_to_python</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">input_string</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+        <span class="n">expected</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+        <span class="n">actual</span> <span class="o">=</span> <span class="n">parse_string_to_python</span><span class="p">(</span><span class="n">input_string</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">actual</span><span class="p">,</span> <span class="n">expected</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TestUtil.test_parse_string_to_python_array"><a class="viewcode-back" href="../../../fastestimator.util.html#fastestimator.util.util_test.TestUtil.test_parse_string_to_python_array">[docs]</a>    <span class="k">def</span> <span class="nf">test_parse_string_to_python_array</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">input_string</span> <span class="o">=</span> <span class="s1">&#39;[]&#39;</span>
+        <span class="n">expected</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">actual</span> <span class="o">=</span> <span class="n">parse_string_to_python</span><span class="p">(</span><span class="n">input_string</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertListEqual</span><span class="p">(</span><span class="n">actual</span><span class="p">,</span> <span class="n">expected</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TestUtil.test_parse_string_to_python_tuple"><a class="viewcode-back" href="../../../fastestimator.util.html#fastestimator.util.util_test.TestUtil.test_parse_string_to_python_tuple">[docs]</a>    <span class="k">def</span> <span class="nf">test_parse_string_to_python_tuple</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">input_string</span> <span class="o">=</span> <span class="s1">&#39;()&#39;</span>
+        <span class="n">expected</span> <span class="o">=</span> <span class="p">()</span>
+        <span class="n">actual</span> <span class="o">=</span> <span class="n">parse_string_to_python</span><span class="p">(</span><span class="n">input_string</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTupleEqual</span><span class="p">(</span><span class="n">actual</span><span class="p">,</span> <span class="n">expected</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TestUtil.test_parse_string_to_python_dict"><a class="viewcode-back" href="../../../fastestimator.util.html#fastestimator.util.util_test.TestUtil.test_parse_string_to_python_dict">[docs]</a>    <span class="k">def</span> <span class="nf">test_parse_string_to_python_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">input_string</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">{}</span><span class="s1">&#39;</span>
+        <span class="n">expected</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">actual</span> <span class="o">=</span> <span class="n">parse_string_to_python</span><span class="p">(</span><span class="n">input_string</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertDictEqual</span><span class="p">(</span><span class="n">actual</span><span class="p">,</span> <span class="n">expected</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TestUtil.test_parse_string_to_python_true"><a class="viewcode-back" href="../../../fastestimator.util.html#fastestimator.util.util_test.TestUtil.test_parse_string_to_python_true">[docs]</a>    <span class="k">def</span> <span class="nf">test_parse_string_to_python_true</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">input_string</span> <span class="o">=</span> <span class="s2">&quot;true&quot;</span>
+        <span class="n">expected</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="n">actual</span> <span class="o">=</span> <span class="n">parse_string_to_python</span><span class="p">(</span><span class="n">input_string</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">actual</span><span class="p">,</span> <span class="n">expected</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TestUtil.test_parse_string_to_python_true2"><a class="viewcode-back" href="../../../fastestimator.util.html#fastestimator.util.util_test.TestUtil.test_parse_string_to_python_true2">[docs]</a>    <span class="k">def</span> <span class="nf">test_parse_string_to_python_true2</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">input_string</span> <span class="o">=</span> <span class="s2">&quot;True&quot;</span>
+        <span class="n">expected</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="n">actual</span> <span class="o">=</span> <span class="n">parse_string_to_python</span><span class="p">(</span><span class="n">input_string</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">actual</span><span class="p">,</span> <span class="n">expected</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TestUtil.test_parse_string_to_python_false"><a class="viewcode-back" href="../../../fastestimator.util.html#fastestimator.util.util_test.TestUtil.test_parse_string_to_python_false">[docs]</a>    <span class="k">def</span> <span class="nf">test_parse_string_to_python_false</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">input_string</span> <span class="o">=</span> <span class="s2">&quot;false&quot;</span>
+        <span class="n">expected</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="n">actual</span> <span class="o">=</span> <span class="n">parse_string_to_python</span><span class="p">(</span><span class="n">input_string</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">actual</span><span class="p">,</span> <span class="n">expected</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TestUtil.test_parse_string_to_python_false2"><a class="viewcode-back" href="../../../fastestimator.util.html#fastestimator.util.util_test.TestUtil.test_parse_string_to_python_false2">[docs]</a>    <span class="k">def</span> <span class="nf">test_parse_string_to_python_false2</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">input_string</span> <span class="o">=</span> <span class="s2">&quot;False&quot;</span>
+        <span class="n">expected</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="n">actual</span> <span class="o">=</span> <span class="n">parse_string_to_python</span><span class="p">(</span><span class="n">input_string</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">actual</span><span class="p">,</span> <span class="n">expected</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TestUtil.test_parse_string_to_python_boolean_array"><a class="viewcode-back" href="../../../fastestimator.util.html#fastestimator.util.util_test.TestUtil.test_parse_string_to_python_boolean_array">[docs]</a>    <span class="k">def</span> <span class="nf">test_parse_string_to_python_boolean_array</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">input_string</span> <span class="o">=</span> <span class="s1">&#39;[true, false, true, false]&#39;</span>
+        <span class="n">expected</span> <span class="o">=</span> <span class="p">[</span><span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">]</span>
+        <span class="n">actual</span> <span class="o">=</span> <span class="n">parse_string_to_python</span><span class="p">(</span><span class="n">input_string</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertListEqual</span><span class="p">(</span><span class="n">actual</span><span class="p">,</span> <span class="n">expected</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TestUtil.test_parse_string_to_python_boolean_array2"><a class="viewcode-back" href="../../../fastestimator.util.html#fastestimator.util.util_test.TestUtil.test_parse_string_to_python_boolean_array2">[docs]</a>    <span class="k">def</span> <span class="nf">test_parse_string_to_python_boolean_array2</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">input_string</span> <span class="o">=</span> <span class="s1">&#39;[True, False, True, False]&#39;</span>
+        <span class="n">expected</span> <span class="o">=</span> <span class="p">[</span><span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">]</span>
+        <span class="n">actual</span> <span class="o">=</span> <span class="n">parse_string_to_python</span><span class="p">(</span><span class="n">input_string</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertListEqual</span><span class="p">(</span><span class="n">actual</span><span class="p">,</span> <span class="n">expected</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TestUtil.test_parse_string_to_python_boolean_tuple"><a class="viewcode-back" href="../../../fastestimator.util.html#fastestimator.util.util_test.TestUtil.test_parse_string_to_python_boolean_tuple">[docs]</a>    <span class="k">def</span> <span class="nf">test_parse_string_to_python_boolean_tuple</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">input_string</span> <span class="o">=</span> <span class="s1">&#39;(True, False, True, False)&#39;</span>
+        <span class="n">expected</span> <span class="o">=</span> <span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
+        <span class="n">actual</span> <span class="o">=</span> <span class="n">parse_string_to_python</span><span class="p">(</span><span class="n">input_string</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTupleEqual</span><span class="p">(</span><span class="n">actual</span><span class="p">,</span> <span class="n">expected</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TestUtil.test_parse_string_to_python_int"><a class="viewcode-back" href="../../../fastestimator.util.html#fastestimator.util.util_test.TestUtil.test_parse_string_to_python_int">[docs]</a>    <span class="k">def</span> <span class="nf">test_parse_string_to_python_int</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">input_string</span> <span class="o">=</span> <span class="s2">&quot;7&quot;</span>
+        <span class="n">expected</span> <span class="o">=</span> <span class="mi">7</span>
+        <span class="n">actual</span> <span class="o">=</span> <span class="n">parse_string_to_python</span><span class="p">(</span><span class="n">input_string</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">actual</span><span class="p">,</span> <span class="n">expected</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TestUtil.test_parse_string_to_python_int_array"><a class="viewcode-back" href="../../../fastestimator.util.html#fastestimator.util.util_test.TestUtil.test_parse_string_to_python_int_array">[docs]</a>    <span class="k">def</span> <span class="nf">test_parse_string_to_python_int_array</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">input_string</span> <span class="o">=</span> <span class="s1">&#39;[0, -2, 4, 8]&#39;</span>
+        <span class="n">expected</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">8</span><span class="p">]</span>
+        <span class="n">actual</span> <span class="o">=</span> <span class="n">parse_string_to_python</span><span class="p">(</span><span class="n">input_string</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertListEqual</span><span class="p">(</span><span class="n">actual</span><span class="p">,</span> <span class="n">expected</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TestUtil.test_parse_string_to_python_int_tuple"><a class="viewcode-back" href="../../../fastestimator.util.html#fastestimator.util.util_test.TestUtil.test_parse_string_to_python_int_tuple">[docs]</a>    <span class="k">def</span> <span class="nf">test_parse_string_to_python_int_tuple</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">input_string</span> <span class="o">=</span> <span class="s1">&#39;(0, -2, 4, 8)&#39;</span>
+        <span class="n">expected</span> <span class="o">=</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">8</span><span class="p">)</span>
+        <span class="n">actual</span> <span class="o">=</span> <span class="n">parse_string_to_python</span><span class="p">(</span><span class="n">input_string</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTupleEqual</span><span class="p">(</span><span class="n">actual</span><span class="p">,</span> <span class="n">expected</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TestUtil.test_parse_string_to_python_float"><a class="viewcode-back" href="../../../fastestimator.util.html#fastestimator.util.util_test.TestUtil.test_parse_string_to_python_float">[docs]</a>    <span class="k">def</span> <span class="nf">test_parse_string_to_python_float</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">input_string</span> <span class="o">=</span> <span class="s2">&quot;7.5&quot;</span>
+        <span class="n">expected</span> <span class="o">=</span> <span class="mf">7.5</span>
+        <span class="n">actual</span> <span class="o">=</span> <span class="n">parse_string_to_python</span><span class="p">(</span><span class="n">input_string</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">actual</span><span class="p">,</span> <span class="n">expected</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TestUtil.test_parse_string_to_python_float_array"><a class="viewcode-back" href="../../../fastestimator.util.html#fastestimator.util.util_test.TestUtil.test_parse_string_to_python_float_array">[docs]</a>    <span class="k">def</span> <span class="nf">test_parse_string_to_python_float_array</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">input_string</span> <span class="o">=</span> <span class="s1">&#39;[0.5, -2.1, 4, 8.89]&#39;</span>
+        <span class="n">expected</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.5</span><span class="p">,</span> <span class="o">-</span><span class="mf">2.1</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mf">8.89</span><span class="p">]</span>
+        <span class="n">actual</span> <span class="o">=</span> <span class="n">parse_string_to_python</span><span class="p">(</span><span class="n">input_string</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertListEqual</span><span class="p">(</span><span class="n">actual</span><span class="p">,</span> <span class="n">expected</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TestUtil.test_parse_string_to_python_float_tuple"><a class="viewcode-back" href="../../../fastestimator.util.html#fastestimator.util.util_test.TestUtil.test_parse_string_to_python_float_tuple">[docs]</a>    <span class="k">def</span> <span class="nf">test_parse_string_to_python_float_tuple</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">input_string</span> <span class="o">=</span> <span class="s1">&#39;(0.5, -2.1, 4, 8.89)&#39;</span>
+        <span class="n">expected</span> <span class="o">=</span> <span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="o">-</span><span class="mf">2.1</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mf">8.89</span><span class="p">)</span>
+        <span class="n">actual</span> <span class="o">=</span> <span class="n">parse_string_to_python</span><span class="p">(</span><span class="n">input_string</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTupleEqual</span><span class="p">(</span><span class="n">actual</span><span class="p">,</span> <span class="n">expected</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TestUtil.test_parse_string_to_python_string"><a class="viewcode-back" href="../../../fastestimator.util.html#fastestimator.util.util_test.TestUtil.test_parse_string_to_python_string">[docs]</a>    <span class="k">def</span> <span class="nf">test_parse_string_to_python_string</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">input_string</span> <span class="o">=</span> <span class="s2">&quot;random string&quot;</span>
+        <span class="n">expected</span> <span class="o">=</span> <span class="s2">&quot;random string&quot;</span>
+        <span class="n">actual</span> <span class="o">=</span> <span class="n">parse_string_to_python</span><span class="p">(</span><span class="n">input_string</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">actual</span><span class="p">,</span> <span class="n">expected</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TestUtil.test_parse_string_to_python_string_array"><a class="viewcode-back" href="../../../fastestimator.util.html#fastestimator.util.util_test.TestUtil.test_parse_string_to_python_string_array">[docs]</a>    <span class="k">def</span> <span class="nf">test_parse_string_to_python_string_array</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">input_string</span> <span class="o">=</span> <span class="s1">&#39;[&quot;random&quot;, &quot;string&quot;]&#39;</span>
+        <span class="n">expected</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;random&#39;</span><span class="p">,</span> <span class="s1">&#39;string&#39;</span><span class="p">]</span>
+        <span class="n">actual</span> <span class="o">=</span> <span class="n">parse_string_to_python</span><span class="p">(</span><span class="n">input_string</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertListEqual</span><span class="p">(</span><span class="n">actual</span><span class="p">,</span> <span class="n">expected</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TestUtil.test_parse_string_to_python_string_tuple"><a class="viewcode-back" href="../../../fastestimator.util.html#fastestimator.util.util_test.TestUtil.test_parse_string_to_python_string_tuple">[docs]</a>    <span class="k">def</span> <span class="nf">test_parse_string_to_python_string_tuple</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">input_string</span> <span class="o">=</span> <span class="s1">&#39;(&quot;random&quot;, &quot;string&quot;)&#39;</span>
+        <span class="n">expected</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;random&#39;</span><span class="p">,</span> <span class="s1">&#39;string&#39;</span><span class="p">)</span>
+        <span class="n">actual</span> <span class="o">=</span> <span class="n">parse_string_to_python</span><span class="p">(</span><span class="n">input_string</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTupleEqual</span><span class="p">(</span><span class="n">actual</span><span class="p">,</span> <span class="n">expected</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TestUtil.test_parse_string_to_python_string_tuple2"><a class="viewcode-back" href="../../../fastestimator.util.html#fastestimator.util.util_test.TestUtil.test_parse_string_to_python_string_tuple2">[docs]</a>    <span class="k">def</span> <span class="nf">test_parse_string_to_python_string_tuple2</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">input_string</span> <span class="o">=</span> <span class="s2">&quot;(&#39;random&#39;, &#39;string&#39;)&quot;</span>
+        <span class="n">expected</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;random&#39;</span><span class="p">,</span> <span class="s1">&#39;string&#39;</span><span class="p">)</span>
+        <span class="n">actual</span> <span class="o">=</span> <span class="n">parse_string_to_python</span><span class="p">(</span><span class="n">input_string</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTupleEqual</span><span class="p">(</span><span class="n">actual</span><span class="p">,</span> <span class="n">expected</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TestUtil.test_parse_string_to_python_nested"><a class="viewcode-back" href="../../../fastestimator.util.html#fastestimator.util.util_test.TestUtil.test_parse_string_to_python_nested">[docs]</a>    <span class="k">def</span> <span class="nf">test_parse_string_to_python_nested</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">input_string</span> <span class="o">=</span> <span class="s1">&#39;(&quot;random&quot;, [&quot;string1&quot;, 10], (True, 7.5, &quot;string2&quot;))&#39;</span>
+        <span class="n">expected</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;random&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;string1&quot;</span><span class="p">,</span> <span class="mi">10</span><span class="p">],</span> <span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="mf">7.5</span><span class="p">,</span> <span class="s2">&quot;string2&quot;</span><span class="p">))</span>
+        <span class="n">actual</span> <span class="o">=</span> <span class="n">parse_string_to_python</span><span class="p">(</span><span class="n">input_string</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTupleEqual</span><span class="p">(</span><span class="n">actual</span><span class="p">,</span> <span class="n">expected</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TestUtil.test_parse_string_to_python_string_dict"><a class="viewcode-back" href="../../../fastestimator.util.html#fastestimator.util.util_test.TestUtil.test_parse_string_to_python_string_dict">[docs]</a>    <span class="k">def</span> <span class="nf">test_parse_string_to_python_string_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">input_string</span> <span class="o">=</span> <span class="s1">&#39;{&quot;key1&quot;:&quot;val1&quot;,&quot;key2&quot;:&quot;val2&quot;}&#39;</span>
+        <span class="n">expected</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;key1&quot;</span><span class="p">:</span> <span class="s2">&quot;val1&quot;</span><span class="p">,</span> <span class="s2">&quot;key2&quot;</span><span class="p">:</span> <span class="s2">&quot;val2&quot;</span><span class="p">}</span>
+        <span class="n">actual</span> <span class="o">=</span> <span class="n">parse_string_to_python</span><span class="p">(</span><span class="n">input_string</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertDictEqual</span><span class="p">(</span><span class="n">actual</span><span class="p">,</span> <span class="n">expected</span><span class="p">)</span></div>
+
+    <span class="c1"># -------------------------------------------------------------------------------------------------------- #</span>
+    <span class="c1"># ----------------------------------------------- Parse CLI ---------------------------------------------- #</span>
+    <span class="c1"># -------------------------------------------------------------------------------------------------------- #</span>
+<div class="viewcode-block" id="TestUtil.test_parse_cli_to_dictionary_none"><a class="viewcode-back" href="../../../fastestimator.util.html#fastestimator.util.util_test.TestUtil.test_parse_cli_to_dictionary_none">[docs]</a>    <span class="k">def</span> <span class="nf">test_parse_cli_to_dictionary_none</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">input_list</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="n">expected</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">actual</span> <span class="o">=</span> <span class="n">parse_cli_to_dictionary</span><span class="p">(</span><span class="n">input_list</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertDictEqual</span><span class="p">(</span><span class="n">actual</span><span class="p">,</span> <span class="n">expected</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TestUtil.test_parse_cli_to_dictionary"><a class="viewcode-back" href="../../../fastestimator.util.html#fastestimator.util.util_test.TestUtil.test_parse_cli_to_dictionary">[docs]</a>    <span class="k">def</span> <span class="nf">test_parse_cli_to_dictionary</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">input_list</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">expected</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">actual</span> <span class="o">=</span> <span class="n">parse_cli_to_dictionary</span><span class="p">(</span><span class="n">input_list</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertDictEqual</span><span class="p">(</span><span class="n">actual</span><span class="p">,</span> <span class="n">expected</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TestUtil.test_parse_cli_to_dictionary_no_key"><a class="viewcode-back" href="../../../fastestimator.util.html#fastestimator.util.util_test.TestUtil.test_parse_cli_to_dictionary_no_key">[docs]</a>    <span class="k">def</span> <span class="nf">test_parse_cli_to_dictionary_no_key</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">input_list</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;thing1&quot;</span><span class="p">,</span> <span class="s2">&quot;thing2&quot;</span><span class="p">,</span> <span class="s2">&quot;True&quot;</span><span class="p">,</span> <span class="s2">&quot;(0,&quot;</span><span class="p">,</span> <span class="s2">&quot;1)&quot;</span><span class="p">]</span>
+        <span class="n">expected</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">actual</span> <span class="o">=</span> <span class="n">parse_cli_to_dictionary</span><span class="p">(</span><span class="n">input_list</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertDictEqual</span><span class="p">(</span><span class="n">actual</span><span class="p">,</span> <span class="n">expected</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TestUtil.test_parse_cli_to_dictionary_one_key_string"><a class="viewcode-back" href="../../../fastestimator.util.html#fastestimator.util.util_test.TestUtil.test_parse_cli_to_dictionary_one_key_string">[docs]</a>    <span class="k">def</span> <span class="nf">test_parse_cli_to_dictionary_one_key_string</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">input_list</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;thing1&quot;</span><span class="p">,</span> <span class="s2">&quot;--key1&quot;</span><span class="p">,</span> <span class="s2">&quot;True&quot;</span><span class="p">,</span> <span class="s2">&quot;(0,&quot;</span><span class="p">,</span> <span class="s2">&quot;1)&quot;</span><span class="p">]</span>
+        <span class="n">expected</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;key1&quot;</span><span class="p">:</span> <span class="s1">&#39;True(0,1)&#39;</span><span class="p">}</span>
+        <span class="n">actual</span> <span class="o">=</span> <span class="n">parse_cli_to_dictionary</span><span class="p">(</span><span class="n">input_list</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertDictEqual</span><span class="p">(</span><span class="n">actual</span><span class="p">,</span> <span class="n">expected</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TestUtil.test_parse_cli_to_dictionary_one_key_string2"><a class="viewcode-back" href="../../../fastestimator.util.html#fastestimator.util.util_test.TestUtil.test_parse_cli_to_dictionary_one_key_string2">[docs]</a>    <span class="k">def</span> <span class="nf">test_parse_cli_to_dictionary_one_key_string2</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">input_list</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;--key1&quot;</span><span class="p">,</span> <span class="s2">&quot;True&quot;</span><span class="p">]</span>
+        <span class="n">expected</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;key1&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">}</span>
+        <span class="n">actual</span> <span class="o">=</span> <span class="n">parse_cli_to_dictionary</span><span class="p">(</span><span class="n">input_list</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertDictEqual</span><span class="p">(</span><span class="n">actual</span><span class="p">,</span> <span class="n">expected</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TestUtil.test_parse_cli_to_dictionary_one_key_tuple"><a class="viewcode-back" href="../../../fastestimator.util.html#fastestimator.util.util_test.TestUtil.test_parse_cli_to_dictionary_one_key_tuple">[docs]</a>    <span class="k">def</span> <span class="nf">test_parse_cli_to_dictionary_one_key_tuple</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">input_list</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;thing1&quot;</span><span class="p">,</span> <span class="s2">&quot;--key1&quot;</span><span class="p">,</span> <span class="s2">&quot;(0,&quot;</span><span class="p">,</span> <span class="s2">&quot;1)&quot;</span><span class="p">]</span>
+        <span class="n">expected</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;key1&quot;</span><span class="p">:</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)}</span>
+        <span class="n">actual</span> <span class="o">=</span> <span class="n">parse_cli_to_dictionary</span><span class="p">(</span><span class="n">input_list</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertDictEqual</span><span class="p">(</span><span class="n">actual</span><span class="p">,</span> <span class="n">expected</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TestUtil.test_parse_cli_to_dictionary_two_key_tuple"><a class="viewcode-back" href="../../../fastestimator.util.html#fastestimator.util.util_test.TestUtil.test_parse_cli_to_dictionary_two_key_tuple">[docs]</a>    <span class="k">def</span> <span class="nf">test_parse_cli_to_dictionary_two_key_tuple</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">input_list</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;--key1&quot;</span><span class="p">,</span> <span class="s2">&quot;(0,&quot;</span><span class="p">,</span> <span class="s2">&quot;1)&quot;</span><span class="p">,</span> <span class="s2">&quot;--key2&quot;</span><span class="p">,</span> <span class="s2">&quot;[True,&quot;</span><span class="p">,</span> <span class="s2">&quot;False,&quot;</span><span class="p">,</span> <span class="s2">&quot;&#39;args&#39;]&quot;</span><span class="p">]</span>
+        <span class="n">expected</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;key1&quot;</span><span class="p">:</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="s2">&quot;key2&quot;</span><span class="p">:</span> <span class="p">[</span><span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="s1">&#39;args&#39;</span><span class="p">]}</span>
+        <span class="n">actual</span> <span class="o">=</span> <span class="n">parse_cli_to_dictionary</span><span class="p">(</span><span class="n">input_list</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertDictEqual</span><span class="p">(</span><span class="n">actual</span><span class="p">,</span> <span class="n">expected</span><span class="p">)</span></div></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, GEHC DataScience
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

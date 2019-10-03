@@ -1,0 +1,352 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>fastestimator.interpretation.umaps &mdash; FastEstimator 0.0.1 documentation</title>
+  
+
+  
+  
+    <link rel="shortcut icon" href="../../../_static/favicon.ico"/>
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../../_static/language_data.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> FastEstimator
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0a0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../learn.html">Learn</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../apphub.html">Example</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api.html">API</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">FastEstimator</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>fastestimator.interpretation.umaps</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for fastestimator.interpretation.umaps</h1><div class="highlight"><pre>
+<span></span><span class="c1"># Copyright 2019 The FastEstimator Authors. All Rights Reserved.</span>
+<span class="c1">#</span>
+<span class="c1"># Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);</span>
+<span class="c1"># you may not use this file except in compliance with the License.</span>
+<span class="c1"># You may obtain a copy of the License at</span>
+<span class="c1">#</span>
+<span class="c1">#     http://www.apache.org/licenses/LICENSE-2.0</span>
+<span class="c1">#</span>
+<span class="c1"># Unless required by applicable law or agreed to in writing, software</span>
+<span class="c1"># distributed under the License is distributed on an &quot;AS IS&quot; BASIS,</span>
+<span class="c1"># WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span>
+<span class="c1"># See the License for the specific language governing permissions and</span>
+<span class="c1"># limitations under the License.</span>
+<span class="c1"># ==============================================================================</span>
+<span class="kn">import</span> <span class="nn">math</span>
+<span class="kn">import</span> <span class="nn">os</span>
+
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+<span class="c1"># noinspection PyPackageRequirements</span>
+<span class="kn">import</span> <span class="nn">umap</span>
+<span class="kn">from</span> <span class="nn">matplotlib.lines</span> <span class="k">import</span> <span class="n">Line2D</span>
+<span class="kn">from</span> <span class="nn">mpl_toolkits.mplot3d</span> <span class="k">import</span> <span class="n">Axes3D</span>
+<span class="kn">from</span> <span class="nn">tqdm</span> <span class="k">import</span> <span class="n">tqdm</span>
+
+<span class="kn">from</span> <span class="nn">fastestimator.util.util</span> <span class="k">import</span> <span class="n">Suppressor</span>
+
+<span class="k">assert</span> <span class="n">Axes3D</span>  <span class="c1"># Axes3D is used to enable projection=&#39;3d&#39;, but will show up as unused without the assert</span>
+
+
+<span class="c1"># TODO: make cache useful again, and fix the progress messages</span>
+<div class="viewcode-block" id="UmapPlotter"><a class="viewcode-back" href="../../../fastestimator.interpretation.html#fastestimator.interpretation.umaps.UmapPlotter">[docs]</a><span class="k">class</span> <span class="nc">UmapPlotter</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">label_dict</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">umap_parameters</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fit</span> <span class="o">=</span> <span class="n">umap</span><span class="o">.</span><span class="n">UMAP</span><span class="p">(</span><span class="o">**</span><span class="n">umap_parameters</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">n_components</span> <span class="o">=</span> <span class="n">umap_parameters</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;n_components&quot;</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">label_dict</span> <span class="o">=</span> <span class="n">label_dict</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">legend_elems</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">color_dict</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="k">def</span> <span class="nf">_map_classes_to_colors</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">classifications</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">classifications</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="nb">len</span><span class="p">(</span><span class="n">classifications</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">color_dict</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">classes</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="s1">&#39;numpy&#39;</span><span class="p">)</span> <span class="k">else</span> <span class="nb">int</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="n">classifications</span><span class="p">))</span>
+            <span class="n">num_classes</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">classes</span><span class="p">)</span>
+            <span class="n">colors</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">hls_palette</span><span class="p">(</span><span class="n">n_colors</span><span class="o">=</span><span class="n">num_classes</span><span class="p">,</span>
+                                     <span class="n">s</span><span class="o">=</span><span class="mf">0.95</span><span class="p">)</span> <span class="k">if</span> <span class="n">num_classes</span> <span class="o">&gt;</span> <span class="mi">10</span> <span class="k">else</span> <span class="n">sns</span><span class="o">.</span><span class="n">color_palette</span><span class="p">(</span><span class="s2">&quot;colorblind&quot;</span><span class="p">)</span>
+            <span class="n">class_to_color</span> <span class="o">=</span> <span class="p">{</span><span class="n">clazz</span><span class="p">:</span> <span class="n">idx</span> <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">clazz</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">classes</span><span class="p">)}</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">color_dict</span> <span class="o">=</span> <span class="p">{</span><span class="n">clazz</span><span class="p">:</span> <span class="n">colors</span><span class="p">[</span><span class="n">class_to_color</span><span class="p">[</span><span class="n">clazz</span><span class="p">]]</span> <span class="k">for</span> <span class="n">clazz</span> <span class="ow">in</span> <span class="n">classes</span><span class="p">}</span>
+        <span class="k">return</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">color_dict</span><span class="p">[</span><span class="n">clazz</span> <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">clazz</span><span class="p">,</span> <span class="s1">&#39;numpy&#39;</span><span class="p">)</span> <span class="k">else</span> <span class="nb">int</span><span class="p">(</span><span class="n">clazz</span><span class="p">)]</span> <span class="k">for</span> <span class="n">clazz</span> <span class="ow">in</span> <span class="n">classifications</span><span class="p">]</span>
+
+<div class="viewcode-block" id="UmapPlotter.plot_umap"><a class="viewcode-back" href="../../../fastestimator.interpretation.html#fastestimator.interpretation.umaps.UmapPlotter.plot_umap">[docs]</a>    <span class="k">def</span> <span class="nf">plot_umap</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">labels</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">legend_loc</span><span class="o">=</span><span class="s1">&#39;best&#39;</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">fig_ax</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="n">color_list</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_map_classes_to_colors</span><span class="p">(</span><span class="n">labels</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">legend_elems</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">color_list</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">legend_elems</span> <span class="o">=</span> <span class="p">[</span>
+                <span class="n">Line2D</span><span class="p">([</span><span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+                       <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">,</span>
+                       <span class="n">color</span><span class="o">=</span><span class="s1">&#39;w&#39;</span><span class="p">,</span>
+                       <span class="n">markerfacecolor</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">color_dict</span><span class="p">[</span><span class="n">clazz</span><span class="p">],</span>
+                       <span class="n">label</span><span class="o">=</span><span class="n">clazz</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">label_dict</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">label_dict</span><span class="p">[</span><span class="n">clazz</span><span class="p">],</span>
+                       <span class="n">markersize</span><span class="o">=</span><span class="mi">7</span><span class="p">)</span> <span class="k">for</span> <span class="n">clazz</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">color_dict</span>
+            <span class="p">]</span>
+        <span class="k">with</span> <span class="n">Suppressor</span><span class="p">():</span>  <span class="c1"># Silence a bunch of numba warnings</span>
+            <span class="n">points</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fit</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">fig_ax</span><span class="p">:</span>
+            <span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+            <span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">111</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">fig_ax</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_yticks</span><span class="p">([],</span> <span class="p">[])</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_yticklabels</span><span class="p">([])</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_xticks</span><span class="p">([],</span> <span class="p">[])</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_xticklabels</span><span class="p">([])</span>
+        <span class="k">if</span> <span class="n">title</span><span class="p">:</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="n">title</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_components</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">points</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">points</span><span class="p">)),</span> <span class="n">c</span><span class="o">=</span><span class="n">color_list</span> <span class="ow">or</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_components</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">points</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">points</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">c</span><span class="o">=</span><span class="n">color_list</span> <span class="ow">or</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_components</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">points</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">points</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">points</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">],</span> <span class="n">c</span><span class="o">=</span><span class="n">color_list</span> <span class="ow">or</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">legend_elems</span> <span class="ow">and</span> <span class="n">legend_loc</span> <span class="o">!=</span> <span class="s1">&#39;off&#39;</span><span class="p">:</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">handles</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">legend_elems</span><span class="p">,</span> <span class="n">loc</span><span class="o">=</span><span class="n">legend_loc</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="s1">&#39;small&#39;</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">fig</span></div>
+
+<div class="viewcode-block" id="UmapPlotter.visualize_umap"><a class="viewcode-back" href="../../../fastestimator.interpretation.html#fastestimator.interpretation.umaps.UmapPlotter.visualize_umap">[docs]</a>    <span class="k">def</span> <span class="nf">visualize_umap</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">labels</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">legend_loc</span><span class="o">=</span><span class="s1">&#39;best&#39;</span><span class="p">,</span> <span class="n">save_path</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">title</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">title</span><span class="p">,</span> <span class="nb">list</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">title</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">),</span> \
+                    <span class="s2">&quot;If titles are provided, must be one-to-one with the data&quot;</span>
+            <span class="n">num_layers</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+            <span class="n">n_components</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span>
+            <span class="n">num_cols</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">ceil</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">num_layers</span><span class="p">))</span>
+            <span class="n">num_rows</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">ceil</span><span class="p">(</span><span class="n">num_layers</span> <span class="o">/</span> <span class="n">num_cols</span><span class="p">)</span>
+            <span class="n">layer_grid_location</span> <span class="o">=</span> <span class="p">{</span><span class="n">idx</span><span class="p">:</span> <span class="p">(</span><span class="n">idx</span> <span class="o">//</span> <span class="n">num_cols</span><span class="p">,</span> <span class="n">idx</span> <span class="o">%</span> <span class="n">num_cols</span><span class="p">)</span> <span class="k">for</span> <span class="n">idx</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_layers</span><span class="p">)}</span>
+            <span class="k">if</span> <span class="n">n_components</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
+                <span class="n">fig</span><span class="p">,</span> <span class="n">axs</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">num_rows</span><span class="p">,</span> <span class="n">num_cols</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">4</span> <span class="o">*</span> <span class="n">num_cols</span><span class="p">,</span> <span class="mf">2.8</span> <span class="o">*</span> <span class="n">num_rows</span><span class="p">),</span>
+                                        <span class="n">subplot_kw</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;projection&#39;</span><span class="p">:</span> <span class="s1">&#39;3d&#39;</span><span class="p">})</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">fig</span><span class="p">,</span> <span class="n">axs</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">num_rows</span><span class="p">,</span> <span class="n">num_cols</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">4</span> <span class="o">*</span> <span class="n">num_cols</span><span class="p">,</span> <span class="mf">2.8</span> <span class="o">*</span> <span class="n">num_rows</span><span class="p">))</span>
+            <span class="c1"># If only one row, need to re-format the axs object for consistency. Likewise for columns</span>
+            <span class="k">if</span> <span class="n">num_rows</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="n">axs</span> <span class="o">=</span> <span class="p">[</span><span class="n">axs</span><span class="p">]</span>
+                <span class="k">if</span> <span class="n">num_cols</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+                    <span class="n">axs</span> <span class="o">=</span> <span class="p">[</span><span class="n">axs</span><span class="p">]</span>
+            <span class="c1"># Turn off axis since numeric values are not meaningful</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_rows</span><span class="p">):</span>
+                <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_cols</span><span class="p">):</span>
+                    <span class="n">axis</span> <span class="o">=</span> <span class="n">axs</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span>
+                    <span class="n">axis</span><span class="o">.</span><span class="n">set_yticks</span><span class="p">([],</span> <span class="p">[])</span>
+                    <span class="n">axis</span><span class="o">.</span><span class="n">set_yticklabels</span><span class="p">([])</span>
+                    <span class="n">axis</span><span class="o">.</span><span class="n">set_xticks</span><span class="p">([],</span> <span class="p">[])</span>
+                    <span class="n">axis</span><span class="o">.</span><span class="n">set_xticklabels</span><span class="p">([])</span>
+            <span class="c1"># some of the columns in the last row might be unused, so disable them</span>
+            <span class="n">last_column_idx</span> <span class="o">=</span> <span class="n">num_cols</span> <span class="o">-</span> <span class="p">(</span><span class="n">num_rows</span> <span class="o">*</span> <span class="n">num_cols</span> <span class="o">-</span> <span class="n">num_layers</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">last_column_idx</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">num_cols</span><span class="p">):</span>
+                <span class="n">axs</span><span class="p">[</span><span class="n">num_rows</span> <span class="o">-</span> <span class="mi">1</span><span class="p">][</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;off&#39;</span><span class="p">)</span>
+
+            <span class="n">legend_loc_plot</span> <span class="o">=</span> <span class="n">legend_loc</span>
+            <span class="k">if</span> <span class="n">legend_loc</span> <span class="o">==</span> <span class="s1">&#39;shared&#39;</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">num_rows</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+                    <span class="n">legend_loc_plot</span> <span class="o">=</span> <span class="s1">&#39;best&#39;</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">legend_loc_plot</span> <span class="o">=</span> <span class="s1">&#39;off&#39;</span>
+            <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">elem</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">tqdm</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s1">&#39;Visualizing&#39;</span><span class="p">)):</span>
+                <span class="n">ax</span> <span class="o">=</span> <span class="n">axs</span><span class="p">[</span><span class="n">layer_grid_location</span><span class="p">[</span><span class="n">idx</span><span class="p">][</span><span class="mi">0</span><span class="p">]][</span><span class="n">layer_grid_location</span><span class="p">[</span><span class="n">idx</span><span class="p">][</span><span class="mi">1</span><span class="p">]]</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">plot_umap</span><span class="p">(</span><span class="n">elem</span><span class="p">,</span>
+                               <span class="n">labels</span><span class="p">,</span>
+                               <span class="n">legend_loc</span><span class="o">=</span><span class="n">legend_loc_plot</span><span class="p">,</span>
+                               <span class="n">title</span><span class="o">=</span><span class="kc">None</span> <span class="k">if</span> <span class="n">title</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">title</span><span class="p">[</span><span class="n">idx</span><span class="p">],</span>
+                               <span class="n">fig_ax</span><span class="o">=</span><span class="p">(</span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span><span class="p">))</span>
+            <span class="k">if</span> <span class="n">legend_loc</span> <span class="o">==</span> <span class="s1">&#39;shared&#39;</span> <span class="ow">and</span> <span class="n">num_rows</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">last_column_idx</span> <span class="o">==</span> <span class="n">num_cols</span> <span class="o">-</span> <span class="mi">1</span><span class="p">:</span>
+                    <span class="n">fig</span><span class="o">.</span><span class="n">subplots_adjust</span><span class="p">(</span><span class="n">bottom</span><span class="o">=</span><span class="mf">0.15</span><span class="p">)</span>
+                    <span class="n">fig</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">handles</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">legend_elems</span><span class="p">,</span> <span class="n">loc</span><span class="o">=</span><span class="s1">&#39;lower center&#39;</span><span class="p">,</span> <span class="n">ncol</span><span class="o">=</span><span class="n">num_cols</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">axs</span><span class="p">[</span><span class="n">num_rows</span> <span class="o">-</span> <span class="mi">1</span><span class="p">][</span><span class="n">last_column_idx</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">handles</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">legend_elems</span><span class="p">,</span>
+                                                                  <span class="n">loc</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">,</span>
+                                                                  <span class="n">fontsize</span><span class="o">=</span><span class="s1">&#39;large&#39;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">plot_umap</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">labels</span><span class="p">,</span> <span class="n">legend_loc</span><span class="o">=</span><span class="n">legend_loc</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="n">title</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">save_path</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">save_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">save_path</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">save_path</span> <span class="o">==</span> <span class="s2">&quot;&quot;</span><span class="p">:</span>
+                <span class="n">save_path</span> <span class="o">=</span> <span class="s2">&quot;.&quot;</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">save_path</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+            <span class="n">save_file</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">save_path</span><span class="p">,</span> <span class="s1">&#39;umap.png&#39;</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Saving to </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">save_file</span><span class="p">))</span>
+            <span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="n">save_file</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span> <span class="n">bbox_inches</span><span class="o">=</span><span class="s2">&quot;tight&quot;</span><span class="p">)</span></div></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, GEHC DataScience
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

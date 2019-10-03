@@ -1,0 +1,848 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>util &mdash; FastEstimator 0.0.1 documentation</title>
+  
+
+  
+  
+    <link rel="shortcut icon" href="_static/favicon.ico"/>
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="metric" href="fastestimator.trace.metric.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> FastEstimator
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0a0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="learn.html">Learn</a></li>
+<li class="toctree-l1"><a class="reference internal" href="apphub.html">Example</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="api.html">API</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="fastestimator.architecture.html">architecture</a></li>
+<li class="toctree-l2"><a class="reference internal" href="fastestimator.cli.html">cli</a></li>
+<li class="toctree-l2"><a class="reference internal" href="fastestimator.dataset.html">dataset</a></li>
+<li class="toctree-l2"><a class="reference internal" href="fastestimator.interpretation.html">interpretation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="fastestimator.layers.html">layers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="fastestimator.op.html">op</a></li>
+<li class="toctree-l2"><a class="reference internal" href="fastestimator.schedule.html">schedule</a></li>
+<li class="toctree-l2"><a class="reference internal" href="fastestimator.summary.html">summary</a></li>
+<li class="toctree-l2"><a class="reference internal" href="fastestimator.trace.html">trace</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">util</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#module-fastestimator.util.loader">loader</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-fastestimator.util.record_writer">record_writer</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-fastestimator.util.tfrecord">tfrecord</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id1">util</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-fastestimator.util.util_test">util_test</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="api.html#module-fastestimator.estimator">estimator</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api.html#module-fastestimator.network">network</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api.html#module-fastestimator.pipeline">pipeline</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">FastEstimator</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="api.html">API</a> &raquo;</li>
+        
+      <li>util</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/fastestimator.util.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  
+<style>
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast,
+.nboutput.nblast {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast + .nbinput {
+    margin-top: -19px;
+}
+
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+
+/* Fix math alignment, see https://github.com/rtfd/sphinx_rtd_theme/pull/686 */
+.math {
+    text-align: unset;
+}
+</style>
+<div class="section" id="module-fastestimator.util">
+<span id="util"></span><h1>util<a class="headerlink" href="#module-fastestimator.util" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="module-fastestimator.util.loader">
+<span id="loader"></span><h2>loader<a class="headerlink" href="#module-fastestimator.util.loader" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="fastestimator.util.loader.PathLoader">
+<em class="property">class </em><code class="sig-prename descclassname">fastestimator.util.loader.</code><code class="sig-name descname">PathLoader</code><span class="sig-paren">(</span><em class="sig-param">root_path</em>, <em class="sig-param">batch=10</em>, <em class="sig-param">input_extension=None</em>, <em class="sig-param">recursive_search=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/util/loader.html#PathLoader"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.util.loader.PathLoader" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>root_path</strong> – The path the the root directory containing files to be read</p></li>
+<li><p><strong>batch</strong> – The batch size to use when loading paths. Must be positive</p></li>
+<li><p><strong>input_extension</strong> – A file extension to limit what sorts of paths are returned</p></li>
+<li><p><strong>recursive_search</strong> – Whether to search within subdirectories for files</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="method">
+<dt id="fastestimator.util.loader.PathLoader.get_file_paths">
+<code class="sig-name descname">get_file_paths</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/util/loader.html#PathLoader.get_file_paths"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.util.loader.PathLoader.get_file_paths" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="fastestimator.util.loader.ImageLoader">
+<em class="property">class </em><code class="sig-prename descclassname">fastestimator.util.loader.</code><code class="sig-name descname">ImageLoader</code><span class="sig-paren">(</span><em class="sig-param">root_path</em>, <em class="sig-param">model</em>, <em class="sig-param">batch=10</em>, <em class="sig-param">input_extension=None</em>, <em class="sig-param">strip_alpha=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/util/loader.html#ImageLoader"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.util.loader.ImageLoader" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#fastestimator.util.loader.PathLoader" title="fastestimator.util.loader.PathLoader"><code class="xref py py-class docutils literal notranslate"><span class="pre">fastestimator.util.loader.PathLoader</span></code></a></p>
+</dd></dl>
+
+</div>
+<hr class="docutils" />
+<div class="section" id="module-fastestimator.util.record_writer">
+<span id="record-writer"></span><h2>record_writer<a class="headerlink" href="#module-fastestimator.util.record_writer" title="Permalink to this headline">¶</a></h2>
+<p>Utility for writing TFRecords.</p>
+<dl class="class">
+<dt id="fastestimator.util.record_writer.RecordWriter">
+<em class="property">class </em><code class="sig-prename descclassname">fastestimator.util.record_writer.</code><code class="sig-name descname">RecordWriter</code><span class="sig-paren">(</span><em class="sig-param">train_data</em>, <em class="sig-param">save_dir</em>, <em class="sig-param">validation_data=None</em>, <em class="sig-param">ops=None</em>, <em class="sig-param">write_feature=None</em>, <em class="sig-param">expand_dims=False</em>, <em class="sig-param">max_record_size_mb=300</em>, <em class="sig-param">compression=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/util/record_writer.html#RecordWriter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.util.record_writer.RecordWriter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Write data into TFRecords.</p>
+<p>This class can handle unpaired features. For example, in cycle-gan the hourse and zebra images are unpaired, which
+means during training you do not have one-to-one correspondance between hourse image and zebra image. When the
+<cite>RecordWriter</cite> instance is sent to <cite>Pipeline</cite> create random pairs between hourse and zebra images. See the cycle-gan
+example in apphub directory.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>train_data</strong> (<em>Union</em><em>[</em><em>dict</em><em>, </em><em>str</em><em>]</em>) – A <cite>dict</cite> that contains train data or a CSV file path. For the CSV file, the
+column header will be used as feature name. Under each column in the CSV file the paths to train data should
+be provided.</p></li>
+<li><p><strong>save_dir</strong> (<em>str</em>) – The directory to save the TFRecords.</p></li>
+<li><p><strong>validation_data</strong> (<em>Union</em><em>[</em><em>dict</em><em>, </em><em>str</em><em>, </em><em>float</em><em>]</em><em>, </em><em>optional</em>) – A <cite>dict</cite> that contains validation data, a CSV file path, or
+a <cite>float</cite> that is between 0 and 1. For the CSV file, the column header will be used as feature name. Under
+each column in the CSV file the paths to validation data should be provided. When this argument is a
+<cite>float</cite>, <cite>RecordWriter</cite> will reserve <cite>validation_data</cite> fraction of the <cite>train_data</cite> as validation data.
+Defaults to None.</p></li>
+<li><p><strong>ops</strong> (<em>obj</em><em>, </em><em>optional</em>) – Transformation operations before TFRecords creation. Defaults to None.</p></li>
+<li><p><strong>write_feature</strong> (<em>str</em><em>, </em><em>optional</em>) – Users can specify what features they want to write to TFRecords. Defaults to
+None.</p></li>
+<li><p><strong>expand_dims</strong> (<em>bool</em><em>, </em><em>optional</em>) – When set to <cite>True</cite>, the first dimension of each feature will be used as batch
+dimension. <cite>RecordWriter</cite> will split the batch into single examples and write one example at a time into
+TFRecord. Defaults to False.</p></li>
+<li><p><strong>max_record_size_mb</strong> (<em>int</em><em>, </em><em>optional</em>) – Maximum size of single TFRecord file. Defaults to 300 MB.</p></li>
+<li><p><strong>compression</strong> (<em>str</em><em>, </em><em>optional</em>) – Compression type can be <cite>“GZIP”</cite>, <cite>“ZLIB”</cite>, or <cite>“”</cite> (no compression). Defaults to
+None.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="method">
+<dt id="fastestimator.util.record_writer.RecordWriter.write">
+<code class="sig-name descname">write</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/util/record_writer.html#RecordWriter.write"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.util.record_writer.RecordWriter.write" title="Permalink to this definition">¶</a></dt>
+<dd><p>Write TFRecods in parallel. Number of processes is set to number of CPU cores.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<hr class="docutils" />
+<div class="section" id="module-fastestimator.util.tfrecord">
+<span id="tfrecord"></span><h2>tfrecord<a class="headerlink" href="#module-fastestimator.util.tfrecord" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="fastestimator.util.tfrecord.get_number_of_examples">
+<code class="sig-prename descclassname">fastestimator.util.tfrecord.</code><code class="sig-name descname">get_number_of_examples</code><span class="sig-paren">(</span><em class="sig-param">file_path</em>, <em class="sig-param">show_warning=True</em>, <em class="sig-param">compression=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/util/tfrecord.html#get_number_of_examples"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.util.tfrecord.get_number_of_examples" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns number of examples in one TFRecord</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>file_path</strong> – Path of TFRecord file</p></li>
+<li><p><strong>show_warning</strong> – Whether to display warning message</p></li>
+<li><p><strong>compression</strong> – None, ‘GZIP’ or ‘ZLIB’</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Number of examples in the TFRecord</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="fastestimator.util.tfrecord.get_features">
+<code class="sig-prename descclassname">fastestimator.util.tfrecord.</code><code class="sig-name descname">get_features</code><span class="sig-paren">(</span><em class="sig-param">file_path</em>, <em class="sig-param">compression=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/util/tfrecord.html#get_features"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.util.tfrecord.get_features" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the feature information in TFRecords</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>file_path</strong> – Path of TFRecord file</p></li>
+<li><p><strong>compression</strong> – None, ‘GZIP’ or ‘ZLIB’</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Dictionary containing feature information of TFRecords</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="fastestimator.util.tfrecord.add_summary">
+<code class="sig-prename descclassname">fastestimator.util.tfrecord.</code><code class="sig-name descname">add_summary</code><span class="sig-paren">(</span><em class="sig-param">data_dir</em>, <em class="sig-param">train_prefix</em>, <em class="sig-param">feature_name</em>, <em class="sig-param">feature_dtype</em>, <em class="sig-param">feature_shape</em>, <em class="sig-param">eval_prefix=None</em>, <em class="sig-param">num_train_examples=None</em>, <em class="sig-param">num_eval_examples=None</em>, <em class="sig-param">compression=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/util/tfrecord.html#add_summary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.util.tfrecord.add_summary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds summary.json file to existing path with tfrecords.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data_dir</strong> (<em>str</em>) – Folder path where tfrecords are stored.</p></li>
+<li><p><strong>train_prefix</strong> (<em>str</em>) – The prefix of all training tfrecord files.</p></li>
+<li><p><strong>feature_name</strong> (<em>list</em>) – Feature name in the tfrecord in a list.</p></li>
+<li><p><strong>feature_dtype</strong> (<em>list</em>) – Original data type for specific feature, this is used for decoding purpose.</p></li>
+<li><p><strong>feature_shape</strong> (<em>list</em>) – Original data shape for specific feature, this is used for reshaping purpose.</p></li>
+<li><p><strong>eval_prefix</strong> (<em>str</em><em>, </em><em>optional</em>) – The prefix of all evaluation tfrecord files. Defaults to None.</p></li>
+<li><p><strong>num_train_examples</strong> (<em>int</em><em>, </em><em>optional</em>) – The total number of training examples, if None, it will calculate
+automatically. Defaults to None.</p></li>
+<li><p><strong>num_eval_examples</strong> (<em>int</em><em>, </em><em>optional</em>) – The total number of validation examples, if None, it will calculate
+automatically. Defaults to None.</p></li>
+<li><p><strong>compression</strong> (<em>str</em><em>, </em><em>optional</em>) – None, ‘GZIP’ or ‘ZLIB’. Defaults to None.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<hr class="docutils" />
+<div class="section" id="id1">
+<h2>util<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<span class="target" id="module-fastestimator.util.util"></span><dl class="function">
+<dt id="fastestimator.util.util.load_image">
+<code class="sig-prename descclassname">fastestimator.util.util.</code><code class="sig-name descname">load_image</code><span class="sig-paren">(</span><em class="sig-param">file_path</em>, <em class="sig-param">strip_alpha=False</em>, <em class="sig-param">channels=3</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/util/util.html#load_image"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.util.util.load_image" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>file_path</strong> – The path to an image file</p></li>
+<li><p><strong>strip_alpha</strong> – True to convert an RGBA image to RGB</p></li>
+<li><p><strong>channels</strong> – How many channels should the image have (0,1,3)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The image loaded into memory and scaled to a range of [-1, 1]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="fastestimator.util.util.load_dict">
+<code class="sig-prename descclassname">fastestimator.util.util.</code><code class="sig-name descname">load_dict</code><span class="sig-paren">(</span><em class="sig-param">dict_path</em>, <em class="sig-param">array_key=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/util/util.html#load_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.util.util.load_dict" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>dict_path</strong> – The path to a json dictionary</p></li>
+<li><p><strong>array_key</strong> – If true the parser will consider the first element in a sublist at the key {_:[K,…,V],…}.
+Otherwise it will parse as {K:V,…} or {K:[…,V],…}</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A dictionary corresponding to the info from the file. If the file was formatted with arrays as the values for a
+key, the last element of the array is used as the value for the key in the parsed dictionary</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="fastestimator.util.util.parse_string_to_python">
+<code class="sig-prename descclassname">fastestimator.util.util.</code><code class="sig-name descname">parse_string_to_python</code><span class="sig-paren">(</span><em class="sig-param">val</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/util/util.html#parse_string_to_python"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.util.util.parse_string_to_python" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>val</strong> – An input string</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A python object version of the input string</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="fastestimator.util.util.convert_tf_dtype">
+<code class="sig-prename descclassname">fastestimator.util.util.</code><code class="sig-name descname">convert_tf_dtype</code><span class="sig-paren">(</span><em class="sig-param">datatype</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/util/util.html#convert_tf_dtype"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.util.util.convert_tf_dtype" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets the tensorflow datatype from string</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>datatype</strong> – String of datatype</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Tensor data type</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="fastestimator.util.util.strip_suffix">
+<code class="sig-prename descclassname">fastestimator.util.util.</code><code class="sig-name descname">strip_suffix</code><span class="sig-paren">(</span><em class="sig-param">target</em>, <em class="sig-param">suffix</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/util/util.html#strip_suffix"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.util.util.strip_suffix" title="Permalink to this definition">¶</a></dt>
+<dd><p>Remove the given suffix from the target if it is present there</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>target</strong> – A string to be formatted</p></li>
+<li><p><strong>suffix</strong> – A string to be removed from ‘target’</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The formatted version of ‘target’</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="fastestimator.util.util.prettify_metric_name">
+<code class="sig-prename descclassname">fastestimator.util.util.</code><code class="sig-name descname">prettify_metric_name</code><span class="sig-paren">(</span><em class="sig-param">metric</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/util/util.html#prettify_metric_name"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.util.util.prettify_metric_name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add spaces to camel case words, then swap _ for space, and capitalize each word</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>metric</strong> – A string to be formatted</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The formatted version of ‘metric’</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="fastestimator.util.util.remove_blacklist_keys">
+<code class="sig-prename descclassname">fastestimator.util.util.</code><code class="sig-name descname">remove_blacklist_keys</code><span class="sig-paren">(</span><em class="sig-param">dic</em>, <em class="sig-param">blacklist</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/util/util.html#remove_blacklist_keys"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.util.util.remove_blacklist_keys" title="Permalink to this definition">¶</a></dt>
+<dd><p>A function which removes the blacklisted elements from a dictionary</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>dic</strong> – The dictionary to inspect</p></li>
+<li><p><strong>blacklist</strong> – keys to be removed from dic if they are present</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+<dl class="simple">
+<dt>Side Effects:</dt><dd><p>Entries in dic may be removed</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="fastestimator.util.util.is_number">
+<code class="sig-prename descclassname">fastestimator.util.util.</code><code class="sig-name descname">is_number</code><span class="sig-paren">(</span><em class="sig-param">s</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/util/util.html#is_number"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.util.util.is_number" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>s</strong> – A string</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>True iff the string represents a number</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="fastestimator.util.util.decode_predictions">
+<code class="sig-prename descclassname">fastestimator.util.util.</code><code class="sig-name descname">decode_predictions</code><span class="sig-paren">(</span><em class="sig-param">predictions</em>, <em class="sig-param">top=3</em>, <em class="sig-param">dictionary=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/util/util.html#decode_predictions"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.util.util.decode_predictions" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>predictions</strong> – A batched numpy array of class prediction scores (Batch X Predictions)</p></li>
+<li><p><strong>top</strong> – How many of the highest predictions to capture</p></li>
+<li><p><strong>dictionary</strong> – {“&lt;class_idx&gt;” -&gt; “&lt;class_name&gt;”}</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A right-justified newline-separated array of the top classes and their associated probabilities.
+There is one entry in the results array per batch in the input</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="class">
+<dt id="fastestimator.util.util.Suppressor">
+<em class="property">class </em><code class="sig-prename descclassname">fastestimator.util.util.</code><code class="sig-name descname">Suppressor</code><a class="reference internal" href="_modules/fastestimator/util/util.html#Suppressor"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.util.util.Suppressor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>A class which can be used to silence output of function calls. example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">Suppressor</span><span class="p">():</span>
+    <span class="n">func</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
+</pre></div>
+</div>
+<dl class="method">
+<dt id="fastestimator.util.util.Suppressor.write">
+<code class="sig-name descname">write</code><span class="sig-paren">(</span><em class="sig-param">x</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/util/util.html#Suppressor.write"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.util.util.Suppressor.write" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="fastestimator.util.util.Timer">
+<em class="property">class </em><code class="sig-prename descclassname">fastestimator.util.util.</code><code class="sig-name descname">Timer</code><span class="sig-paren">(</span><em class="sig-param">name='Task'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/util/util.html#Timer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.util.util.Timer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">contextlib.ContextDecorator</span></code></p>
+<p>A class that can be used to time things:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">Timer</span><span class="p">():</span>
+    <span class="n">func</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
+
+<span class="nd">@Timer</span><span class="p">()</span>
+<span class="k">def</span> <span class="nf">func</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="class">
+<dt id="fastestimator.util.util.NonContext">
+<em class="property">class </em><code class="sig-prename descclassname">fastestimator.util.util.</code><code class="sig-name descname">NonContext</code><a class="reference internal" href="_modules/fastestimator/util/util.html#NonContext"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.util.util.NonContext" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>A class which is used for nothing</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="fastestimator.util.util.get_num_devices">
+<code class="sig-prename descclassname">fastestimator.util.util.</code><code class="sig-name descname">get_num_devices</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/util/util.html#get_num_devices"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.util.util.get_num_devices" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="fastestimator.util.util.flatten_list">
+<code class="sig-prename descclassname">fastestimator.util.util.</code><code class="sig-name descname">flatten_list</code><span class="sig-paren">(</span><em class="sig-param">input_list</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/util/util.html#flatten_list"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.util.util.flatten_list" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="fastestimator.util.util.to_list">
+<code class="sig-prename descclassname">fastestimator.util.util.</code><code class="sig-name descname">to_list</code><span class="sig-paren">(</span><em class="sig-param">data</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/util/util.html#to_list"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.util.util.to_list" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<hr class="docutils" />
+<div class="section" id="module-fastestimator.util.util_test">
+<span id="util-test"></span><h2>util_test<a class="headerlink" href="#module-fastestimator.util.util_test" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="fastestimator.util.util_test.TestUtil">
+<em class="property">class </em><code class="sig-prename descclassname">fastestimator.util.util_test.</code><code class="sig-name descname">TestUtil</code><span class="sig-paren">(</span><em class="sig-param">methodName='runTest'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/util/util_test.html#TestUtil"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.util.util_test.TestUtil" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">unittest.case.TestCase</span></code></p>
+<dl class="attribute">
+<dt id="fastestimator.util.util_test.TestUtil.mock_good_parsed_result">
+<code class="sig-name descname">mock_good_parsed_result</code><em class="property"> = {'example/sec': [[0, 0.0], [100, 44.738688], [200, 45.086421], [300, 44.689092], [400, 44.799198], [500, 44.523727], [600, 45.055799]], 'lr': [[0, 0.0002], [100, 0.0002], [200, 0.0002], [300, 0.0002], [400, 0.0002], [500, 0.0002], [600, 0.0002]], 'min_val_loss': [[281, 0.725258], [562, 0.725258]], 'since_best': [[281, 0.0], [562, 1.0]], 'train_loss': [[0, 12.027558], [100, 2.565781], [200, 0.824913], [300, 0.561318], [400, 0.427389], [500, 0.528405], [600, 0.686736]], 'val_image_labels_loss': [[281, 0.7330105359355609], [562, 4.280138591821823]], 'val_image_labels_my_binary_accuracy': [[281, 0.5194444588075081], [562, 0.5662698552840286]], 'val_loss': [[281, 0.725258], [562, 4.125795]], 'val_mask_raw_conditionalDice': [[281, 0.007752625846316934], [562, 0.15434368319272632]], 'val_mask_raw_loss': [[281, -0.007752625846316934], [562, -0.15434368319272632]]}</em><a class="headerlink" href="#fastestimator.util.util_test.TestUtil.mock_good_parsed_result" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="fastestimator.util.util_test.TestUtil.test_get_num_devices">
+<code class="sig-name descname">test_get_num_devices</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/util/util_test.html#TestUtil.test_get_num_devices"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.util.util_test.TestUtil.test_get_num_devices" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="fastestimator.util.util_test.TestUtil.test_remove_blacklist_keys_success">
+<code class="sig-name descname">test_remove_blacklist_keys_success</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/util/util_test.html#TestUtil.test_remove_blacklist_keys_success"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.util.util_test.TestUtil.test_remove_blacklist_keys_success" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="fastestimator.util.util_test.TestUtil.test_remove_blacklist_keys_none">
+<code class="sig-name descname">test_remove_blacklist_keys_none</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/util/util_test.html#TestUtil.test_remove_blacklist_keys_none"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.util.util_test.TestUtil.test_remove_blacklist_keys_none" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="fastestimator.util.util_test.TestUtil.test_remove_blacklist_keys_empty_list">
+<code class="sig-name descname">test_remove_blacklist_keys_empty_list</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/util/util_test.html#TestUtil.test_remove_blacklist_keys_empty_list"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.util.util_test.TestUtil.test_remove_blacklist_keys_empty_list" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="fastestimator.util.util_test.TestUtil.test_remove_blacklist_keys_empty_set">
+<code class="sig-name descname">test_remove_blacklist_keys_empty_set</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/util/util_test.html#TestUtil.test_remove_blacklist_keys_empty_set"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.util.util_test.TestUtil.test_remove_blacklist_keys_empty_set" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="fastestimator.util.util_test.TestUtil.test_remove_blacklist_keys_empty">
+<code class="sig-name descname">test_remove_blacklist_keys_empty</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/util/util_test.html#TestUtil.test_remove_blacklist_keys_empty"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.util.util_test.TestUtil.test_remove_blacklist_keys_empty" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="fastestimator.util.util_test.TestUtil.test_remove_blacklist_keys_missing">
+<code class="sig-name descname">test_remove_blacklist_keys_missing</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/util/util_test.html#TestUtil.test_remove_blacklist_keys_missing"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.util.util_test.TestUtil.test_remove_blacklist_keys_missing" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="fastestimator.util.util_test.TestUtil.test_strip_suffix">
+<code class="sig-name descname">test_strip_suffix</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/util/util_test.html#TestUtil.test_strip_suffix"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.util.util_test.TestUtil.test_strip_suffix" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="fastestimator.util.util_test.TestUtil.test_strip_suffix_empty">
+<code class="sig-name descname">test_strip_suffix_empty</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/util/util_test.html#TestUtil.test_strip_suffix_empty"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.util.util_test.TestUtil.test_strip_suffix_empty" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="fastestimator.util.util_test.TestUtil.test_strip_suffix_none">
+<code class="sig-name descname">test_strip_suffix_none</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/util/util_test.html#TestUtil.test_strip_suffix_none"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.util.util_test.TestUtil.test_strip_suffix_none" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="fastestimator.util.util_test.TestUtil.test_strip_suffix_full">
+<code class="sig-name descname">test_strip_suffix_full</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/util/util_test.html#TestUtil.test_strip_suffix_full"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.util.util_test.TestUtil.test_strip_suffix_full" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="fastestimator.util.util_test.TestUtil.test_strip_suffix_wrong_suffix">
+<code class="sig-name descname">test_strip_suffix_wrong_suffix</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/util/util_test.html#TestUtil.test_strip_suffix_wrong_suffix"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.util.util_test.TestUtil.test_strip_suffix_wrong_suffix" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="fastestimator.util.util_test.TestUtil.test_strip_suffix_super_suffix">
+<code class="sig-name descname">test_strip_suffix_super_suffix</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/util/util_test.html#TestUtil.test_strip_suffix_super_suffix"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.util.util_test.TestUtil.test_strip_suffix_super_suffix" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="fastestimator.util.util_test.TestUtil.test_strip_suffix_empty_base">
+<code class="sig-name descname">test_strip_suffix_empty_base</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/util/util_test.html#TestUtil.test_strip_suffix_empty_base"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.util.util_test.TestUtil.test_strip_suffix_empty_base" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="fastestimator.util.util_test.TestUtil.test_strip_suffix_no_base">
+<code class="sig-name descname">test_strip_suffix_no_base</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/util/util_test.html#TestUtil.test_strip_suffix_no_base"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.util.util_test.TestUtil.test_strip_suffix_no_base" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="fastestimator.util.util_test.TestUtil.test_prettify_metric_name">
+<code class="sig-name descname">test_prettify_metric_name</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/util/util_test.html#TestUtil.test_prettify_metric_name"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.util.util_test.TestUtil.test_prettify_metric_name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="fastestimator.util.util_test.TestUtil.test_parse_string_to_python_none">
+<code class="sig-name descname">test_parse_string_to_python_none</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/util/util_test.html#TestUtil.test_parse_string_to_python_none"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.util.util_test.TestUtil.test_parse_string_to_python_none" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="fastestimator.util.util_test.TestUtil.test_parse_string_to_python">
+<code class="sig-name descname">test_parse_string_to_python</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/util/util_test.html#TestUtil.test_parse_string_to_python"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.util.util_test.TestUtil.test_parse_string_to_python" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="fastestimator.util.util_test.TestUtil.test_parse_string_to_python_array">
+<code class="sig-name descname">test_parse_string_to_python_array</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/util/util_test.html#TestUtil.test_parse_string_to_python_array"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.util.util_test.TestUtil.test_parse_string_to_python_array" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="fastestimator.util.util_test.TestUtil.test_parse_string_to_python_tuple">
+<code class="sig-name descname">test_parse_string_to_python_tuple</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/util/util_test.html#TestUtil.test_parse_string_to_python_tuple"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.util.util_test.TestUtil.test_parse_string_to_python_tuple" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="fastestimator.util.util_test.TestUtil.test_parse_string_to_python_dict">
+<code class="sig-name descname">test_parse_string_to_python_dict</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/util/util_test.html#TestUtil.test_parse_string_to_python_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.util.util_test.TestUtil.test_parse_string_to_python_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="fastestimator.util.util_test.TestUtil.test_parse_string_to_python_true">
+<code class="sig-name descname">test_parse_string_to_python_true</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/util/util_test.html#TestUtil.test_parse_string_to_python_true"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.util.util_test.TestUtil.test_parse_string_to_python_true" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="fastestimator.util.util_test.TestUtil.test_parse_string_to_python_true2">
+<code class="sig-name descname">test_parse_string_to_python_true2</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/util/util_test.html#TestUtil.test_parse_string_to_python_true2"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.util.util_test.TestUtil.test_parse_string_to_python_true2" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="fastestimator.util.util_test.TestUtil.test_parse_string_to_python_false">
+<code class="sig-name descname">test_parse_string_to_python_false</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/util/util_test.html#TestUtil.test_parse_string_to_python_false"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.util.util_test.TestUtil.test_parse_string_to_python_false" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="fastestimator.util.util_test.TestUtil.test_parse_string_to_python_false2">
+<code class="sig-name descname">test_parse_string_to_python_false2</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/util/util_test.html#TestUtil.test_parse_string_to_python_false2"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.util.util_test.TestUtil.test_parse_string_to_python_false2" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="fastestimator.util.util_test.TestUtil.test_parse_string_to_python_boolean_array">
+<code class="sig-name descname">test_parse_string_to_python_boolean_array</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/util/util_test.html#TestUtil.test_parse_string_to_python_boolean_array"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.util.util_test.TestUtil.test_parse_string_to_python_boolean_array" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="fastestimator.util.util_test.TestUtil.test_parse_string_to_python_boolean_array2">
+<code class="sig-name descname">test_parse_string_to_python_boolean_array2</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/util/util_test.html#TestUtil.test_parse_string_to_python_boolean_array2"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.util.util_test.TestUtil.test_parse_string_to_python_boolean_array2" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="fastestimator.util.util_test.TestUtil.test_parse_string_to_python_boolean_tuple">
+<code class="sig-name descname">test_parse_string_to_python_boolean_tuple</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/util/util_test.html#TestUtil.test_parse_string_to_python_boolean_tuple"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.util.util_test.TestUtil.test_parse_string_to_python_boolean_tuple" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="fastestimator.util.util_test.TestUtil.test_parse_string_to_python_int">
+<code class="sig-name descname">test_parse_string_to_python_int</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/util/util_test.html#TestUtil.test_parse_string_to_python_int"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.util.util_test.TestUtil.test_parse_string_to_python_int" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="fastestimator.util.util_test.TestUtil.test_parse_string_to_python_int_array">
+<code class="sig-name descname">test_parse_string_to_python_int_array</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/util/util_test.html#TestUtil.test_parse_string_to_python_int_array"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.util.util_test.TestUtil.test_parse_string_to_python_int_array" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="fastestimator.util.util_test.TestUtil.test_parse_string_to_python_int_tuple">
+<code class="sig-name descname">test_parse_string_to_python_int_tuple</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/util/util_test.html#TestUtil.test_parse_string_to_python_int_tuple"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.util.util_test.TestUtil.test_parse_string_to_python_int_tuple" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="fastestimator.util.util_test.TestUtil.test_parse_string_to_python_float">
+<code class="sig-name descname">test_parse_string_to_python_float</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/util/util_test.html#TestUtil.test_parse_string_to_python_float"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.util.util_test.TestUtil.test_parse_string_to_python_float" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="fastestimator.util.util_test.TestUtil.test_parse_string_to_python_float_array">
+<code class="sig-name descname">test_parse_string_to_python_float_array</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/util/util_test.html#TestUtil.test_parse_string_to_python_float_array"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.util.util_test.TestUtil.test_parse_string_to_python_float_array" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="fastestimator.util.util_test.TestUtil.test_parse_string_to_python_float_tuple">
+<code class="sig-name descname">test_parse_string_to_python_float_tuple</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/util/util_test.html#TestUtil.test_parse_string_to_python_float_tuple"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.util.util_test.TestUtil.test_parse_string_to_python_float_tuple" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="fastestimator.util.util_test.TestUtil.test_parse_string_to_python_string">
+<code class="sig-name descname">test_parse_string_to_python_string</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/util/util_test.html#TestUtil.test_parse_string_to_python_string"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.util.util_test.TestUtil.test_parse_string_to_python_string" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="fastestimator.util.util_test.TestUtil.test_parse_string_to_python_string_array">
+<code class="sig-name descname">test_parse_string_to_python_string_array</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/util/util_test.html#TestUtil.test_parse_string_to_python_string_array"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.util.util_test.TestUtil.test_parse_string_to_python_string_array" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="fastestimator.util.util_test.TestUtil.test_parse_string_to_python_string_tuple">
+<code class="sig-name descname">test_parse_string_to_python_string_tuple</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/util/util_test.html#TestUtil.test_parse_string_to_python_string_tuple"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.util.util_test.TestUtil.test_parse_string_to_python_string_tuple" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="fastestimator.util.util_test.TestUtil.test_parse_string_to_python_string_tuple2">
+<code class="sig-name descname">test_parse_string_to_python_string_tuple2</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/util/util_test.html#TestUtil.test_parse_string_to_python_string_tuple2"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.util.util_test.TestUtil.test_parse_string_to_python_string_tuple2" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="fastestimator.util.util_test.TestUtil.test_parse_string_to_python_nested">
+<code class="sig-name descname">test_parse_string_to_python_nested</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/util/util_test.html#TestUtil.test_parse_string_to_python_nested"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.util.util_test.TestUtil.test_parse_string_to_python_nested" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="fastestimator.util.util_test.TestUtil.test_parse_string_to_python_string_dict">
+<code class="sig-name descname">test_parse_string_to_python_string_dict</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/util/util_test.html#TestUtil.test_parse_string_to_python_string_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.util.util_test.TestUtil.test_parse_string_to_python_string_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="fastestimator.util.util_test.TestUtil.test_parse_cli_to_dictionary_none">
+<code class="sig-name descname">test_parse_cli_to_dictionary_none</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/util/util_test.html#TestUtil.test_parse_cli_to_dictionary_none"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.util.util_test.TestUtil.test_parse_cli_to_dictionary_none" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="fastestimator.util.util_test.TestUtil.test_parse_cli_to_dictionary">
+<code class="sig-name descname">test_parse_cli_to_dictionary</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/util/util_test.html#TestUtil.test_parse_cli_to_dictionary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.util.util_test.TestUtil.test_parse_cli_to_dictionary" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="fastestimator.util.util_test.TestUtil.test_parse_cli_to_dictionary_no_key">
+<code class="sig-name descname">test_parse_cli_to_dictionary_no_key</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/util/util_test.html#TestUtil.test_parse_cli_to_dictionary_no_key"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.util.util_test.TestUtil.test_parse_cli_to_dictionary_no_key" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="fastestimator.util.util_test.TestUtil.test_parse_cli_to_dictionary_one_key_string">
+<code class="sig-name descname">test_parse_cli_to_dictionary_one_key_string</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/util/util_test.html#TestUtil.test_parse_cli_to_dictionary_one_key_string"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.util.util_test.TestUtil.test_parse_cli_to_dictionary_one_key_string" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="fastestimator.util.util_test.TestUtil.test_parse_cli_to_dictionary_one_key_string2">
+<code class="sig-name descname">test_parse_cli_to_dictionary_one_key_string2</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/util/util_test.html#TestUtil.test_parse_cli_to_dictionary_one_key_string2"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.util.util_test.TestUtil.test_parse_cli_to_dictionary_one_key_string2" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="fastestimator.util.util_test.TestUtil.test_parse_cli_to_dictionary_one_key_tuple">
+<code class="sig-name descname">test_parse_cli_to_dictionary_one_key_tuple</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/util/util_test.html#TestUtil.test_parse_cli_to_dictionary_one_key_tuple"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.util.util_test.TestUtil.test_parse_cli_to_dictionary_one_key_tuple" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="fastestimator.util.util_test.TestUtil.test_parse_cli_to_dictionary_two_key_tuple">
+<code class="sig-name descname">test_parse_cli_to_dictionary_two_key_tuple</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/util/util_test.html#TestUtil.test_parse_cli_to_dictionary_two_key_tuple"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.util.util_test.TestUtil.test_parse_cli_to_dictionary_two_key_tuple" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+      
+        <a href="fastestimator.trace.metric.html" class="btn btn-neutral float-left" title="metric" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, GEHC DataScience
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

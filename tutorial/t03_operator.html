@@ -1,0 +1,673 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Tutorial 3: Operator &mdash; FastEstimator 0.0.1 documentation</title>
+  
+
+  
+  
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Tutorial 4: Pipeline debugging and benchmarking" href="t04_pipeline_debug_benchmark.html" />
+    <link rel="prev" title="Tutorial 2: Using In-Disk Data in FastEstimator" href="t02_using_data_in_disk.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> FastEstimator
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0a0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../install.html">Installation</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../learn.html">Learn</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="t01_basic_usage.html">Tutorial 1: Basic Usage of FastEstimator</a></li>
+<li class="toctree-l2"><a class="reference internal" href="t02_using_data_in_disk.html">Tutorial 2: Using In-Disk Data in FastEstimator</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Tutorial 3: Operator</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#How-Operator-works">How Operator works</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#How-to-express-Operator-connections-in-FastEstimator">How to express Operator connections in FastEstimator</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#What-are-different-types-of-Operators?">What are different types of Operators?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#How-Operator-is-defined?">How Operator is defined?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Operator-demo-in-FastEstimator">Operator demo in FastEstimator</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#step-0:-RecordWriter(use-prebuilt-Op-and-Custom-Op)">step 0: RecordWriter(use prebuilt Op and Custom Op)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#step-1:-Pipeline:-(use-prebuilt-Op-and-Custom-Op)">step 1: Pipeline: (use prebuilt Op and Custom Op)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#step-2:-Network:-(use-prebuilt-Op-and-Custom-Op)">step 2: Network: (use prebuilt Op and Custom Op)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#step-3:-Estimator-(same-as-tutorial-2,-nothing-special)">step 3: Estimator (same as tutorial 2, nothing special)</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="t04_pipeline_debug_benchmark.html">Tutorial 4: Pipeline debugging and benchmarking</a></li>
+<li class="toctree-l2"><a class="reference internal" href="t05_trace_debug_training.html">Tutorial 5: Trace - training control and debugging</a></li>
+<li class="toctree-l2"><a class="reference internal" href="t06_TensorFilter_imbalanced_training.html">Tutorial 6: TensorFilter - imbalanced training</a></li>
+<li class="toctree-l2"><a class="reference internal" href="t07_expand_data_dimension.html">Tutorial 7: expanding data dimension in recordwriter and pipeline</a></li>
+<li class="toctree-l2"><a class="reference internal" href="t08_scheduler_progressive_training.html">Tutorial 8: Scheduler - changing hyperparameters during the training</a></li>
+<li class="toctree-l2"><a class="reference internal" href="t09_learning_rate_controller.html">Tutorial 9: Learning Rate Controller</a></li>
+<li class="toctree-l2"><a class="reference internal" href="t10_unpaired_dataset.html">Tutorial 10: Dataset with unpaired features</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../apphub.html">Example</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api.html">API</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">FastEstimator</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../learn.html">Learn</a> &raquo;</li>
+        
+      <li>Tutorial 3: Operator</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/tutorial/t03_operator.ipynb.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  
+<style>
+/* CSS for nbsphinx extension */
+
+/* remove conflicting styling from Sphinx themes */
+div.nbinput,
+div.nbinput div.prompt,
+div.nbinput div.input_area,
+div.nbinput div[class*=highlight],
+div.nbinput div[class*=highlight] pre,
+div.nboutput,
+div.nbinput div.prompt,
+div.nbinput div.output_area,
+div.nboutput div[class*=highlight],
+div.nboutput div[class*=highlight] pre {
+    background: none;
+    border: none;
+    padding: 0 0;
+    margin: 0;
+    box-shadow: none;
+}
+
+/* avoid gaps between output lines */
+div.nboutput div[class*=highlight] pre {
+    line-height: normal;
+}
+
+/* input/output containers */
+div.nbinput,
+div.nboutput {
+    display: -webkit-flex;
+    display: flex;
+    align-items: flex-start;
+    margin: 0;
+    width: 100%;
+}
+@media (max-width: 540px) {
+    div.nbinput,
+    div.nboutput {
+        flex-direction: column;
+    }
+}
+
+/* input container */
+div.nbinput {
+    padding-top: 5px;
+}
+
+/* last container */
+div.nblast {
+    padding-bottom: 5px;
+}
+
+/* input prompt */
+div.nbinput div.prompt pre {
+    color: #307FC1;
+}
+
+/* output prompt */
+div.nboutput div.prompt pre {
+    color: #BF5B3D;
+}
+
+/* all prompts */
+div.nbinput div.prompt,
+div.nboutput div.prompt {
+    min-width: 5ex;
+    padding-top: 0.4em;
+    padding-right: 0.4em;
+    text-align: right;
+    flex: 0;
+}
+@media (max-width: 540px) {
+    div.nbinput div.prompt,
+    div.nboutput div.prompt {
+        text-align: left;
+        padding: 0.4em;
+    }
+    div.nboutput div.prompt.empty {
+        padding: 0;
+    }
+}
+
+/* disable scrollbars on prompts */
+div.nbinput div.prompt pre,
+div.nboutput div.prompt pre {
+    overflow: hidden;
+}
+
+/* input/output area */
+div.nbinput div.input_area,
+div.nboutput div.output_area {
+    padding: 0.4em;
+    -webkit-flex: 1;
+    flex: 1;
+    overflow: auto;
+}
+@media (max-width: 540px) {
+    div.nbinput div.input_area,
+    div.nboutput div.output_area {
+        width: 100%;
+    }
+}
+
+/* input area */
+div.nbinput div.input_area {
+    border: 1px solid #e0e0e0;
+    border-radius: 2px;
+    background: #f5f5f5;
+}
+
+/* override MathJax center alignment in output cells */
+div.nboutput div[class*=MathJax] {
+    text-align: left !important;
+}
+
+/* override sphinx.ext.imgmath center alignment in output cells */
+div.nboutput div.math p {
+    text-align: left;
+}
+
+/* standard error */
+div.nboutput div.output_area.stderr {
+    background: #fdd;
+}
+
+/* ANSI colors */
+.ansi-black-fg { color: #3E424D; }
+.ansi-black-bg { background-color: #3E424D; }
+.ansi-black-intense-fg { color: #282C36; }
+.ansi-black-intense-bg { background-color: #282C36; }
+.ansi-red-fg { color: #E75C58; }
+.ansi-red-bg { background-color: #E75C58; }
+.ansi-red-intense-fg { color: #B22B31; }
+.ansi-red-intense-bg { background-color: #B22B31; }
+.ansi-green-fg { color: #00A250; }
+.ansi-green-bg { background-color: #00A250; }
+.ansi-green-intense-fg { color: #007427; }
+.ansi-green-intense-bg { background-color: #007427; }
+.ansi-yellow-fg { color: #DDB62B; }
+.ansi-yellow-bg { background-color: #DDB62B; }
+.ansi-yellow-intense-fg { color: #B27D12; }
+.ansi-yellow-intense-bg { background-color: #B27D12; }
+.ansi-blue-fg { color: #208FFB; }
+.ansi-blue-bg { background-color: #208FFB; }
+.ansi-blue-intense-fg { color: #0065CA; }
+.ansi-blue-intense-bg { background-color: #0065CA; }
+.ansi-magenta-fg { color: #D160C4; }
+.ansi-magenta-bg { background-color: #D160C4; }
+.ansi-magenta-intense-fg { color: #A03196; }
+.ansi-magenta-intense-bg { background-color: #A03196; }
+.ansi-cyan-fg { color: #60C6C8; }
+.ansi-cyan-bg { background-color: #60C6C8; }
+.ansi-cyan-intense-fg { color: #258F8F; }
+.ansi-cyan-intense-bg { background-color: #258F8F; }
+.ansi-white-fg { color: #C5C1B4; }
+.ansi-white-bg { background-color: #C5C1B4; }
+.ansi-white-intense-fg { color: #A1A6B2; }
+.ansi-white-intense-bg { background-color: #A1A6B2; }
+
+.ansi-default-inverse-fg { color: #FFFFFF; }
+.ansi-default-inverse-bg { background-color: #000000; }
+
+.ansi-bold { font-weight: bold; }
+.ansi-underline { text-decoration: underline; }
+
+/* Some additional styling taken form the Jupyter notebook CSS */
+div.rendered_html table {
+  border: none;
+  border-collapse: collapse;
+  border-spacing: 0;
+  color: black;
+  font-size: 12px;
+  table-layout: fixed;
+}
+div.rendered_html thead {
+  border-bottom: 1px solid black;
+  vertical-align: bottom;
+}
+div.rendered_html tr,
+div.rendered_html th,
+div.rendered_html td {
+  text-align: right;
+  vertical-align: middle;
+  padding: 0.5em 0.5em;
+  line-height: normal;
+  white-space: normal;
+  max-width: none;
+  border: none;
+}
+div.rendered_html th {
+  font-weight: bold;
+}
+div.rendered_html tbody tr:nth-child(odd) {
+  background: #f5f5f5;
+}
+div.rendered_html tbody tr:hover {
+  background: rgba(66, 165, 245, 0.2);
+}
+
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast,
+.nboutput.nblast {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast + .nbinput {
+    margin-top: -19px;
+}
+
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+
+/* Fix math alignment, see https://github.com/rtfd/sphinx_rtd_theme/pull/686 */
+.math {
+    text-align: unset;
+}
+</style>
+<div class="section" id="Tutorial-3:-Operator">
+<h1>Tutorial 3: Operator<a class="headerlink" href="#Tutorial-3:-Operator" title="Permalink to this headline">¶</a></h1>
+<p>In FastEstimator, the most important concept is <code class="docutils literal notranslate"><span class="pre">Operator</span></code>, which is used extensively in <code class="docutils literal notranslate"><span class="pre">RecordWriter</span></code>, <code class="docutils literal notranslate"><span class="pre">Pipeline</span></code> and <code class="docutils literal notranslate"><span class="pre">Network</span></code>. In this tutorial, we’re going to talk about everything you need to know about <code class="docutils literal notranslate"><span class="pre">Operator</span></code>.</p>
+<p>Let’s start with a short version: <code class="docutils literal notranslate"><span class="pre">Operator</span></code> is a class that works like a function, it is used in FastEstimator for constructing workflow graphs.</p>
+<p>As we all know, a python function has 3 compoents: input variable(s), transformation logics and output variable(s). Similarly, an <code class="docutils literal notranslate"><span class="pre">Operator</span></code> has 3 parts: input key(s), transformation fuction and output key(s).</p>
+<p>Now you may think: “<code class="docutils literal notranslate"><span class="pre">Operator</span></code> and function are almost the same, what’s different between them? why do we need it?”</p>
+<p>The difference is: function uses variable whereas <code class="docutils literal notranslate"><span class="pre">Operator</span></code> uses keys (which is a representation of variable). The purpose of <code class="docutils literal notranslate"><span class="pre">Operator</span></code> is to allow users to construct a graph when variables are not created yet. In FastEstimator, we take care of the variable creation, routing and management such that users can have a good sleep at night.</p>
+<div class="section" id="How-Operator-works">
+<h2>How Operator works<a class="headerlink" href="#How-Operator-works" title="Permalink to this headline">¶</a></h2>
+<p>Assuming our data is in a dictionary format with key-value pairs, and an <code class="docutils literal notranslate"><span class="pre">Operator</span></code> named <code class="docutils literal notranslate"><span class="pre">Add_one</span></code> which add 1 to input key is given:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;x&quot;</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;y&quot;</span><span class="p">:</span><span class="mi">2</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>if we want to add 1 to the value associated with key <code class="docutils literal notranslate"><span class="pre">x</span></code>, we can simply do:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">Add_one</span><span class="p">(</span><span class="n">inputs</span><span class="o">=</span><span class="s2">&quot;x&quot;</span><span class="p">,</span> <span class="n">outputs</span><span class="o">=</span><span class="s2">&quot;x&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>At run time, what the operator will do is:</p>
+<ol class="arabic simple">
+<li><p>take the value of the input key ‘x’ from the data dictionary</p></li>
+<li><p>apply transformation functions to the value</p></li>
+<li><p>write the output value to the data dictionary with output key ‘x’</p></li>
+</ol>
+<p>As a result, the data will become:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="s2">&quot;x&quot;</span><span class="p">:</span><span class="mi">2</span><span class="p">,</span> <span class="s2">&quot;y&quot;</span><span class="p">:</span><span class="mi">2</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>Now let’s add 1 to the value of <code class="docutils literal notranslate"><span class="pre">x</span></code> again and write the output to a new key <code class="docutils literal notranslate"><span class="pre">z</span></code>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">Add_one</span><span class="p">(</span><span class="n">inputs</span><span class="o">=</span><span class="s2">&quot;x&quot;</span><span class="p">,</span> <span class="n">outputs</span><span class="o">=</span><span class="s2">&quot;z&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>data then becomes:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="s2">&quot;x&quot;</span><span class="p">:</span><span class="mi">2</span><span class="p">,</span> <span class="s2">&quot;y&quot;</span><span class="p">:</span><span class="mi">2</span><span class="p">,</span> <span class="s2">&quot;z&quot;</span><span class="p">:</span><span class="mi">3</span><span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="How-to-express-Operator-connections-in-FastEstimator">
+<h2>How to express Operator connections in FastEstimator<a class="headerlink" href="#How-to-express-Operator-connections-in-FastEstimator" title="Permalink to this headline">¶</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">Operator</span></code> can take multiple inputs and produce multiple outputs. One can see the true power of <code class="docutils literal notranslate"><span class="pre">Operator</span></code> when combining them in a sequence. The Figure below lists several examples of graph topologies enabled by lists of <code class="docutils literal notranslate"><span class="pre">Operator</span></code>. We will talk about <code class="docutils literal notranslate"><span class="pre">Schedule</span></code> in detail in future tutorials.</p>
+</div>
+<div class="section" id="What-are-different-types-of-Operators?">
+<h2>What are different types of Operators?<a class="headerlink" href="#What-are-different-types-of-Operators?" title="Permalink to this headline">¶</a></h2>
+<p>On the implementation level, there are two types of <code class="docutils literal notranslate"><span class="pre">Operators</span></code> that every operator class inherits: <code class="docutils literal notranslate"><span class="pre">NumpyOp</span></code> and <code class="docutils literal notranslate"><span class="pre">TensorOp</span></code>.</p>
+<p><code class="docutils literal notranslate"><span class="pre">NumpyOp</span></code> is used in the <code class="docutils literal notranslate"><span class="pre">ops</span></code> argument of <code class="docutils literal notranslate"><span class="pre">RecordWriter</span></code> only. Users can use any library inside the transformation function to calculate output. For example, users can call numpy, cv2, scipy functions etc.</p>
+<p><code class="docutils literal notranslate"><span class="pre">TensorOp</span></code> is used in the <code class="docutils literal notranslate"><span class="pre">ops</span></code> argument of <code class="docutils literal notranslate"><span class="pre">Pipeline</span></code> and <code class="docutils literal notranslate"><span class="pre">Network</span></code>. Users are restricted to use tensor graph to construct the output. For example, the transformation logic has to be written in tensorfloew graph.</p>
+</div>
+<div class="section" id="How-Operator-is-defined?">
+<h2>How Operator is defined?<a class="headerlink" href="#How-Operator-is-defined?" title="Permalink to this headline">¶</a></h2>
+<p>An <code class="docutils literal notranslate"><span class="pre">Operator</span></code> is defined like this:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Operator</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">inputs</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">outputs</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">inputs</span> <span class="o">=</span> <span class="n">inputs</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">outputs</span> <span class="o">=</span> <span class="n">outputs</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mode</span> <span class="o">=</span> <span class="n">mode</span>
+
+    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">state</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">data</span>
+</pre></div>
+</div>
+<p>where: * <code class="docutils literal notranslate"><span class="pre">inputs</span></code> and <code class="docutils literal notranslate"><span class="pre">outputs</span></code> are the keys for input and outputs of <code class="docutils literal notranslate"><span class="pre">forward</span></code> function. * <code class="docutils literal notranslate"><span class="pre">mode</span></code> is the execution mode (“train”, “eval”) that the Operator is active for. mode can be a string (like “train”) or a list of string (like [“train”, “eval”]). If mode is None, then it means Operator will be active for all scenarios.</p>
+<p>If there are multiple inputs/outputs in <code class="docutils literal notranslate"><span class="pre">forward</span></code> function, <code class="docutils literal notranslate"><span class="pre">inputs</span></code> and <code class="docutils literal notranslate"><span class="pre">outputs</span></code> can be a list or tuple, the <code class="docutils literal notranslate"><span class="pre">forward</span></code> function’s input/output variable <code class="docutils literal notranslate"><span class="pre">data</span></code> will have the same data type. For example, if we need <code class="docutils literal notranslate"><span class="pre">AddOne</span></code> to take multiple inputs:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1">#assume dictionary is {&quot;x&quot;:1, &quot;y&quot;:2}</span>
+
+<span class="n">AddOne</span><span class="p">(</span><span class="n">inputs</span><span class="o">=</span><span class="s2">&quot;x&quot;</span><span class="p">)</span> <span class="c1">#the data in forward function is 1</span>
+
+<span class="n">AddOne</span><span class="p">(</span><span class="n">inputs</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;x&quot;</span><span class="p">,</span> <span class="s2">&quot;y&quot;</span><span class="p">])</span> <span class="c1">#the data in forward function is [1,2]</span>
+
+<span class="n">AddOne</span><span class="p">(</span><span class="n">inputs</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;x&quot;</span><span class="p">,</span> <span class="s2">&quot;y&quot;</span><span class="p">))</span> <span class="c1">#the data in forward function is (1,2)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="Operator-demo-in-FastEstimator">
+<h2>Operator demo in FastEstimator<a class="headerlink" href="#Operator-demo-in-FastEstimator" title="Permalink to this headline">¶</a></h2>
+<p>Next we will illustrate the usage of <code class="docutils literal notranslate"><span class="pre">Operator</span></code> in an end-to-end deep learning task. Let’s start with the task in tutorial 2 and build more complex logics using <code class="docutils literal notranslate"><span class="pre">Operator</span></code>.</p>
+<p>Let’s first generate some in-disk data images and csv files for later usage:</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">fastestimator.dataset.mnist</span> <span class="k">import</span> <span class="n">load_data</span>
+
+<span class="n">train_csv</span><span class="p">,</span> <span class="n">eval_csv</span><span class="p">,</span> <span class="n">data_path</span> <span class="o">=</span> <span class="n">load_data</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;image data is generated in </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">data_path</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="step-0:-RecordWriter(use-prebuilt-Op-and-Custom-Op)">
+<h3>step 0: RecordWriter(use prebuilt Op and Custom Op)<a class="headerlink" href="#step-0:-RecordWriter(use-prebuilt-Op-and-Custom-Op)" title="Permalink to this headline">¶</a></h3>
+<p>In this task, when the csv files and trainig images are provided in-disk, we want to do two preprocessing steps upfront:</p>
+<ol class="arabic simple">
+<li><p>read the image (in grey scale) and label. (we will use the pre-built <code class="docutils literal notranslate"><span class="pre">ImageReader</span></code> Operator in FastEstimator)</p></li>
+<li><p>resale the image pixel value range, from [0, 255] to [-1, 1]. (We will customize an Operator to achieve this)</p></li>
+</ol>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">fastestimator.util.op</span> <span class="k">import</span> <span class="n">NumpyOp</span>
+<span class="kn">from</span> <span class="nn">fastestimator.record.preprocess</span> <span class="k">import</span> <span class="n">ImageReader</span>
+<span class="kn">import</span> <span class="nn">fastestimator</span> <span class="k">as</span> <span class="nn">fe</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">os</span>
+
+<span class="k">class</span> <span class="nc">Rescale</span><span class="p">(</span><span class="n">NumpyOp</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">state</span><span class="p">):</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="p">(</span><span class="n">data</span> <span class="o">-</span> <span class="mf">127.5</span><span class="p">)</span> <span class="o">/</span> <span class="mf">127.5</span>
+        <span class="k">return</span> <span class="n">data</span>
+
+<span class="n">writer</span> <span class="o">=</span> <span class="n">fe</span><span class="o">.</span><span class="n">RecordWriter</span><span class="p">(</span><span class="n">save_dir</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">data_path</span><span class="p">,</span> <span class="s2">&quot;FEdata&quot;</span><span class="p">),</span>
+                         <span class="n">train_data</span><span class="o">=</span><span class="n">train_csv</span><span class="p">,</span>
+                         <span class="n">validation_data</span><span class="o">=</span><span class="n">eval_csv</span><span class="p">,</span>
+                         <span class="n">ops</span><span class="o">=</span><span class="p">[</span><span class="n">ImageReader</span><span class="p">(</span><span class="n">inputs</span><span class="o">=</span><span class="s2">&quot;x&quot;</span><span class="p">,</span> <span class="n">parent_path</span><span class="o">=</span><span class="n">data_path</span><span class="p">,</span> <span class="n">grey_scale</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
+                              <span class="n">Rescale</span><span class="p">(</span><span class="n">outputs</span><span class="o">=</span><span class="s2">&quot;x&quot;</span><span class="p">)])</span>
+</pre></div>
+</div>
+</div>
+<p>Note that in the ops above, <code class="docutils literal notranslate"><span class="pre">ImageReader</span></code> does not have outputs and <code class="docutils literal notranslate"><span class="pre">Rescale</span></code> does not have inputs. This is because in FastEstimator, if the input of next operator uses the output of previous operator, then there is no need to read/write the data from/to the dictionary.</p>
+</div>
+<div class="section" id="step-1:-Pipeline:-(use-prebuilt-Op-and-Custom-Op)">
+<h3>step 1: Pipeline: (use prebuilt Op and Custom Op)<a class="headerlink" href="#step-1:-Pipeline:-(use-prebuilt-Op-and-Custom-Op)" title="Permalink to this headline">¶</a></h3>
+<p>As mentioned before, <code class="docutils literal notranslate"><span class="pre">Pipeline</span></code> is responsible for real-time preprocessing during the training (such as augmentation). let’s do the following preprocessing during training for each batch: 1. Resize the imge to (30,30), we are going to customize this operation. 2. Augment the image (rotation -15 to +15 degree), we are going to use prebuilt operator for it.</p>
+<p>Some may argue that <code class="docutils literal notranslate"><span class="pre">Resize</span></code> can be done upfront in <code class="docutils literal notranslate"><span class="pre">RecordWriter</span></code>, which this is true indeed. But sometimes doing resize in the training may have some benefits, for example, we can save disk space by storing 28x28 data instead of 30x30. It is up to the user to choose based on specific usecase.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">fastestimator.pipeline.augmentation</span> <span class="k">import</span> <span class="n">Augmentation2D</span>
+<span class="kn">from</span> <span class="nn">fastestimator.util.op</span> <span class="k">import</span> <span class="n">TensorOp</span>
+<span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
+
+
+<span class="k">class</span> <span class="nc">Resize</span><span class="p">(</span><span class="n">TensorOp</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">inputs</span><span class="p">,</span> <span class="n">outputs</span><span class="p">,</span> <span class="n">size</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">inputs</span><span class="o">=</span><span class="n">inputs</span><span class="p">,</span> <span class="n">outputs</span><span class="o">=</span><span class="n">outputs</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">size</span> <span class="o">=</span> <span class="n">size</span>
+
+    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">state</span><span class="p">):</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">resize</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">size</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">data</span>
+
+<span class="n">pipeline</span> <span class="o">=</span> <span class="n">fe</span><span class="o">.</span><span class="n">Pipeline</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">writer</span><span class="p">,</span>
+                       <span class="n">batch_size</span><span class="o">=</span><span class="mi">32</span><span class="p">,</span>
+                       <span class="n">ops</span><span class="o">=</span><span class="p">[</span><span class="n">Resize</span><span class="p">(</span><span class="n">inputs</span><span class="o">=</span><span class="s2">&quot;x&quot;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="mi">30</span><span class="p">,</span> <span class="mi">30</span><span class="p">),</span> <span class="n">outputs</span><span class="o">=</span><span class="s2">&quot;x&quot;</span><span class="p">),</span>
+                            <span class="n">Augmentation2D</span><span class="p">(</span><span class="n">outputs</span><span class="o">=</span><span class="s2">&quot;x&quot;</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;train&quot;</span><span class="p">,</span> <span class="n">rotation_range</span><span class="o">=</span><span class="mi">15</span><span class="p">)])</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="step-2:-Network:-(use-prebuilt-Op-and-Custom-Op)">
+<h3>step 2: Network: (use prebuilt Op and Custom Op)<a class="headerlink" href="#step-2:-Network:-(use-prebuilt-Op-and-Custom-Op)" title="Permalink to this headline">¶</a></h3>
+<p>Network is responsible for differentiable executions, here let’s do the following: 1. feed the augmentated image to the network and get the predicted score 2. scale the predicted score 10 times and write to a new key (this is only for demo purpose, it has no actual usage)</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">fastestimator.architecture</span> <span class="k">import</span> <span class="n">LeNet</span>
+<span class="kn">from</span> <span class="nn">fastestimator.network.model</span> <span class="k">import</span> <span class="n">FEModel</span>
+<span class="kn">from</span> <span class="nn">fastestimator.network.model</span> <span class="k">import</span> <span class="n">ModelOp</span>
+<span class="kn">from</span> <span class="nn">fastestimator.network.loss</span> <span class="k">import</span> <span class="n">SparseCategoricalCrossentropy</span>
+
+
+<span class="k">class</span> <span class="nc">Scale</span><span class="p">(</span><span class="n">TensorOp</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">state</span><span class="p">):</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">data</span> <span class="o">*</span> <span class="mi">10</span>
+        <span class="k">return</span> <span class="n">data</span>
+
+<span class="n">model</span> <span class="o">=</span> <span class="n">FEModel</span><span class="p">(</span><span class="n">model_def</span><span class="o">=</span><span class="k">lambda</span><span class="p">:</span> <span class="n">LeNet</span><span class="p">(</span><span class="n">input_shape</span><span class="o">=</span><span class="p">(</span><span class="mi">30</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">1</span><span class="p">)),</span> <span class="n">model_name</span><span class="o">=</span><span class="s2">&quot;lenet&quot;</span><span class="p">,</span> <span class="n">optimizer</span><span class="o">=</span><span class="s2">&quot;adam&quot;</span><span class="p">,</span> <span class="n">loss_name</span><span class="o">=</span><span class="s2">&quot;loss&quot;</span><span class="p">)</span>
+<span class="n">network</span> <span class="o">=</span> <span class="n">fe</span><span class="o">.</span><span class="n">Network</span><span class="p">(</span><span class="n">ops</span><span class="o">=</span><span class="p">[</span><span class="n">ModelOp</span><span class="p">(</span><span class="n">inputs</span><span class="o">=</span><span class="s2">&quot;x&quot;</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">,</span> <span class="n">outputs</span><span class="o">=</span><span class="s2">&quot;y_pred&quot;</span><span class="p">),</span>
+                          <span class="n">SparseCategoricalCrossentropy</span><span class="p">(</span><span class="n">y_pred</span><span class="o">=</span><span class="s2">&quot;y_pred&quot;</span><span class="p">,</span> <span class="n">y_true</span><span class="o">=</span><span class="s2">&quot;y&quot;</span><span class="p">,</span> <span class="n">outputs</span><span class="o">=</span><span class="s2">&quot;loss&quot;</span><span class="p">),</span>
+                          <span class="n">Scale</span><span class="p">(</span><span class="n">inputs</span><span class="o">=</span><span class="s2">&quot;y_pred&quot;</span><span class="p">,</span> <span class="n">outputs</span><span class="o">=</span><span class="s2">&quot;y_pred_scaled&quot;</span><span class="p">)])</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="step-3:-Estimator-(same-as-tutorial-2,-nothing-special)">
+<h3>step 3: Estimator (same as tutorial 2, nothing special)<a class="headerlink" href="#step-3:-Estimator-(same-as-tutorial-2,-nothing-special)" title="Permalink to this headline">¶</a></h3>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">estimator</span> <span class="o">=</span> <span class="n">fe</span><span class="o">.</span><span class="n">Estimator</span><span class="p">(</span><span class="n">network</span><span class="o">=</span><span class="n">network</span><span class="p">,</span> <span class="n">pipeline</span><span class="o">=</span><span class="n">pipeline</span><span class="p">,</span> <span class="n">epochs</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">estimator</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<p>—</p>
+<p><a class="reference external" href="https://github.com/fastestimator/fastestimator/blob/master/tutorial/t03_operator.ipynb">Link to GitHub</a></p>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="t04_pipeline_debug_benchmark.html" class="btn btn-neutral float-right" title="Tutorial 4: Pipeline debugging and benchmarking" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="t02_using_data_in_disk.html" class="btn btn-neutral float-left" title="Tutorial 2: Using In-Disk Data in FastEstimator" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, GEHC DataScience
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

@@ -1,0 +1,349 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>fastestimator.interpretation.util.fft_util &mdash; FastEstimator 0.0.1 documentation</title>
+  
+
+  
+  
+    <link rel="shortcut icon" href="../../../../_static/favicon.ico"/>
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../../" src="../../../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../../../_static/language_data.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
+    
+    <script type="text/javascript" src="../../../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../../index.html" class="icon icon-home"> FastEstimator
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0a0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../learn.html">Learn</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../apphub.html">Example</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../api.html">API</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">FastEstimator</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../../index.html">Module code</a> &raquo;</li>
+        
+      <li>fastestimator.interpretation.util.fft_util</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for fastestimator.interpretation.util.fft_util</h1><div class="highlight"><pre>
+<span></span><span class="c1"># Copyright 2019 The FastEstimator Authors. All Rights Reserved.</span>
+<span class="c1">#</span>
+<span class="c1"># Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);</span>
+<span class="c1"># you may not use this file except in compliance with the License.</span>
+<span class="c1"># You may obtain a copy of the License at</span>
+<span class="c1">#</span>
+<span class="c1">#     http://www.apache.org/licenses/LICENSE-2.0</span>
+<span class="c1">#</span>
+<span class="c1"># Unless required by applicable law or agreed to in writing, software</span>
+<span class="c1"># distributed under the License is distributed on an &quot;AS IS&quot; BASIS,</span>
+<span class="c1"># WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span>
+<span class="c1"># See the License for the specific language governing permissions and</span>
+<span class="c1"># limitations under the License.</span>
+<span class="c1"># ==============================================================================</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
+<span class="kn">import</span> <span class="nn">tensorflow_probability</span> <span class="k">as</span> <span class="nn">tfp</span>
+
+
+<div class="viewcode-block" id="gaussian_kernel"><a class="viewcode-back" href="../../../../fastestimator.interpretation.util.html#fastestimator.interpretation.util.fft_util.gaussian_kernel">[docs]</a><span class="nd">@tf</span><span class="o">.</span><span class="n">function</span>
+<span class="k">def</span> <span class="nf">gaussian_kernel</span><span class="p">(</span><span class="n">mean</span><span class="p">,</span> <span class="n">std</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Args:</span>
+<span class="sd">        mean: The center of the normal distribution</span>
+<span class="sd">        std: The standard deviation of the normal distribution</span>
+<span class="sd">    Returns:</span>
+<span class="sd">        A gaussian kernel defined by the specified normal distribution, expanded for multiplication against a</span>
+<span class="sd">        3-channel image</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># kernel size should be 6x the std in order to be similar to global op</span>
+    <span class="n">size</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">maximum</span><span class="p">(</span><span class="mf">2.0</span><span class="p">,</span> <span class="n">tf</span><span class="o">.</span><span class="n">math</span><span class="o">.</span><span class="n">ceil</span><span class="p">(</span><span class="mi">3</span> <span class="o">*</span> <span class="n">std</span><span class="p">))</span>
+    <span class="n">d</span> <span class="o">=</span> <span class="n">tfp</span><span class="o">.</span><span class="n">distributions</span><span class="o">.</span><span class="n">Normal</span><span class="p">(</span><span class="n">mean</span><span class="p">,</span> <span class="n">std</span><span class="p">)</span>
+    <span class="n">vals</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">prob</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">range</span><span class="p">(</span><span class="n">start</span><span class="o">=-</span><span class="n">size</span><span class="p">,</span> <span class="n">limit</span><span class="o">=</span><span class="n">size</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">float32</span><span class="p">))</span>
+    <span class="n">kernel</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">einsum</span><span class="p">(</span><span class="s1">&#39;i,j-&gt;ij&#39;</span><span class="p">,</span> <span class="n">vals</span><span class="p">,</span> <span class="n">vals</span><span class="p">)</span>
+    <span class="n">kernel</span> <span class="o">=</span> <span class="n">kernel</span> <span class="o">/</span> <span class="n">tf</span><span class="o">.</span><span class="n">reduce_sum</span><span class="p">(</span><span class="n">kernel</span><span class="p">)</span>
+    <span class="c1"># Convert the kernel to 3 channel TODO make dynamic</span>
+    <span class="n">kernel</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">stack</span><span class="p">([</span><span class="n">kernel</span><span class="p">,</span> <span class="n">kernel</span><span class="p">,</span> <span class="n">kernel</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+    <span class="c1"># Expand kernel shape to match conv2d spec</span>
+    <span class="n">kernel</span> <span class="o">=</span> <span class="n">kernel</span><span class="p">[:,</span> <span class="p">:,</span> <span class="p">:,</span> <span class="n">tf</span><span class="o">.</span><span class="n">newaxis</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">kernel</span></div>
+
+
+<div class="viewcode-block" id="blur_image"><a class="viewcode-back" href="../../../../fastestimator.interpretation.util.html#fastestimator.interpretation.util.fft_util.blur_image">[docs]</a><span class="nd">@tf</span><span class="o">.</span><span class="n">function</span>
+<span class="k">def</span> <span class="nf">blur_image</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">std</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Args:</span>
+<span class="sd">        image: A 3 channel input image</span>
+<span class="sd">        std: The standard deviation of the gaussian filter to be applied</span>
+<span class="sd">    Returns:</span>
+<span class="sd">        &#39;image&#39; blurred by a gaussian filter</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">kernel</span> <span class="o">=</span> <span class="n">gaussian_kernel</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">std</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">tf</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">depthwise_conv2d</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">kernel</span><span class="p">,</span> <span class="n">strides</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">padding</span><span class="o">=</span><span class="s2">&quot;SAME&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="blur_image_fft"><a class="viewcode-back" href="../../../../fastestimator.interpretation.util.html#fastestimator.interpretation.util.fft_util.blur_image_fft">[docs]</a><span class="nd">@tf</span><span class="o">.</span><span class="n">function</span>
+<span class="k">def</span> <span class="nf">blur_image_fft</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">std</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;This method is equivalent to blur_image(), but is slower right now due to a bug in tensorflow related to graph</span>
+<span class="sd">    construction for the irfft2d function. TODO re-evaluate performance trade-off as new version of TF2 are released</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        image: An n-channel input image</span>
+<span class="sd">        std: The standard deviation of the gaussian filter to be applied</span>
+<span class="sd">    Returns:</span>
+<span class="sd">        &#39;image&#39; blurred by a gaussian filter</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">mean</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="c1"># Wiki article on gaussian blurring indicates that a 6s * 6s filter is basically equivalent to global kernel</span>
+    <span class="n">half_kernel_size</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">maximum</span><span class="p">(</span><span class="mf">2.0</span><span class="p">,</span> <span class="n">tf</span><span class="o">.</span><span class="n">math</span><span class="o">.</span><span class="n">ceil</span><span class="p">(</span><span class="mf">3.0</span> <span class="o">*</span> <span class="n">std</span><span class="p">))</span>
+
+    <span class="n">kernel_size</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">half_kernel_size</span> <span class="o">+</span> <span class="mi">1</span>  <span class="c1"># Kernel size will always be odd</span>
+    <span class="n">b</span><span class="p">,</span> <span class="n">h</span><span class="p">,</span> <span class="n">w</span><span class="p">,</span> <span class="n">c</span> <span class="o">=</span> <span class="n">image</span><span class="o">.</span><span class="n">shape</span>
+    <span class="c1"># Convert to batch-channel-h-w</span>
+    <span class="n">tf_image</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">])</span>
+    <span class="n">fft_length</span> <span class="o">=</span> <span class="p">[</span><span class="n">h</span><span class="p">,</span> <span class="n">w</span><span class="p">]</span>
+    <span class="c1"># Need to pad the fft size based on the kernel size. Also, the last axis needs to be padded by one if it ends up</span>
+    <span class="c1"># being odd. The extra pixel will get cropped off at the end</span>
+    <span class="n">fft_length_padded</span> <span class="o">=</span> <span class="p">[</span><span class="n">fft_length</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">kernel_size</span><span class="p">,</span> <span class="n">fft_length</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">kernel_size</span> <span class="o">+</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">w</span><span class="p">)</span> <span class="o">%</span> <span class="mi">2</span><span class="p">]</span>
+    <span class="n">ft_image</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">signal</span><span class="o">.</span><span class="n">rfft2d</span><span class="p">(</span><span class="n">tf_image</span><span class="p">,</span> <span class="n">fft_length</span><span class="o">=</span><span class="n">fft_length_padded</span><span class="p">)</span>
+
+    <span class="n">d</span> <span class="o">=</span> <span class="n">tfp</span><span class="o">.</span><span class="n">distributions</span><span class="o">.</span><span class="n">Normal</span><span class="p">(</span><span class="n">mean</span><span class="p">,</span> <span class="n">std</span><span class="p">)</span>
+    <span class="n">vals</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">prob</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">range</span><span class="p">(</span><span class="n">start</span><span class="o">=-</span><span class="n">half_kernel_size</span><span class="p">,</span> <span class="n">limit</span><span class="o">=</span><span class="n">half_kernel_size</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">float32</span><span class="p">))</span>
+    <span class="n">kernel</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">einsum</span><span class="p">(</span><span class="s1">&#39;i,j-&gt;ij&#39;</span><span class="p">,</span> <span class="n">vals</span><span class="p">,</span> <span class="n">vals</span><span class="p">)</span>
+    <span class="n">kernel</span> <span class="o">=</span> <span class="n">kernel</span> <span class="o">/</span> <span class="n">tf</span><span class="o">.</span><span class="n">reduce_sum</span><span class="p">(</span><span class="n">kernel</span><span class="p">)</span>
+
+    <span class="n">big_kernel</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="n">num_rows</span><span class="o">=</span><span class="n">kernel_size</span><span class="p">,</span> <span class="n">num_columns</span><span class="o">=</span><span class="n">kernel_size</span><span class="p">,</span> <span class="n">batch_shape</span><span class="o">=</span><span class="p">[</span><span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">kernel</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
+    <span class="n">kernel</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="n">big_kernel</span><span class="p">,</span> <span class="n">kernel</span><span class="p">)</span>
+    <span class="n">ft_kernel</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">signal</span><span class="o">.</span><span class="n">rfft2d</span><span class="p">(</span><span class="n">kernel</span><span class="p">,</span> <span class="n">fft_length</span><span class="o">=</span><span class="n">fft_length_padded</span><span class="p">)</span>
+
+    <span class="n">ft_image</span> <span class="o">=</span> <span class="n">ft_image</span> <span class="o">*</span> <span class="n">ft_kernel</span>
+
+    <span class="n">tf_image</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">signal</span><span class="o">.</span><span class="n">irfft2d</span><span class="p">(</span><span class="n">ft_image</span><span class="p">)</span>
+    <span class="c1"># Convert to batch-dim1-dim2-channel</span>
+    <span class="n">tf_image</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">tf_image</span><span class="p">,</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+    <span class="c1"># Cast to int for indexing</span>
+    <span class="n">half_kernel_size</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">cast</span><span class="p">(</span><span class="n">half_kernel_size</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">int32</span><span class="p">)</span>
+    <span class="c1"># Crop the extra pixels</span>
+    <span class="n">tf_image</span> <span class="o">=</span> <span class="n">tf_image</span><span class="p">[:,</span> <span class="n">half_kernel_size</span><span class="p">:</span><span class="n">h</span> <span class="o">+</span> <span class="n">half_kernel_size</span><span class="p">,</span> <span class="n">half_kernel_size</span><span class="p">:</span><span class="n">w</span> <span class="o">+</span> <span class="n">half_kernel_size</span><span class="p">,</span> <span class="p">:]</span>
+    <span class="k">return</span> <span class="n">tf_image</span></div>
+
+
+<div class="viewcode-block" id="rfft2d_freqs"><a class="viewcode-back" href="../../../../fastestimator.interpretation.util.html#fastestimator.interpretation.util.fft_util.rfft2d_freqs">[docs]</a><span class="k">def</span> <span class="nf">rfft2d_freqs</span><span class="p">(</span><span class="n">h</span><span class="p">,</span> <span class="n">w</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Args:</span>
+<span class="sd">        h: height of an image</span>
+<span class="sd">        w: width of an image</span>
+<span class="sd">    Returns:</span>
+<span class="sd">        A 2d fourier spectrum corresponding to the given image dimensions</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">fy</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">fftfreq</span><span class="p">(</span><span class="n">h</span><span class="p">)[:,</span> <span class="kc">None</span><span class="p">]</span>
+    <span class="c1"># when we have an odd input dimension we need to keep one additional</span>
+    <span class="c1"># frequency and later cut off 1 pixel</span>
+    <span class="n">fx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">fftfreq</span><span class="p">(</span><span class="n">w</span><span class="p">)[:</span><span class="n">w</span> <span class="o">//</span> <span class="mi">2</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">+</span> <span class="n">w</span> <span class="o">%</span> <span class="mi">2</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">fx</span> <span class="o">*</span> <span class="n">fx</span> <span class="o">+</span> <span class="n">fy</span> <span class="o">*</span> <span class="n">fy</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="fft_vars_to_whitened_im"><a class="viewcode-back" href="../../../../fastestimator.interpretation.util.html#fastestimator.interpretation.util.fft_util.fft_vars_to_whitened_im">[docs]</a><span class="nd">@tf</span><span class="o">.</span><span class="n">function</span>
+<span class="k">def</span> <span class="nf">fft_vars_to_whitened_im</span><span class="p">(</span><span class="n">fft_vars</span><span class="p">,</span> <span class="n">scale</span><span class="p">,</span> <span class="n">width</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Args:</span>
+<span class="sd">        fft_vars: A tensor of dimension: real/imaginary X batch X channel X height X width</span>
+<span class="sd">        scale: A matrix which normalizes the energy of an image</span>
+<span class="sd">        width: The true width of the pixel image (needed to resolve ambiguity introduced by the fourier transform)</span>
+<span class="sd">    Returns:</span>
+<span class="sd">        A pixel-space image corresponding to the given input variables, after applying a normalization by &#39;scale&#39;</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">spectrum</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">complex</span><span class="p">(</span><span class="n">fft_vars</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">fft_vars</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+    <span class="n">spectrum</span> <span class="o">=</span> <span class="n">scale</span> <span class="o">*</span> <span class="n">spectrum</span>  <span class="c1"># whiten the fft domain image (de-correlates adjacent pixels)</span>
+    <span class="n">image</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">signal</span><span class="o">.</span><span class="n">irfft2d</span><span class="p">(</span><span class="n">spectrum</span><span class="p">)</span>
+    <span class="n">image</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>  <span class="c1"># fft domain required width and height to be the last dimensions</span>
+    <span class="n">image</span> <span class="o">=</span> <span class="n">image</span><span class="p">[:,</span> <span class="p">:,</span> <span class="p">:</span><span class="n">width</span><span class="p">,</span> <span class="p">:]</span>  <span class="c1"># Crop the extra pixel that results if width is odd</span>
+    <span class="n">image</span> <span class="o">=</span> <span class="n">image</span> <span class="o">/</span> <span class="mf">4.0</span>  <span class="c1"># Make the image develop more slowly / controlled. Not sure why 4 vs any other factor</span>
+    <span class="k">return</span> <span class="n">image</span></div>
+
+
+<div class="viewcode-block" id="fft_vars_to_im"><a class="viewcode-back" href="../../../../fastestimator.interpretation.util.html#fastestimator.interpretation.util.fft_util.fft_vars_to_im">[docs]</a><span class="nd">@tf</span><span class="o">.</span><span class="n">function</span>
+<span class="k">def</span> <span class="nf">fft_vars_to_im</span><span class="p">(</span><span class="n">fft_vars</span><span class="p">,</span> <span class="n">width</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Args:</span>
+<span class="sd">        fft_vars: A tensor of dimension: real/imaginary X batch X channel X height X width</span>
+<span class="sd">        width: The true width of the pixel image (needed to resolve ambiguity introduced by the fourier transform)</span>
+<span class="sd">    Returns:</span>
+<span class="sd">        A pixel-space image corresponding to the given input variables</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">spectrum</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">complex</span><span class="p">(</span><span class="n">fft_vars</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">fft_vars</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+    <span class="n">image</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">signal</span><span class="o">.</span><span class="n">irfft2d</span><span class="p">(</span><span class="n">spectrum</span><span class="p">)</span>
+    <span class="n">image</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+    <span class="n">image</span> <span class="o">=</span> <span class="n">image</span><span class="p">[:,</span> <span class="p">:,</span> <span class="p">:</span><span class="n">width</span><span class="p">,</span> <span class="p">:]</span>
+    <span class="n">image</span> <span class="o">=</span> <span class="n">image</span> <span class="o">/</span> <span class="mf">4.0</span>  <span class="c1"># Make the image develop more slowly / controlled. Not sure why 4 vs any other factor</span>
+    <span class="k">return</span> <span class="n">image</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, GEHC DataScience
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

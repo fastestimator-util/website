@@ -1,0 +1,573 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>fastestimator.cli.visualize &mdash; FastEstimator 0.0.1 documentation</title>
+  
+
+  
+  
+    <link rel="shortcut icon" href="../../../_static/favicon.ico"/>
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../../_static/language_data.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> FastEstimator
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0a0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../learn.html">Learn</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../apphub.html">Example</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api.html">API</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">FastEstimator</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>fastestimator.cli.visualize</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for fastestimator.cli.visualize</h1><div class="highlight"><pre>
+<span></span><span class="c1"># Copyright 2019 The FastEstimator Authors. All Rights Reserved.</span>
+<span class="c1">#</span>
+<span class="c1"># Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);</span>
+<span class="c1"># you may not use this file except in compliance with the License.</span>
+<span class="c1"># You may obtain a copy of the License at</span>
+<span class="c1">#</span>
+<span class="c1">#     http://www.apache.org/licenses/LICENSE-2.0</span>
+<span class="c1">#</span>
+<span class="c1"># Unless required by applicable law or agreed to in writing, software</span>
+<span class="c1"># distributed under the License is distributed on an &quot;AS IS&quot; BASIS,</span>
+<span class="c1"># WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span>
+<span class="c1"># See the License for the specific language governing permissions and</span>
+<span class="c1"># limitations under the License.</span>
+<span class="c1"># ==============================================================================</span>
+<span class="kn">import</span> <span class="nn">argparse</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+
+<span class="kn">from</span> <span class="nn">fastestimator.cli.cli_util</span> <span class="k">import</span> <span class="n">load_and_caricature</span><span class="p">,</span> <span class="n">load_and_saliency</span><span class="p">,</span> <span class="n">load_and_umap</span><span class="p">,</span> <span class="n">parse_log_dir</span><span class="p">,</span> \
+    <span class="n">SaveAction</span><span class="p">,</span> <span class="n">parse_cli_to_dictionary</span>
+
+
+<div class="viewcode-block" id="logs"><a class="viewcode-back" href="../../../fastestimator.cli.html#fastestimator.cli.visualize.logs">[docs]</a><span class="k">def</span> <span class="nf">logs</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="n">unknown</span><span class="p">):</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">unknown</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;error: unrecognized arguments: &quot;</span><span class="p">,</span> <span class="nb">str</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s2">&quot;, &quot;</span><span class="p">,</span> <span class="n">unknown</span><span class="p">))</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">parse_log_dir</span><span class="p">(</span><span class="n">args</span><span class="p">[</span><span class="s1">&#39;log_dir&#39;</span><span class="p">],</span>
+                  <span class="n">args</span><span class="p">[</span><span class="s1">&#39;extension&#39;</span><span class="p">],</span>
+                  <span class="n">args</span><span class="p">[</span><span class="s1">&#39;recursive&#39;</span><span class="p">],</span>
+                  <span class="n">args</span><span class="p">[</span><span class="s1">&#39;smooth&#39;</span><span class="p">],</span>
+                  <span class="n">args</span><span class="p">[</span><span class="s1">&#39;save&#39;</span><span class="p">],</span>
+                  <span class="n">args</span><span class="p">[</span><span class="s1">&#39;save_dir&#39;</span><span class="p">],</span>
+                  <span class="n">args</span><span class="p">[</span><span class="s1">&#39;ignore&#39;</span><span class="p">],</span>
+                  <span class="n">args</span><span class="p">[</span><span class="s1">&#39;share_legend&#39;</span><span class="p">],</span>
+                  <span class="n">args</span><span class="p">[</span><span class="s1">&#39;pretty_names&#39;</span><span class="p">])</span></div>
+
+
+<div class="viewcode-block" id="configure_log_parser"><a class="viewcode-back" href="../../../fastestimator.cli.html#fastestimator.cli.visualize.configure_log_parser">[docs]</a><span class="k">def</span> <span class="nf">configure_log_parser</span><span class="p">(</span><span class="n">subparsers</span><span class="p">):</span>
+    <span class="n">parser</span> <span class="o">=</span> <span class="n">subparsers</span><span class="o">.</span><span class="n">add_parser</span><span class="p">(</span><span class="s1">&#39;logs&#39;</span><span class="p">,</span>
+                                   <span class="n">description</span><span class="o">=</span><span class="s1">&#39;Generates comparison graphs amongst one or more log files&#39;</span><span class="p">,</span>
+                                   <span class="n">formatter_class</span><span class="o">=</span><span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentDefaultsHelpFormatter</span><span class="p">,</span>
+                                   <span class="n">allow_abbrev</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;log_dir&#39;</span><span class="p">,</span>
+                        <span class="n">metavar</span><span class="o">=</span><span class="s1">&#39;&lt;Log Dir&gt;&#39;</span><span class="p">,</span>
+                        <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span>
+                        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;The path to a folder containing one or more log files&quot;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--extension&#39;</span><span class="p">,</span>
+                        <span class="n">metavar</span><span class="o">=</span><span class="s1">&#39;E&#39;</span><span class="p">,</span>
+                        <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span>
+                        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;The file type / extension of your logs&quot;</span><span class="p">,</span>
+                        <span class="n">default</span><span class="o">=</span><span class="s2">&quot;.txt&quot;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--recursive&#39;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s1">&#39;store_true&#39;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Recursively search sub-directories for log files&quot;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--ignore&#39;</span><span class="p">,</span>
+                        <span class="n">metavar</span><span class="o">=</span><span class="s1">&#39;I&#39;</span><span class="p">,</span>
+                        <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span>
+                        <span class="n">nargs</span><span class="o">=</span><span class="s1">&#39;+&#39;</span><span class="p">,</span>
+                        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;The names of metrics to ignore though they may be present in the log files&quot;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--smooth&#39;</span><span class="p">,</span>
+                        <span class="n">metavar</span><span class="o">=</span><span class="s1">&#39;&lt;float&gt;&#39;</span><span class="p">,</span>
+                        <span class="nb">type</span><span class="o">=</span><span class="nb">float</span><span class="p">,</span>
+                        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;The amount of gaussian smoothing to apply (zero for no smoothing)&quot;</span><span class="p">,</span>
+                        <span class="n">default</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--pretty_names&#39;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Clean up the metric names for display&quot;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s1">&#39;store_true&#39;</span><span class="p">)</span>
+
+    <span class="n">legend_group</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">add_argument_group</span><span class="p">(</span><span class="s1">&#39;legend arguments&#39;</span><span class="p">)</span>
+    <span class="n">legend_x_group</span> <span class="o">=</span> <span class="n">legend_group</span><span class="o">.</span><span class="n">add_mutually_exclusive_group</span><span class="p">(</span><span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">legend_x_group</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--common_legend&#39;</span><span class="p">,</span>
+                                <span class="n">dest</span><span class="o">=</span><span class="s1">&#39;share_legend&#39;</span><span class="p">,</span>
+                                <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Generate one legend total&quot;</span><span class="p">,</span>
+                                <span class="n">action</span><span class="o">=</span><span class="s1">&#39;store_true&#39;</span><span class="p">,</span>
+                                <span class="n">default</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">legend_x_group</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--split_legend&#39;</span><span class="p">,</span>
+                                <span class="n">dest</span><span class="o">=</span><span class="s1">&#39;share_legend&#39;</span><span class="p">,</span>
+                                <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Generate one legend per graph&quot;</span><span class="p">,</span>
+                                <span class="n">action</span><span class="o">=</span><span class="s1">&#39;store_false&#39;</span><span class="p">,</span>
+                                <span class="n">default</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+    <span class="n">save_group</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">add_argument_group</span><span class="p">(</span><span class="s1">&#39;output arguments&#39;</span><span class="p">)</span>
+    <span class="n">save_x_group</span> <span class="o">=</span> <span class="n">save_group</span><span class="o">.</span><span class="n">add_mutually_exclusive_group</span><span class="p">(</span><span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">save_x_group</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s1">&#39;--save&#39;</span><span class="p">,</span>
+        <span class="n">nargs</span><span class="o">=</span><span class="s1">&#39;?&#39;</span><span class="p">,</span>
+        <span class="n">metavar</span><span class="o">=</span><span class="s1">&#39;&lt;Save Dir&gt;&#39;</span><span class="p">,</span>
+        <span class="n">dest</span><span class="o">=</span><span class="s1">&#39;save&#39;</span><span class="p">,</span>
+        <span class="n">action</span><span class="o">=</span><span class="n">SaveAction</span><span class="p">,</span>
+        <span class="n">default</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Save the output image. May be accompanied by a directory into </span><span class="se">\</span>
+<span class="s2">                                              which the file is saved. If no output directory is specified, the log </span><span class="se">\</span>
+<span class="s2">                                              directory will be used&quot;</span><span class="p">)</span>
+    <span class="n">save_x_group</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--display&#39;</span><span class="p">,</span>
+                              <span class="n">dest</span><span class="o">=</span><span class="s1">&#39;save&#39;</span><span class="p">,</span>
+                              <span class="n">action</span><span class="o">=</span><span class="s1">&#39;store_false&#39;</span><span class="p">,</span>
+                              <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Render the image to the UI (rather than saving it)&quot;</span><span class="p">,</span>
+                              <span class="n">default</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">save_x_group</span><span class="o">.</span><span class="n">set_defaults</span><span class="p">(</span><span class="n">save_dir</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">set_defaults</span><span class="p">(</span><span class="n">func</span><span class="o">=</span><span class="n">logs</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="saliency"><a class="viewcode-back" href="../../../fastestimator.cli.html#fastestimator.cli.visualize.saliency">[docs]</a><span class="k">def</span> <span class="nf">saliency</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="n">unknown</span><span class="p">):</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">unknown</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;error: unrecognized arguments: &quot;</span><span class="p">,</span> <span class="nb">str</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s2">&quot;, &quot;</span><span class="p">,</span> <span class="n">unknown</span><span class="p">))</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">load_and_saliency</span><span class="p">(</span><span class="n">args</span><span class="p">[</span><span class="s1">&#39;model&#39;</span><span class="p">],</span>
+                      <span class="n">args</span><span class="p">[</span><span class="s1">&#39;inputs&#39;</span><span class="p">],</span>
+                      <span class="n">baseline</span><span class="o">=</span><span class="n">args</span><span class="p">[</span><span class="s1">&#39;baseline&#39;</span><span class="p">],</span>
+                      <span class="n">dictionary_path</span><span class="o">=</span><span class="n">args</span><span class="p">[</span><span class="s1">&#39;dictionary&#39;</span><span class="p">],</span>
+                      <span class="n">strip_alpha</span><span class="o">=</span><span class="n">args</span><span class="p">[</span><span class="s1">&#39;strip_alpha&#39;</span><span class="p">],</span>
+                      <span class="n">smooth_factor</span><span class="o">=</span><span class="n">args</span><span class="p">[</span><span class="s1">&#39;smooth&#39;</span><span class="p">],</span>
+                      <span class="n">save</span><span class="o">=</span><span class="n">args</span><span class="p">[</span><span class="s1">&#39;save&#39;</span><span class="p">],</span>
+                      <span class="n">save_dir</span><span class="o">=</span><span class="n">args</span><span class="p">[</span><span class="s1">&#39;save_dir&#39;</span><span class="p">])</span></div>
+
+
+<div class="viewcode-block" id="configure_saliency_parser"><a class="viewcode-back" href="../../../fastestimator.cli.html#fastestimator.cli.visualize.configure_saliency_parser">[docs]</a><span class="k">def</span> <span class="nf">configure_saliency_parser</span><span class="p">(</span><span class="n">subparsers</span><span class="p">):</span>
+    <span class="n">parser</span> <span class="o">=</span> <span class="n">subparsers</span><span class="o">.</span><span class="n">add_parser</span><span class="p">(</span><span class="s1">&#39;saliency&#39;</span><span class="p">,</span>
+                                   <span class="n">description</span><span class="o">=</span><span class="s1">&#39;Generates saliency maps for a model on given input(s)&#39;</span><span class="p">,</span>
+                                   <span class="n">formatter_class</span><span class="o">=</span><span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentDefaultsHelpFormatter</span><span class="p">,</span>
+                                   <span class="n">allow_abbrev</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;model&#39;</span><span class="p">,</span> <span class="n">metavar</span><span class="o">=</span><span class="s1">&#39;&lt;Model Path&gt;&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;The path to a saved model file&quot;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s1">&#39;inputs&#39;</span><span class="p">,</span>
+        <span class="n">metavar</span><span class="o">=</span><span class="s1">&#39;Input&#39;</span><span class="p">,</span>
+        <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span>
+        <span class="n">nargs</span><span class="o">=</span><span class="s1">&#39;+&#39;</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;The paths to one or more inputs to visualize (or the path to a folder which will be </span><span class="se">\</span>
+<span class="s2">                        recursively traversed to find image files)&quot;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--dictionary&#39;</span><span class="p">,</span>
+                        <span class="n">metavar</span><span class="o">=</span><span class="s1">&#39;&lt;Dictionary Path&gt;&#39;</span><span class="p">,</span>
+                        <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span>
+                        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;The path to a {&#39;class_id&#39;:&#39;class_name&#39;} json file&quot;</span><span class="p">,</span>
+                        <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--smooth&#39;</span><span class="p">,</span>
+                        <span class="n">metavar</span><span class="o">=</span><span class="s1">&#39;N&#39;</span><span class="p">,</span>
+                        <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span>
+                        <span class="n">default</span><span class="o">=</span><span class="mi">7</span><span class="p">,</span>
+                        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;The number of samples to use when generating smoothed saliency masks&quot;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s1">&#39;--baseline&#39;</span><span class="p">,</span>
+        <span class="n">metavar</span><span class="o">=</span><span class="s1">&#39;B&#39;</span><span class="p">,</span>
+        <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span>
+        <span class="n">default</span><span class="o">=</span><span class="s1">&#39;-1&#39;</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;The value to use as a baseline for integrated gradient calculations. Can be either a </span><span class="se">\</span>
+<span class="s2">                        number or the path to an image. What would a &#39;blank&#39; input look like&quot;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--strip-alpha&#39;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s1">&#39;store_true&#39;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;True if you want to convert RGBA images to RGB&quot;</span><span class="p">)</span>
+    <span class="n">save_group</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">add_argument_group</span><span class="p">(</span><span class="s1">&#39;output arguments&#39;</span><span class="p">)</span>
+    <span class="n">save_x_group</span> <span class="o">=</span> <span class="n">save_group</span><span class="o">.</span><span class="n">add_mutually_exclusive_group</span><span class="p">(</span><span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">save_x_group</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s1">&#39;--save&#39;</span><span class="p">,</span>
+        <span class="n">nargs</span><span class="o">=</span><span class="s1">&#39;?&#39;</span><span class="p">,</span>
+        <span class="n">metavar</span><span class="o">=</span><span class="s1">&#39;&lt;Save Dir&gt;&#39;</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Save the output image. May be accompanied by a directory into which the </span><span class="se">\</span>
+<span class="s2">                              file is saved. If no output directory is specified, the model directory will be used&quot;</span><span class="p">,</span>
+        <span class="n">dest</span><span class="o">=</span><span class="s1">&#39;save&#39;</span><span class="p">,</span>
+        <span class="n">action</span><span class="o">=</span><span class="n">SaveAction</span><span class="p">,</span>
+        <span class="n">default</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">save_x_group</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--display&#39;</span><span class="p">,</span>
+                              <span class="n">dest</span><span class="o">=</span><span class="s1">&#39;save&#39;</span><span class="p">,</span>
+                              <span class="n">action</span><span class="o">=</span><span class="s1">&#39;store_false&#39;</span><span class="p">,</span>
+                              <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Render the image to the UI (rather than saving it)&quot;</span><span class="p">,</span>
+                              <span class="n">default</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">save_x_group</span><span class="o">.</span><span class="n">set_defaults</span><span class="p">(</span><span class="n">save_dir</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">set_defaults</span><span class="p">(</span><span class="n">func</span><span class="o">=</span><span class="n">saliency</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="umap"><a class="viewcode-back" href="../../../fastestimator.cli.html#fastestimator.cli.visualize.umap">[docs]</a><span class="k">def</span> <span class="nf">umap</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="n">unknown</span><span class="p">):</span>
+    <span class="n">hyperparameters</span> <span class="o">=</span> <span class="n">parse_cli_to_dictionary</span><span class="p">(</span><span class="n">unknown</span><span class="p">)</span>
+    <span class="n">load_and_umap</span><span class="p">(</span><span class="n">args</span><span class="p">[</span><span class="s1">&#39;model&#39;</span><span class="p">],</span>
+                  <span class="n">args</span><span class="p">[</span><span class="s1">&#39;input_dir&#39;</span><span class="p">],</span>
+                  <span class="n">print_layers</span><span class="o">=</span><span class="n">args</span><span class="p">[</span><span class="s1">&#39;print_layers&#39;</span><span class="p">],</span>
+                  <span class="n">strip_alpha</span><span class="o">=</span><span class="n">args</span><span class="p">[</span><span class="s1">&#39;strip_alpha&#39;</span><span class="p">],</span>
+                  <span class="n">layers</span><span class="o">=</span><span class="n">args</span><span class="p">[</span><span class="s1">&#39;layers&#39;</span><span class="p">],</span>
+                  <span class="n">batch</span><span class="o">=</span><span class="n">args</span><span class="p">[</span><span class="s1">&#39;batch&#39;</span><span class="p">],</span>
+                  <span class="n">use_cache</span><span class="o">=</span><span class="n">args</span><span class="p">[</span><span class="s1">&#39;cache&#39;</span><span class="p">],</span>
+                  <span class="n">cache_dir</span><span class="o">=</span><span class="n">args</span><span class="p">[</span><span class="s1">&#39;cache_dir&#39;</span><span class="p">],</span>
+                  <span class="n">dictionary_path</span><span class="o">=</span><span class="n">args</span><span class="p">[</span><span class="s1">&#39;dictionary&#39;</span><span class="p">],</span>
+                  <span class="n">legend_mode</span><span class="o">=</span><span class="n">args</span><span class="p">[</span><span class="s1">&#39;legend&#39;</span><span class="p">],</span>
+                  <span class="n">save</span><span class="o">=</span><span class="n">args</span><span class="p">[</span><span class="s1">&#39;save&#39;</span><span class="p">],</span>
+                  <span class="n">save_dir</span><span class="o">=</span><span class="n">args</span><span class="p">[</span><span class="s1">&#39;save_dir&#39;</span><span class="p">],</span>
+                  <span class="n">umap_parameters</span><span class="o">=</span><span class="n">hyperparameters</span><span class="p">,</span>
+                  <span class="n">input_extension</span><span class="o">=</span><span class="n">args</span><span class="p">[</span><span class="s1">&#39;extension&#39;</span><span class="p">])</span></div>
+
+
+<div class="viewcode-block" id="configure_umap_parser"><a class="viewcode-back" href="../../../fastestimator.cli.html#fastestimator.cli.visualize.configure_umap_parser">[docs]</a><span class="k">def</span> <span class="nf">configure_umap_parser</span><span class="p">(</span><span class="n">subparsers</span><span class="p">):</span>
+    <span class="n">parser</span> <span class="o">=</span> <span class="n">subparsers</span><span class="o">.</span><span class="n">add_parser</span><span class="p">(</span><span class="s1">&#39;umap&#39;</span><span class="p">,</span>
+                                   <span class="n">description</span><span class="o">=</span><span class="s1">&#39;Plots umaps for model layers over given inputs&#39;</span><span class="p">,</span>
+                                   <span class="n">formatter_class</span><span class="o">=</span><span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentDefaultsHelpFormatter</span><span class="p">,</span>
+                                   <span class="n">allow_abbrev</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;model&#39;</span><span class="p">,</span> <span class="n">metavar</span><span class="o">=</span><span class="s1">&#39;&lt;Model Path&gt;&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;The path to a saved model file&quot;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;input_dir&#39;</span><span class="p">,</span>
+                        <span class="n">metavar</span><span class="o">=</span><span class="s1">&#39;Input&#39;</span><span class="p">,</span>
+                        <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span>
+                        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;The path to a folder of folders containing inputs sorted by class&quot;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s1">&#39;--print-layers&#39;</span><span class="p">,</span>
+        <span class="n">action</span><span class="o">=</span><span class="s1">&#39;store_true&#39;</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;True if you only want to print a model&#39;s layers to the console. Useful for inspecting a </span><span class="se">\</span>
+<span class="s2">                            model to choose which layer indices to visualize.&quot;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s1">&#39;--layers&#39;</span><span class="p">,</span>
+        <span class="n">metavar</span><span class="o">=</span><span class="s1">&#39;IDX&#39;</span><span class="p">,</span>
+        <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span>
+        <span class="n">nargs</span><span class="o">=</span><span class="s1">&#39;+&#39;</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s1">&#39;The indices of layers you want to visualize. If not provided then all layers will be </span><span class="se">\</span>
+<span class="s1">                                      analyzed, but that is likely to run out of memory on moderately sized models.&#39;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--strip-alpha&#39;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s1">&#39;store_true&#39;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;True if you want to convert RGBA images to RGB&quot;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--extension&#39;</span><span class="p">,</span>
+                        <span class="n">metavar</span><span class="o">=</span><span class="s1">&#39;E&#39;</span><span class="p">,</span>
+                        <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span>
+                        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;The file type / extension of your input files (default matches all files)&quot;</span><span class="p">,</span>
+                        <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--batch&#39;</span><span class="p">,</span>
+                        <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span>
+                        <span class="n">default</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span>
+                        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;How many images to process at a time (set based on available RAM)&quot;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--dictionary&#39;</span><span class="p">,</span>
+                        <span class="n">metavar</span><span class="o">=</span><span class="s1">&#39;&lt;Dictionary Path&gt;&#39;</span><span class="p">,</span>
+                        <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span>
+                        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;The path to a {&#39;class_id&#39;:&#39;class_name&#39;} json file&quot;</span><span class="p">,</span>
+                        <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--legend&#39;</span><span class="p">,</span>
+                        <span class="n">choices</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;on&#39;</span><span class="p">,</span> <span class="s1">&#39;off&#39;</span><span class="p">,</span> <span class="s1">&#39;shared&#39;</span><span class="p">],</span>
+                        <span class="n">default</span><span class="o">=</span><span class="s1">&#39;shared&#39;</span><span class="p">,</span>
+                        <span class="n">help</span><span class="o">=</span><span class="s1">&#39;Whether to display legends or not.&#39;</span><span class="p">)</span>
+    <span class="n">save_group</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">add_argument_group</span><span class="p">(</span><span class="s1">&#39;output arguments&#39;</span><span class="p">)</span>
+    <span class="n">save_group</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s1">&#39;--cache&#39;</span><span class="p">,</span>
+        <span class="n">metavar</span><span class="o">=</span><span class="s1">&#39;&lt;Cache Dir&gt;&#39;</span><span class="p">,</span>
+        <span class="n">action</span><span class="o">=</span><span class="n">SaveAction</span><span class="p">,</span>
+        <span class="n">default</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Enable caching of intermediate results. Highly recommended to reduce RAM </span><span class="se">\</span>
+<span class="s2">                            requirements. If no cache directory is specified, a sibling of the input directory will be </span><span class="se">\</span>
+<span class="s2">                            used&quot;</span><span class="p">)</span>
+    <span class="n">save_group</span><span class="o">.</span><span class="n">set_defaults</span><span class="p">(</span><span class="n">cache_dir</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+    <span class="n">save_x_group</span> <span class="o">=</span> <span class="n">save_group</span><span class="o">.</span><span class="n">add_mutually_exclusive_group</span><span class="p">(</span><span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">save_x_group</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s1">&#39;--save&#39;</span><span class="p">,</span>
+        <span class="n">nargs</span><span class="o">=</span><span class="s1">&#39;?&#39;</span><span class="p">,</span>
+        <span class="n">metavar</span><span class="o">=</span><span class="s1">&#39;&lt;Save Dir&gt;&#39;</span><span class="p">,</span>
+        <span class="n">dest</span><span class="o">=</span><span class="s1">&#39;save&#39;</span><span class="p">,</span>
+        <span class="n">action</span><span class="o">=</span><span class="n">SaveAction</span><span class="p">,</span>
+        <span class="n">default</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Save the output image. May be accompanied by a directory into </span><span class="se">\</span>
+<span class="s2">                                                      which the file is saved. If no output directory is specified, </span><span class="se">\</span>
+<span class="s2">                                                      the model directory will be used&quot;</span><span class="p">)</span>
+    <span class="n">save_x_group</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--display&#39;</span><span class="p">,</span>
+                              <span class="n">dest</span><span class="o">=</span><span class="s1">&#39;save&#39;</span><span class="p">,</span>
+                              <span class="n">action</span><span class="o">=</span><span class="s1">&#39;store_false&#39;</span><span class="p">,</span>
+                              <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Render the image to the UI (rather than saving it)&quot;</span><span class="p">,</span>
+                              <span class="n">default</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">save_x_group</span><span class="o">.</span><span class="n">set_defaults</span><span class="p">(</span><span class="n">save_dir</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument_group</span><span class="p">(</span>
+        <span class="s1">&#39;umap arguments&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Arguments from the umap module may all be passed through. Examples </span><span class="se">\</span>
+<span class="s1">    include --n_neighbors &lt;int&gt;, --metric &lt;str&gt;, --n_epochs &lt;int&gt;, --min_dist &lt;float&gt;, --learning_rate &lt;float&gt;, etc...&#39;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">set_defaults</span><span class="p">(</span><span class="n">func</span><span class="o">=</span><span class="n">umap</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="caricature"><a class="viewcode-back" href="../../../fastestimator.cli.html#fastestimator.cli.visualize.caricature">[docs]</a><span class="k">def</span> <span class="nf">caricature</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="n">unknown</span><span class="p">):</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">unknown</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;error: unrecognized arguments: &quot;</span><span class="p">,</span> <span class="nb">str</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s2">&quot;, &quot;</span><span class="p">,</span> <span class="n">unknown</span><span class="p">))</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">load_and_caricature</span><span class="p">(</span><span class="n">args</span><span class="p">[</span><span class="s1">&#39;model&#39;</span><span class="p">],</span>
+                        <span class="n">args</span><span class="p">[</span><span class="s1">&#39;inputs&#39;</span><span class="p">],</span>
+                        <span class="n">dictionary_path</span><span class="o">=</span><span class="n">args</span><span class="p">[</span><span class="s1">&#39;dictionary&#39;</span><span class="p">],</span>
+                        <span class="n">save</span><span class="o">=</span><span class="n">args</span><span class="p">[</span><span class="s1">&#39;save&#39;</span><span class="p">],</span>
+                        <span class="n">save_dir</span><span class="o">=</span><span class="n">args</span><span class="p">[</span><span class="s1">&#39;save_dir&#39;</span><span class="p">],</span>
+                        <span class="n">strip_alpha</span><span class="o">=</span><span class="n">args</span><span class="p">[</span><span class="s1">&#39;strip_alpha&#39;</span><span class="p">],</span>
+                        <span class="n">layer_ids</span><span class="o">=</span><span class="n">args</span><span class="p">[</span><span class="s1">&#39;layers&#39;</span><span class="p">],</span>
+                        <span class="n">print_layers</span><span class="o">=</span><span class="n">args</span><span class="p">[</span><span class="s1">&#39;print_layers&#39;</span><span class="p">],</span>
+                        <span class="n">n_steps</span><span class="o">=</span><span class="n">args</span><span class="p">[</span><span class="s1">&#39;steps&#39;</span><span class="p">],</span>
+                        <span class="n">learning_rate</span><span class="o">=</span><span class="n">args</span><span class="p">[</span><span class="s1">&#39;learning_rate&#39;</span><span class="p">],</span>
+                        <span class="n">blur</span><span class="o">=</span><span class="n">args</span><span class="p">[</span><span class="s1">&#39;blur&#39;</span><span class="p">],</span>
+                        <span class="n">cossim_pow</span><span class="o">=</span><span class="n">args</span><span class="p">[</span><span class="s1">&#39;cossim&#39;</span><span class="p">],</span>
+                        <span class="n">sd</span><span class="o">=</span><span class="n">args</span><span class="p">[</span><span class="s1">&#39;stddev&#39;</span><span class="p">],</span>
+                        <span class="n">fft</span><span class="o">=</span><span class="ow">not</span> <span class="n">args</span><span class="p">[</span><span class="s1">&#39;pixel_based&#39;</span><span class="p">],</span>
+                        <span class="n">decorrelate</span><span class="o">=</span><span class="ow">not</span> <span class="n">args</span><span class="p">[</span><span class="s1">&#39;true_color&#39;</span><span class="p">],</span>
+                        <span class="n">sigmoid</span><span class="o">=</span><span class="ow">not</span> <span class="n">args</span><span class="p">[</span><span class="s1">&#39;hard_clip&#39;</span><span class="p">])</span></div>
+
+
+<div class="viewcode-block" id="configure_caricature_parser"><a class="viewcode-back" href="../../../fastestimator.cli.html#fastestimator.cli.visualize.configure_caricature_parser">[docs]</a><span class="k">def</span> <span class="nf">configure_caricature_parser</span><span class="p">(</span><span class="n">subparsers</span><span class="p">):</span>
+    <span class="n">parser</span> <span class="o">=</span> <span class="n">subparsers</span><span class="o">.</span><span class="n">add_parser</span><span class="p">(</span><span class="s1">&#39;caricature&#39;</span><span class="p">,</span>
+                                   <span class="n">description</span><span class="o">=</span><span class="s1">&#39;Plots caricatures for model layers over given inputs&#39;</span><span class="p">,</span>
+                                   <span class="n">formatter_class</span><span class="o">=</span><span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentDefaultsHelpFormatter</span><span class="p">,</span>
+                                   <span class="n">allow_abbrev</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;model&#39;</span><span class="p">,</span> <span class="n">metavar</span><span class="o">=</span><span class="s1">&#39;&lt;Model Path&gt;&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;The path to a saved model file&quot;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s1">&#39;inputs&#39;</span><span class="p">,</span>
+        <span class="n">metavar</span><span class="o">=</span><span class="s1">&#39;Input&#39;</span><span class="p">,</span>
+        <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span>
+        <span class="n">nargs</span><span class="o">=</span><span class="s1">&#39;+&#39;</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;The paths to one or more inputs to visualize (or the path to a folder which will be </span><span class="se">\</span>
+<span class="s2">                            recursively traversed to find image files)&quot;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s1">&#39;--print-layers&#39;</span><span class="p">,</span>
+        <span class="n">action</span><span class="o">=</span><span class="s1">&#39;store_true&#39;</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;True if you only want to print a model&#39;s layers to the console. Useful for inspecting a </span><span class="se">\</span>
+<span class="s2">                            model to choose which layer indices to visualize.&quot;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s1">&#39;--layers&#39;</span><span class="p">,</span>
+        <span class="n">metavar</span><span class="o">=</span><span class="s1">&#39;IDX&#39;</span><span class="p">,</span>
+        <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span>
+        <span class="n">nargs</span><span class="o">=</span><span class="s1">&#39;+&#39;</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s1">&#39;The indices of layers you want to visualize. If not provided then all layers will be </span><span class="se">\</span>
+<span class="s1">                                      analyzed, but that is likely to run out of memory on moderately sized models.&#39;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--strip-alpha&#39;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s1">&#39;store_true&#39;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;True if you want to convert RGBA images to RGB&quot;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--dictionary&#39;</span><span class="p">,</span>
+                        <span class="n">metavar</span><span class="o">=</span><span class="s1">&#39;&lt;Dictionary Path&gt;&#39;</span><span class="p">,</span>
+                        <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span>
+                        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;The path to a {&#39;class_id&#39;:&#39;class_name&#39;} json file&quot;</span><span class="p">,</span>
+                        <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--steps&#39;</span><span class="p">,</span> <span class="n">metavar</span><span class="o">=</span><span class="s1">&#39;N&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;How many optimization iterations to run&quot;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="mi">250</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--learning-rate&#39;</span><span class="p">,</span>
+                        <span class="n">metavar</span><span class="o">=</span><span class="s1">&#39;LR&#39;</span><span class="p">,</span>
+                        <span class="nb">type</span><span class="o">=</span><span class="nb">float</span><span class="p">,</span>
+                        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Initial learning rate for the optimizer&quot;</span><span class="p">,</span>
+                        <span class="n">default</span><span class="o">=</span><span class="mf">0.05</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--blur&#39;</span><span class="p">,</span>
+                        <span class="n">metavar</span><span class="o">=</span><span class="s1">&#39;B&#39;</span><span class="p">,</span>
+                        <span class="nb">type</span><span class="o">=</span><span class="nb">float</span><span class="p">,</span>
+                        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Strength of blurring used on image during processing (reduces high-frequency artifacts)&quot;</span><span class="p">,</span>
+                        <span class="n">default</span><span class="o">=</span><span class="mf">1.0</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s1">&#39;--cossim&#39;</span><span class="p">,</span>
+        <span class="n">metavar</span><span class="o">=</span><span class="s1">&#39;B&#39;</span><span class="p">,</span>
+        <span class="nb">type</span><span class="o">=</span><span class="nb">float</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Strength of cosine similarity coefficient in loss function (higher value increases </span><span class="se">\</span>
+<span class="s2">                        similarity)&quot;</span><span class="p">,</span>
+        <span class="n">default</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--stddev&#39;</span><span class="p">,</span>
+                        <span class="nb">type</span><span class="o">=</span><span class="nb">float</span><span class="p">,</span>
+                        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;The standard deviation of the noise used to generate the seed image&quot;</span><span class="p">,</span>
+                        <span class="n">default</span><span class="o">=</span><span class="mf">0.01</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s1">&#39;--pixel-based&#39;</span><span class="p">,</span>
+        <span class="n">action</span><span class="o">=</span><span class="s1">&#39;store_true&#39;</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Use pixel-based optimization rather than fft based. Individual steps will be faster but </span><span class="se">\</span>
+<span class="s2">                        convergence will be slower&quot;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--true-color&#39;</span><span class="p">,</span>
+                        <span class="n">action</span><span class="o">=</span><span class="s1">&#39;store_true&#39;</span><span class="p">,</span>
+                        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Disable color decorrelation. You may want this if using non-imagenet style images&quot;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--hard-clip&#39;</span><span class="p">,</span>
+                        <span class="n">action</span><span class="o">=</span><span class="s1">&#39;store_true&#39;</span><span class="p">,</span>
+                        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Use hard clipping instead of sigmoids to constrain pixel values&quot;</span><span class="p">)</span>
+    <span class="n">save_group</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">add_argument_group</span><span class="p">(</span><span class="s1">&#39;output arguments&#39;</span><span class="p">)</span>
+    <span class="n">save_x_group</span> <span class="o">=</span> <span class="n">save_group</span><span class="o">.</span><span class="n">add_mutually_exclusive_group</span><span class="p">(</span><span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">save_x_group</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s1">&#39;--save&#39;</span><span class="p">,</span>
+        <span class="n">nargs</span><span class="o">=</span><span class="s1">&#39;?&#39;</span><span class="p">,</span>
+        <span class="n">metavar</span><span class="o">=</span><span class="s1">&#39;&lt;Save Dir&gt;&#39;</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Save the output image. May be accompanied by a directory into which the </span><span class="se">\</span>
+<span class="s2">                              file is saved. If no output directory is specified, the model directory will be used&quot;</span><span class="p">,</span>
+        <span class="n">dest</span><span class="o">=</span><span class="s1">&#39;save&#39;</span><span class="p">,</span>
+        <span class="n">action</span><span class="o">=</span><span class="n">SaveAction</span><span class="p">,</span>
+        <span class="n">default</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">save_x_group</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--display&#39;</span><span class="p">,</span>
+                              <span class="n">dest</span><span class="o">=</span><span class="s1">&#39;save&#39;</span><span class="p">,</span>
+                              <span class="n">action</span><span class="o">=</span><span class="s1">&#39;store_false&#39;</span><span class="p">,</span>
+                              <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Render the image to the UI (rather than saving it)&quot;</span><span class="p">,</span>
+                              <span class="n">default</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">save_x_group</span><span class="o">.</span><span class="n">set_defaults</span><span class="p">(</span><span class="n">save_dir</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">set_defaults</span><span class="p">(</span><span class="n">func</span><span class="o">=</span><span class="n">caricature</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="configure_visualization_parser"><a class="viewcode-back" href="../../../fastestimator.cli.html#fastestimator.cli.visualize.configure_visualization_parser">[docs]</a><span class="k">def</span> <span class="nf">configure_visualization_parser</span><span class="p">(</span><span class="n">subparsers</span><span class="p">):</span>
+    <span class="n">visualization_parser</span> <span class="o">=</span> <span class="n">subparsers</span><span class="o">.</span><span class="n">add_parser</span><span class="p">(</span><span class="s1">&#39;visualize&#39;</span><span class="p">,</span>
+                                                 <span class="n">description</span><span class="o">=</span><span class="s1">&#39;Generates various types of visualiztaions&#39;</span><span class="p">,</span>
+                                                 <span class="n">allow_abbrev</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">visualization_subparsers</span> <span class="o">=</span> <span class="n">visualization_parser</span><span class="o">.</span><span class="n">add_subparsers</span><span class="p">()</span>
+    <span class="c1"># In python 3.7 the following 2 lines could be put into the .add_subparsers() call</span>
+    <span class="n">visualization_subparsers</span><span class="o">.</span><span class="n">required</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="n">visualization_subparsers</span><span class="o">.</span><span class="n">dest</span> <span class="o">=</span> <span class="s1">&#39;mode&#39;</span>
+
+    <span class="n">configure_log_parser</span><span class="p">(</span><span class="n">visualization_subparsers</span><span class="p">)</span>
+    <span class="n">configure_saliency_parser</span><span class="p">(</span><span class="n">visualization_subparsers</span><span class="p">)</span>
+    <span class="n">configure_umap_parser</span><span class="p">(</span><span class="n">visualization_subparsers</span><span class="p">)</span>
+    <span class="n">configure_caricature_parser</span><span class="p">(</span><span class="n">visualization_subparsers</span><span class="p">)</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, GEHC DataScience
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

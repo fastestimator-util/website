@@ -1,0 +1,22 @@
+op
+========================
+
+.. automodule:: fastestimator.op
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+.. toctree::
+
+   fastestimator.op.numpyop
+   fastestimator.op.tensorop
+
+---------------------
+
+op
+---------------------
+.. automodule:: fastestimator.op.op
+   :members:
+   :undoc-members:
+   :show-inheritance:
+

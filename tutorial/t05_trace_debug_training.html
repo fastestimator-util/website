@@ -1,0 +1,632 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Tutorial 5: Trace - training control and debugging &mdash; FastEstimator 0.0.1 documentation</title>
+  
+
+  
+  
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Tutorial 6: TensorFilter - imbalanced training" href="t06_TensorFilter_imbalanced_training.html" />
+    <link rel="prev" title="Tutorial 4: Pipeline debugging and benchmarking" href="t04_pipeline_debug_benchmark.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> FastEstimator
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0a0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../install.html">Installation</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../learn.html">Learn</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="t01_basic_usage.html">Tutorial 1: Basic Usage of FastEstimator</a></li>
+<li class="toctree-l2"><a class="reference internal" href="t02_using_data_in_disk.html">Tutorial 2: Using In-Disk Data in FastEstimator</a></li>
+<li class="toctree-l2"><a class="reference internal" href="t03_operator.html">Tutorial 3: Operator</a></li>
+<li class="toctree-l2"><a class="reference internal" href="t04_pipeline_debug_benchmark.html">Tutorial 4: Pipeline debugging and benchmarking</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Tutorial 5: Trace - training control and debugging</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#debugging-training-loop-with-Trace">debugging training loop with Trace</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#define-trace">define trace</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="t06_TensorFilter_imbalanced_training.html">Tutorial 6: TensorFilter - imbalanced training</a></li>
+<li class="toctree-l2"><a class="reference internal" href="t07_expand_data_dimension.html">Tutorial 7: expanding data dimension in recordwriter and pipeline</a></li>
+<li class="toctree-l2"><a class="reference internal" href="t08_scheduler_progressive_training.html">Tutorial 8: Scheduler - changing hyperparameters during the training</a></li>
+<li class="toctree-l2"><a class="reference internal" href="t09_learning_rate_controller.html">Tutorial 9: Learning Rate Controller</a></li>
+<li class="toctree-l2"><a class="reference internal" href="t10_unpaired_dataset.html">Tutorial 10: Dataset with unpaired features</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../apphub.html">Example</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api.html">API</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">FastEstimator</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../learn.html">Learn</a> &raquo;</li>
+        
+      <li>Tutorial 5: Trace - training control and debugging</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/tutorial/t05_trace_debug_training.ipynb.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  
+<style>
+/* CSS for nbsphinx extension */
+
+/* remove conflicting styling from Sphinx themes */
+div.nbinput,
+div.nbinput div.prompt,
+div.nbinput div.input_area,
+div.nbinput div[class*=highlight],
+div.nbinput div[class*=highlight] pre,
+div.nboutput,
+div.nbinput div.prompt,
+div.nbinput div.output_area,
+div.nboutput div[class*=highlight],
+div.nboutput div[class*=highlight] pre {
+    background: none;
+    border: none;
+    padding: 0 0;
+    margin: 0;
+    box-shadow: none;
+}
+
+/* avoid gaps between output lines */
+div.nboutput div[class*=highlight] pre {
+    line-height: normal;
+}
+
+/* input/output containers */
+div.nbinput,
+div.nboutput {
+    display: -webkit-flex;
+    display: flex;
+    align-items: flex-start;
+    margin: 0;
+    width: 100%;
+}
+@media (max-width: 540px) {
+    div.nbinput,
+    div.nboutput {
+        flex-direction: column;
+    }
+}
+
+/* input container */
+div.nbinput {
+    padding-top: 5px;
+}
+
+/* last container */
+div.nblast {
+    padding-bottom: 5px;
+}
+
+/* input prompt */
+div.nbinput div.prompt pre {
+    color: #307FC1;
+}
+
+/* output prompt */
+div.nboutput div.prompt pre {
+    color: #BF5B3D;
+}
+
+/* all prompts */
+div.nbinput div.prompt,
+div.nboutput div.prompt {
+    min-width: 5ex;
+    padding-top: 0.4em;
+    padding-right: 0.4em;
+    text-align: right;
+    flex: 0;
+}
+@media (max-width: 540px) {
+    div.nbinput div.prompt,
+    div.nboutput div.prompt {
+        text-align: left;
+        padding: 0.4em;
+    }
+    div.nboutput div.prompt.empty {
+        padding: 0;
+    }
+}
+
+/* disable scrollbars on prompts */
+div.nbinput div.prompt pre,
+div.nboutput div.prompt pre {
+    overflow: hidden;
+}
+
+/* input/output area */
+div.nbinput div.input_area,
+div.nboutput div.output_area {
+    padding: 0.4em;
+    -webkit-flex: 1;
+    flex: 1;
+    overflow: auto;
+}
+@media (max-width: 540px) {
+    div.nbinput div.input_area,
+    div.nboutput div.output_area {
+        width: 100%;
+    }
+}
+
+/* input area */
+div.nbinput div.input_area {
+    border: 1px solid #e0e0e0;
+    border-radius: 2px;
+    background: #f5f5f5;
+}
+
+/* override MathJax center alignment in output cells */
+div.nboutput div[class*=MathJax] {
+    text-align: left !important;
+}
+
+/* override sphinx.ext.imgmath center alignment in output cells */
+div.nboutput div.math p {
+    text-align: left;
+}
+
+/* standard error */
+div.nboutput div.output_area.stderr {
+    background: #fdd;
+}
+
+/* ANSI colors */
+.ansi-black-fg { color: #3E424D; }
+.ansi-black-bg { background-color: #3E424D; }
+.ansi-black-intense-fg { color: #282C36; }
+.ansi-black-intense-bg { background-color: #282C36; }
+.ansi-red-fg { color: #E75C58; }
+.ansi-red-bg { background-color: #E75C58; }
+.ansi-red-intense-fg { color: #B22B31; }
+.ansi-red-intense-bg { background-color: #B22B31; }
+.ansi-green-fg { color: #00A250; }
+.ansi-green-bg { background-color: #00A250; }
+.ansi-green-intense-fg { color: #007427; }
+.ansi-green-intense-bg { background-color: #007427; }
+.ansi-yellow-fg { color: #DDB62B; }
+.ansi-yellow-bg { background-color: #DDB62B; }
+.ansi-yellow-intense-fg { color: #B27D12; }
+.ansi-yellow-intense-bg { background-color: #B27D12; }
+.ansi-blue-fg { color: #208FFB; }
+.ansi-blue-bg { background-color: #208FFB; }
+.ansi-blue-intense-fg { color: #0065CA; }
+.ansi-blue-intense-bg { background-color: #0065CA; }
+.ansi-magenta-fg { color: #D160C4; }
+.ansi-magenta-bg { background-color: #D160C4; }
+.ansi-magenta-intense-fg { color: #A03196; }
+.ansi-magenta-intense-bg { background-color: #A03196; }
+.ansi-cyan-fg { color: #60C6C8; }
+.ansi-cyan-bg { background-color: #60C6C8; }
+.ansi-cyan-intense-fg { color: #258F8F; }
+.ansi-cyan-intense-bg { background-color: #258F8F; }
+.ansi-white-fg { color: #C5C1B4; }
+.ansi-white-bg { background-color: #C5C1B4; }
+.ansi-white-intense-fg { color: #A1A6B2; }
+.ansi-white-intense-bg { background-color: #A1A6B2; }
+
+.ansi-default-inverse-fg { color: #FFFFFF; }
+.ansi-default-inverse-bg { background-color: #000000; }
+
+.ansi-bold { font-weight: bold; }
+.ansi-underline { text-decoration: underline; }
+
+/* Some additional styling taken form the Jupyter notebook CSS */
+div.rendered_html table {
+  border: none;
+  border-collapse: collapse;
+  border-spacing: 0;
+  color: black;
+  font-size: 12px;
+  table-layout: fixed;
+}
+div.rendered_html thead {
+  border-bottom: 1px solid black;
+  vertical-align: bottom;
+}
+div.rendered_html tr,
+div.rendered_html th,
+div.rendered_html td {
+  text-align: right;
+  vertical-align: middle;
+  padding: 0.5em 0.5em;
+  line-height: normal;
+  white-space: normal;
+  max-width: none;
+  border: none;
+}
+div.rendered_html th {
+  font-weight: bold;
+}
+div.rendered_html tbody tr:nth-child(odd) {
+  background: #f5f5f5;
+}
+div.rendered_html tbody tr:hover {
+  background: rgba(66, 165, 245, 0.2);
+}
+
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast,
+.nboutput.nblast {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast + .nbinput {
+    margin-top: -19px;
+}
+
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+
+/* Fix math alignment, see https://github.com/rtfd/sphinx_rtd_theme/pull/686 */
+.math {
+    text-align: unset;
+}
+</style>
+<div class="section" id="Tutorial-5:-Trace---training-control-and-debugging">
+<h1>Tutorial 5: Trace - training control and debugging<a class="headerlink" href="#Tutorial-5:-Trace---training-control-and-debugging" title="Permalink to this headline">¶</a></h1>
+<p>In this tutorial, we will talk about another important concept in FastEstimator - Trace.</p>
+<p><code class="docutils literal notranslate"><span class="pre">Trace</span></code> is a class contains has 6 event functions below, each event function will be executed on different events of training loop when putting <code class="docutils literal notranslate"><span class="pre">Trace</span></code> inside <code class="docutils literal notranslate"><span class="pre">Estimator</span></code>. If you are a Keras user, you would see that <code class="docutils literal notranslate"><span class="pre">Trace</span></code> is a combination of callbacks and metrics. * on_begin * on_epoch_begin * on_batch_begin * on_batch_end * on_epoch_end * on_end</p>
+<p><code class="docutils literal notranslate"><span class="pre">Trace</span></code> differs from keras’s callback in the following places: 1. Trace has full access to the preprocessing data and prediction data 2. Trace can pass data among each other 3. Trace is simpler and has fewer event functions than keras callbacks</p>
+<p><code class="docutils literal notranslate"><span class="pre">Trace</span></code> can be used for anything that involves training loop, such as changing learning rate, calculating metrics, writing checkpoints and so on.</p>
+<div class="section" id="debugging-training-loop-with-Trace">
+<h2>debugging training loop with Trace<a class="headerlink" href="#debugging-training-loop-with-Trace" title="Permalink to this headline">¶</a></h2>
+<p>Since <code class="docutils literal notranslate"><span class="pre">Trace</span></code> can have full access to data used in training loop, one natural usage of <code class="docutils literal notranslate"><span class="pre">Trace</span></code> is debugging training loop, for example, printing network prediction for each batch.</p>
+<p>Remember in tutorial 3, we customized an operation that scales the prediction score by 10 and write to a new key, let’s see whether the operation is working correctly using <code class="docutils literal notranslate"><span class="pre">Trace</span></code>.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">tempfile</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
+
+<span class="kn">import</span> <span class="nn">fastestimator</span> <span class="k">as</span> <span class="nn">fe</span>
+<span class="kn">from</span> <span class="nn">fastestimator.architecture</span> <span class="k">import</span> <span class="n">LeNet</span>
+<span class="kn">from</span> <span class="nn">fastestimator.estimator.trace</span> <span class="k">import</span> <span class="n">Accuracy</span><span class="p">,</span> <span class="n">ModelSaver</span>
+<span class="kn">from</span> <span class="nn">fastestimator.network.loss</span> <span class="k">import</span> <span class="n">SparseCategoricalCrossentropy</span>
+<span class="kn">from</span> <span class="nn">fastestimator.network.model</span> <span class="k">import</span> <span class="n">FEModel</span><span class="p">,</span> <span class="n">ModelOp</span>
+<span class="kn">from</span> <span class="nn">fastestimator.pipeline.processing</span> <span class="k">import</span> <span class="n">Minmax</span>
+<span class="kn">from</span> <span class="nn">fastestimator.util.op</span> <span class="k">import</span> <span class="n">TensorOp</span>
+
+<span class="k">class</span> <span class="nc">Scale</span><span class="p">(</span><span class="n">TensorOp</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">state</span><span class="p">):</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">data</span> <span class="o">*</span> <span class="mi">10</span>
+        <span class="k">return</span> <span class="n">data</span>
+
+<span class="p">(</span><span class="n">x_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">),</span> <span class="p">(</span><span class="n">x_eval</span><span class="p">,</span> <span class="n">y_eval</span><span class="p">)</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">mnist</span><span class="o">.</span><span class="n">load_data</span><span class="p">()</span>
+<span class="n">train_data</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;x&quot;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">expand_dims</span><span class="p">(</span><span class="n">x_train</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">),</span> <span class="s2">&quot;y&quot;</span><span class="p">:</span> <span class="n">y_train</span><span class="p">}</span>
+<span class="n">eval_data</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;x&quot;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">expand_dims</span><span class="p">(</span><span class="n">x_eval</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">),</span> <span class="s2">&quot;y&quot;</span><span class="p">:</span> <span class="n">y_eval</span><span class="p">}</span>
+<span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;train&quot;</span><span class="p">:</span> <span class="n">train_data</span><span class="p">,</span> <span class="s2">&quot;eval&quot;</span><span class="p">:</span> <span class="n">eval_data</span><span class="p">}</span>
+<span class="n">pipeline</span> <span class="o">=</span> <span class="n">fe</span><span class="o">.</span><span class="n">Pipeline</span><span class="p">(</span><span class="n">batch_size</span><span class="o">=</span><span class="mi">32</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">ops</span><span class="o">=</span><span class="n">Minmax</span><span class="p">(</span><span class="n">inputs</span><span class="o">=</span><span class="s2">&quot;x&quot;</span><span class="p">,</span> <span class="n">outputs</span><span class="o">=</span><span class="s2">&quot;x&quot;</span><span class="p">))</span>
+
+<span class="c1"># step 2. prepare model</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">FEModel</span><span class="p">(</span><span class="n">model_def</span><span class="o">=</span><span class="n">LeNet</span><span class="p">,</span> <span class="n">model_name</span><span class="o">=</span><span class="s2">&quot;lenet&quot;</span><span class="p">,</span> <span class="n">optimizer</span><span class="o">=</span><span class="s2">&quot;adam&quot;</span><span class="p">)</span>
+<span class="n">network</span> <span class="o">=</span> <span class="n">fe</span><span class="o">.</span><span class="n">Network</span><span class="p">(</span>
+    <span class="n">ops</span><span class="o">=</span><span class="p">[</span><span class="n">ModelOp</span><span class="p">(</span><span class="n">inputs</span><span class="o">=</span><span class="s2">&quot;x&quot;</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">,</span> <span class="n">outputs</span><span class="o">=</span><span class="s2">&quot;y_pred&quot;</span><span class="p">),</span>
+         <span class="n">SparseCategoricalCrossentropy</span><span class="p">(</span><span class="n">inputs</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;y&quot;</span><span class="p">,</span> <span class="s2">&quot;y_pred&quot;</span><span class="p">)),</span>
+         <span class="n">Scale</span><span class="p">(</span><span class="n">inputs</span><span class="o">=</span><span class="s2">&quot;y_pred&quot;</span><span class="p">,</span> <span class="n">outputs</span><span class="o">=</span><span class="s2">&quot;y_pred_scaled&quot;</span><span class="p">)])</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="define-trace">
+<h2>define trace<a class="headerlink" href="#define-trace" title="Permalink to this headline">¶</a></h2>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">fastestimator.estimator.trace</span> <span class="k">import</span> <span class="n">Trace</span>
+
+<span class="k">class</span> <span class="nc">ShowPred</span><span class="p">(</span><span class="n">Trace</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">on_batch_end</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">state</span><span class="p">[</span><span class="s2">&quot;mode&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;train&quot;</span><span class="p">:</span>
+            <span class="n">batch_data</span> <span class="o">=</span> <span class="n">state</span><span class="p">[</span><span class="s2">&quot;batch&quot;</span><span class="p">]</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;step: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">state</span><span class="p">[</span><span class="s2">&quot;batch_idx&quot;</span><span class="p">]))</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;batch data has following keys: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">batch_data</span><span class="o">.</span><span class="n">keys</span><span class="p">())))</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;scaled_prediction is:&quot;</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">batch_data</span><span class="p">[</span><span class="s2">&quot;y_pred_scaled&quot;</span><span class="p">])</span>
+
+<span class="c1"># step 3.prepare estimator</span>
+<span class="n">estimator</span> <span class="o">=</span> <span class="n">fe</span><span class="o">.</span><span class="n">Estimator</span><span class="p">(</span><span class="n">network</span><span class="o">=</span><span class="n">network</span><span class="p">,</span> <span class="n">pipeline</span><span class="o">=</span><span class="n">pipeline</span><span class="p">,</span> <span class="n">epochs</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">traces</span><span class="o">=</span><span class="n">ShowPred</span><span class="p">(),</span> <span class="n">steps_per_epoch</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">estimator</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+    ______           __  ______     __  _                 __
+   / ____/___ ______/ /_/ ____/____/ /_(_)___ ___  ____ _/ /_____  _____
+  / /_  / __ `/ ___/ __/ __/ / ___/ __/ / __ `__ \/ __ `/ __/ __ \/ ___/
+ / __/ / /_/ (__  ) /_/ /___(__  ) /_/ / / / / / / /_/ / /_/ /_/ / /
+/_/    \__,_/____/\__/_____/____/\__/_/_/ /_/ /_/\__,_/\__/\____/_/
+
+
+FastEstimator-Warn: No ModelSaver Trace detected. Models will not be saved.
+FastEstimator-Start: step: 0; lenet_lr: 0.001;
+step: 0
+batch data has following keys: [&#39;y_pred&#39;, &#39;y&#39;, &#39;x&#39;, &#39;loss&#39;, &#39;y_pred_scaled&#39;]
+scaled_prediction is:
+tf.Tensor(
+[[1.0597024  0.88230646 0.9054666  1.0526242  1.0112537  1.1514847
+  0.9731587  0.9711996  0.84732836 1.1454759 ]
+ [1.0177196  0.96111745 0.8916435  1.0738678  0.9751328  1.2481465
+  0.9405147  0.87076896 0.8726471  1.148442  ]
+ [1.0760062  0.94326234 0.9008551  1.0322686  1.0499443  1.1253775
+  0.93624175 0.9271722  0.90360963 1.1052628 ]
+ [1.0469304  0.89323467 0.91441756 1.0751362  0.9745273  1.1652466
+  0.96247584 0.9406713  0.8315316  1.1958287 ]
+ [1.0219785  0.929411   0.89820254 1.0585518  0.93793464 1.2132744
+  0.9584836  0.951019   0.8594369  1.1717079 ]
+ [1.0567241  0.9066122  0.9052205  1.0659181  1.0157421  1.2072058
+  0.96398747 0.8855149  0.8579869  1.1350882 ]
+ [1.0661185  0.91435105 0.89010346 1.0575683  0.9922614  1.2262878
+  0.93575335 0.91625047 0.86531997 1.135985  ]
+ [1.0357784  0.8888004  0.8541077  1.0948972  0.98482585 1.283034
+  0.90922797 0.9051948  0.9000034  1.1441307 ]
+ [1.0599277  0.90635175 0.89042604 1.0980016  1.0003179  1.2005775
+  0.97344226 0.904382   0.81406707 1.152506  ]
+ [1.0498649  0.95371425 0.9321244  1.0166047  1.0222087  1.1368012
+  0.9753012  0.91623485 0.8738795  1.123267  ]
+ [1.103452   0.903526   0.9064317  1.0117977  1.0413742  1.1384664
+  0.96658295 0.93786097 0.8479606  1.1425483 ]
+ [1.029507   0.92203546 0.9414134  1.023415   1.0161355  1.1061418
+  0.98370135 0.97101694 0.90548897 1.1011443 ]
+ [1.0279974  0.95044667 0.93619615 1.0110079  1.0024072  1.1394106
+  0.9575084  0.8984376  0.89733607 1.1792525 ]
+ [1.0699053  0.87303096 0.9200075  1.0734357  1.0142893  1.1181858
+  0.9856108  0.93070036 0.8564811  1.1583531 ]
+ [1.0348419  0.9044772  0.8707888  1.0723933  1.0153837  1.1527358
+  0.9473658  0.93430406 0.8998435  1.1678661 ]
+ [1.0630001  0.8815649  0.8781316  1.080618   0.99296457 1.2163352
+  0.95687056 0.9228797  0.8936867  1.1139493 ]
+ [1.0232941  0.8857512  0.8840588  1.092468   0.99615574 1.2249657
+  0.92473567 0.9100239  0.8655537  1.1929938 ]
+ [1.0537924  0.88076466 0.8679014  1.1071997  1.006206   1.1429375
+  0.93528    0.9362229  0.8875452  1.1821507 ]
+ [1.0308622  0.93516076 0.9209412  1.0852494  1.0089574  1.1817933
+  0.94350743 0.896239   0.8588871  1.138402  ]
+ [1.0389919  0.91212773 0.9013858  1.038586   1.0234965  1.1859746
+  0.95688295 0.9387725  0.84085584 1.1629258 ]
+ [1.0600939  0.94089186 0.9131027  1.0013218  1.0147965  1.1764416
+  0.965766   0.95196784 0.870939   1.1046789 ]
+ [1.1057894  0.8504439  0.83679646 1.1040735  0.9999001  1.2389936
+  0.9062878  0.9403291  0.8776086  1.1397778 ]
+ [1.0217856  0.9747643  0.9006238  1.0764693  0.9715878  1.2085975
+  0.9288042  0.89752984 0.8574368  1.1624014 ]
+ [1.0469611  0.9568805  0.92177266 1.0700536  0.993606   1.2035027
+  0.9525442  0.9015994  0.8851406  1.067939  ]
+ [0.9877974  0.901551   0.93022996 1.0543675  1.0002809  1.1707911
+  0.94319403 0.971319   0.94477963 1.09569   ]
+ [0.9924806  0.92723554 0.9150472  1.0373987  1.000831   1.1852853
+  0.9879187  0.9019555  0.8348947  1.216953  ]
+ [1.0991246  0.8782563  0.8438319  1.1016914  0.9863124  1.2292806
+  0.9132333  0.9342602  0.892106   1.1219026 ]
+ [0.9851291  0.9535258  0.8752247  1.1077297  1.0111363  1.166092
+  0.969571   0.91310537 0.89379835 1.1246873 ]
+ [1.0290915  0.88374877 0.84945655 1.0189545  1.0234096  1.2094458
+  0.88590777 0.9749155  0.9239709  1.2010993 ]
+ [1.0008084  0.9482253  0.8974297  1.0725788  0.99595183 1.1546551
+  0.9506333  0.9104537  0.90859526 1.1606691 ]
+ [1.0367537  0.9001863  0.8841595  1.0721065  0.9803247  1.2551355
+  0.9427656  0.92319757 0.87253726 1.1328338 ]
+ [0.9999633  0.9283558  0.8862161  1.0871539  1.0199494  1.1970563
+  0.9454409  0.9472147  0.92662996 1.0620204 ]], shape=(32, 10), dtype=float32)
+FastEstimator-Train: step: 0; loss: 2.3327756;
+FastEstimator-Eval: step: 1; epoch: 0; loss: 2.280537; min_loss: 2.280537; since_best_loss: 0;
+FastEstimator-Finish: step: 1; total_time: 2.58 sec; lenet_lr: 0.001;
+</pre></div></div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<p>—</p>
+<p><a class="reference external" href="https://github.com/fastestimator/fastestimator/blob/master/tutorial/t05_trace_debug_training.ipynb">Link to GitHub</a></p>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="t06_TensorFilter_imbalanced_training.html" class="btn btn-neutral float-right" title="Tutorial 6: TensorFilter - imbalanced training" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="t04_pipeline_debug_benchmark.html" class="btn btn-neutral float-left" title="Tutorial 4: Pipeline debugging and benchmarking" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, GEHC DataScience
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

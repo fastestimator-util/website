@@ -1,0 +1,418 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>fastestimator.trace.trace &mdash; FastEstimator 0.0.1 documentation</title>
+  
+
+  
+  
+    <link rel="shortcut icon" href="../../../_static/favicon.ico"/>
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../../_static/language_data.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> FastEstimator
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0a0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../learn.html">Learn</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../apphub.html">Example</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api.html">API</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">FastEstimator</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>fastestimator.trace.trace</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for fastestimator.trace.trace</h1><div class="highlight"><pre>
+<span></span><span class="c1"># Copyright 2019 The FastEstimator Authors. All Rights Reserved.</span>
+<span class="c1">#</span>
+<span class="c1"># Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);</span>
+<span class="c1"># you may not use this file except in compliance with the License.</span>
+<span class="c1"># You may obtain a copy of the License at</span>
+<span class="c1">#</span>
+<span class="c1">#     http://www.apache.org/licenses/LICENSE-2.0</span>
+<span class="c1">#</span>
+<span class="c1"># Unless required by applicable law or agreed to in writing, software</span>
+<span class="c1"># distributed under the License is distributed on an &quot;AS IS&quot; BASIS,</span>
+<span class="c1"># WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span>
+<span class="c1"># See the License for the specific language governing permissions and</span>
+<span class="c1"># limitations under the License.</span>
+<span class="c1"># ==============================================================================</span>
+<span class="sd">&quot;&quot;&quot;Trace contains metrics and other information users want to track.&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">time</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
+<span class="kn">from</span> <span class="nn">tensorflow.python.keras</span> <span class="k">import</span> <span class="n">backend</span>
+
+
+<div class="viewcode-block" id="Trace"><a class="viewcode-back" href="../../../fastestimator.trace.html#fastestimator.trace.trace.Trace">[docs]</a><span class="k">class</span> <span class="nc">Trace</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Trace base class. User can use `Trace` to customize their own operations during training, validation and testing.</span>
+<span class="sd">    The `Network` instance can be accessible by `self.network`. Trace execution order will attempt to be inferred</span>
+<span class="sd">    whenever possible based on the provided inputs and outputs variables.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        inputs (str, list, set): A set of keys that this trace intends to read from the state dictionary as inputs</span>
+<span class="sd">        outputs (str, list, set): A set of keys that this trace intends to write into the state dictionary</span>
+<span class="sd">        mode (string): Restrict the trace to run only on given modes (&#39;train&#39;, &#39;eval&#39;, &#39;test&#39;). None will always</span>
+<span class="sd">                        execute</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">inputs</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">outputs</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">network</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mode</span> <span class="o">=</span> <span class="n">mode</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">inputs</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="nb">filter</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">inputs</span> <span class="ow">or</span> <span class="p">{}))</span> <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">inputs</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span> <span class="k">else</span> <span class="p">{</span><span class="n">inputs</span><span class="p">}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">outputs</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="nb">filter</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">outputs</span> <span class="ow">or</span> <span class="p">{}))</span> <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">outputs</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span> <span class="k">else</span> <span class="p">{</span><span class="n">outputs</span><span class="p">}</span>
+
+<div class="viewcode-block" id="Trace.on_begin"><a class="viewcode-back" href="../../../fastestimator.trace.html#fastestimator.trace.trace.Trace.on_begin">[docs]</a>    <span class="k">def</span> <span class="nf">on_begin</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Runs once at the beginning of training</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            state (ChainMap): dictionary of run time that has the following key(s):</span>
+
+<span class="sd">                * &quot;train_step&quot; (int): current global training step starting from 0</span>
+<span class="sd">                * &quot;num_devices&quot; (int): number of devices(mainly gpu) that are being used, if cpu only, the number is 1</span>
+<span class="sd">                * &quot;log_steps&quot; (int): how many training steps between logging intervals</span>
+<span class="sd">                * &quot;persist_summary&quot; (bool): whether to persist the experiment history/summary</span>
+<span class="sd">                * &quot;total_epochs&quot; (int): how many epochs the training is scheduled to run for</span>
+<span class="sd">                * &quot;total_train_steps&quot; (int): how many training steps the training is scheduled to run for</span>
+<span class="sd">                * any keys written by &#39;on_begin&#39; of previous traces</span>
+<span class="sd">        &quot;&quot;&quot;</span></div>
+<div class="viewcode-block" id="Trace.on_epoch_begin"><a class="viewcode-back" href="../../../fastestimator.trace.html#fastestimator.trace.trace.Trace.on_epoch_begin">[docs]</a>    <span class="k">def</span> <span class="nf">on_epoch_begin</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Runs at the beginning of each epoch of the mode.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            state (ChainMap): dictionary of run time that has the following key(s):</span>
+<span class="sd">            </span>
+<span class="sd">                * &quot;mode&quot; (str):  current run time mode, can be &quot;train&quot;, &quot;eval&quot; or &quot;test&quot;</span>
+<span class="sd">                * &quot;epoch&quot; (int): current epoch index starting from 0</span>
+<span class="sd">                * &quot;train_step&quot; (int): current global training step starting from 0</span>
+<span class="sd">                * any keys written by &#39;on_epoch_begin&#39; of previous traces</span>
+<span class="sd">        &quot;&quot;&quot;</span></div>
+<div class="viewcode-block" id="Trace.on_batch_begin"><a class="viewcode-back" href="../../../fastestimator.trace.html#fastestimator.trace.trace.Trace.on_batch_begin">[docs]</a>    <span class="k">def</span> <span class="nf">on_batch_begin</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Runs at the beginning of every batch of the mode.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            state (ChainMap): dictionary of run time that has the following key(s):</span>
+
+<span class="sd">                * &quot;mode&quot; (str): current run time mode, can be &quot;train&quot;, &quot;eval&quot; or &quot;test&quot;</span>
+<span class="sd">                * &quot;epoch&quot; (int): current epoch index starting from 0</span>
+<span class="sd">                * &quot;train_step&quot; (int): current global training step starting from 0</span>
+<span class="sd">                * &quot;batch_idx&quot; (int): current local step of the epoch starting from 0</span>
+<span class="sd">                * &quot;batch_size&quot; (int): current global batch size</span>
+<span class="sd">                * any keys written by &#39;on_batch_begin&#39; of previous traces</span>
+<span class="sd">        &quot;&quot;&quot;</span></div>
+<div class="viewcode-block" id="Trace.on_batch_end"><a class="viewcode-back" href="../../../fastestimator.trace.html#fastestimator.trace.trace.Trace.on_batch_end">[docs]</a>    <span class="k">def</span> <span class="nf">on_batch_end</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Runs at the end of every batch of the mode. Anything written to the top level of the state dictionary will be</span>
+<span class="sd">        printed in the logs. Things written only to the batch sub-dictionary will not be logged</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            state (ChainMap): dictionary of run time that has the following key(s):</span>
+
+<span class="sd">                * &quot;mode&quot; (str):  current run time mode, can be &quot;train&quot;, &quot;eval&quot; or &quot;test&quot;</span>
+<span class="sd">                * &quot;epoch&quot; (int): current epoch index starting from 0</span>
+<span class="sd">                * &quot;train_step&quot; (int): current global training step starting from 0</span>
+<span class="sd">                * &quot;batch_idx&quot; (int): current local step of the epoch starting from 0</span>
+<span class="sd">                * &quot;batch_size&quot; (int): current global batch size</span>
+<span class="sd">                * &quot;batch&quot; (dict): the batch data after the Network execution</span>
+<span class="sd">                * &lt;loss_name&gt; defined in model (float): loss of current batch (only available when mode is &quot;train&quot;)</span>
+<span class="sd">                * any keys written by &#39;on_batch_end&#39; of previous traces</span>
+<span class="sd">        &quot;&quot;&quot;</span></div>
+<div class="viewcode-block" id="Trace.on_epoch_end"><a class="viewcode-back" href="../../../fastestimator.trace.html#fastestimator.trace.trace.Trace.on_epoch_end">[docs]</a>    <span class="k">def</span> <span class="nf">on_epoch_end</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Runs at the end of every epoch of the mode. Anything written into the state dictionary will be logged</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            state (ChainMap): dictionary of run time that has the following key(s):</span>
+
+<span class="sd">                * &quot;mode&quot; (str):  current run time mode, can be &quot;train&quot;, &quot;eval&quot; or &quot;test&quot;</span>
+<span class="sd">                * &quot;epoch&quot; (int): current epoch index starting from 0</span>
+<span class="sd">                * &quot;train_step&quot; (int): current global training step starting from 0</span>
+<span class="sd">                * &lt;loss_name&gt; defined in model (float): average loss of the epoch (only available when mode is &quot;eval&quot;)</span>
+<span class="sd">                * any keys written by &#39;on_epoch_end&#39; of previous traces</span>
+<span class="sd">        &quot;&quot;&quot;</span></div>
+<div class="viewcode-block" id="Trace.on_end"><a class="viewcode-back" href="../../../fastestimator.trace.html#fastestimator.trace.trace.Trace.on_end">[docs]</a>    <span class="k">def</span> <span class="nf">on_end</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Runs once at the end training. Anything written into the state dictionary will be logged</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            state (ChainMap): dictionary of run time that has the following key(s):</span>
+
+<span class="sd">                * &quot;train_step&quot; (int): current global training step starting from 0</span>
+<span class="sd">                * &quot;epoch&quot; (int): current epoch index starting from 0</span>
+<span class="sd">                * &quot;num_devices&quot; (int): number of devices (mainly gpu) that are being used. If cpu only, the number is 1</span>
+<span class="sd">                * &quot;summary&quot; (Experiment): will be returned from estimator.fit() if a summary input was specified</span>
+<span class="sd">                * any keys written by &#39;on_end&#39; of previous traces</span>
+<span class="sd">        &quot;&quot;&quot;</span></div></div>
+
+
+<div class="viewcode-block" id="MonitorLoss"><a class="viewcode-back" href="../../../fastestimator.trace.html#fastestimator.trace.trace.MonitorLoss">[docs]</a><span class="k">class</span> <span class="nc">MonitorLoss</span><span class="p">(</span><span class="n">Trace</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Records loss value. Please don&#39;t add this trace into an estimator manually. An estimator will add it</span>
+<span class="sd">    automatically.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">epochs_since_best</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">best_loss</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">epoch_losses</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">eval_results</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="k">def</span> <span class="nf">on_epoch_begin</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">epoch_losses</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">network</span><span class="o">.</span><span class="n">epoch_losses</span>
+        <span class="k">if</span> <span class="n">state</span><span class="p">[</span><span class="s2">&quot;mode&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;eval&quot;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">eval_results</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="k">def</span> <span class="nf">on_batch_end</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">state</span><span class="p">[</span><span class="s2">&quot;mode&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;train&quot;</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">epoch_losses</span><span class="p">:</span>
+                <span class="n">state</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_reduce_loss</span><span class="p">(</span><span class="n">state</span><span class="p">[</span><span class="s2">&quot;batch&quot;</span><span class="p">][</span><span class="n">key</span><span class="p">],</span> <span class="n">state</span><span class="p">[</span><span class="s2">&quot;batch_size&quot;</span><span class="p">])</span>
+        <span class="k">elif</span> <span class="n">state</span><span class="p">[</span><span class="s2">&quot;mode&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;eval&quot;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">eval_results</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">eval_results</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span>
+                    <span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_reduce_loss</span><span class="p">(</span><span class="n">state</span><span class="p">[</span><span class="s2">&quot;batch&quot;</span><span class="p">][</span><span class="n">key</span><span class="p">],</span> <span class="n">state</span><span class="p">[</span><span class="s2">&quot;batch_size&quot;</span><span class="p">])])</span> <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">epoch_losses</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">eval_results</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">eval_results</span><span class="p">[</span><span class="n">key</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_reduce_loss</span><span class="p">(</span><span class="n">state</span><span class="p">[</span><span class="s2">&quot;batch&quot;</span><span class="p">][</span><span class="n">key</span><span class="p">],</span> <span class="n">state</span><span class="p">[</span><span class="s2">&quot;batch_size&quot;</span><span class="p">]))</span>
+
+    <span class="k">def</span> <span class="nf">on_epoch_end</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">state</span><span class="p">[</span><span class="s2">&quot;mode&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;eval&quot;</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">eval_results</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+                <span class="n">state</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">eval_results</span><span class="p">[</span><span class="n">key</span><span class="p">]),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">eval_results</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="n">key</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">eval_results</span><span class="o">.</span><span class="n">keys</span><span class="p">())[</span><span class="mi">0</span><span class="p">]</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">best_loss</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">state</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">best_loss</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">best_loss</span> <span class="o">=</span> <span class="n">state</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">epochs_since_best</span> <span class="o">=</span> <span class="mi">0</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">epochs_since_best</span> <span class="o">+=</span> <span class="mi">1</span>
+                <span class="n">state</span><span class="p">[</span><span class="s2">&quot;min_&quot;</span> <span class="o">+</span> <span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">best_loss</span>
+                <span class="n">state</span><span class="p">[</span><span class="s2">&quot;since_best_loss&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">epochs_since_best</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="nd">@tf</span><span class="o">.</span><span class="n">function</span>
+    <span class="k">def</span> <span class="nf">_reduce_loss</span><span class="p">(</span><span class="n">element_wise_loss</span><span class="p">,</span> <span class="n">global_batch_size</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">tf</span><span class="o">.</span><span class="n">reduce_sum</span><span class="p">(</span><span class="n">element_wise_loss</span><span class="p">)</span> <span class="o">/</span> <span class="n">global_batch_size</span></div>
+
+
+<div class="viewcode-block" id="TrainInfo"><a class="viewcode-back" href="../../../fastestimator.trace.html#fastestimator.trace.trace.TrainInfo">[docs]</a><span class="k">class</span> <span class="nc">TrainInfo</span><span class="p">(</span><span class="n">Trace</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Essential training information for logging during training. Please don&#39;t add this trace into an estimator</span>
+<span class="sd">    manually. An estimator will add it automatically.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        log_steps (int): Interval steps of logging</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">mode</span><span class="o">=</span><span class="s2">&quot;train&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">log_steps</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">elapse_times</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">num_example</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">time_start</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">train_start</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">total_train_steps</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="k">def</span> <span class="nf">on_begin</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">train_start</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">perf_counter</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">total_train_steps</span> <span class="o">=</span> <span class="n">state</span><span class="p">[</span><span class="s2">&quot;total_train_steps&quot;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">log_steps</span> <span class="o">=</span> <span class="n">state</span><span class="p">[</span><span class="s1">&#39;log_steps&#39;</span><span class="p">]</span>
+        <span class="n">state</span><span class="p">[</span><span class="s2">&quot;total_train_steps&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">total_train_steps</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_get_lr</span><span class="p">(</span><span class="n">state</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">on_epoch_begin</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">time_start</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">perf_counter</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">on_batch_end</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">num_example</span> <span class="o">+=</span> <span class="n">state</span><span class="p">[</span><span class="s2">&quot;batch_size&quot;</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">state</span><span class="p">[</span><span class="s2">&quot;train_step&quot;</span><span class="p">]</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">log_steps</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">state</span><span class="p">[</span><span class="s2">&quot;train_step&quot;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">elapse_times</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">perf_counter</span><span class="p">()</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">time_start</span><span class="p">)</span>
+                <span class="n">state</span><span class="p">[</span><span class="s2">&quot;examples/sec&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">num_example</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">elapse_times</span><span class="p">),</span> <span class="mi">1</span><span class="p">)</span>
+                <span class="n">state</span><span class="p">[</span><span class="s2">&quot;progress&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">{:.1%}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">state</span><span class="p">[</span><span class="s2">&quot;train_step&quot;</span><span class="p">]</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">total_train_steps</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">elapse_times</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">num_example</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">time_start</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">perf_counter</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">on_epoch_end</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">elapse_times</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">perf_counter</span><span class="p">()</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">time_start</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">on_end</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">):</span>
+        <span class="n">state</span><span class="p">[</span><span class="s1">&#39;total_time&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">{}</span><span class="s2"> sec&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">perf_counter</span><span class="p">()</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">train_start</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_get_lr</span><span class="p">(</span><span class="n">state</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_get_lr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">model_name</span><span class="p">,</span> <span class="n">model</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">network</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">optimizer</span><span class="p">,</span> <span class="s2">&quot;lr&quot;</span><span class="p">):</span>
+                <span class="n">lr</span> <span class="o">=</span> <span class="n">backend</span><span class="o">.</span><span class="n">get_value</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">optimizer</span><span class="o">.</span><span class="n">lr</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">lr</span> <span class="o">=</span> <span class="n">backend</span><span class="o">.</span><span class="n">get_value</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">optimizer</span><span class="o">.</span><span class="n">_optimizer</span><span class="o">.</span><span class="n">lr</span><span class="p">)</span>
+            <span class="n">state</span><span class="p">[</span><span class="n">model_name</span> <span class="o">+</span> <span class="s2">&quot;_lr&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="n">lr</span><span class="p">,</span> <span class="mi">6</span><span class="p">)</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, GEHC DataScience
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

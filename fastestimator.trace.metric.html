@@ -1,0 +1,431 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>metric &mdash; FastEstimator 0.0.1 documentation</title>
+  
+
+  
+  
+    <link rel="shortcut icon" href="_static/favicon.ico"/>
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="util" href="fastestimator.util.html" />
+    <link rel="prev" title="io" href="fastestimator.trace.io.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> FastEstimator
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0a0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="learn.html">Learn</a></li>
+<li class="toctree-l1"><a class="reference internal" href="apphub.html">Example</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="api.html">API</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="fastestimator.architecture.html">architecture</a></li>
+<li class="toctree-l2"><a class="reference internal" href="fastestimator.cli.html">cli</a></li>
+<li class="toctree-l2"><a class="reference internal" href="fastestimator.dataset.html">dataset</a></li>
+<li class="toctree-l2"><a class="reference internal" href="fastestimator.interpretation.html">interpretation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="fastestimator.layers.html">layers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="fastestimator.op.html">op</a></li>
+<li class="toctree-l2"><a class="reference internal" href="fastestimator.schedule.html">schedule</a></li>
+<li class="toctree-l2"><a class="reference internal" href="fastestimator.summary.html">summary</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="fastestimator.trace.html">trace</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="fastestimator.trace.adapt.html">adapt</a></li>
+<li class="toctree-l3"><a class="reference internal" href="fastestimator.trace.io.html">io</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">metric</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#module-fastestimator.trace.metric.accuracy">accuracy</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-fastestimator.trace.metric.confusion_matrix">confusion_matrix</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-fastestimator.trace.metric.dice">dice</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-fastestimator.trace.metric.f1_score">f1_score</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-fastestimator.trace.metric.precision">precision</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-fastestimator.trace.metric.recall">recall</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="fastestimator.trace.html#id1">trace</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="fastestimator.util.html">util</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api.html#module-fastestimator.estimator">estimator</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api.html#module-fastestimator.network">network</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api.html#module-fastestimator.pipeline">pipeline</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">FastEstimator</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="api.html">API</a> &raquo;</li>
+        
+          <li><a href="fastestimator.trace.html">trace</a> &raquo;</li>
+        
+      <li>metric</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/fastestimator.trace.metric.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  
+<style>
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast,
+.nboutput.nblast {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast + .nbinput {
+    margin-top: -19px;
+}
+
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+
+/* Fix math alignment, see https://github.com/rtfd/sphinx_rtd_theme/pull/686 */
+.math {
+    text-align: unset;
+}
+</style>
+<div class="section" id="module-fastestimator.trace.metric">
+<span id="metric"></span><h1>metric<a class="headerlink" href="#module-fastestimator.trace.metric" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="module-fastestimator.trace.metric.accuracy">
+<span id="accuracy"></span><h2>accuracy<a class="headerlink" href="#module-fastestimator.trace.metric.accuracy" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="fastestimator.trace.metric.accuracy.Accuracy">
+<em class="property">class </em><code class="sig-prename descclassname">fastestimator.trace.metric.accuracy.</code><code class="sig-name descname">Accuracy</code><span class="sig-paren">(</span><em class="sig-param">true_key</em>, <em class="sig-param">pred_key</em>, <em class="sig-param">mode='eval'</em>, <em class="sig-param">output_name='accuracy'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/trace/metric/accuracy.html#Accuracy"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.trace.metric.accuracy.Accuracy" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="fastestimator.trace.html#fastestimator.trace.trace.Trace" title="fastestimator.trace.trace.Trace"><code class="xref py py-class docutils literal notranslate"><span class="pre">fastestimator.trace.trace.Trace</span></code></a></p>
+<p>Calculates accuracy for classification task and report it back to logger.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>true_key</strong> (<em>str</em>) – Name of the key that corresponds to ground truth in batch dictionary</p></li>
+<li><p><strong>pred_key</strong> (<em>str</em>) – Name of the key that corresponds to predicted score in batch dictionary</p></li>
+<li><p><strong>mode</strong> (<em>str</em><em>, </em><em>optional</em>) – Restrict the trace to run only on given modes {‘train’, ‘eval’, ‘test’}. None will always
+execute. Defaults to ‘eval’.</p></li>
+<li><p><strong>output_name</strong> (<em>str</em><em>, </em><em>optional</em>) – Name of the key to store to the state. Defaults to “accuracy”.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<hr class="docutils" />
+<div class="section" id="module-fastestimator.trace.metric.confusion_matrix">
+<span id="confusion-matrix"></span><h2>confusion_matrix<a class="headerlink" href="#module-fastestimator.trace.metric.confusion_matrix" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="fastestimator.trace.metric.confusion_matrix.ConfusionMatrix">
+<em class="property">class </em><code class="sig-prename descclassname">fastestimator.trace.metric.confusion_matrix.</code><code class="sig-name descname">ConfusionMatrix</code><span class="sig-paren">(</span><em class="sig-param">true_key</em>, <em class="sig-param">pred_key</em>, <em class="sig-param">num_classes</em>, <em class="sig-param">mode='eval'</em>, <em class="sig-param">output_name='confusion_matrix'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/trace/metric/confusion_matrix.html#ConfusionMatrix"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.trace.metric.confusion_matrix.ConfusionMatrix" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="fastestimator.trace.html#fastestimator.trace.trace.Trace" title="fastestimator.trace.trace.Trace"><code class="xref py py-class docutils literal notranslate"><span class="pre">fastestimator.trace.trace.Trace</span></code></a></p>
+<p>Computes confusion matrix between y_true and y_predict.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>true_key</strong> (<em>str</em>) – Name of the key that corresponds to ground truth in batch dictionary</p></li>
+<li><p><strong>pred_key</strong> (<em>str</em>) – Name of the key that corresponds to predicted score in batch dictionary</p></li>
+<li><p><strong>num_classes</strong> (<em>int</em>) – Total number of classes of the confusion matrix.</p></li>
+<li><p><strong>mode</strong> (<em>str</em><em>, </em><em>optional</em>) – Restrict the trace to run only on given modes {‘train’, ‘eval’, ‘test’}. None will always
+execute. Defaults to ‘eval’.</p></li>
+<li><p><strong>output_name</strong> (<em>str</em><em>, </em><em>optional</em>) – Name of the key to store to the state. Defaults to “confusion_matrix”.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<hr class="docutils" />
+<div class="section" id="module-fastestimator.trace.metric.dice">
+<span id="dice"></span><h2>dice<a class="headerlink" href="#module-fastestimator.trace.metric.dice" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="fastestimator.trace.metric.dice.Dice">
+<em class="property">class </em><code class="sig-prename descclassname">fastestimator.trace.metric.dice.</code><code class="sig-name descname">Dice</code><span class="sig-paren">(</span><em class="sig-param">true_key</em>, <em class="sig-param">pred_key</em>, <em class="sig-param">threshold=0.5</em>, <em class="sig-param">mode='eval'</em>, <em class="sig-param">output_name='dice'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/trace/metric/dice.html#Dice"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.trace.metric.dice.Dice" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="fastestimator.trace.html#fastestimator.trace.trace.Trace" title="fastestimator.trace.trace.Trace"><code class="xref py py-class docutils literal notranslate"><span class="pre">fastestimator.trace.trace.Trace</span></code></a></p>
+<p>Computes Dice score for binary classification between y_true and y_predict.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>true_key</strong> (<em>str</em>) – Name of the keys in the ground truth label in data pipeline.</p></li>
+<li><p><strong>pred_key</strong> (<em>str</em><em>, </em><em>optional</em>) – Mame of the keys in predicted label. Default is <cite>None</cite>.</p></li>
+<li><p><strong>threshold</strong> (<em>float</em><em>, </em><em>optional</em>) – Threshold of the prediction. Defaults to 0.5.</p></li>
+<li><p><strong>mode</strong> (<em>str</em><em>, </em><em>optional</em>) – Restrict the trace to run only on given modes {‘train’, ‘eval’, ‘test’}. None will always
+execute. Defaults to ‘eval’.</p></li>
+<li><p><strong>output_name</strong> (<em>str</em><em>, </em><em>optional</em>) – Name of the key to store to the state. Defaults to “dice”.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<hr class="docutils" />
+<div class="section" id="module-fastestimator.trace.metric.f1_score">
+<span id="f1-score"></span><h2>f1_score<a class="headerlink" href="#module-fastestimator.trace.metric.f1_score" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="fastestimator.trace.metric.f1_score.F1Score">
+<em class="property">class </em><code class="sig-prename descclassname">fastestimator.trace.metric.f1_score.</code><code class="sig-name descname">F1Score</code><span class="sig-paren">(</span><em class="sig-param">true_key</em>, <em class="sig-param">pred_key=None</em>, <em class="sig-param">labels=None</em>, <em class="sig-param">pos_label=1</em>, <em class="sig-param">average='auto'</em>, <em class="sig-param">sample_weight=None</em>, <em class="sig-param">mode='eval'</em>, <em class="sig-param">output_name='f1score'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/trace/metric/f1_score.html#F1Score"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.trace.metric.f1_score.F1Score" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="fastestimator.trace.html#fastestimator.trace.trace.Trace" title="fastestimator.trace.trace.Trace"><code class="xref py py-class docutils literal notranslate"><span class="pre">fastestimator.trace.trace.Trace</span></code></a></p>
+<p>Calculate F1 score for classification task and report it back to logger.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>true_key</strong> (<em>str</em>) – Name of the keys in the ground truth label in data pipeline.</p></li>
+<li><p><strong>pred_key</strong> (<em>str</em><em>, </em><em>optional</em>) – Name of the keys in predicted label. Default is <cite>None</cite>.</p></li>
+<li><p><strong>labels</strong> (<em>list</em><em>, </em><em>optional</em>) – The set of labels to include. For more details, please refer to
+sklearn.netrics.f1_score. Defaults to None.</p></li>
+<li><p><strong>pos_label</strong> (<em>str</em><em> or </em><em>int</em><em>, </em><em>optional</em>) – The class to report. For more details, please refer to
+sklearn.netrics.f1_score. Defaults to 1.</p></li>
+<li><p><strong>average</strong> (<em>str</em><em>, </em><em>optional</em>) – It should be one of {“auto”, “binary”, “micro”, “macro”, “weighted”, “samples”, None}.
+If “auto”, the trace will detect the input data type and choose the right average for you. Otherwise, it
+will pass its to sklearn.metrics.f1_score. Defaults to “auto”.</p></li>
+<li><p><strong>sample_weight</strong> (<em>array-like of shape</em><em>, </em><em>optional</em>) – Sample weights, For more details, please refer to
+sklearn.netrics.f1_score. Defaults to None.</p></li>
+<li><p><strong>mode</strong> (<em>str</em><em>, </em><em>optional</em>) – Restrict the trace to run only on given modes {‘train’, ‘eval’, ‘test’}. None will always
+execute. Defaults to ‘eval’.</p></li>
+<li><p><strong>output_name</strong> (<em>str</em><em>, </em><em>optional</em>) – Name of the key to store back to the state. Defaults to “f1score”.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<hr class="docutils" />
+<div class="section" id="module-fastestimator.trace.metric.precision">
+<span id="precision"></span><h2>precision<a class="headerlink" href="#module-fastestimator.trace.metric.precision" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="fastestimator.trace.metric.precision.Precision">
+<em class="property">class </em><code class="sig-prename descclassname">fastestimator.trace.metric.precision.</code><code class="sig-name descname">Precision</code><span class="sig-paren">(</span><em class="sig-param">true_key</em>, <em class="sig-param">pred_key=None</em>, <em class="sig-param">labels=None</em>, <em class="sig-param">pos_label=1</em>, <em class="sig-param">average='auto'</em>, <em class="sig-param">sample_weight=None</em>, <em class="sig-param">mode='eval'</em>, <em class="sig-param">output_name='precision'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/trace/metric/precision.html#Precision"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.trace.metric.precision.Precision" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="fastestimator.trace.html#fastestimator.trace.trace.Trace" title="fastestimator.trace.trace.Trace"><code class="xref py py-class docutils literal notranslate"><span class="pre">fastestimator.trace.trace.Trace</span></code></a></p>
+<p>Computes precision for classification task and report it back to logger.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>true_key</strong> (<em>str</em>) – Name of the keys in the ground truth label in data pipeline.</p></li>
+<li><p><strong>pred_key</strong> (<em>str</em><em>, </em><em>optional</em>) – Name of the keys in predicted label. Defaults to None.</p></li>
+<li><p><strong>labels</strong> (<em>list</em><em>, </em><em>optional</em>) – The set of labels to include. For more details please refer to
+sklearn.metrics.precision_score. Defaults to None.</p></li>
+<li><p><strong>pos_label</strong> (<em>str</em><em> or </em><em>int</em><em>, </em><em>optional</em>) – The class to report. For more details please refer to
+sklearn.metrics.precision_score. Defaults to 1.</p></li>
+<li><p><strong>average</strong> (<em>str</em><em>, </em><em>optional</em>) – It should be one of {“auto”, “binary”, “micro”, “macro”, “weighted”, “samples”, None}.
+If “auto”, the trace will detect the input data type and choose the right average for you. Otherwise, it
+will pass its to sklearn.metrics.precision_score. Defaults to “auto”.</p></li>
+<li><p><strong>sample_weight</strong> (<em>1d array-like</em><em>, </em><em>optional</em>) – Sample weight. If None, it will not apply sample weight. For more
+details please refer to sklearn.metrics.precision_score. Defaults to None.</p></li>
+<li><p><strong>mode</strong> (<em>str</em><em>, </em><em>optional</em>) – Restrict the trace to run only on given modes {‘train’, ‘eval’, ‘test’}. None will always
+execute. Defaults to ‘eval’.</p></li>
+<li><p><strong>output_name</strong> (<em>str</em><em>, </em><em>optional</em>) – Name of the key to store to the state. Defaults to “precision”.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<hr class="docutils" />
+<div class="section" id="module-fastestimator.trace.metric.recall">
+<span id="recall"></span><h2>recall<a class="headerlink" href="#module-fastestimator.trace.metric.recall" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="fastestimator.trace.metric.recall.Recall">
+<em class="property">class </em><code class="sig-prename descclassname">fastestimator.trace.metric.recall.</code><code class="sig-name descname">Recall</code><span class="sig-paren">(</span><em class="sig-param">true_key</em>, <em class="sig-param">pred_key=None</em>, <em class="sig-param">labels=None</em>, <em class="sig-param">pos_label=1</em>, <em class="sig-param">average='auto'</em>, <em class="sig-param">sample_weight=None</em>, <em class="sig-param">mode='eval'</em>, <em class="sig-param">output_name='recall'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/trace/metric/recall.html#Recall"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.trace.metric.recall.Recall" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="fastestimator.trace.html#fastestimator.trace.trace.Trace" title="fastestimator.trace.trace.Trace"><code class="xref py py-class docutils literal notranslate"><span class="pre">fastestimator.trace.trace.Trace</span></code></a></p>
+<p>Compute recall for classification task and report it back to logger.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>true_key</strong> (<em>str</em>) – Name of the keys in the ground truth label in data pipeline.</p></li>
+<li><p><strong>pred_key</strong> (<em>str</em><em>, </em><em>optional</em>) – Name of the keys in predicted label. Defaults to None.</p></li>
+<li><p><strong>labels</strong> (<em>list</em><em>, </em><em>optional</em>) – The set of labels to include. For more details, please refer to
+sklearn.netrics.recall_score. Defaults to None.</p></li>
+<li><p><strong>pos_label</strong> (<em>str</em><em> or </em><em>int</em><em>, </em><em>optional</em>) – The class to report. For more details, please refer to
+sklearn.netrics.recall_score. Defaults to 1.</p></li>
+<li><p><strong>average</strong> (<em>str</em><em>, </em><em>optional</em>) – It should be one of {“auto”, “binary”, “micro”, “macro”, “weighted”, “samples”, None}.
+If “auto”, the trace will detect the input data type and choose the right average for you. Otherwise, it
+will pass its to sklearn.metrics.recall_score. Defaults to “auto”.</p></li>
+<li><p><strong>sample_weight</strong> (<em>array-like of shape</em><em>, </em><em>optional</em>) – Sample weights, For more details, please refer to
+sklearn.netrics.recall_score. Defaults to None.</p></li>
+<li><p><strong>mode</strong> (<em>str</em><em>, </em><em>optional</em>) – Restrict the trace to run only on given modes {‘train’, ‘eval’, ‘test’}. None will always
+execute. Defaults to ‘eval’.</p></li>
+<li><p><strong>output_name</strong> (<em>str</em><em>, </em><em>optional</em>) – Name of the key to store to the state. Defaults to “recall”.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="fastestimator.util.html" class="btn btn-neutral float-right" title="util" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="fastestimator.trace.io.html" class="btn btn-neutral float-left" title="io" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, GEHC DataScience
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

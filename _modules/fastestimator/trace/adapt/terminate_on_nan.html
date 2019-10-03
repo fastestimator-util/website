@@ -1,0 +1,273 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>fastestimator.trace.adapt.terminate_on_nan &mdash; FastEstimator 0.0.1 documentation</title>
+  
+
+  
+  
+    <link rel="shortcut icon" href="../../../../_static/favicon.ico"/>
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../../" src="../../../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../../../_static/language_data.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
+    
+    <script type="text/javascript" src="../../../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../../index.html" class="icon icon-home"> FastEstimator
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0a0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../learn.html">Learn</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../apphub.html">Example</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../api.html">API</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">FastEstimator</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../../index.html">Module code</a> &raquo;</li>
+        
+      <li>fastestimator.trace.adapt.terminate_on_nan</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for fastestimator.trace.adapt.terminate_on_nan</h1><div class="highlight"><pre>
+<span></span><span class="c1"># Copyright 2019 The FastEstimator Authors. All Rights Reserved.</span>
+<span class="c1">#</span>
+<span class="c1"># Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);</span>
+<span class="c1"># you may not use this file except in compliance with the License.</span>
+<span class="c1"># You may obtain a copy of the License at</span>
+<span class="c1">#</span>
+<span class="c1">#     http://www.apache.org/licenses/LICENSE-2.0</span>
+<span class="c1">#</span>
+<span class="c1"># Unless required by applicable law or agreed to in writing, software</span>
+<span class="c1"># distributed under the License is distributed on an &quot;AS IS&quot; BASIS,</span>
+<span class="c1"># WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span>
+<span class="c1"># See the License for the specific language governing permissions and</span>
+<span class="c1"># limitations under the License.</span>
+<span class="c1"># ==============================================================================</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
+
+<span class="kn">from</span> <span class="nn">fastestimator.trace</span> <span class="k">import</span> <span class="n">Trace</span>
+
+
+<div class="viewcode-block" id="TerminateOnNaN"><a class="viewcode-back" href="../../../../fastestimator.trace.adapt.html#fastestimator.trace.adapt.terminate_on_nan.TerminateOnNaN">[docs]</a><span class="k">class</span> <span class="nc">TerminateOnNaN</span><span class="p">(</span><span class="n">Trace</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;End Training if a NaN value is detected. By default (inputs=None) it will monitor all loss values at the end</span>
+<span class="sd">    of each batch. If one or more inputs are specified, it will only monitor those values. Inputs may be loss keys</span>
+<span class="sd">    and/or the keys corresponding to the outputs of other traces (ex. accuracy) but then the other traces must be</span>
+<span class="sd">    given before TerminateOnNaN in the trace list.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        monitor_names (str, list, optional): What key(s) to monitor for NaN values.</span>
+<span class="sd">                                            - None (default) will monitor all loss values.</span>
+<span class="sd">                                            - &quot;*&quot; will monitor all state keys and losses.</span>
+<span class="sd">                                            Defaults to None.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">monitor_names</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">monitored_keys</span> <span class="o">=</span> <span class="n">monitor_names</span> <span class="k">if</span> <span class="n">monitor_names</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="nb">set</span><span class="p">(</span><span class="n">monitor_names</span><span class="p">)</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">inputs</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">monitored_keys</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">all_loss_keys</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">monitored_loss_keys</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">monitored_state_keys</span> <span class="o">=</span> <span class="p">{}</span>
+
+    <span class="k">def</span> <span class="nf">on_epoch_begin</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">all_loss_keys</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">network</span><span class="o">.</span><span class="n">epoch_losses</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">monitored_keys</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">monitored_loss_keys</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">all_loss_keys</span>
+        <span class="k">elif</span> <span class="s2">&quot;*&quot;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">monitored_keys</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">monitored_loss_keys</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">all_loss_keys</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">monitored_state_keys</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;*&quot;</span><span class="p">}</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">monitored_loss_keys</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">monitored_keys</span> <span class="o">&amp;</span> <span class="bp">self</span><span class="o">.</span><span class="n">all_loss_keys</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">monitored_state_keys</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">monitored_keys</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">monitored_loss_keys</span>
+
+    <span class="k">def</span> <span class="nf">on_batch_end</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">monitored_loss_keys</span><span class="p">:</span>
+            <span class="n">loss</span> <span class="o">=</span> <span class="n">state</span><span class="p">[</span><span class="s2">&quot;batch&quot;</span><span class="p">][</span><span class="n">key</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">tf</span><span class="o">.</span><span class="n">reduce_any</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">math</span><span class="o">.</span><span class="n">is_nan</span><span class="p">(</span><span class="n">loss</span><span class="p">)):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">network</span><span class="o">.</span><span class="n">stop_training</span> <span class="o">=</span> <span class="kc">True</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;FastEstimator-TerminateOnNaN: NaN Detected in Loss: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">key</span><span class="p">))</span>
+        <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">state</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span> <span class="k">if</span> <span class="s2">&quot;*&quot;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">monitored_state_keys</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">monitored_state_keys</span><span class="p">:</span>
+            <span class="n">val</span> <span class="o">=</span> <span class="n">state</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_is_floating</span><span class="p">(</span><span class="n">val</span><span class="p">)</span> <span class="ow">and</span> <span class="n">tf</span><span class="o">.</span><span class="n">reduce_any</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">math</span><span class="o">.</span><span class="n">is_nan</span><span class="p">(</span><span class="n">val</span><span class="p">)):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">network</span><span class="o">.</span><span class="n">stop_training</span> <span class="o">=</span> <span class="kc">True</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;FastEstimator-TerminateOnNaN: NaN Detected in: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">key</span><span class="p">))</span>
+
+    <span class="k">def</span> <span class="nf">on_epoch_end</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">state</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span> <span class="k">if</span> <span class="s2">&quot;*&quot;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">monitored_state_keys</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">monitored_state_keys</span><span class="p">:</span>
+            <span class="n">val</span> <span class="o">=</span> <span class="n">state</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_is_floating</span><span class="p">(</span><span class="n">val</span><span class="p">)</span> <span class="ow">and</span> <span class="n">tf</span><span class="o">.</span><span class="n">reduce_any</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">math</span><span class="o">.</span><span class="n">is_nan</span><span class="p">(</span><span class="n">val</span><span class="p">)):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">network</span><span class="o">.</span><span class="n">stop_training</span> <span class="o">=</span> <span class="kc">True</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;FastEstimator-TerminateOnNaN: NaN Detected in: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">key</span><span class="p">))</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">_is_floating</span><span class="p">(</span><span class="n">val</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">val</span><span class="p">,</span> <span class="nb">float</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">val</span><span class="p">,</span> <span class="n">tf</span><span class="o">.</span><span class="n">Tensor</span><span class="p">)</span>
+                                          <span class="ow">and</span> <span class="n">val</span><span class="o">.</span><span class="n">dtype</span><span class="o">.</span><span class="n">is_floating</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">val</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span>
+                                                                         <span class="ow">and</span> <span class="n">np</span><span class="o">.</span><span class="n">issubdtype</span><span class="p">(</span><span class="n">val</span><span class="o">.</span><span class="n">dtype</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">floating</span><span class="p">))</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, GEHC DataScience
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
