@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>API &mdash; FastEstimator 0.0.1 documentation</title>
+  <title>API &mdash; FastEstimator 1.0a0 documentation</title>
   
 
   
@@ -65,7 +65,7 @@
             
             
               <div class="version">
-                1.0a0
+                1.0
               </div>
             
           
@@ -201,148 +201,16 @@
 <span id="api"></span><h1>API<a class="headerlink" href="#module-fastestimator" title="Permalink to this headline">¶</a></h1>
 <div class="toctree-wrapper compound">
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="fastestimator.architecture.html">architecture</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="fastestimator.architecture.html#module-fastestimator.architecture.cyclegan">cyclegan</a></li>
-<li class="toctree-l2"><a class="reference internal" href="fastestimator.architecture.html#module-fastestimator.architecture.lenet">lenet</a></li>
-<li class="toctree-l2"><a class="reference internal" href="fastestimator.architecture.html#module-fastestimator.architecture.retinanet">retinanet</a></li>
-<li class="toctree-l2"><a class="reference internal" href="fastestimator.architecture.html#module-fastestimator.architecture.stnet">stnet</a></li>
-<li class="toctree-l2"><a class="reference internal" href="fastestimator.architecture.html#module-fastestimator.architecture.unet">unet</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="fastestimator.cli.html">cli</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="fastestimator.cli.html#module-fastestimator.cli.cli_util">cli_util</a></li>
-<li class="toctree-l2"><a class="reference internal" href="fastestimator.cli.html#module-fastestimator.cli.predict">predict</a></li>
-<li class="toctree-l2"><a class="reference internal" href="fastestimator.cli.html#module-fastestimator.cli.train">train</a></li>
-<li class="toctree-l2"><a class="reference internal" href="fastestimator.cli.html#module-fastestimator.cli.visualize">visualize</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="fastestimator.dataset.html">dataset</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="fastestimator.dataset.html#module-fastestimator.dataset.cub200">cub200</a></li>
-<li class="toctree-l2"><a class="reference internal" href="fastestimator.dataset.html#module-fastestimator.dataset.horse2zebra">horse2zebra</a></li>
-<li class="toctree-l2"><a class="reference internal" href="fastestimator.dataset.html#module-fastestimator.dataset.mendeley">mendeley</a></li>
-<li class="toctree-l2"><a class="reference internal" href="fastestimator.dataset.html#module-fastestimator.dataset.mnist">mnist</a></li>
-<li class="toctree-l2"><a class="reference internal" href="fastestimator.dataset.html#module-fastestimator.dataset.montgomery">montgomery</a></li>
-<li class="toctree-l2"><a class="reference internal" href="fastestimator.dataset.html#module-fastestimator.dataset.mscoco">mscoco</a></li>
-<li class="toctree-l2"><a class="reference internal" href="fastestimator.dataset.html#module-fastestimator.dataset.svhn">svhn</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="fastestimator.interpretation.html">interpretation</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="fastestimator.interpretation.util.html">util</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="fastestimator.interpretation.util.html#module-fastestimator.interpretation.util.color_util">color_util</a></li>
-<li class="toctree-l3"><a class="reference internal" href="fastestimator.interpretation.util.html#module-fastestimator.interpretation.util.fft_util">fft_util</a></li>
-<li class="toctree-l3"><a class="reference internal" href="fastestimator.interpretation.util.html#module-fastestimator.interpretation.util.saliency_util">saliency_util</a></li>
-<li class="toctree-l3"><a class="reference internal" href="fastestimator.interpretation.util.html#module-fastestimator.interpretation.util.umap_util">umap_util</a></li>
-<li class="toctree-l3"><a class="reference internal" href="fastestimator.interpretation.util.html#module-fastestimator.interpretation.util.vis_util">vis_util</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="fastestimator.interpretation.html#module-fastestimator.interpretation.caricature">caricature</a></li>
-<li class="toctree-l2"><a class="reference internal" href="fastestimator.interpretation.html#module-fastestimator.interpretation.saliency">saliency</a></li>
-<li class="toctree-l2"><a class="reference internal" href="fastestimator.interpretation.html#module-fastestimator.interpretation.umaps">umaps</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="fastestimator.layers.html">layers</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="fastestimator.layers.html#module-fastestimator.layers.instance_norm">instance_norm</a></li>
-<li class="toctree-l2"><a class="reference internal" href="fastestimator.layers.html#module-fastestimator.layers.reflection_padding_2d">reflection_padding_2d</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="fastestimator.op.html">op</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="fastestimator.op.numpyop.html">numpyop</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="fastestimator.op.numpyop.html#module-fastestimator.op.numpyop.image_reader">image_reader</a></li>
-<li class="toctree-l3"><a class="reference internal" href="fastestimator.op.numpyop.html#module-fastestimator.op.numpyop.mat_reader">mat_reader</a></li>
-<li class="toctree-l3"><a class="reference internal" href="fastestimator.op.numpyop.html#module-fastestimator.op.numpyop.minmax">minmax</a></li>
-<li class="toctree-l3"><a class="reference internal" href="fastestimator.op.numpyop.html#module-fastestimator.op.numpyop.reshape">reshape</a></li>
-<li class="toctree-l3"><a class="reference internal" href="fastestimator.op.numpyop.html#module-fastestimator.op.numpyop.resize">resize</a></li>
-<li class="toctree-l3"><a class="reference internal" href="fastestimator.op.numpyop.html#module-fastestimator.op.numpyop.scale">scale</a></li>
-<li class="toctree-l3"><a class="reference internal" href="fastestimator.op.numpyop.html#module-fastestimator.op.numpyop.z_score">z_score</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="fastestimator.op.tensorop.html">tensorop</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="fastestimator.op.tensorop.augmentation.html">augmentation</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="fastestimator.op.tensorop.augmentation.html#module-fastestimator.op.tensorop.augmentation.adversarial_sample">adversarial_sample</a></li>
-<li class="toctree-l4"><a class="reference internal" href="fastestimator.op.tensorop.augmentation.html#module-fastestimator.op.tensorop.augmentation.augmentation_2d">augmentation_2d</a></li>
-<li class="toctree-l4"><a class="reference internal" href="fastestimator.op.tensorop.augmentation.html#module-fastestimator.op.tensorop.augmentation.mixup_batch">mixup_batch</a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="fastestimator.op.tensorop.filter.html">filter</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="fastestimator.op.tensorop.filter.html#id1">filter</a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="fastestimator.op.tensorop.loss.html">loss</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="fastestimator.op.tensorop.loss.html#module-fastestimator.op.tensorop.loss.binary_crossentropy">binary_crossentropy</a></li>
-<li class="toctree-l4"><a class="reference internal" href="fastestimator.op.tensorop.loss.html#id1">loss</a></li>
-<li class="toctree-l4"><a class="reference internal" href="fastestimator.op.tensorop.loss.html#module-fastestimator.op.tensorop.loss.mean_squared_error">mean_squared_error</a></li>
-<li class="toctree-l4"><a class="reference internal" href="fastestimator.op.tensorop.loss.html#module-fastestimator.op.tensorop.loss.mixup_loss">mixup_loss</a></li>
-<li class="toctree-l4"><a class="reference internal" href="fastestimator.op.tensorop.loss.html#module-fastestimator.op.tensorop.loss.sparse_categorical_crossentropy">sparse_categorical_crossentropy</a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="fastestimator.op.tensorop.model.html">model</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="fastestimator.op.tensorop.model.html#id1">model</a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="fastestimator.op.tensorop.html#module-fastestimator.op.tensorop.average">average</a></li>
-<li class="toctree-l3"><a class="reference internal" href="fastestimator.op.tensorop.html#module-fastestimator.op.tensorop.binarize">binarize</a></li>
-<li class="toctree-l3"><a class="reference internal" href="fastestimator.op.tensorop.html#module-fastestimator.op.tensorop.minmax">minmax</a></li>
-<li class="toctree-l3"><a class="reference internal" href="fastestimator.op.tensorop.html#module-fastestimator.op.tensorop.onehot">onehot</a></li>
-<li class="toctree-l3"><a class="reference internal" href="fastestimator.op.tensorop.html#module-fastestimator.op.tensorop.reshape">reshape</a></li>
-<li class="toctree-l3"><a class="reference internal" href="fastestimator.op.tensorop.html#module-fastestimator.op.tensorop.resize">resize</a></li>
-<li class="toctree-l3"><a class="reference internal" href="fastestimator.op.tensorop.html#module-fastestimator.op.tensorop.scale">scale</a></li>
-<li class="toctree-l3"><a class="reference internal" href="fastestimator.op.tensorop.html#module-fastestimator.op.tensorop.z_score">z_score</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="fastestimator.op.html#id1">op</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="fastestimator.schedule.html">schedule</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="fastestimator.schedule.html#module-fastestimator.schedule.epoch_scheduler">epoch_scheduler</a></li>
-<li class="toctree-l2"><a class="reference internal" href="fastestimator.schedule.html#module-fastestimator.schedule.lr_scheduler">lr_scheduler</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="fastestimator.summary.html">summary</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="fastestimator.summary.logs.html">logs</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="fastestimator.summary.logs.html#module-fastestimator.summary.logs.log_parse">log_parse</a></li>
-<li class="toctree-l3"><a class="reference internal" href="fastestimator.summary.logs.html#module-fastestimator.summary.logs.log_plot">log_plot</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="fastestimator.summary.html#id1">summary</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="fastestimator.trace.html">trace</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="fastestimator.trace.adapt.html">adapt</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="fastestimator.trace.adapt.html#module-fastestimator.trace.adapt.early_stopping">early_stopping</a></li>
-<li class="toctree-l3"><a class="reference internal" href="fastestimator.trace.adapt.html#module-fastestimator.trace.adapt.lr_controller">lr_controller</a></li>
-<li class="toctree-l3"><a class="reference internal" href="fastestimator.trace.adapt.html#module-fastestimator.trace.adapt.terminate_on_nan">terminate_on_nan</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="fastestimator.trace.io.html">io</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="fastestimator.trace.io.html#module-fastestimator.trace.io.caricature">caricature</a></li>
-<li class="toctree-l3"><a class="reference internal" href="fastestimator.trace.io.html#module-fastestimator.trace.io.csv_logger">csv_logger</a></li>
-<li class="toctree-l3"><a class="reference internal" href="fastestimator.trace.io.html#module-fastestimator.trace.io.logger">logger</a></li>
-<li class="toctree-l3"><a class="reference internal" href="fastestimator.trace.io.html#module-fastestimator.trace.io.model_saver">model_saver</a></li>
-<li class="toctree-l3"><a class="reference internal" href="fastestimator.trace.io.html#module-fastestimator.trace.io.saliency">saliency</a></li>
-<li class="toctree-l3"><a class="reference internal" href="fastestimator.trace.io.html#module-fastestimator.trace.io.tensorboard">tensorboard</a></li>
-<li class="toctree-l3"><a class="reference internal" href="fastestimator.trace.io.html#module-fastestimator.trace.io.umap">umap</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="fastestimator.trace.metric.html">metric</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="fastestimator.trace.metric.html#module-fastestimator.trace.metric.accuracy">accuracy</a></li>
-<li class="toctree-l3"><a class="reference internal" href="fastestimator.trace.metric.html#module-fastestimator.trace.metric.confusion_matrix">confusion_matrix</a></li>
-<li class="toctree-l3"><a class="reference internal" href="fastestimator.trace.metric.html#module-fastestimator.trace.metric.dice">dice</a></li>
-<li class="toctree-l3"><a class="reference internal" href="fastestimator.trace.metric.html#module-fastestimator.trace.metric.f1_score">f1_score</a></li>
-<li class="toctree-l3"><a class="reference internal" href="fastestimator.trace.metric.html#module-fastestimator.trace.metric.precision">precision</a></li>
-<li class="toctree-l3"><a class="reference internal" href="fastestimator.trace.metric.html#module-fastestimator.trace.metric.recall">recall</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="fastestimator.trace.html#id1">trace</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="fastestimator.util.html">util</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="fastestimator.util.html#module-fastestimator.util.loader">loader</a></li>
-<li class="toctree-l2"><a class="reference internal" href="fastestimator.util.html#module-fastestimator.util.record_writer">record_writer</a></li>
-<li class="toctree-l2"><a class="reference internal" href="fastestimator.util.html#module-fastestimator.util.tfrecord">tfrecord</a></li>
-<li class="toctree-l2"><a class="reference internal" href="fastestimator.util.html#id1">util</a></li>
-<li class="toctree-l2"><a class="reference internal" href="fastestimator.util.html#module-fastestimator.util.util_test">util_test</a></li>
-</ul>
-</li>
+<li class="toctree-l1"><a class="reference internal" href="fastestimator.architecture.html">architecture</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fastestimator.cli.html">cli</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fastestimator.dataset.html">dataset</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fastestimator.interpretation.html">interpretation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fastestimator.layers.html">layers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fastestimator.op.html">op</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fastestimator.schedule.html">schedule</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fastestimator.summary.html">summary</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fastestimator.trace.html">trace</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fastestimator.util.html">util</a></li>
 </ul>
 </div>
 <hr class="docutils" />

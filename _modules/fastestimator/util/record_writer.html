@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>fastestimator.util.record_writer &mdash; FastEstimator 0.0.1 documentation</title>
+  <title>fastestimator.util.record_writer &mdash; FastEstimator 1.0a0 documentation</title>
   
 
   
@@ -63,7 +63,7 @@
             
             
               <div class="version">
-                1.0a0
+                1.0
               </div>
             
           
@@ -171,13 +171,14 @@
 <span class="c1"># ==============================================================================</span>
 <span class="sd">&quot;&quot;&quot;Utility for writing TFRecords.&quot;&quot;&quot;</span>
 <span class="kn">import</span> <span class="nn">json</span>
-<span class="kn">import</span> <span class="nn">multiprocessing</span> <span class="k">as</span> <span class="nn">mp</span>
 <span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">from</span> <span class="nn">concurrent.futures</span> <span class="k">import</span> <span class="n">ThreadPoolExecutor</span>
 
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 <span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
+
 <span class="kn">from</span> <span class="nn">fastestimator.op</span> <span class="k">import</span> <span class="n">get_inputs_by_op</span><span class="p">,</span> <span class="n">get_op_from_mode</span><span class="p">,</span> <span class="n">verify_ops</span><span class="p">,</span> <span class="n">write_outputs_by_key</span>
 
 
@@ -227,7 +228,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">expand_dims</span> <span class="o">=</span> <span class="n">expand_dims</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">max_record_size_mb</span> <span class="o">=</span> <span class="n">max_record_size_mb</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">compression</span> <span class="o">=</span> <span class="n">compression</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">num_process</span> <span class="o">=</span> <span class="n">mp</span><span class="o">.</span><span class="n">cpu_count</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">num_process</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">cpu_count</span><span class="p">()</span> <span class="ow">or</span> <span class="mi">1</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">compression_option</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">TFRecordOptions</span><span class="p">(</span><span class="n">compression_type</span><span class="o">=</span><span class="n">compression</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">global_file_idx</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;train&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;eval&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">}</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">global_feature_key</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;train&quot;</span><span class="p">:</span> <span class="p">[],</span> <span class="s2">&quot;eval&quot;</span><span class="p">:</span> <span class="p">[]}</span>
@@ -329,7 +330,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">global_feature_key</span><span class="p">[</span><span class="n">mode</span><span class="p">]</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">feature_name</span><span class="p">[</span><span class="n">mode</span><span class="p">])</span>
         <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">global_feature_key</span><span class="p">[</span><span class="n">mode</span><span class="p">]))</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">global_feature_key</span><span class="p">[</span><span class="n">mode</span><span class="p">]),</span> <span class="s2">&quot;found duplicate key in feature name during </span><span class="si">{}</span><span class="s2">: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
-                <span class="n">mode</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">global_feature_key</span><span class="p">[</span><span class="n">mode</span><span class="p">])</span>
+            <span class="n">mode</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">global_feature_key</span><span class="p">[</span><span class="n">mode</span><span class="p">])</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">mb_per_csv_example</span><span class="p">[</span><span class="n">mode</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">mb_per_record_example</span><span class="p">[</span><span class="n">mode</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">feature_dtype</span><span class="p">[</span><span class="n">mode</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
@@ -354,41 +355,34 @@
     <span class="k">def</span> <span class="nf">_write_tfrecord_parallel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dictionary</span><span class="p">,</span> <span class="n">mode</span><span class="p">):</span>
         <span class="n">num_example_list</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="n">feature_shape_list</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="n">processes</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="n">queue_example</span> <span class="o">=</span> <span class="n">mp</span><span class="o">.</span><span class="n">Queue</span><span class="p">()</span>
-        <span class="n">queue_shape</span> <span class="o">=</span> <span class="n">mp</span><span class="o">.</span><span class="n">Queue</span><span class="p">()</span>
         <span class="n">num_files_process</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span>
             <span class="n">np</span><span class="o">.</span><span class="n">ceil</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">num_example_csv</span><span class="p">[</span><span class="n">mode</span><span class="p">]</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">mb_per_csv_example</span><span class="p">[</span><span class="n">mode</span><span class="p">]</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_record_size_mb</span> <span class="o">/</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">num_process</span><span class="p">))</span>
         <span class="n">num_example_process_remain</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_example_csv</span><span class="p">[</span><span class="n">mode</span><span class="p">]</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_process</span>
-        <span class="n">serial_start</span> <span class="o">=</span> <span class="mi">0</span>
-        <span class="n">file_idx_start</span> <span class="o">=</span> <span class="mi">0</span>
-        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">num_process</span><span class="p">):</span>
-            <span class="k">if</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">num_example_process_remain</span><span class="p">:</span>
-                <span class="n">num_example_process</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_example_csv</span><span class="p">[</span><span class="n">mode</span><span class="p">]</span> <span class="o">//</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_process</span> <span class="o">+</span> <span class="mi">1</span>
-            <span class="k">else</span><span class="p">:</span>
-                <span class="n">num_example_process</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_example_csv</span><span class="p">[</span><span class="n">mode</span><span class="p">]</span> <span class="o">//</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_process</span>
-            <span class="n">serial_end</span> <span class="o">=</span> <span class="n">serial_start</span> <span class="o">+</span> <span class="n">num_example_process</span>
-            <span class="n">processes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
-                <span class="n">mp</span><span class="o">.</span><span class="n">Process</span><span class="p">(</span>
-                    <span class="n">target</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_write_tfrecord_serial</span><span class="p">,</span>
-                    <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">dictionary</span><span class="p">,</span>
-                          <span class="n">serial_start</span><span class="p">,</span>
-                          <span class="n">serial_end</span><span class="p">,</span>
-                          <span class="n">num_files_process</span><span class="p">,</span>
-                          <span class="n">file_idx_start</span><span class="p">,</span>
-                          <span class="n">mode</span><span class="p">,</span>
-                          <span class="n">queue_example</span><span class="p">,</span>
-                          <span class="n">queue_shape</span><span class="p">)))</span>
-            <span class="n">serial_start</span> <span class="o">+=</span> <span class="n">num_example_process</span>
-            <span class="n">file_idx_start</span> <span class="o">+=</span> <span class="n">num_files_process</span>
-        <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">processes</span><span class="p">:</span>
-            <span class="n">p</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
-        <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">num_process</span><span class="p">):</span>
-            <span class="n">num_example_list</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">queue_example</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">block</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span>
-            <span class="n">feature_shape_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">queue_shape</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">block</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span>
-        <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">processes</span><span class="p">:</span>
-            <span class="n">p</span><span class="o">.</span><span class="n">join</span><span class="p">()</span>
+        <span class="n">futures</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">with</span> <span class="n">ThreadPoolExecutor</span><span class="p">(</span><span class="n">max_workers</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">num_process</span><span class="p">)</span> <span class="k">as</span> <span class="n">executor</span><span class="p">:</span>
+            <span class="n">serial_start</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="n">file_idx_start</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">num_process</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">num_example_process_remain</span><span class="p">:</span>
+                    <span class="n">num_example_process</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_example_csv</span><span class="p">[</span><span class="n">mode</span><span class="p">]</span> <span class="o">//</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_process</span> <span class="o">+</span> <span class="mi">1</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">num_example_process</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_example_csv</span><span class="p">[</span><span class="n">mode</span><span class="p">]</span> <span class="o">//</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_process</span>
+                <span class="n">serial_end</span> <span class="o">=</span> <span class="n">serial_start</span> <span class="o">+</span> <span class="n">num_example_process</span>
+                <span class="n">futures</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                    <span class="n">executor</span><span class="o">.</span><span class="n">submit</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_write_tfrecord_serial</span><span class="p">,</span>
+                                    <span class="n">dictionary</span><span class="p">,</span>
+                                    <span class="n">serial_start</span><span class="p">,</span>
+                                    <span class="n">serial_end</span><span class="p">,</span>
+                                    <span class="n">num_files_process</span><span class="p">,</span>
+                                    <span class="n">file_idx_start</span><span class="p">,</span>
+                                    <span class="n">mode</span><span class="p">))</span>
+                <span class="n">serial_start</span> <span class="o">+=</span> <span class="n">num_example_process</span>
+                <span class="n">file_idx_start</span> <span class="o">+=</span> <span class="n">num_files_process</span>
+        <span class="k">for</span> <span class="n">future</span> <span class="ow">in</span> <span class="n">futures</span><span class="p">:</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="n">future</span><span class="o">.</span><span class="n">result</span><span class="p">()</span>
+            <span class="n">num_example_list</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">result</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+            <span class="n">feature_shape_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">result</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_reconfirm_shape</span><span class="p">(</span><span class="n">feature_shape_list</span><span class="p">,</span> <span class="n">mode</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">num_example_list</span>
 
@@ -400,15 +394,7 @@
                     <span class="n">feature_shape</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">feature_shape</span><span class="p">[</span><span class="n">mode</span><span class="p">]</span> <span class="o">=</span> <span class="n">feature_shape</span>
 
-    <span class="k">def</span> <span class="nf">_write_tfrecord_serial</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
-                               <span class="n">dictionary</span><span class="p">,</span>
-                               <span class="n">serial_start</span><span class="p">,</span>
-                               <span class="n">serial_end</span><span class="p">,</span>
-                               <span class="n">num_files_process</span><span class="p">,</span>
-                               <span class="n">file_idx_start</span><span class="p">,</span>
-                               <span class="n">mode</span><span class="p">,</span>
-                               <span class="n">queue_example</span><span class="p">,</span>
-                               <span class="n">queue_shape</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">_write_tfrecord_serial</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dictionary</span><span class="p">,</span> <span class="n">serial_start</span><span class="p">,</span> <span class="n">serial_end</span><span class="p">,</span> <span class="n">num_files_process</span><span class="p">,</span> <span class="n">file_idx_start</span><span class="p">,</span> <span class="n">mode</span><span class="p">):</span>
         <span class="n">num_example_list</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="n">num_csv_example_per_file</span> <span class="o">=</span> <span class="p">(</span><span class="n">serial_end</span> <span class="o">-</span> <span class="n">serial_start</span><span class="p">)</span> <span class="o">//</span> <span class="n">num_files_process</span>
         <span class="n">show_progress</span> <span class="o">=</span> <span class="n">serial_start</span> <span class="o">==</span> <span class="mi">0</span>
@@ -430,8 +416,7 @@
                                         <span class="n">mode</span><span class="p">))</span>
             <span class="n">file_start</span> <span class="o">+=</span> <span class="n">num_csv_example_per_file</span>
             <span class="n">file_end</span> <span class="o">+=</span> <span class="n">num_csv_example_per_file</span>
-        <span class="n">queue_example</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="n">num_example_list</span><span class="p">)</span>
-        <span class="n">queue_shape</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">feature_shape</span><span class="p">[</span><span class="n">mode</span><span class="p">])</span>
+        <span class="k">return</span> <span class="n">num_example_list</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">feature_shape</span><span class="p">[</span><span class="n">mode</span><span class="p">]</span>
 
     <span class="k">def</span> <span class="nf">_write_single_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
                            <span class="n">dictionary</span><span class="p">,</span>

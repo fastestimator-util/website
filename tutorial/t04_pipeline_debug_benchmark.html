@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Tutorial 4: Pipeline debugging and benchmarking &mdash; FastEstimator 0.0.1 documentation</title>
+  <title>Tutorial 4: Pipeline debugging and benchmarking &mdash; FastEstimator 1.0a0 documentation</title>
   
 
   
@@ -65,7 +65,7 @@
             
             
               <div class="version">
-                1.0a0
+                1.0
               </div>
             
           
@@ -92,19 +92,19 @@
               <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../install.html">Installation</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../learn.html">Learn</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="t01_basic_usage.html">Tutorial 1: Basic Usage of FastEstimator</a></li>
-<li class="toctree-l2"><a class="reference internal" href="t02_using_data_in_disk.html">Tutorial 2: Using In-Disk Data in FastEstimator</a></li>
+<li class="toctree-l2"><a class="reference internal" href="t01_basic_usage.html">Tutorial 1: Getting started with FastEstimator</a></li>
+<li class="toctree-l2"><a class="reference internal" href="t02_using_data_in_disk.html">Tutorial 2: Dealing with large datasets with FastEstimator</a></li>
 <li class="toctree-l2"><a class="reference internal" href="t03_operator.html">Tutorial 3: Operator</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">Tutorial 4: Pipeline debugging and benchmarking</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#define-the-pipeline-(same-as-tutorial-2)">define the pipeline (same as tutorial 2)</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#access-the-pipeline-results">access the pipeline results</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#benchmark-pipeline-speed">benchmark pipeline speed</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#1)-Define-the-pipeline-(same-as-tutorial-3)">1) Define the pipeline <em>(same as tutorial 3)</em></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#2)-Access-the-pipeline-results">2) Access the pipeline results</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#3)-Benchmark-pipeline-speed">3) Benchmark pipeline speed</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="t05_trace_debug_training.html">Tutorial 5: Trace - training control and debugging</a></li>
-<li class="toctree-l2"><a class="reference internal" href="t06_TensorFilter_imbalanced_training.html">Tutorial 6: TensorFilter - imbalanced training</a></li>
-<li class="toctree-l2"><a class="reference internal" href="t07_expand_data_dimension.html">Tutorial 7: expanding data dimension in recordwriter and pipeline</a></li>
-<li class="toctree-l2"><a class="reference internal" href="t08_scheduler_progressive_training.html">Tutorial 8: Scheduler - changing hyperparameters during the training</a></li>
+<li class="toctree-l2"><a class="reference internal" href="t06_TensorFilter_imbalanced_training.html">Tutorial 6: Dealing with imbalanced dataset using TensorFilter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="t07_expand_data_dimension.html">Tutorial 7: Expanding data dimension in RecordWriter and Pipeline</a></li>
+<li class="toctree-l2"><a class="reference internal" href="t08_scheduler_progressive_training.html">Tutorial 8: Changing hyperparameters during training with Scheduler</a></li>
 <li class="toctree-l2"><a class="reference internal" href="t09_learning_rate_controller.html">Tutorial 9: Learning Rate Controller</a></li>
 <li class="toctree-l2"><a class="reference internal" href="t10_unpaired_dataset.html">Tutorial 10: Dataset with unpaired features</a></li>
 </ul>
@@ -401,25 +401,36 @@ div.rendered_html tbody tr:hover {
 </style>
 <div class="section" id="Tutorial-4:-Pipeline-debugging-and-benchmarking">
 <h1>Tutorial 4: Pipeline debugging and benchmarking<a class="headerlink" href="#Tutorial-4:-Pipeline-debugging-and-benchmarking" title="Permalink to this headline">¶</a></h1>
-<p>When creating your own end-to-end deep learning workflow, things may go wrong anywhere along the way, it’s very important to access the data after the pipeline and examine the correctness of pipeline operations. Furthermore, pipeline may be too slow to keep gpu busy, users may need to benchmark the pipeline speed to decide whether to move some operation to gpu.</p>
-<p>In this tutorial, we are going to show you how to access pipeline results and do pipeline benchmarking. We will use the same pipeline as tutorial 3.</p>
-<div class="section" id="define-the-pipeline-(same-as-tutorial-2)">
-<h2>define the pipeline (same as tutorial 2)<a class="headerlink" href="#define-the-pipeline-(same-as-tutorial-2)" title="Permalink to this headline">¶</a></h2>
-<div class="nbinput docutils container">
+<hr class="docutils" />
+<p>When creating your own end-to-end deep learning workflow, things may go wrong anywhere along the way. You’ve probably experienced it… That’s why it’s very important to <strong>access the data after the pipeline</strong> and examine the correctness of pipeline operations and preprocessing. Furthermore, in some cases, the pipeline may be too slow to keep the GPU busy. Users may need to <strong>benchmark the pipeline speed</strong> to decide whether to move some operations to GPU or not.</p>
+<p>In this tutorial, we are going to show you how to access pipeline results and do pipeline benchmarking. We will use the same pipeline as in tutorial 3.</p>
+<div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="kn">from</span> <span class="nn">fastestimator.pipeline.augmentation</span> <span class="k">import</span> <span class="n">Augmentation2D</span>
-<span class="kn">from</span> <span class="nn">fastestimator.util.op</span> <span class="k">import</span> <span class="n">TensorOp</span>
-<span class="kn">from</span> <span class="nn">fastestimator.dataset.mnist</span> <span class="k">import</span> <span class="n">load_data</span>
-<span class="kn">from</span> <span class="nn">fastestimator.util.op</span> <span class="k">import</span> <span class="n">NumpyOp</span>
-<span class="kn">from</span> <span class="nn">fastestimator.record.preprocess</span> <span class="k">import</span> <span class="n">ImageReader</span>
-<span class="kn">import</span> <span class="nn">fastestimator</span> <span class="k">as</span> <span class="nn">fe</span>
+<span></span><span class="kn">import</span> <span class="nn">fastestimator</span> <span class="k">as</span> <span class="nn">fe</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="1)-Define-the-pipeline-(same-as-tutorial-3)">
+<h2>1) Define the pipeline <em>(same as tutorial 3)</em><a class="headerlink" href="#1)-Define-the-pipeline-(same-as-tutorial-3)" title="Permalink to this headline">¶</a></h2>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">fastestimator.dataset.mnist</span> <span class="k">import</span> <span class="n">load_data</span>
+<span class="kn">from</span> <span class="nn">fastestimator.op</span> <span class="k">import</span> <span class="n">NumpyOp</span>
+<span class="kn">from</span> <span class="nn">fastestimator.util</span> <span class="k">import</span> <span class="n">RecordWriter</span>
+<span class="kn">from</span> <span class="nn">fastestimator.op.numpyop</span> <span class="k">import</span> <span class="n">ImageReader</span>
+<span class="kn">from</span> <span class="nn">fastestimator.op.tensorop</span> <span class="k">import</span> <span class="n">Augmentation2D</span>
+<span class="kn">from</span> <span class="nn">fastestimator.op</span> <span class="k">import</span> <span class="n">TensorOp</span>
 
+<span class="c1"># Create Rescale and Resize custom ops</span>
 <span class="k">class</span> <span class="nc">Rescale</span><span class="p">(</span><span class="n">NumpyOp</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">state</span><span class="p">):</span>
         <span class="n">data</span> <span class="o">=</span> <span class="p">(</span><span class="n">data</span> <span class="o">-</span> <span class="mf">127.5</span><span class="p">)</span> <span class="o">/</span> <span class="mf">127.5</span>
@@ -434,16 +445,18 @@ div.rendered_html tbody tr:hover {
         <span class="n">data</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">resize</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">size</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">data</span>
 
+<span class="c1"># Load data</span>
 <span class="n">train_csv</span><span class="p">,</span> <span class="n">eval_csv</span><span class="p">,</span> <span class="n">data_path</span> <span class="o">=</span> <span class="n">load_data</span><span class="p">()</span>
 
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;image data is generated in </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">data_path</span><span class="p">))</span>
 
-<span class="n">writer</span> <span class="o">=</span> <span class="n">fe</span><span class="o">.</span><span class="n">RecordWriter</span><span class="p">(</span><span class="n">save_dir</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">data_path</span><span class="p">,</span> <span class="s2">&quot;FEdata&quot;</span><span class="p">),</span>
+<span class="c1"># Create RecordWriter</span>
+<span class="n">writer</span> <span class="o">=</span> <span class="n">RecordWriter</span><span class="p">(</span><span class="n">save_dir</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">data_path</span><span class="p">,</span> <span class="s2">&quot;FEdata&quot;</span><span class="p">),</span>
                          <span class="n">train_data</span><span class="o">=</span><span class="n">train_csv</span><span class="p">,</span>
                          <span class="n">validation_data</span><span class="o">=</span><span class="n">eval_csv</span><span class="p">,</span>
                          <span class="n">ops</span><span class="o">=</span><span class="p">[</span><span class="n">ImageReader</span><span class="p">(</span><span class="n">inputs</span><span class="o">=</span><span class="s2">&quot;x&quot;</span><span class="p">,</span> <span class="n">parent_path</span><span class="o">=</span><span class="n">data_path</span><span class="p">,</span> <span class="n">grey_scale</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
                               <span class="n">Rescale</span><span class="p">(</span><span class="n">outputs</span><span class="o">=</span><span class="s2">&quot;x&quot;</span><span class="p">)])</span>
-
+<span class="c1"># Create Pipeline</span>
 <span class="n">pipeline</span> <span class="o">=</span> <span class="n">fe</span><span class="o">.</span><span class="n">Pipeline</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">writer</span><span class="p">,</span>
                        <span class="n">batch_size</span><span class="o">=</span><span class="mi">32</span><span class="p">,</span>
                        <span class="n">ops</span><span class="o">=</span><span class="p">[</span><span class="n">Resize</span><span class="p">(</span><span class="n">inputs</span><span class="o">=</span><span class="s2">&quot;x&quot;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="mi">30</span><span class="p">,</span> <span class="mi">30</span><span class="p">),</span> <span class="n">outputs</span><span class="o">=</span><span class="s2">&quot;x&quot;</span><span class="p">),</span>
@@ -451,34 +464,30 @@ div.rendered_html tbody tr:hover {
 </pre></div>
 </div>
 </div>
-<div class="nboutput docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area stderr docutils container">
-<div class="highlight"><pre>
-/anaconda3/lib/python3.6/site-packages/h5py/__init__.py:36: FutureWarning: Conversion of the second argument of issubdtype from `float` to `np.floating` is deprecated. In future, it will be treated as `np.float64 == np.dtype(float).type`.
-  from ._conv import register_converters as _register_converters
-</pre></div></div>
-</div>
 <div class="nboutput nblast docutils container">
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-image data is generated in /var/folders/5g/d_ny7h211cj3zqkzrtq01s480000gn/T/.fe/Mnist
+image data is generated in /tmp/.fe/Mnist
 </pre></div></div>
 </div>
 </div>
-<div class="section" id="access-the-pipeline-results">
-<h2>access the pipeline results<a class="headerlink" href="#access-the-pipeline-results" title="Permalink to this headline">¶</a></h2>
-<p><code class="docutils literal notranslate"><span class="pre">pipeline.show_results</span></code> is built for accessing the pipeline data, for example, if users want to access single batch of pipeline data on epoch 0 during training:</p>
+<div class="section" id="2)-Access-the-pipeline-results">
+<h2>2) Access the pipeline results<a class="headerlink" href="#2)-Access-the-pipeline-results" title="Permalink to this headline">¶</a></h2>
+<div class="line-block">
+<div class="line"><code class="docutils literal notranslate"><span class="pre">pipeline.show_results</span></code> is built for accessing the pipeline data.</div>
+<div class="line">For example, if users want to access single batch of pipeline data on epoch 0 during training:</div>
+</div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">result</span> <span class="o">=</span> <span class="n">pipeline</span><span class="o">.</span><span class="n">show_results</span><span class="p">(</span><span class="n">current_epoch</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;train&quot;</span><span class="p">,</span> <span class="n">num_steps</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span></span><span class="c1"># Use show_results by specifying the epoch, mode and step (batch)</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">pipeline</span><span class="o">.</span><span class="n">show_results</span><span class="p">(</span><span class="n">current_epoch</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;train&quot;</span><span class="p">,</span> <span class="n">num_steps</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 
+<span class="c1"># Isolate x and y from result</span>
 <span class="n">x</span> <span class="o">=</span> <span class="n">result</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s2">&quot;x&quot;</span><span class="p">]</span>
 <span class="n">y</span> <span class="o">=</span> <span class="n">result</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s2">&quot;y&quot;</span><span class="p">]</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;shape of feature x is </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">))</span>
@@ -491,20 +500,21 @@ image data is generated in /var/folders/5g/d_ny7h211cj3zqkzrtq01s480000gn/T/.fe/
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-FastEstimator: Reading non-empty directory: /var/folders/5g/d_ny7h211cj3zqkzrtq01s480000gn/T/.fe/Mnist/FEdata
-FastEstimator: Found 60000 examples for train in /var/folders/5g/d_ny7h211cj3zqkzrtq01s480000gn/T/.fe/Mnist/FEdata/train_summary0.json
-FastEstimator: Found 10000 examples for eval in /var/folders/5g/d_ny7h211cj3zqkzrtq01s480000gn/T/.fe/Mnist/FEdata/eval_summary0.json
+FastEstimator: Reading non-empty directory: /tmp/.fe/Mnist/FEdata
+FastEstimator: Found 60000 examples for train in /tmp/.fe/Mnist/FEdata/train_summary0.json
+FastEstimator: Found 10000 examples for eval in /tmp/.fe/Mnist/FEdata/eval_summary0.json
 shape of feature x is (32, 30, 30, 1)
 shape of feature y is (32,)
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 
+<span class="c1">#  Display 4 examples of data after Pipeline</span>
 <span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
 <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">):</span>
     <span class="n">axes</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;off&#39;</span><span class="p">)</span>
@@ -518,29 +528,33 @@ shape of feature y is (32,)
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-ground truth label is 3
+ground truth label is 8
+ground truth label is 1
+ground truth label is 9
 ground truth label is 5
-ground truth label is 5
-ground truth label is 6
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../_images/tutorial_t04_pipeline_debug_benchmark_5_1.png" src="../_images/tutorial_t04_pipeline_debug_benchmark_5_1.png" />
+<img alt="../_images/tutorial_t04_pipeline_debug_benchmark_6_1.png" src="../_images/tutorial_t04_pipeline_debug_benchmark_6_1.png" />
 </div>
 </div>
 </div>
-<div class="section" id="benchmark-pipeline-speed">
-<h2>benchmark pipeline speed<a class="headerlink" href="#benchmark-pipeline-speed" title="Permalink to this headline">¶</a></h2>
-<p><code class="docutils literal notranslate"><span class="pre">pipeline.benchmark</span></code> can be used to benchmark the pipeline speed, for example, if users want to benchmark on epoch 0 during training for 2000 steps (batches).</p>
+<div class="section" id="3)-Benchmark-pipeline-speed">
+<h2>3) Benchmark pipeline speed<a class="headerlink" href="#3)-Benchmark-pipeline-speed" title="Permalink to this headline">¶</a></h2>
+<div class="line-block">
+<div class="line"><code class="docutils literal notranslate"><span class="pre">pipeline.benchmark</span></code> can be used to benchmark the pipeline speed.</div>
+<div class="line">For example, if users want to benchmark on epoch 0 during training for 2000 steps (batches):</div>
+</div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">pipeline</span><span class="o">.</span><span class="n">benchmark</span><span class="p">(</span><span class="n">current_epoch</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span><span class="n">mode</span><span class="o">=</span><span class="s2">&quot;train&quot;</span><span class="p">,</span> <span class="n">num_steps</span><span class="o">=</span><span class="mi">1500</span><span class="p">)</span>
+<span></span><span class="c1"># You just have to specify the epoch, mode, and number of batches</span>
+<span class="n">pipeline</span><span class="o">.</span><span class="n">benchmark</span><span class="p">(</span><span class="n">current_epoch</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span><span class="n">mode</span><span class="o">=</span><span class="s2">&quot;train&quot;</span><span class="p">,</span> <span class="n">num_steps</span><span class="o">=</span><span class="mi">1500</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -549,24 +563,24 @@ ground truth label is 6
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-FastEstimator: Reading non-empty directory: /var/folders/5g/d_ny7h211cj3zqkzrtq01s480000gn/T/.fe/Mnist/FEdata
-FastEstimator: Found 60000 examples for train in /var/folders/5g/d_ny7h211cj3zqkzrtq01s480000gn/T/.fe/Mnist/FEdata/train_summary0.json
-FastEstimator: Found 10000 examples for eval in /var/folders/5g/d_ny7h211cj3zqkzrtq01s480000gn/T/.fe/Mnist/FEdata/eval_summary0.json
-FastEstimator: Step: 100, Epoch: 0, Batch Size 32, Example/sec 21609.71
-FastEstimator: Step: 200, Epoch: 0, Batch Size 32, Example/sec 20687.99
-FastEstimator: Step: 300, Epoch: 0, Batch Size 32, Example/sec 20598.51
-FastEstimator: Step: 400, Epoch: 0, Batch Size 32, Example/sec 20761.09
-FastEstimator: Step: 500, Epoch: 0, Batch Size 32, Example/sec 21411.01
-FastEstimator: Step: 600, Epoch: 0, Batch Size 32, Example/sec 21501.51
-FastEstimator: Step: 700, Epoch: 0, Batch Size 32, Example/sec 19981.62
-FastEstimator: Step: 800, Epoch: 0, Batch Size 32, Example/sec 21540.19
-FastEstimator: Step: 900, Epoch: 0, Batch Size 32, Example/sec 21277.43
-FastEstimator: Step: 1000, Epoch: 0, Batch Size 32, Example/sec 21895.33
-FastEstimator: Step: 1100, Epoch: 0, Batch Size 32, Example/sec 20462.84
-FastEstimator: Step: 1200, Epoch: 0, Batch Size 32, Example/sec 21390.37
-FastEstimator: Step: 1300, Epoch: 0, Batch Size 32, Example/sec 21021.64
-FastEstimator: Step: 1400, Epoch: 0, Batch Size 32, Example/sec 17913.87
-FastEstimator: Step: 1500, Epoch: 0, Batch Size 32, Example/sec 19595.48
+FastEstimator: Reading non-empty directory: /tmp/.fe/Mnist/FEdata
+FastEstimator: Found 60000 examples for train in /tmp/.fe/Mnist/FEdata/train_summary0.json
+FastEstimator: Found 10000 examples for eval in /tmp/.fe/Mnist/FEdata/eval_summary0.json
+FastEstimator: Step: 100, Epoch: 0, Batch Size 32, Example/sec 27125.30
+FastEstimator: Step: 200, Epoch: 0, Batch Size 32, Example/sec 27397.79
+FastEstimator: Step: 300, Epoch: 0, Batch Size 32, Example/sec 27347.61
+FastEstimator: Step: 400, Epoch: 0, Batch Size 32, Example/sec 27330.95
+FastEstimator: Step: 500, Epoch: 0, Batch Size 32, Example/sec 27346.13
+FastEstimator: Step: 600, Epoch: 0, Batch Size 32, Example/sec 27343.98
+FastEstimator: Step: 700, Epoch: 0, Batch Size 32, Example/sec 27004.02
+FastEstimator: Step: 800, Epoch: 0, Batch Size 32, Example/sec 27087.50
+FastEstimator: Step: 900, Epoch: 0, Batch Size 32, Example/sec 26587.90
+FastEstimator: Step: 1000, Epoch: 0, Batch Size 32, Example/sec 27395.27
+FastEstimator: Step: 1100, Epoch: 0, Batch Size 32, Example/sec 26832.51
+FastEstimator: Step: 1200, Epoch: 0, Batch Size 32, Example/sec 26723.64
+FastEstimator: Step: 1300, Epoch: 0, Batch Size 32, Example/sec 26315.49
+FastEstimator: Step: 1400, Epoch: 0, Batch Size 32, Example/sec 27077.04
+FastEstimator: Step: 1500, Epoch: 0, Batch Size 32, Example/sec 26629.48
 </pre></div></div>
 </div>
 <div class="nbinput nblast docutils container">
@@ -581,7 +595,7 @@ FastEstimator: Step: 1500, Epoch: 0, Batch Size 32, Example/sec 19595.48
 </div>
 </div>
 <p>—</p>
-<p><a class="reference external" href="https://github.com/fastestimator/fastestimator/blob/master/tutorial/t04_pipeline_debug_benchmark.ipynb">Link to GitHub</a></p>
+<p><a class="reference external" href="https://github.com/fastestimator/fastestimator/blob/master/tutorial/t04_pipeline_debug_benchmark.ipynb">Example Link to GitHub</a></p>
 
 
            </div>

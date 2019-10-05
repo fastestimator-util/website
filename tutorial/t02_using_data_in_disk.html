@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Tutorial 2: Using In-Disk Data in FastEstimator &mdash; FastEstimator 0.0.1 documentation</title>
+  <title>Tutorial 2: Dealing with large datasets with FastEstimator &mdash; FastEstimator 1.0a0 documentation</title>
   
 
   
@@ -41,7 +41,7 @@
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Tutorial 3: Operator" href="t03_operator.html" />
-    <link rel="prev" title="Tutorial 1: Basic Usage of FastEstimator" href="t01_basic_usage.html" /> 
+    <link rel="prev" title="Tutorial 1: Getting started with FastEstimator" href="t01_basic_usage.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -65,7 +65,7 @@
             
             
               <div class="version">
-                1.0a0
+                1.0
               </div>
             
           
@@ -92,21 +92,22 @@
               <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../install.html">Installation</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../learn.html">Learn</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="t01_basic_usage.html">Tutorial 1: Basic Usage of FastEstimator</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">Tutorial 2: Using In-Disk Data in FastEstimator</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="t01_basic_usage.html">Tutorial 1: Getting started with FastEstimator</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Tutorial 2: Dealing with large datasets with FastEstimator</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#Before-we-start:">Before we start:</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#Step-0:-RecordWriter">Step 0: RecordWriter</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#Step-1-and-above:-Pipeline--&gt;-Network--&gt;-Estimator,-same-as-tutorial-1.">Step 1 and above: Pipeline -&gt; Network -&gt; Estimator, same as tutorial 1.</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#Start-training">Start training</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#Before-we-finish">Before we finish</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Step-0:-Get-the-paths-to-the-csv-files">Step 0: Get the paths to the csv files</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Step-1:-RecordWriter">Step 1: RecordWriter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Step-2:-Pipeline--&gt;-Network--&gt;-Estimator-(see-tutorial-1-for-details)">Step 2: Pipeline -&gt; Network -&gt; Estimator (see tutorial 1 for details)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Step-3:-Start-training">Step 3: Start training</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Key-take-aways:">Key take-aways:</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="t03_operator.html">Tutorial 3: Operator</a></li>
 <li class="toctree-l2"><a class="reference internal" href="t04_pipeline_debug_benchmark.html">Tutorial 4: Pipeline debugging and benchmarking</a></li>
 <li class="toctree-l2"><a class="reference internal" href="t05_trace_debug_training.html">Tutorial 5: Trace - training control and debugging</a></li>
-<li class="toctree-l2"><a class="reference internal" href="t06_TensorFilter_imbalanced_training.html">Tutorial 6: TensorFilter - imbalanced training</a></li>
-<li class="toctree-l2"><a class="reference internal" href="t07_expand_data_dimension.html">Tutorial 7: expanding data dimension in recordwriter and pipeline</a></li>
-<li class="toctree-l2"><a class="reference internal" href="t08_scheduler_progressive_training.html">Tutorial 8: Scheduler - changing hyperparameters during the training</a></li>
+<li class="toctree-l2"><a class="reference internal" href="t06_TensorFilter_imbalanced_training.html">Tutorial 6: Dealing with imbalanced dataset using TensorFilter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="t07_expand_data_dimension.html">Tutorial 7: Expanding data dimension in RecordWriter and Pipeline</a></li>
+<li class="toctree-l2"><a class="reference internal" href="t08_scheduler_progressive_training.html">Tutorial 8: Changing hyperparameters during training with Scheduler</a></li>
 <li class="toctree-l2"><a class="reference internal" href="t09_learning_rate_controller.html">Tutorial 9: Learning Rate Controller</a></li>
 <li class="toctree-l2"><a class="reference internal" href="t10_unpaired_dataset.html">Tutorial 10: Dataset with unpaired features</a></li>
 </ul>
@@ -160,7 +161,7 @@
         
           <li><a href="../learn.html">Learn</a> &raquo;</li>
         
-      <li>Tutorial 2: Using In-Disk Data in FastEstimator</li>
+      <li>Tutorial 2: Dealing with large datasets with FastEstimator</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -401,14 +402,21 @@ div.rendered_html tbody tr:hover {
     text-align: unset;
 }
 </style>
-<div class="section" id="Tutorial-2:-Using-In-Disk-Data-in-FastEstimator">
-<h1>Tutorial 2: Using In-Disk Data in FastEstimator<a class="headerlink" href="#Tutorial-2:-Using-In-Disk-Data-in-FastEstimator" title="Permalink to this headline">¶</a></h1>
-<p>In Tutorial 1, we introduced our 3 main APIs and general workflow of a deep learning task: <code class="docutils literal notranslate"><span class="pre">Pipeline</span></code> -&gt; <code class="docutils literal notranslate"><span class="pre">Network</span></code> -&gt; <code class="docutils literal notranslate"><span class="pre">Estimator</span></code>. Then we used in-memory data for training. But what if the dataset size is too big to fit in memory? Say, data is in the size of ImageNet?</p>
-<p>The short answer is: user will use one more API for disk data: <code class="docutils literal notranslate"><span class="pre">RecordWriter</span></code>, such that the overall workflow becomes: <code class="docutils literal notranslate"><span class="pre">RecordWriter</span></code> -&gt; <code class="docutils literal notranslate"><span class="pre">Pipeline</span></code> -&gt; <code class="docutils literal notranslate"><span class="pre">Network</span></code> -&gt; <code class="docutils literal notranslate"><span class="pre">Estimator</span></code>. In this tutorial, we are going to show you how to do in-disk data training in FastEstimator.</p>
+<div class="section" id="Tutorial-2:-Dealing-with-large-datasets-with-FastEstimator">
+<h1>Tutorial 2: Dealing with large datasets with FastEstimator<a class="headerlink" href="#Tutorial-2:-Dealing-with-large-datasets-with-FastEstimator" title="Permalink to this headline">¶</a></h1>
+<hr class="docutils" />
+<div class="line-block">
+<div class="line">In Tutorial 1, we introduced our 3 main APIs and general workflow of a deep learning task using FastEstimator: <code class="docutils literal notranslate"><span class="pre">Pipeline</span></code> -&gt; <code class="docutils literal notranslate"><span class="pre">Network</span></code> -&gt; <code class="docutils literal notranslate"><span class="pre">Estimator</span></code>. Then we used in-memory data for training.</div>
+<div class="line"><strong>But what if the dataset size was too big to fit in memory? Imagine data is the size of ImageNet?</strong></div>
+</div>
+<div class="line-block">
+<div class="line">The short answer is: <strong>the user will use one more API to use in disk data for training: ``RecordWriter``</strong>, such that the overall workflow becomes:</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">RecordWriter</span></code> -&gt; <code class="docutils literal notranslate"><span class="pre">Pipeline</span></code> -&gt; <code class="docutils literal notranslate"><span class="pre">Network</span></code> -&gt; <code class="docutils literal notranslate"><span class="pre">Estimator</span></code>. In this tutorial, we are going to show you how to do in-disk data training in FastEstimator.</div>
+</div>
 <div class="section" id="Before-we-start:">
 <h2>Before we start:<a class="headerlink" href="#Before-we-start:" title="Permalink to this headline">¶</a></h2>
 <p>Two things are required regarding in-disk data : * Data files, obviously :) * A csv file that describes the data (prepare two csv files if you have a separate validation set)</p>
-<p>In the csv file, the rows of csv represent different examples and columns represent different features within example. For example, for a classification task, a csv may look like:</p>
+<p>In the csv file, the rows of csv represent different examples and columns represent different features within example. For example, for a classification task, a csv may look like this:</p>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 76%" />
@@ -434,7 +442,7 @@ div.rendered_html tbody tr:hover {
 </tr>
 </tbody>
 </table>
-<p>The csv of a multi-mask segmentation task may look like:</p>
+<p>The csv of a multi-mask segmentation task may look like this:</p>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 33%" />
@@ -466,8 +474,13 @@ div.rendered_html tbody tr:hover {
 </tr>
 </tbody>
 </table>
-<p>Please keep in mind that, there is no restriction on the data folder structures, number of features or name of features. Now, let’s generate some in-disk data for this tutorial:</p>
-<div class="nbinput nblast docutils container">
+<p>Please keep in mind that, there is no restriction on the data folder structures, number of features or name of features.</p>
+<p>Now, let’s generate some in-disk data for this tutorial!</p>
+</div>
+<div class="section" id="Step-0:-Get-the-paths-to-the-csv-files">
+<h2>Step 0: Get the paths to the csv files<a class="headerlink" href="#Step-0:-Get-the-paths-to-the-csv-files" title="Permalink to this headline">¶</a></h2>
+<p>For this example, we will use the function <code class="docutils literal notranslate"><span class="pre">load_data</span></code> from MNIST dataset to download the dataset and get the paths to the above-mentioned csv files for training, evaluation and to the data directory. You just have to use the paths for your specific case.</p>
+<div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
 </pre></div>
 </div>
@@ -481,9 +494,19 @@ div.rendered_html tbody tr:hover {
 </pre></div>
 </div>
 </div>
-<p>Let’s take a look at the csv file and image file</p>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+training csv path is /tmp/.fe/Mnist/train.csv
+evaluation csv path is /tmp/.fe/Mnist/eval.csv
+mnist image path is /tmp/.fe/Mnist
+</pre></div></div>
+</div>
+<p>Let’s take a look at the csv file and image file.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -493,8 +516,65 @@ div.rendered_html tbody tr:hover {
 </pre></div>
 </div>
 </div>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>x</th>
+      <th>y</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>image/train_0.png</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>image/train_1.png</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>image/train_2.png</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>image/train_3.png</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>image/train_4.png</td>
+      <td>9</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -506,24 +586,44 @@ div.rendered_html tbody tr:hover {
 </pre></div>
 </div>
 </div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
 </div>
-<div class="section" id="Step-0:-RecordWriter">
-<h2>Step 0: RecordWriter<a class="headerlink" href="#Step-0:-RecordWriter" title="Permalink to this headline">¶</a></h2>
-<p>In FastEstimator, we convert user’s in-disk data to TFRecord for the best training speed.</p>
-<p><code class="docutils literal notranslate"><span class="pre">save_dir</span></code> is required to specify the path to write the record.</p>
-<p><code class="docutils literal notranslate"><span class="pre">train_data</span></code> can either be a csv path or a dictionary like the one used in tutorial 1.</p>
-<p><code class="docutils literal notranslate"><span class="pre">validation_data</span></code> is optional and can take all input formats of <code class="docutils literal notranslate"><span class="pre">train_data</span></code>. In addition, <code class="docutils literal notranslate"><span class="pre">validation_data</span></code> can also take a floating point number between 0 to 1 which indicates the validation split ratio, then validation data will be randomly sampled from training data.</p>
-<p>Before converting data to TFRecord, users can apply a series of propcoessing tasks to the data in <code class="docutils literal notranslate"><span class="pre">ops</span></code> argument, we will talk about them in detail in tutorial 3.</p>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+ground truth of image is 0
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/tutorial_t02_using_data_in_disk_6_1.png" src="../_images/tutorial_t02_using_data_in_disk_6_1.png" />
+</div>
+</div>
+</div>
+<div class="section" id="Step-1:-RecordWriter">
+<h2>Step 1: RecordWriter<a class="headerlink" href="#Step-1:-RecordWriter" title="Permalink to this headline">¶</a></h2>
+<p>In FastEstimator, we convert user’s in-disk data to TFRecord for the best training speed. The RecordWriter API takes care of it.</p>
+<p>You will have to specify :</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">save_dir</span></code> : the path to write the record.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">train_data</span></code> : can either be a csv path or a dictionary like the one used in tutorial 1.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">validation_data</span></code> (optional) : it can take all input formats of <code class="docutils literal notranslate"><span class="pre">train_data</span></code>. In addition, <code class="docutils literal notranslate"><span class="pre">validation_data</span></code> can also take a floating point number between 0 to 1 which indicates the validation split ratio, then validation data will be randomly sampled from training data.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ops</span></code>: before converting data to TFRecord, users can apply a series of propcoessing tasks to the data in <code class="docutils literal notranslate"><span class="pre">ops</span></code> argument, we will talk about them in detail in tutorial 3.</p></li>
+</ul>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="kn">from</span> <span class="nn">fastestimator.record.preprocess</span> <span class="k">import</span> <span class="n">ImageReader</span>
+<span></span><span class="kn">from</span> <span class="nn">fastestimator.util</span> <span class="k">import</span> <span class="n">RecordWriter</span>
+<span class="kn">from</span> <span class="nn">fastestimator.op.numpyop</span> <span class="k">import</span> <span class="n">ImageReader</span>
 <span class="kn">import</span> <span class="nn">fastestimator</span> <span class="k">as</span> <span class="nn">fe</span>
 <span class="kn">import</span> <span class="nn">tempfile</span>
 
-<span class="n">writer</span> <span class="o">=</span> <span class="n">fe</span><span class="o">.</span><span class="n">RecordWriter</span><span class="p">(</span><span class="n">save_dir</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">folder_path</span><span class="p">,</span> <span class="s2">&quot;FEdata&quot;</span><span class="p">),</span>
+<span class="c1"># We simply create a RecordWriter will all required arguments.</span>
+<span class="n">writer</span> <span class="o">=</span> <span class="n">RecordWriter</span><span class="p">(</span><span class="n">save_dir</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">folder_path</span><span class="p">,</span> <span class="s2">&quot;FEdata&quot;</span><span class="p">),</span>
                          <span class="n">train_data</span><span class="o">=</span><span class="n">train_csv</span><span class="p">,</span>
                          <span class="n">validation_data</span><span class="o">=</span><span class="n">eval_csv</span><span class="p">,</span>
                          <span class="n">ops</span><span class="o">=</span><span class="n">ImageReader</span><span class="p">(</span><span class="n">inputs</span><span class="o">=</span><span class="s2">&quot;x&quot;</span><span class="p">,</span> <span class="n">parent_path</span><span class="o">=</span><span class="n">folder_path</span><span class="p">,</span> <span class="n">outputs</span><span class="o">=</span><span class="s2">&quot;x&quot;</span><span class="p">,</span> <span class="n">grey_scale</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span>
@@ -531,46 +631,155 @@ div.rendered_html tbody tr:hover {
 </div>
 </div>
 </div>
-<div class="section" id="Step-1-and-above:-Pipeline--&gt;-Network--&gt;-Estimator,-same-as-tutorial-1.">
-<h2>Step 1 and above: Pipeline -&gt; Network -&gt; Estimator, same as tutorial 1.<a class="headerlink" href="#Step-1-and-above:-Pipeline-->-Network-->-Estimator,-same-as-tutorial-1." title="Permalink to this headline">¶</a></h2>
+<div class="section" id="Step-2:-Pipeline--&gt;-Network--&gt;-Estimator-(see-tutorial-1-for-details)">
+<h2>Step 2: Pipeline -&gt; Network -&gt; Estimator (see tutorial 1 for details)<a class="headerlink" href="#Step-2:-Pipeline-->-Network-->-Estimator-(see-tutorial-1-for-details)" title="Permalink to this headline">¶</a></h2>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="kn">from</span> <span class="nn">fastestimator.pipeline.processing</span> <span class="k">import</span> <span class="n">Minmax</span>
+<span></span><span class="kn">from</span> <span class="nn">fastestimator.op.tensorop</span> <span class="k">import</span> <span class="n">Minmax</span>
 <span class="kn">from</span> <span class="nn">fastestimator.architecture</span> <span class="k">import</span> <span class="n">LeNet</span>
-<span class="kn">from</span> <span class="nn">fastestimator.network.model</span> <span class="k">import</span> <span class="n">FEModel</span>
-<span class="kn">from</span> <span class="nn">fastestimator.network.model</span> <span class="k">import</span> <span class="n">ModelOp</span>
-<span class="kn">from</span> <span class="nn">fastestimator.network.loss</span> <span class="k">import</span> <span class="n">SparseCategoricalCrossentropy</span>
+<span class="kn">from</span> <span class="nn">fastestimator.op.tensorop.model</span> <span class="k">import</span> <span class="n">ModelOp</span>
+<span class="kn">from</span> <span class="nn">fastestimator.op.tensorop.loss</span> <span class="k">import</span> <span class="n">SparseCategoricalCrossentropy</span>
 
+<span class="c1"># Pipeline creation</span>
 <span class="n">pipeline</span> <span class="o">=</span> <span class="n">fe</span><span class="o">.</span><span class="n">Pipeline</span><span class="p">(</span><span class="n">batch_size</span><span class="o">=</span><span class="mi">32</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">writer</span><span class="p">,</span> <span class="n">ops</span><span class="o">=</span><span class="n">Minmax</span><span class="p">(</span><span class="n">inputs</span><span class="o">=</span><span class="s2">&quot;x&quot;</span><span class="p">,</span> <span class="n">outputs</span><span class="o">=</span><span class="s2">&quot;x&quot;</span><span class="p">))</span>
 
-<span class="n">model</span> <span class="o">=</span> <span class="n">FEModel</span><span class="p">(</span><span class="n">model_def</span><span class="o">=</span><span class="n">LeNet</span><span class="p">,</span> <span class="n">model_name</span><span class="o">=</span><span class="s2">&quot;lenet&quot;</span><span class="p">,</span> <span class="n">optimizer</span><span class="o">=</span><span class="s2">&quot;adam&quot;</span><span class="p">,</span> <span class="n">loss_name</span><span class="o">=</span><span class="s2">&quot;loss&quot;</span><span class="p">)</span>
+<span class="c1"># Model and network definition</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">fe</span><span class="o">.</span><span class="n">build</span><span class="p">(</span><span class="n">model_def</span><span class="o">=</span><span class="n">LeNet</span><span class="p">,</span> <span class="n">model_name</span><span class="o">=</span><span class="s2">&quot;lenet&quot;</span><span class="p">,</span> <span class="n">optimizer</span><span class="o">=</span><span class="s2">&quot;adam&quot;</span><span class="p">,</span> <span class="n">loss_name</span><span class="o">=</span><span class="s2">&quot;loss&quot;</span><span class="p">)</span>
 <span class="n">network</span> <span class="o">=</span> <span class="n">fe</span><span class="o">.</span><span class="n">Network</span><span class="p">(</span><span class="n">ops</span><span class="o">=</span><span class="p">[</span><span class="n">ModelOp</span><span class="p">(</span><span class="n">inputs</span><span class="o">=</span><span class="s2">&quot;x&quot;</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">,</span> <span class="n">outputs</span><span class="o">=</span><span class="s2">&quot;y_pred&quot;</span><span class="p">),</span>
                           <span class="n">SparseCategoricalCrossentropy</span><span class="p">(</span><span class="n">y_pred</span><span class="o">=</span><span class="s2">&quot;y_pred&quot;</span><span class="p">,</span> <span class="n">y_true</span><span class="o">=</span><span class="s2">&quot;y&quot;</span><span class="p">,</span> <span class="n">outputs</span><span class="o">=</span><span class="s2">&quot;loss&quot;</span><span class="p">)])</span>
+
+<span class="c1"># Estimator definition</span>
 <span class="n">estimator</span> <span class="o">=</span> <span class="n">fe</span><span class="o">.</span><span class="n">Estimator</span><span class="p">(</span><span class="n">network</span><span class="o">=</span><span class="n">network</span><span class="p">,</span> <span class="n">pipeline</span><span class="o">=</span><span class="n">pipeline</span><span class="p">,</span> <span class="n">epochs</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </div>
-<div class="section" id="Start-training">
-<h2>Start training<a class="headerlink" href="#Start-training" title="Permalink to this headline">¶</a></h2>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+<div class="section" id="Step-3:-Start-training">
+<h2>Step 3: Start training<a class="headerlink" href="#Step-3:-Start-training" title="Permalink to this headline">¶</a></h2>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">estimator</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+<span></span><span class="c1"># Launch the training!</span>
+<span class="n">estimator</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
 </div>
-<div class="section" id="Before-we-finish">
-<h2>Before we finish<a class="headerlink" href="#Before-we-finish" title="Permalink to this headline">¶</a></h2>
-<p>As mentioned in tutorial 1, the preprocessing in the <code class="docutils literal notranslate"><span class="pre">RecordWriter</span></code> is a place for “once-for-all” type preprocessing. If a preprocessing functions only needs to be done once (e,g, Resize and Rescale), then it is recommended to put them in <code class="docutils literal notranslate"><span class="pre">RecordWriter</span></code>. By doing this you can reduce the amount of computation needed during training and thereby train faster.</p>
-<p>Now, to summarize the conceptural workflow in FastEstimator for any deep learning task: 0. Optional, but if I have in-disk data or want to apply some preprocessing once and for all –&gt; Express them in <code class="docutils literal notranslate"><span class="pre">RecordWriter</span></code> 1. How do I want my data to be processed during the training, –&gt; Express them in <code class="docutils literal notranslate"><span class="pre">Pipeline</span></code> 2. How do I want my network architecture and loss to be defined, what are the connections between networks if there are multiple of them. –&gt; Express them in <code class="docutils literal notranslate"><span class="pre">Network</span></code> 3. How long do I
-train the model, what do I need during training loop –&gt; Express them in <code class="docutils literal notranslate"><span class="pre">Estimator</span></code></p>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+    ______           __  ______     __  _                 __
+   / ____/___ ______/ /_/ ____/____/ /_(_)___ ___  ____ _/ /_____  _____
+  / /_  / __ `/ ___/ __/ __/ / ___/ __/ / __ `__ \/ __ `/ __/ __ \/ ___/
+ / __/ / /_/ (__  ) /_/ /___(__  ) /_/ / / / / / / /_/ / /_/ /_/ / /
+/_/    \__,_/____/\__/_____/____/\__/_/_/ /_/ /_/\__,_/\__/\____/_/
+
+
+FastEstimator: Saving tfrecord to /tmp/.fe/Mnist/FEdata
+FastEstimator: Converting Train TFRecords 0.0%, Speed: 0.00 record/sec
+FastEstimator: Converting Train TFRecords 5.0%, Speed: 25311.16 record/sec
+FastEstimator: Converting Train TFRecords 10.0%, Speed: 16474.48 record/sec
+FastEstimator: Converting Train TFRecords 15.0%, Speed: 12341.98 record/sec
+FastEstimator: Converting Train TFRecords 20.0%, Speed: 11620.45 record/sec
+FastEstimator: Converting Train TFRecords 25.0%, Speed: 11131.52 record/sec
+FastEstimator: Converting Train TFRecords 30.0%, Speed: 10988.09 record/sec
+FastEstimator: Converting Train TFRecords 35.0%, Speed: 10596.24 record/sec
+FastEstimator: Converting Train TFRecords 40.0%, Speed: 10305.17 record/sec
+FastEstimator: Converting Train TFRecords 45.0%, Speed: 10228.76 record/sec
+FastEstimator: Converting Train TFRecords 50.0%, Speed: 10132.39 record/sec
+FastEstimator: Converting Train TFRecords 55.0%, Speed: 10084.15 record/sec
+FastEstimator: Converting Train TFRecords 60.0%, Speed: 10059.63 record/sec
+FastEstimator: Converting Train TFRecords 65.0%, Speed: 10015.38 record/sec
+FastEstimator: Converting Train TFRecords 70.0%, Speed: 9937.32 record/sec
+FastEstimator: Converting Train TFRecords 75.0%, Speed: 9863.26 record/sec
+FastEstimator: Converting Train TFRecords 80.0%, Speed: 9807.95 record/sec
+FastEstimator: Converting Train TFRecords 85.0%, Speed: 9787.11 record/sec
+FastEstimator: Converting Train TFRecords 90.0%, Speed: 9682.32 record/sec
+FastEstimator: Converting Train TFRecords 95.0%, Speed: 9687.31 record/sec
+FastEstimator: Converting Eval TFRecords 0.0%, Speed: 0.00 record/sec
+FastEstimator: Converting Eval TFRecords 5.0%, Speed: 71333.40 record/sec
+FastEstimator: Converting Eval TFRecords 9.9%, Speed: 33643.90 record/sec
+FastEstimator: Converting Eval TFRecords 14.9%, Speed: 41380.53 record/sec
+FastEstimator: Converting Eval TFRecords 19.8%, Speed: 30654.80 record/sec
+FastEstimator: Converting Eval TFRecords 24.8%, Speed: 28463.06 record/sec
+FastEstimator: Converting Eval TFRecords 29.8%, Speed: 27949.82 record/sec
+FastEstimator: Converting Eval TFRecords 34.7%, Speed: 21332.26 record/sec
+FastEstimator: Converting Eval TFRecords 39.7%, Speed: 17595.54 record/sec
+FastEstimator: Converting Eval TFRecords 44.6%, Speed: 19030.31 record/sec
+FastEstimator: Converting Eval TFRecords 49.6%, Speed: 16616.11 record/sec
+FastEstimator: Converting Eval TFRecords 54.6%, Speed: 16706.31 record/sec
+FastEstimator: Converting Eval TFRecords 59.5%, Speed: 14221.30 record/sec
+FastEstimator: Converting Eval TFRecords 64.5%, Speed: 13732.77 record/sec
+FastEstimator: Converting Eval TFRecords 69.4%, Speed: 13604.46 record/sec
+FastEstimator: Converting Eval TFRecords 74.4%, Speed: 12936.53 record/sec
+FastEstimator: Converting Eval TFRecords 79.4%, Speed: 12607.93 record/sec
+FastEstimator: Converting Eval TFRecords 84.3%, Speed: 11888.54 record/sec
+FastEstimator: Converting Eval TFRecords 89.3%, Speed: 12352.50 record/sec
+FastEstimator: Converting Eval TFRecords 94.2%, Speed: 11802.17 record/sec
+FastEstimator: Converting Eval TFRecords 99.2%, Speed: 12120.14 record/sec
+FastEstimator: Reading non-empty directory: /tmp/.fe/Mnist/FEdata
+FastEstimator: Found 60000 examples for train in /tmp/.fe/Mnist/FEdata/train_summary0.json
+FastEstimator: Found 10000 examples for eval in /tmp/.fe/Mnist/FEdata/eval_summary0.json
+FastEstimator-Warn: No ModelSaver Trace detected. Models will not be saved.
+FastEstimator-Start: step: 0; total_train_steps: 3750; lenet_lr: 0.001;
+FastEstimator-Train: step: 0; loss: 2.316646;
+FastEstimator-Train: step: 100; loss: 0.2023166; examples/sec: 1544.1; progress: 2.7%;
+FastEstimator-Train: step: 200; loss: 0.4131472; examples/sec: 1548.3; progress: 5.3%;
+FastEstimator-Train: step: 300; loss: 0.1216927; examples/sec: 1575.2; progress: 8.0%;
+FastEstimator-Train: step: 400; loss: 0.0763787; examples/sec: 1560.1; progress: 10.7%;
+FastEstimator-Train: step: 500; loss: 0.5539406; examples/sec: 1572.2; progress: 13.3%;
+FastEstimator-Train: step: 600; loss: 0.1830472; examples/sec: 1545.4; progress: 16.0%;
+FastEstimator-Train: step: 700; loss: 0.0571711; examples/sec: 1548.8; progress: 18.7%;
+FastEstimator-Train: step: 800; loss: 0.0670647; examples/sec: 1539.8; progress: 21.3%;
+FastEstimator-Train: step: 900; loss: 0.0689847; examples/sec: 1543.9; progress: 24.0%;
+FastEstimator-Train: step: 1000; loss: 0.2534505; examples/sec: 1534.3; progress: 26.7%;
+FastEstimator-Train: step: 1100; loss: 0.1595627; examples/sec: 1543.9; progress: 29.3%;
+FastEstimator-Train: step: 1200; loss: 0.1693894; examples/sec: 1535.8; progress: 32.0%;
+FastEstimator-Train: step: 1300; loss: 0.0614095; examples/sec: 1545.7; progress: 34.7%;
+FastEstimator-Train: step: 1400; loss: 0.02138; examples/sec: 1525.9; progress: 37.3%;
+FastEstimator-Train: step: 1500; loss: 0.0439597; examples/sec: 1531.7; progress: 40.0%;
+FastEstimator-Train: step: 1600; loss: 0.066583; examples/sec: 1523.1; progress: 42.7%;
+FastEstimator-Train: step: 1700; loss: 0.0377765; examples/sec: 1502.6; progress: 45.3%;
+FastEstimator-Train: step: 1800; loss: 0.044106; examples/sec: 1497.4; progress: 48.0%;
+FastEstimator-Eval: step: 1875; epoch: 0; loss: 0.0484788; min_loss: 0.048478775; since_best_loss: 0;
+FastEstimator-Train: step: 1900; loss: 0.0396217; examples/sec: 752.4; progress: 50.7%;
+FastEstimator-Train: step: 2000; loss: 0.0075153; examples/sec: 1544.8; progress: 53.3%;
+FastEstimator-Train: step: 2100; loss: 0.0014823; examples/sec: 1522.4; progress: 56.0%;
+FastEstimator-Train: step: 2200; loss: 0.0135821; examples/sec: 1532.0; progress: 58.7%;
+FastEstimator-Train: step: 2300; loss: 0.0017681; examples/sec: 1531.1; progress: 61.3%;
+FastEstimator-Train: step: 2400; loss: 0.025974; examples/sec: 1529.5; progress: 64.0%;
+FastEstimator-Train: step: 2500; loss: 0.1640374; examples/sec: 1541.8; progress: 66.7%;
+FastEstimator-Train: step: 2600; loss: 0.0118217; examples/sec: 1555.9; progress: 69.3%;
+FastEstimator-Train: step: 2700; loss: 0.0811621; examples/sec: 1575.7; progress: 72.0%;
+FastEstimator-Train: step: 2800; loss: 0.077312; examples/sec: 1566.0; progress: 74.7%;
+FastEstimator-Train: step: 2900; loss: 0.0056092; examples/sec: 1551.9; progress: 77.3%;
+FastEstimator-Train: step: 3000; loss: 0.004439; examples/sec: 1529.8; progress: 80.0%;
+FastEstimator-Train: step: 3100; loss: 0.1169912; examples/sec: 1536.4; progress: 82.7%;
+FastEstimator-Train: step: 3200; loss: 0.0165762; examples/sec: 1536.1; progress: 85.3%;
+FastEstimator-Train: step: 3300; loss: 0.0012112; examples/sec: 1549.6; progress: 88.0%;
+FastEstimator-Train: step: 3400; loss: 0.0454505; examples/sec: 1536.0; progress: 90.7%;
+FastEstimator-Train: step: 3500; loss: 0.0044532; examples/sec: 1525.3; progress: 93.3%;
+FastEstimator-Train: step: 3600; loss: 0.0086824; examples/sec: 1523.1; progress: 96.0%;
+FastEstimator-Train: step: 3700; loss: 0.0135707; examples/sec: 1490.3; progress: 98.7%;
+FastEstimator-Eval: step: 3750; epoch: 1; loss: 0.0374213; min_loss: 0.03742133; since_best_loss: 0;
+FastEstimator-Finish: step: 3750; total_time: 88.41 sec; lenet_lr: 0.001;
+</pre></div></div>
+</div>
+</div>
+<hr class="docutils" />
+<div class="section" id="Key-take-aways:">
+<h2>Key take-aways:<a class="headerlink" href="#Key-take-aways:" title="Permalink to this headline">¶</a></h2>
+<p>As mentioned in tutorial 1, the preprocessing in the <code class="docutils literal notranslate"><span class="pre">RecordWriter</span></code> is a place for “once-for-all” type preprocessing. If a preprocessing function only needs to be done once (e,g, Resize and Rescale), then it is recommended to put them in <code class="docutils literal notranslate"><span class="pre">RecordWriter</span></code>. By doing this you can reduce the amount of computation needed during training and thereby train faster.</p>
+<blockquote>
+<div><p>Now, let’s summarize the <strong>conceptual workflow</strong> in FastEstimator for any deep learning task: 0. <em>[Optional]</em> Do I have in-disk data or want to apply some preprocessing once and for all? <em>-&gt; Express this in ``RecordWriter``</em> 1. How do I want my data to be processed during the training? <em>-&gt; Express this in ``Pipeline``</em> 2. How do I want my network architecture and loss to be defined? what are the connections between networks if there are multiple of them? <em>-&gt; Express this in ``Network``</em> 3.
+How long do I train the model? what do I need during training loop? <em>-&gt; Express this in ``Estimator``</em></p>
+</div></blockquote>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
@@ -583,7 +792,7 @@ train the model, what do I need during training loop –&gt; Express them in <co
 </div>
 </div>
 <p>—</p>
-<p><a class="reference external" href="https://github.com/fastestimator/fastestimator/blob/master/tutorial/t02_using_data_in_disk.ipynb">Link to GitHub</a></p>
+<p><a class="reference external" href="https://github.com/fastestimator/fastestimator/blob/master/tutorial/t02_using_data_in_disk.ipynb">Example Link to GitHub</a></p>
 
 
            </div>
@@ -596,7 +805,7 @@ train the model, what do I need during training loop –&gt; Express them in <co
         <a href="t03_operator.html" class="btn btn-neutral float-right" title="Tutorial 3: Operator" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="t01_basic_usage.html" class="btn btn-neutral float-left" title="Tutorial 1: Basic Usage of FastEstimator" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="t01_basic_usage.html" class="btn btn-neutral float-left" title="Tutorial 1: Getting started with FastEstimator" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

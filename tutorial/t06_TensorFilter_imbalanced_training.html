@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Tutorial 6: TensorFilter - imbalanced training &mdash; FastEstimator 0.0.1 documentation</title>
+  <title>Tutorial 6: Dealing with imbalanced dataset using TensorFilter &mdash; FastEstimator 1.0a0 documentation</title>
   
 
   
@@ -40,7 +40,7 @@
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Tutorial 7: expanding data dimension in recordwriter and pipeline" href="t07_expand_data_dimension.html" />
+    <link rel="next" title="Tutorial 7: Expanding data dimension in RecordWriter and Pipeline" href="t07_expand_data_dimension.html" />
     <link rel="prev" title="Tutorial 5: Trace - training control and debugging" href="t05_trace_debug_training.html" /> 
 </head>
 
@@ -65,7 +65,7 @@
             
             
               <div class="version">
-                1.0a0
+                1.0
               </div>
             
           
@@ -92,19 +92,19 @@
               <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../install.html">Installation</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../learn.html">Learn</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="t01_basic_usage.html">Tutorial 1: Basic Usage of FastEstimator</a></li>
-<li class="toctree-l2"><a class="reference internal" href="t02_using_data_in_disk.html">Tutorial 2: Using In-Disk Data in FastEstimator</a></li>
+<li class="toctree-l2"><a class="reference internal" href="t01_basic_usage.html">Tutorial 1: Getting started with FastEstimator</a></li>
+<li class="toctree-l2"><a class="reference internal" href="t02_using_data_in_disk.html">Tutorial 2: Dealing with large datasets with FastEstimator</a></li>
 <li class="toctree-l2"><a class="reference internal" href="t03_operator.html">Tutorial 3: Operator</a></li>
 <li class="toctree-l2"><a class="reference internal" href="t04_pipeline_debug_benchmark.html">Tutorial 4: Pipeline debugging and benchmarking</a></li>
 <li class="toctree-l2"><a class="reference internal" href="t05_trace_debug_training.html">Tutorial 5: Trace - training control and debugging</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">Tutorial 6: TensorFilter - imbalanced training</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#Prepare-data-(same-as-tutorial-1)">Prepare data (same as tutorial 1)</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#Customize-your-own-Filter">Customize your own Filter</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#Using-pre-built-ScalarFilter">Using pre-built ScalarFilter</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Tutorial 6: Dealing with imbalanced dataset using TensorFilter</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#Step-0---Data-preparation-(same-as-tutorial-1)">Step 0 - Data preparation <em>(same as tutorial 1)</em></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Step-1---Customize-your-own-Filter…">Step 1 - Customize your own Filter…</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#…-or-use-a-pre-built-ScalarFilter">… or use a pre-built ScalarFilter</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="t07_expand_data_dimension.html">Tutorial 7: expanding data dimension in recordwriter and pipeline</a></li>
-<li class="toctree-l2"><a class="reference internal" href="t08_scheduler_progressive_training.html">Tutorial 8: Scheduler - changing hyperparameters during the training</a></li>
+<li class="toctree-l2"><a class="reference internal" href="t07_expand_data_dimension.html">Tutorial 7: Expanding data dimension in RecordWriter and Pipeline</a></li>
+<li class="toctree-l2"><a class="reference internal" href="t08_scheduler_progressive_training.html">Tutorial 8: Changing hyperparameters during training with Scheduler</a></li>
 <li class="toctree-l2"><a class="reference internal" href="t09_learning_rate_controller.html">Tutorial 9: Learning Rate Controller</a></li>
 <li class="toctree-l2"><a class="reference internal" href="t10_unpaired_dataset.html">Tutorial 10: Dataset with unpaired features</a></li>
 </ul>
@@ -158,7 +158,7 @@
         
           <li><a href="../learn.html">Learn</a> &raquo;</li>
         
-      <li>Tutorial 6: TensorFilter - imbalanced training</li>
+      <li>Tutorial 6: Dealing with imbalanced dataset using TensorFilter</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -399,23 +399,25 @@ div.rendered_html tbody tr:hover {
     text-align: unset;
 }
 </style>
-<div class="section" id="Tutorial-6:-TensorFilter---imbalanced-training">
-<h1>Tutorial 6: TensorFilter - imbalanced training<a class="headerlink" href="#Tutorial-6:-TensorFilter---imbalanced-training" title="Permalink to this headline">¶</a></h1>
-<p>When dataset is imbalanced, training data needs to maintain certain distribution to make sure minority classes are not ommitted during the training. In FastEstimator, <code class="docutils literal notranslate"><span class="pre">TensorFilter</span></code> is designed for that purpose.</p>
+<div class="section" id="Tutorial-6:-Dealing-with-imbalanced-dataset-using-TensorFilter">
+<h1>Tutorial 6: Dealing with imbalanced dataset using TensorFilter<a class="headerlink" href="#Tutorial-6:-Dealing-with-imbalanced-dataset-using-TensorFilter" title="Permalink to this headline">¶</a></h1>
+<p>When your dataset is imbalanced, training data needs to maintain a certain distribution to make sure minority classes are not ommitted during the training. In FastEstimator, <code class="docutils literal notranslate"><span class="pre">TensorFilter</span></code> is designed for that purpose.</p>
 <p><code class="docutils literal notranslate"><span class="pre">TensorFilter</span></code> is a Tensor Operator that is used in <code class="docutils literal notranslate"><span class="pre">Pipeline</span></code> along with other tensor operators such as <code class="docutils literal notranslate"><span class="pre">MinMax</span></code> and <code class="docutils literal notranslate"><span class="pre">Resize</span></code>.</p>
-<p>There is only two differences between <code class="docutils literal notranslate"><span class="pre">TensorFilter</span></code> and <code class="docutils literal notranslate"><span class="pre">TensorOp</span></code>: 1. <code class="docutils literal notranslate"><span class="pre">TensorFilter</span></code> does not have outputs 2. the forward function of <code class="docutils literal notranslate"><span class="pre">TensorFilter</span></code> produce a boolean value which indicates whether to keep the data.</p>
-<div class="section" id="Prepare-data-(same-as-tutorial-1)">
-<h2>Prepare data (same as tutorial 1)<a class="headerlink" href="#Prepare-data-(same-as-tutorial-1)" title="Permalink to this headline">¶</a></h2>
+<p>There are only two differences between <code class="docutils literal notranslate"><span class="pre">TensorFilter</span></code> and <code class="docutils literal notranslate"><span class="pre">TensorOp</span></code>: 1. <code class="docutils literal notranslate"><span class="pre">TensorFilter</span></code> does not have outputs. 2. The forward function of <code class="docutils literal notranslate"><span class="pre">TensorFilter</span></code> produces a boolean value which indicates whether to keep the data or not.</p>
+<div class="section" id="Step-0---Data-preparation-(same-as-tutorial-1)">
+<h2>Step 0 - Data preparation <em>(same as tutorial 1)</em><a class="headerlink" href="#Step-0---Data-preparation-(same-as-tutorial-1)" title="Permalink to this headline">¶</a></h2>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span></span><span class="c1"># Import libraries</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
 <span class="kn">import</span> <span class="nn">fastestimator</span> <span class="k">as</span> <span class="nn">fe</span>
-<span class="kn">from</span> <span class="nn">fastestimator.pipeline.processing</span> <span class="k">import</span> <span class="n">Minmax</span>
+<span class="kn">from</span> <span class="nn">fastestimator.op.tensorop</span> <span class="k">import</span> <span class="n">Minmax</span>
 
+<span class="c1"># Load data and create dictionaries</span>
 <span class="p">(</span><span class="n">x_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">),</span> <span class="p">(</span><span class="n">x_eval</span><span class="p">,</span> <span class="n">y_eval</span><span class="p">)</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">mnist</span><span class="o">.</span><span class="n">load_data</span><span class="p">()</span>
 <span class="n">train_data</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;x&quot;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">expand_dims</span><span class="p">(</span><span class="n">x_train</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">),</span> <span class="s2">&quot;y&quot;</span><span class="p">:</span> <span class="n">y_train</span><span class="p">}</span>
 <span class="n">eval_data</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;x&quot;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">expand_dims</span><span class="p">(</span><span class="n">x_eval</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">),</span> <span class="s2">&quot;y&quot;</span><span class="p">:</span> <span class="n">y_eval</span><span class="p">}</span>
@@ -424,32 +426,35 @@ div.rendered_html tbody tr:hover {
 </div>
 </div>
 </div>
-<div class="section" id="Customize-your-own-Filter">
-<h2>Customize your own Filter<a class="headerlink" href="#Customize-your-own-Filter" title="Permalink to this headline">¶</a></h2>
-<p>In this example, let’s get rid of all image that has label less than 5</p>
+<div class="section" id="Step-1---Customize-your-own-Filter…">
+<h2>Step 1 - Customize your own Filter…<a class="headerlink" href="#Step-1---Customize-your-own-Filter…" title="Permalink to this headline">¶</a></h2>
+<p>In this example, we will get rid of all images that have a label smaller than 5.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="kn">from</span> <span class="nn">fastestimator.pipeline.processing</span> <span class="k">import</span> <span class="n">TensorFilter</span>
+<span></span><span class="kn">from</span> <span class="nn">fastestimator.op.tensorop</span> <span class="k">import</span> <span class="n">TensorFilter</span>
 
+<span class="c1"># We create our filter in forward function, it&#39;s just our condition.</span>
 <span class="k">class</span> <span class="nc">MyFilter</span><span class="p">(</span><span class="n">TensorFilter</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">state</span><span class="p">):</span>
         <span class="n">pass_filter</span> <span class="o">=</span> <span class="n">data</span> <span class="o">&gt;=</span> <span class="mi">5</span>
         <span class="k">return</span> <span class="n">pass_filter</span>
 
+<span class="c1"># We specify the filter in Pipeline ops list.</span>
 <span class="n">pipeline</span> <span class="o">=</span> <span class="n">fe</span><span class="o">.</span><span class="n">Pipeline</span><span class="p">(</span><span class="n">batch_size</span><span class="o">=</span><span class="mi">32</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">ops</span><span class="o">=</span><span class="p">[</span><span class="n">MyFilter</span><span class="p">(</span><span class="n">inputs</span><span class="o">=</span><span class="s2">&quot;y&quot;</span><span class="p">),</span> <span class="n">Minmax</span><span class="p">(</span><span class="n">inputs</span><span class="o">=</span><span class="s2">&quot;x&quot;</span><span class="p">,</span> <span class="n">outputs</span><span class="o">=</span><span class="s2">&quot;x&quot;</span><span class="p">)])</span>
 </pre></div>
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">results</span> <span class="o">=</span> <span class="n">pipeline</span><span class="o">.</span><span class="n">show_results</span><span class="p">()</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;filtering out all data with label less than 5, the label of current batch is:&quot;</span><span class="p">)</span>
+<span></span><span class="c1"># Let&#39;s check our pipeline ops results with show_results</span>
+<span class="n">results</span> <span class="o">=</span> <span class="n">pipeline</span><span class="o">.</span><span class="n">show_results</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;filtering out all data with label less than 5, the labels of current batch are:&quot;</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">results</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s2">&quot;y&quot;</span><span class="p">])</span>
 </pre></div>
 </div>
@@ -459,21 +464,25 @@ div.rendered_html tbody tr:hover {
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-filtering out all data with label less than 5, the label of current batch is:
-tf.Tensor([9 9 6 9 7 9 6 8 9 5 7 9 5 5 9 9 9 6 9 8 8 6 6 8 9 5 5 6 7 8 5 5], shape=(32,), dtype=uint8)
+filtering out all data with label less than 5, the labels of current batch are:
+tf.Tensor([6 9 7 9 5 5 8 6 9 5 9 6 6 5 6 9 9 5 8 9 5 5 7 7 8 8 6 7 7 9 5 5], shape=(32,), dtype=uint8)
 </pre></div></div>
 </div>
 </div>
-<div class="section" id="Using-pre-built-ScalarFilter">
-<h2>Using pre-built ScalarFilter<a class="headerlink" href="#Using-pre-built-ScalarFilter" title="Permalink to this headline">¶</a></h2>
-<p>In FastEstimator, if user needs to filter on scalar value with probability, one can use pre-built filter <code class="docutils literal notranslate"><span class="pre">ScalarFilter</span></code>. Let’s filter out even number label with 50% probility:</p>
+<div class="section" id="…-or-use-a-pre-built-ScalarFilter">
+<h2>… or use a pre-built ScalarFilter<a class="headerlink" href="#…-or-use-a-pre-built-ScalarFilter" title="Permalink to this headline">¶</a></h2>
+<div class="line-block">
+<div class="line">In FastEstimator, if user needs to filter out scalar values with a certain probability, one can use pre-built filter <code class="docutils literal notranslate"><span class="pre">ScalarFilter</span></code>.</div>
+<div class="line">Let’s filter out even numbers labels with 50% probability:</div>
+</div>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="kn">from</span> <span class="nn">fastestimator.pipeline.processing</span> <span class="k">import</span> <span class="n">ScalarFilter</span>
+<span></span><span class="kn">from</span> <span class="nn">fastestimator.op.tensorop</span> <span class="k">import</span> <span class="n">ScalarFilter</span>
 
+<span class="c1"># We specify the list of scalars to filter out and the probability to keep these scalars</span>
 <span class="n">pipeline</span> <span class="o">=</span> <span class="n">fe</span><span class="o">.</span><span class="n">Pipeline</span><span class="p">(</span><span class="n">batch_size</span><span class="o">=</span><span class="mi">32</span><span class="p">,</span>
                        <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">,</span>
                        <span class="n">ops</span><span class="o">=</span><span class="p">[</span><span class="n">ScalarFilter</span><span class="p">(</span><span class="n">inputs</span><span class="o">=</span><span class="s2">&quot;y&quot;</span><span class="p">,</span> <span class="n">filter_value</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">8</span><span class="p">],</span> <span class="n">keep_prob</span><span class="o">=</span><span class="p">[</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">]),</span>
@@ -482,11 +491,13 @@ tf.Tensor([9 9 6 9 7 9 6 8 9 5 7 9 5 5 9 9 9 6 9 8 8 6 6 8 9 5 5 6 7 8 5 5], sha
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">results</span> <span class="o">=</span> <span class="n">pipeline</span><span class="o">.</span><span class="n">show_results</span><span class="p">(</span><span class="n">num_steps</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+<span></span><span class="c1"># Let&#39;s check our pipeline ops results with show_results</span>
+<span class="n">results</span> <span class="o">=</span> <span class="n">pipeline</span><span class="o">.</span><span class="n">show_results</span><span class="p">(</span><span class="n">num_steps</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+
 <span class="k">for</span> <span class="n">idx</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
     <span class="n">batch_label</span> <span class="o">=</span> <span class="n">results</span><span class="p">[</span><span class="n">idx</span><span class="p">][</span><span class="s2">&quot;y&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span>
     <span class="n">even_count</span> <span class="o">=</span> <span class="mi">0</span>
@@ -505,22 +516,31 @@ tf.Tensor([9 9 6 9 7 9 6 8 9 5 7 9 5 5 9 9 9 6 9 8 8 6 6 8 9 5 5 6 7 8 5 5], sha
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-in batch number 0, there are 20 odd labels and 12 even labels
-in batch number 1, there are 26 odd labels and 6 even labels
-in batch number 2, there are 25 odd labels and 7 even labels
-in batch number 3, there are 27 odd labels and 5 even labels
+in batch number 0, there are 17 odd labels and 15 even labels
+in batch number 1, there are 25 odd labels and 7 even labels
+in batch number 2, there are 21 odd labels and 11 even labels
+in batch number 3, there are 21 odd labels and 11 even labels
 in batch number 4, there are 19 odd labels and 13 even labels
-in batch number 5, there are 19 odd labels and 13 even labels
-in batch number 6, there are 21 odd labels and 11 even labels
-in batch number 7, there are 17 odd labels and 15 even labels
-in batch number 8, there are 20 odd labels and 12 even labels
-in batch number 9, there are 21 odd labels and 11 even labels
+in batch number 5, there are 23 odd labels and 9 even labels
+in batch number 6, there are 23 odd labels and 9 even labels
+in batch number 7, there are 20 odd labels and 12 even labels
+in batch number 8, there are 16 odd labels and 16 even labels
+in batch number 9, there are 18 odd labels and 14 even labels
 </pre></div></div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span>
+</pre></div>
+</div>
 </div>
 </div>
 </div>
 <p>—</p>
-<p><a class="reference external" href="https://github.com/fastestimator/fastestimator/blob/master/tutorial/t06_TensorFilter_imbalanced_training.ipynb">Link to GitHub</a></p>
+<p><a class="reference external" href="https://github.com/fastestimator/fastestimator/blob/master/tutorial/t06_TensorFilter_imbalanced_training.ipynb">Example Link to GitHub</a></p>
 
 
            </div>
@@ -530,7 +550,7 @@ in batch number 9, there are 21 odd labels and 11 even labels
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="t07_expand_data_dimension.html" class="btn btn-neutral float-right" title="Tutorial 7: expanding data dimension in recordwriter and pipeline" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="t07_expand_data_dimension.html" class="btn btn-neutral float-right" title="Tutorial 7: Expanding data dimension in RecordWriter and Pipeline" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="t05_trace_debug_training.html" class="btn btn-neutral float-left" title="Tutorial 5: Trace - training control and debugging" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>

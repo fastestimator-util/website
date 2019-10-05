@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>CIFAR10 Image Classification Using LeNet &mdash; FastEstimator 0.0.1 documentation</title>
+  <title>CIFAR10 Image Classification Using LeNet with mixup &mdash; FastEstimator 1.0a0 documentation</title>
   
 
   
@@ -41,7 +41,7 @@
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" />
     <link rel="next" title="MNIST Image Classification Using LeNet" href="../lenet_mnist/lenet_mnist.html" />
-    <link rel="prev" title="CIFAR10 Image Classification Using LeNet" href="../lenet_cifar10_adversarial/lenet_cifar10_adversarial.html" /> 
+    <link rel="prev" title="CIFAR10 Image Classification Using LeNet with adversarial samples" href="../lenet_cifar10_adversarial/lenet_cifar10_adversarial.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -65,7 +65,7 @@
             
             
               <div class="version">
-                1.0a0
+                1.0
               </div>
             
           
@@ -95,9 +95,9 @@
 <li class="toctree-l1 current"><a class="reference internal" href="../../../apphub.html">Example</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="../../NLP.html">NLP</a></li>
 <li class="toctree-l2 current"><a class="reference internal" href="../../image_classification.html">Image Classification</a><ul class="current">
-<li class="toctree-l3"><a class="reference internal" href="../densenet121_cifar10/densenet121_cifar10.html">Cifar10 Image Classification Using DenseNet-121</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../lenet_cifar10_adversarial/lenet_cifar10_adversarial.html">CIFAR10 Image Classification Using LeNet</a></li>
-<li class="toctree-l3 current"><a class="current reference internal" href="#">CIFAR10 Image Classification Using LeNet</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../densenet121_cifar10/densenet121_cifar10.html">CIFAR10 Image Classification Using DenseNet-121</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../lenet_cifar10_adversarial/lenet_cifar10_adversarial.html">CIFAR10 Image Classification Using LeNet with adversarial samples</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">CIFAR10 Image Classification Using LeNet with mixup</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#Step-1:-Prepare-training-and-evaluation-dataset,-create-FastEstimator-Pipeline">Step 1: Prepare training and evaluation dataset, create FastEstimator <code class="docutils literal notranslate"><span class="pre">Pipeline</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#Step-2:-Prepare-model,-create-FastEstimator-Network">Step 2: Prepare model, create FastEstimator <code class="docutils literal notranslate"><span class="pre">Network</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#Step-3:-Configure-training,-create-Estimator">Step 3: Configure training, create <code class="docutils literal notranslate"><span class="pre">Estimator</span></code></a></li>
@@ -106,8 +106,6 @@
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="../lenet_mnist/lenet_mnist.html">MNIST Image Classification Using LeNet</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../lenet_mnist/lenet_mnist.html#Step-3:-Configure-training,-create-Estimator">Step 3: Configure training, create <code class="docutils literal notranslate"><span class="pre">Estimator</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="../lenet_mnist/lenet_mnist.html#Start-Training">Start Training</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../../image_generation.html">Image Generation</a></li>
@@ -166,7 +164,7 @@
         
           <li><a href="../../image_classification.html">Image Classification</a> &raquo;</li>
         
-      <li>CIFAR10 Image Classification Using LeNet</li>
+      <li>CIFAR10 Image Classification Using LeNet with mixup</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -407,8 +405,8 @@ div.rendered_html tbody tr:hover {
     text-align: unset;
 }
 </style>
-<div class="section" id="CIFAR10-Image-Classification-Using-LeNet">
-<h1>CIFAR10 Image Classification Using LeNet<a class="headerlink" href="#CIFAR10-Image-Classification-Using-LeNet" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="CIFAR10-Image-Classification-Using-LeNet-with-mixup">
+<h1>CIFAR10 Image Classification Using LeNet with mixup<a class="headerlink" href="#CIFAR10-Image-Classification-Using-LeNet-with-mixup" title="Permalink to this headline">¶</a></h1>
 <p>In this tutorial, we are going to walk through the logic in <code class="docutils literal notranslate"><span class="pre">lenet_cifar10_mixup.py</span></code> shown below and provide step-by-step instructions.</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
@@ -445,12 +443,10 @@ from tensorflow.python.keras.losses import SparseCategoricalCrossentropy as Kera
 
 import fastestimator as fe
 from fastestimator.architecture import LeNet
-from fastestimator.estimator.trace import Accuracy, ConfusionMatrix, ModelSaver
-from fastestimator.network.loss import MixUpLoss, SparseCategoricalCrossentropy
-from fastestimator.network.model import FEModel, ModelOp
-from fastestimator.pipeline.augmentation import MixUpBatch
-from fastestimator.pipeline.processing import Minmax
-from fastestimator.util.schedule import Scheduler
+from fastestimator.op.tensorop import MixUpLoss, SparseCategoricalCrossentropy, ModelOp, MixUpBatch, Minmax
+from fastestimator import FEModel
+from fastestimator.schedule import Scheduler
+from fastestimator.trace import Accuracy, ConfusionMatrix, ModelSaver
 
 
 def get_estimator(epochs=10, batch_size=32, alpha=1.0, warmup=0, model_dir=tempfile.mkdtemp()):
@@ -529,6 +525,18 @@ eval label shape is (10000, 1)
 </pre></div>
 </div>
 </div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="c1">#Parameters</span>
+<span class="n">epochs</span> <span class="o">=</span> <span class="mi">35</span>
+<span class="n">batch_size</span> <span class="o">=</span> <span class="mi">50</span>
+<span class="n">steps_per_epoch</span> <span class="o">=</span> <span class="kc">None</span>
+</pre></div>
+</div>
+</div>
 <p>Now we are ready to define <code class="docutils literal notranslate"><span class="pre">Pipeline</span></code>, we want to apply a <code class="docutils literal notranslate"><span class="pre">Minmax</span></code> online preprocessing to the image feature <code class="docutils literal notranslate"><span class="pre">x</span></code> for both training and evaluation:</p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
@@ -536,9 +544,9 @@ eval label shape is (10000, 1)
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="kn">import</span> <span class="nn">fastestimator</span> <span class="k">as</span> <span class="nn">fe</span>
-<span class="kn">from</span> <span class="nn">fastestimator.pipeline.processing</span> <span class="k">import</span> <span class="n">Minmax</span>
+<span class="kn">from</span> <span class="nn">fastestimator.op.tensorop</span> <span class="k">import</span> <span class="n">Minmax</span>
 
-<span class="n">pipeline</span> <span class="o">=</span> <span class="n">fe</span><span class="o">.</span><span class="n">Pipeline</span><span class="p">(</span><span class="n">batch_size</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">ops</span><span class="o">=</span><span class="n">Minmax</span><span class="p">(</span><span class="n">inputs</span><span class="o">=</span><span class="s2">&quot;x&quot;</span><span class="p">,</span> <span class="n">outputs</span><span class="o">=</span><span class="s2">&quot;x&quot;</span><span class="p">))</span>
+<span class="n">pipeline</span> <span class="o">=</span> <span class="n">fe</span><span class="o">.</span><span class="n">Pipeline</span><span class="p">(</span><span class="n">batch_size</span><span class="o">=</span><span class="n">batch_size</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">ops</span><span class="o">=</span><span class="n">Minmax</span><span class="p">(</span><span class="n">inputs</span><span class="o">=</span><span class="s2">&quot;x&quot;</span><span class="p">,</span> <span class="n">outputs</span><span class="o">=</span><span class="s2">&quot;x&quot;</span><span class="p">))</span>
 </pre></div>
 </div>
 </div>
@@ -552,9 +560,9 @@ eval label shape is (10000, 1)
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="kn">from</span> <span class="nn">fastestimator.architecture</span> <span class="k">import</span> <span class="n">LeNet</span>
-<span class="kn">from</span> <span class="nn">fastestimator.network.model</span> <span class="k">import</span> <span class="n">FEModel</span>
 
-<span class="n">model</span> <span class="o">=</span> <span class="n">FEModel</span><span class="p">(</span><span class="n">model_def</span><span class="o">=</span><span class="k">lambda</span><span class="p">:</span> <span class="n">LeNet</span><span class="p">(</span><span class="n">input_shape</span><span class="o">=</span><span class="n">x_train</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">:],</span> <span class="n">classes</span><span class="o">=</span><span class="mi">10</span><span class="p">),</span> <span class="n">model_name</span><span class="o">=</span><span class="s2">&quot;LeNet&quot;</span><span class="p">,</span> <span class="n">optimizer</span><span class="o">=</span><span class="s2">&quot;adam&quot;</span><span class="p">)</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">fe</span><span class="o">.</span><span class="n">build</span><span class="p">(</span><span class="n">model_def</span><span class="o">=</span><span class="k">lambda</span><span class="p">:</span> <span class="n">LeNet</span><span class="p">(</span><span class="n">input_shape</span><span class="o">=</span><span class="n">x_train</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">:],</span> <span class="n">classes</span><span class="o">=</span><span class="mi">10</span><span class="p">),</span> <span class="n">model_name</span><span class="o">=</span><span class="s2">&quot;LeNet&quot;</span><span class="p">,</span>
+                 <span class="n">optimizer</span><span class="o">=</span><span class="s2">&quot;adam&quot;</span><span class="p">,</span> <span class="n">loss_name</span><span class="o">=</span><span class="s2">&quot;loss&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -564,8 +572,7 @@ eval label shape is (10000, 1)
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="kn">from</span> <span class="nn">fastestimator.network.model</span> <span class="k">import</span> <span class="n">ModelOp</span>
-<span class="kn">from</span> <span class="nn">fastestimator.network.loss</span> <span class="k">import</span> <span class="n">SparseCategoricalCrossentropy</span>
+<span></span><span class="kn">from</span> <span class="nn">fastestimator.op.tensorop</span> <span class="k">import</span> <span class="n">ModelOp</span><span class="p">,</span> <span class="n">SparseCategoricalCrossentropy</span>
 
 <span class="n">simple_network</span> <span class="o">=</span> <span class="n">fe</span><span class="o">.</span><span class="n">Network</span><span class="p">(</span><span class="n">ops</span><span class="o">=</span><span class="p">[</span><span class="n">ModelOp</span><span class="p">(</span><span class="n">inputs</span><span class="o">=</span><span class="s2">&quot;x&quot;</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">,</span> <span class="n">outputs</span><span class="o">=</span><span class="s2">&quot;y_pred&quot;</span><span class="p">),</span>
                                  <span class="n">SparseCategoricalCrossentropy</span><span class="p">(</span><span class="n">y_pred</span><span class="o">=</span><span class="s2">&quot;y_pred&quot;</span><span class="p">,</span> <span class="n">y_true</span><span class="o">=</span><span class="s2">&quot;y&quot;</span><span class="p">,</span> <span class="n">outputs</span><span class="o">=</span><span class="s2">&quot;loss&quot;</span><span class="p">)])</span>
@@ -580,20 +587,20 @@ before computing the loss. Note that mixup is only performed during training (no
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="kn">from</span> <span class="nn">tensorflow.python.keras.losses</span> <span class="k">import</span> <span class="n">SparseCategoricalCrossentropy</span> <span class="k">as</span> <span class="n">KerasCrossentropy</span>
-<span class="kn">from</span> <span class="nn">fastestimator.pipeline.augmentation</span> <span class="k">import</span> <span class="n">MixUpBatch</span>
-<span class="kn">from</span> <span class="nn">fastestimator.network.loss</span> <span class="k">import</span> <span class="n">MixUpLoss</span>
-<span class="kn">from</span> <span class="nn">fastestimator.util.schedule</span> <span class="k">import</span> <span class="n">Scheduler</span>
+<span class="kn">from</span> <span class="nn">fastestimator.op.tensorop</span> <span class="k">import</span> <span class="n">MixUpBatch</span><span class="p">,</span> <span class="n">MixUpLoss</span>
+<span class="kn">from</span> <span class="nn">fastestimator.schedule</span> <span class="k">import</span> <span class="n">Scheduler</span>
 
-<span class="n">pipeline2</span> <span class="o">=</span> <span class="n">fe</span><span class="o">.</span><span class="n">Pipeline</span><span class="p">(</span><span class="n">batch_size</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">ops</span><span class="o">=</span><span class="n">Minmax</span><span class="p">(</span><span class="n">inputs</span><span class="o">=</span><span class="s2">&quot;x&quot;</span><span class="p">,</span> <span class="n">outputs</span><span class="o">=</span><span class="s2">&quot;x&quot;</span><span class="p">))</span>
-<span class="n">model2</span> <span class="o">=</span> <span class="n">FEModel</span><span class="p">(</span><span class="n">model_def</span><span class="o">=</span><span class="k">lambda</span><span class="p">:</span> <span class="n">LeNet</span><span class="p">(</span><span class="n">input_shape</span><span class="o">=</span><span class="n">x_train</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">:],</span> <span class="n">classes</span><span class="o">=</span><span class="mi">10</span><span class="p">),</span> <span class="n">model_name</span><span class="o">=</span><span class="s2">&quot;LeNet&quot;</span><span class="p">,</span> <span class="n">optimizer</span><span class="o">=</span><span class="s2">&quot;adam&quot;</span><span class="p">)</span>
+<span class="n">pipeline2</span> <span class="o">=</span> <span class="n">fe</span><span class="o">.</span><span class="n">Pipeline</span><span class="p">(</span><span class="n">batch_size</span><span class="o">=</span><span class="n">batch_size</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">ops</span><span class="o">=</span><span class="n">Minmax</span><span class="p">(</span><span class="n">inputs</span><span class="o">=</span><span class="s2">&quot;x&quot;</span><span class="p">,</span> <span class="n">outputs</span><span class="o">=</span><span class="s2">&quot;x&quot;</span><span class="p">))</span>
+<span class="n">model2</span> <span class="o">=</span> <span class="n">fe</span><span class="o">.</span><span class="n">build</span><span class="p">(</span><span class="n">model_def</span><span class="o">=</span><span class="k">lambda</span><span class="p">:</span> <span class="n">LeNet</span><span class="p">(</span><span class="n">input_shape</span><span class="o">=</span><span class="n">x_train</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">:],</span> <span class="n">classes</span><span class="o">=</span><span class="mi">10</span><span class="p">),</span> <span class="n">model_name</span><span class="o">=</span><span class="s2">&quot;LeNet&quot;</span><span class="p">,</span>
+                  <span class="n">optimizer</span><span class="o">=</span><span class="s2">&quot;adam&quot;</span><span class="p">,</span> <span class="n">loss_name</span><span class="o">=</span><span class="s2">&quot;loss&quot;</span><span class="p">)</span>
 <span class="n">warmup</span> <span class="o">=</span> <span class="mi">1</span>
 
 <span class="n">mixup_network</span> <span class="o">=</span> <span class="n">fe</span><span class="o">.</span><span class="n">Network</span><span class="p">(</span><span class="n">ops</span><span class="o">=</span><span class="p">[</span>
         <span class="n">Scheduler</span><span class="p">({</span><span class="n">warmup</span><span class="p">:</span> <span class="n">MixUpBatch</span><span class="p">(</span><span class="n">inputs</span><span class="o">=</span><span class="s2">&quot;x&quot;</span><span class="p">,</span> <span class="n">outputs</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;x&quot;</span><span class="p">,</span> <span class="s2">&quot;lambda&quot;</span><span class="p">],</span> <span class="n">alpha</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;train&quot;</span><span class="p">)}),</span>
         <span class="n">ModelOp</span><span class="p">(</span><span class="n">inputs</span><span class="o">=</span><span class="s2">&quot;x&quot;</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">model2</span><span class="p">,</span> <span class="n">outputs</span><span class="o">=</span><span class="s2">&quot;y_pred&quot;</span><span class="p">),</span>
-        <span class="n">Scheduler</span><span class="p">({</span><span class="mi">0</span><span class="p">:</span> <span class="n">SparseCategoricalCrossentropy</span><span class="p">(</span><span class="n">y_true</span><span class="o">=</span><span class="s2">&quot;y&quot;</span><span class="p">,</span> <span class="n">y_pred</span><span class="o">=</span><span class="s2">&quot;y_pred&quot;</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;train&quot;</span><span class="p">),</span>
-                   <span class="n">warmup</span><span class="p">:</span> <span class="n">MixUpLoss</span><span class="p">(</span><span class="n">KerasCrossentropy</span><span class="p">(),</span> <span class="n">lam</span><span class="o">=</span><span class="s2">&quot;lambda&quot;</span><span class="p">,</span> <span class="n">y_true</span><span class="o">=</span><span class="s2">&quot;y&quot;</span><span class="p">,</span> <span class="n">y_pred</span><span class="o">=</span><span class="s2">&quot;y_pred&quot;</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;train&quot;</span><span class="p">)}),</span>
-        <span class="n">SparseCategoricalCrossentropy</span><span class="p">(</span><span class="n">y_true</span><span class="o">=</span><span class="s2">&quot;y&quot;</span><span class="p">,</span> <span class="n">y_pred</span><span class="o">=</span><span class="s2">&quot;y_pred&quot;</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;eval&quot;</span><span class="p">)</span>
+        <span class="n">Scheduler</span><span class="p">({</span><span class="mi">0</span><span class="p">:</span> <span class="n">SparseCategoricalCrossentropy</span><span class="p">(</span><span class="n">y_true</span><span class="o">=</span><span class="s2">&quot;y&quot;</span><span class="p">,</span> <span class="n">y_pred</span><span class="o">=</span><span class="s2">&quot;y_pred&quot;</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;train&quot;</span><span class="p">,</span> <span class="n">outputs</span><span class="o">=</span><span class="s2">&quot;loss&quot;</span><span class="p">),</span>
+                   <span class="n">warmup</span><span class="p">:</span> <span class="n">MixUpLoss</span><span class="p">(</span><span class="n">KerasCrossentropy</span><span class="p">(),</span> <span class="n">lam</span><span class="o">=</span><span class="s2">&quot;lambda&quot;</span><span class="p">,</span> <span class="n">y_true</span><span class="o">=</span><span class="s2">&quot;y&quot;</span><span class="p">,</span> <span class="n">y_pred</span><span class="o">=</span><span class="s2">&quot;y_pred&quot;</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;train&quot;</span><span class="p">,</span> <span class="n">outputs</span><span class="o">=</span><span class="s2">&quot;loss&quot;</span><span class="p">)}),</span>
+        <span class="n">SparseCategoricalCrossentropy</span><span class="p">(</span><span class="n">y_true</span><span class="o">=</span><span class="s2">&quot;y&quot;</span><span class="p">,</span> <span class="n">y_pred</span><span class="o">=</span><span class="s2">&quot;y_pred&quot;</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;eval&quot;</span><span class="p">,</span> <span class="n">outputs</span><span class="o">=</span><span class="s2">&quot;loss&quot;</span><span class="p">)</span>
     <span class="p">])</span>
 </pre></div>
 </div>
@@ -609,7 +616,7 @@ before computing the loss. Note that mixup is only performed during training (no
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="kn">import</span> <span class="nn">tempfile</span>
 <span class="kn">import</span> <span class="nn">os</span>
-<span class="kn">from</span> <span class="nn">fastestimator.estimator.trace</span> <span class="k">import</span> <span class="n">Accuracy</span><span class="p">,</span> <span class="n">ModelSaver</span>
+<span class="kn">from</span> <span class="nn">fastestimator.trace</span> <span class="k">import</span> <span class="n">Accuracy</span><span class="p">,</span> <span class="n">ModelSaver</span>
 
 <span class="n">simple_traces</span> <span class="o">=</span> <span class="p">[</span><span class="n">Accuracy</span><span class="p">(</span><span class="n">true_key</span><span class="o">=</span><span class="s2">&quot;y&quot;</span><span class="p">,</span> <span class="n">pred_key</span><span class="o">=</span><span class="s2">&quot;y_pred&quot;</span><span class="p">,</span> <span class="n">output_name</span><span class="o">=</span><span class="s1">&#39;acc&#39;</span><span class="p">)]</span>
 
@@ -623,8 +630,10 @@ before computing the loss. Note that mixup is only performed during training (no
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">simple_estimator</span> <span class="o">=</span> <span class="n">fe</span><span class="o">.</span><span class="n">Estimator</span><span class="p">(</span><span class="n">network</span><span class="o">=</span><span class="n">simple_network</span><span class="p">,</span> <span class="n">pipeline</span><span class="o">=</span><span class="n">pipeline</span><span class="p">,</span> <span class="n">epochs</span><span class="o">=</span><span class="mi">35</span><span class="p">,</span> <span class="n">traces</span><span class="o">=</span><span class="n">simple_traces</span><span class="p">,</span> <span class="n">log_steps</span><span class="o">=</span><span class="mi">750</span><span class="p">)</span>
-<span class="n">mixup_estimator</span> <span class="o">=</span> <span class="n">fe</span><span class="o">.</span><span class="n">Estimator</span><span class="p">(</span><span class="n">network</span><span class="o">=</span><span class="n">mixup_network</span><span class="p">,</span> <span class="n">pipeline</span><span class="o">=</span><span class="n">pipeline2</span><span class="p">,</span> <span class="n">epochs</span><span class="o">=</span><span class="mi">35</span><span class="p">,</span> <span class="n">traces</span><span class="o">=</span><span class="n">mixup_traces</span><span class="p">,</span> <span class="n">log_steps</span><span class="o">=</span><span class="mi">750</span><span class="p">)</span>
+<span></span><span class="n">simple_estimator</span> <span class="o">=</span> <span class="n">fe</span><span class="o">.</span><span class="n">Estimator</span><span class="p">(</span><span class="n">network</span><span class="o">=</span><span class="n">simple_network</span><span class="p">,</span> <span class="n">pipeline</span><span class="o">=</span><span class="n">pipeline</span><span class="p">,</span> <span class="n">epochs</span><span class="o">=</span><span class="n">epochs</span><span class="p">,</span>
+                                <span class="n">steps_per_epoch</span><span class="o">=</span><span class="n">steps_per_epoch</span><span class="p">,</span> <span class="n">traces</span><span class="o">=</span><span class="n">simple_traces</span><span class="p">,</span> <span class="n">log_steps</span><span class="o">=</span><span class="mi">750</span><span class="p">)</span>
+<span class="n">mixup_estimator</span> <span class="o">=</span> <span class="n">fe</span><span class="o">.</span><span class="n">Estimator</span><span class="p">(</span><span class="n">network</span><span class="o">=</span><span class="n">mixup_network</span><span class="p">,</span> <span class="n">pipeline</span><span class="o">=</span><span class="n">pipeline2</span><span class="p">,</span> <span class="n">epochs</span><span class="o">=</span><span class="n">epochs</span><span class="p">,</span>
+                               <span class="n">steps_per_epoch</span><span class="o">=</span><span class="n">steps_per_epoch</span><span class="p">,</span> <span class="n">traces</span><span class="o">=</span><span class="n">mixup_traces</span><span class="p">,</span> <span class="n">log_steps</span><span class="o">=</span><span class="mi">750</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -654,90 +663,90 @@ before computing the loss. Note that mixup is only performed during training (no
 
 
 FastEstimator-Warn: No ModelSaver Trace detected. Models will not be saved.
-FastEstimator-Start: step: 0; LeNet_lr: 0.001;
-FastEstimator-Train: step: 0; loss: 2.331715;
-FastEstimator-Train: step: 750; loss: 1.4613332; examples/sec: 1959.19;
-FastEstimator-Eval: step: 1000; epoch: 0; loss: 1.2774726; min_loss: 1.2774726; since_best_loss: 0; acc: 0.5494;
-FastEstimator-Train: step: 1500; loss: 1.0069875; examples/sec: 1741.94;
-FastEstimator-Eval: step: 2000; epoch: 1; loss: 1.1048425; min_loss: 1.1048425; since_best_loss: 0; acc: 0.6104;
-FastEstimator-Train: step: 2250; loss: 1.0621296; examples/sec: 1569.21;
-FastEstimator-Eval: step: 3000; epoch: 2; loss: 1.0642631; min_loss: 1.0642631; since_best_loss: 0; acc: 0.629;
-FastEstimator-Train: step: 3000; loss: 0.9282726; examples/sec: 1656.14;
-FastEstimator-Train: step: 3750; loss: 0.7400702; examples/sec: 1716.0;
-FastEstimator-Eval: step: 4000; epoch: 3; loss: 0.9628639; min_loss: 0.9628639; since_best_loss: 0; acc: 0.6646;
-FastEstimator-Train: step: 4500; loss: 1.0233922; examples/sec: 1785.55;
-FastEstimator-Eval: step: 5000; epoch: 4; loss: 0.8989107; min_loss: 0.8989107; since_best_loss: 0; acc: 0.6877;
-FastEstimator-Train: step: 5250; loss: 0.6407582; examples/sec: 1726.28;
-FastEstimator-Eval: step: 6000; epoch: 5; loss: 0.8909989; min_loss: 0.8909989; since_best_loss: 0; acc: 0.6922;
-FastEstimator-Train: step: 6000; loss: 0.8722225; examples/sec: 1568.69;
-FastEstimator-Train: step: 6750; loss: 0.9620216; examples/sec: 1568.78;
-FastEstimator-Eval: step: 7000; epoch: 6; loss: 0.89311326; min_loss: 0.8909989; since_best_loss: 1; acc: 0.6921;
-FastEstimator-Train: step: 7500; loss: 0.75550026; examples/sec: 1447.76;
-FastEstimator-Eval: step: 8000; epoch: 7; loss: 0.8349639; min_loss: 0.8349639; since_best_loss: 0; acc: 0.7091;
-FastEstimator-Train: step: 8250; loss: 0.7132422; examples/sec: 1562.86;
-FastEstimator-Eval: step: 9000; epoch: 8; loss: 0.8533372; min_loss: 0.8349639; since_best_loss: 1; acc: 0.711;
-FastEstimator-Train: step: 9000; loss: 0.7781199; examples/sec: 1414.02;
-FastEstimator-Train: step: 9750; loss: 0.884112; examples/sec: 1528.63;
-FastEstimator-Eval: step: 10000; epoch: 9; loss: 0.88970655; min_loss: 0.8349639; since_best_loss: 2; acc: 0.7039;
-FastEstimator-Train: step: 10500; loss: 0.727613; examples/sec: 1551.64;
-FastEstimator-Eval: step: 11000; epoch: 10; loss: 0.8509058; min_loss: 0.8349639; since_best_loss: 3; acc: 0.7217;
-FastEstimator-Train: step: 11250; loss: 0.63292617; examples/sec: 1499.25;
-FastEstimator-Eval: step: 12000; epoch: 11; loss: 0.8842011; min_loss: 0.8349639; since_best_loss: 4; acc: 0.7115;
-FastEstimator-Train: step: 12000; loss: 0.41313928; examples/sec: 1350.88;
-FastEstimator-Train: step: 12750; loss: 0.61047447; examples/sec: 1469.66;
-FastEstimator-Eval: step: 13000; epoch: 12; loss: 0.8647006; min_loss: 0.8349639; since_best_loss: 5; acc: 0.7213;
-FastEstimator-Train: step: 13500; loss: 0.7467363; examples/sec: 1461.29;
-FastEstimator-Eval: step: 14000; epoch: 13; loss: 0.9206247; min_loss: 0.8349639; since_best_loss: 6; acc: 0.7048;
-FastEstimator-Train: step: 14250; loss: 0.6380059; examples/sec: 1306.6;
-FastEstimator-Eval: step: 15000; epoch: 14; loss: 0.9063304; min_loss: 0.8349639; since_best_loss: 7; acc: 0.7177;
-FastEstimator-Train: step: 15000; loss: 0.39659286; examples/sec: 1417.06;
-FastEstimator-Train: step: 15750; loss: 0.55478966; examples/sec: 1328.54;
-FastEstimator-Eval: step: 16000; epoch: 15; loss: 0.93593335; min_loss: 0.8349639; since_best_loss: 8; acc: 0.7194;
-FastEstimator-Train: step: 16500; loss: 0.5506267; examples/sec: 1484.73;
-FastEstimator-Eval: step: 17000; epoch: 16; loss: 1.0133876; min_loss: 0.8349639; since_best_loss: 9; acc: 0.694;
-FastEstimator-Train: step: 17250; loss: 0.44862288; examples/sec: 1488.35;
-FastEstimator-Eval: step: 18000; epoch: 17; loss: 1.0024047; min_loss: 0.8349639; since_best_loss: 10; acc: 0.7042;
-FastEstimator-Train: step: 18000; loss: 0.37044662; examples/sec: 1615.37;
-FastEstimator-Train: step: 18750; loss: 0.5664523; examples/sec: 1458.71;
-FastEstimator-Eval: step: 19000; epoch: 18; loss: 1.0099096; min_loss: 0.8349639; since_best_loss: 11; acc: 0.7126;
-FastEstimator-Train: step: 19500; loss: 0.4712916; examples/sec: 1439.24;
-FastEstimator-Eval: step: 20000; epoch: 19; loss: 1.0874232; min_loss: 0.8349639; since_best_loss: 12; acc: 0.7021;
-FastEstimator-Train: step: 20250; loss: 0.2522728; examples/sec: 1513.15;
-FastEstimator-Eval: step: 21000; epoch: 20; loss: 1.0883918; min_loss: 0.8349639; since_best_loss: 13; acc: 0.7045;
-FastEstimator-Train: step: 21000; loss: 0.32584956; examples/sec: 1312.09;
-FastEstimator-Train: step: 21750; loss: 0.36073315; examples/sec: 1539.58;
-FastEstimator-Eval: step: 22000; epoch: 21; loss: 1.1733301; min_loss: 0.8349639; since_best_loss: 14; acc: 0.7007;
-FastEstimator-Train: step: 22500; loss: 0.31950936; examples/sec: 1527.46;
-FastEstimator-Eval: step: 23000; epoch: 22; loss: 1.2329471; min_loss: 0.8349639; since_best_loss: 15; acc: 0.6954;
-FastEstimator-Train: step: 23250; loss: 0.20031738; examples/sec: 1542.69;
-FastEstimator-Eval: step: 24000; epoch: 23; loss: 1.2536111; min_loss: 0.8349639; since_best_loss: 16; acc: 0.6963;
-FastEstimator-Train: step: 24000; loss: 0.35041863; examples/sec: 1675.59;
-FastEstimator-Train: step: 24750; loss: 0.19467203; examples/sec: 1496.21;
-FastEstimator-Eval: step: 25000; epoch: 24; loss: 1.2932085; min_loss: 0.8349639; since_best_loss: 17; acc: 0.7018;
-FastEstimator-Train: step: 25500; loss: 0.30500555; examples/sec: 1512.29;
-FastEstimator-Eval: step: 26000; epoch: 25; loss: 1.3495258; min_loss: 0.8349639; since_best_loss: 18; acc: 0.6936;
-FastEstimator-Train: step: 26250; loss: 0.12196634; examples/sec: 1349.19;
-FastEstimator-Eval: step: 27000; epoch: 26; loss: 1.441781; min_loss: 0.8349639; since_best_loss: 19; acc: 0.6913;
-FastEstimator-Train: step: 27000; loss: 0.17332903; examples/sec: 1525.78;
-FastEstimator-Train: step: 27750; loss: 0.18337594; examples/sec: 1619.0;
-FastEstimator-Eval: step: 28000; epoch: 27; loss: 1.4789841; min_loss: 0.8349639; since_best_loss: 20; acc: 0.6976;
-FastEstimator-Train: step: 28500; loss: 0.2023769; examples/sec: 1562.2;
-FastEstimator-Eval: step: 29000; epoch: 28; loss: 1.4952649; min_loss: 0.8349639; since_best_loss: 21; acc: 0.6959;
-FastEstimator-Train: step: 29250; loss: 0.17000729; examples/sec: 1224.92;
-FastEstimator-Eval: step: 30000; epoch: 29; loss: 1.5622888; min_loss: 0.8349639; since_best_loss: 22; acc: 0.6981;
-FastEstimator-Train: step: 30000; loss: 0.17837387; examples/sec: 1292.76;
-FastEstimator-Train: step: 30750; loss: 0.3066153; examples/sec: 1371.19;
-FastEstimator-Eval: step: 31000; epoch: 30; loss: 1.6347879; min_loss: 0.8349639; since_best_loss: 23; acc: 0.6924;
-FastEstimator-Train: step: 31500; loss: 0.16399877; examples/sec: 1330.44;
-FastEstimator-Eval: step: 32000; epoch: 31; loss: 1.6906112; min_loss: 0.8349639; since_best_loss: 24; acc: 0.6907;
-FastEstimator-Train: step: 32250; loss: 0.071930796; examples/sec: 1411.48;
-FastEstimator-Eval: step: 33000; epoch: 32; loss: 1.7898657; min_loss: 0.8349639; since_best_loss: 25; acc: 0.6881;
-FastEstimator-Train: step: 33000; loss: 0.07546672; examples/sec: 1355.55;
-FastEstimator-Train: step: 33750; loss: 0.15083854; examples/sec: 1287.87;
-FastEstimator-Eval: step: 34000; epoch: 33; loss: 1.7661749; min_loss: 0.8349639; since_best_loss: 26; acc: 0.6926;
-FastEstimator-Train: step: 34500; loss: 0.09949369; examples/sec: 1140.92;
-FastEstimator-Eval: step: 35000; epoch: 34; loss: 1.8486111; min_loss: 0.8349639; since_best_loss: 27; acc: 0.6855;
-FastEstimator-Finish: step: 35000; total_time: 1239.61 sec; LeNet_lr: 0.001;
+FastEstimator-Start: step: 0; total_train_steps: 35000; LeNet_lr: 0.001;
+FastEstimator-Train: step: 0; loss: 2.2989788;
+FastEstimator-Train: step: 750; loss: 1.3157376; examples/sec: 1518.4; progress: 2.1%;
+FastEstimator-Eval: step: 1000; epoch: 0; loss: 1.2433634; min_loss: 1.2433634; since_best_loss: 0; acc: 0.5502;
+FastEstimator-Train: step: 1500; loss: 1.4256195; examples/sec: 1416.8; progress: 4.3%;
+FastEstimator-Eval: step: 2000; epoch: 1; loss: 1.1029515; min_loss: 1.1029515; since_best_loss: 0; acc: 0.6091;
+FastEstimator-Train: step: 2250; loss: 1.1579484; examples/sec: 1346.8; progress: 6.4%;
+FastEstimator-Eval: step: 3000; epoch: 2; loss: 1.0051966; min_loss: 1.0051966; since_best_loss: 0; acc: 0.6488;
+FastEstimator-Train: step: 3000; loss: 1.2000177; examples/sec: 1330.8; progress: 8.6%;
+FastEstimator-Train: step: 3750; loss: 0.9446747; examples/sec: 1303.5; progress: 10.7%;
+FastEstimator-Eval: step: 4000; epoch: 3; loss: 0.9416299; min_loss: 0.94162995; since_best_loss: 0; acc: 0.6711;
+FastEstimator-Train: step: 4500; loss: 0.9623857; examples/sec: 1315.8; progress: 12.9%;
+FastEstimator-Eval: step: 5000; epoch: 4; loss: 0.9077615; min_loss: 0.9077615; since_best_loss: 0; acc: 0.6852;
+FastEstimator-Train: step: 5250; loss: 0.9986706; examples/sec: 1373.0; progress: 15.0%;
+FastEstimator-Eval: step: 6000; epoch: 5; loss: 0.9207905; min_loss: 0.9077615; since_best_loss: 1; acc: 0.6865;
+FastEstimator-Train: step: 6000; loss: 0.7511868; examples/sec: 1351.1; progress: 17.1%;
+FastEstimator-Train: step: 6750; loss: 0.8952303; examples/sec: 1158.7; progress: 19.3%;
+FastEstimator-Eval: step: 7000; epoch: 6; loss: 0.9191301; min_loss: 0.9077615; since_best_loss: 2; acc: 0.6849;
+FastEstimator-Train: step: 7500; loss: 0.7468068; examples/sec: 1207.7; progress: 21.4%;
+FastEstimator-Eval: step: 8000; epoch: 7; loss: 0.8561178; min_loss: 0.85611784; since_best_loss: 0; acc: 0.7034;
+FastEstimator-Train: step: 8250; loss: 0.6032203; examples/sec: 1305.5; progress: 23.6%;
+FastEstimator-Eval: step: 9000; epoch: 8; loss: 0.8458996; min_loss: 0.84589964; since_best_loss: 0; acc: 0.71;
+FastEstimator-Train: step: 9000; loss: 0.5752448; examples/sec: 1234.1; progress: 25.7%;
+FastEstimator-Train: step: 9750; loss: 0.807608; examples/sec: 1323.9; progress: 27.9%;
+FastEstimator-Eval: step: 10000; epoch: 9; loss: 0.8584864; min_loss: 0.84589964; since_best_loss: 1; acc: 0.7079;
+FastEstimator-Train: step: 10500; loss: 0.4007401; examples/sec: 1327.5; progress: 30.0%;
+FastEstimator-Eval: step: 11000; epoch: 10; loss: 0.847151; min_loss: 0.84589964; since_best_loss: 2; acc: 0.7152;
+FastEstimator-Train: step: 11250; loss: 0.594514; examples/sec: 1326.8; progress: 32.1%;
+FastEstimator-Eval: step: 12000; epoch: 11; loss: 0.9184404; min_loss: 0.84589964; since_best_loss: 3; acc: 0.7099;
+FastEstimator-Train: step: 12000; loss: 0.58203; examples/sec: 1368.5; progress: 34.3%;
+FastEstimator-Train: step: 12750; loss: 0.4818403; examples/sec: 1335.5; progress: 36.4%;
+FastEstimator-Eval: step: 13000; epoch: 12; loss: 0.846058; min_loss: 0.84589964; since_best_loss: 4; acc: 0.7259;
+FastEstimator-Train: step: 13500; loss: 0.3530467; examples/sec: 1340.5; progress: 38.6%;
+FastEstimator-Eval: step: 14000; epoch: 13; loss: 0.8999681; min_loss: 0.84589964; since_best_loss: 5; acc: 0.718;
+FastEstimator-Train: step: 14250; loss: 0.5744307; examples/sec: 1432.3; progress: 40.7%;
+FastEstimator-Eval: step: 15000; epoch: 14; loss: 0.9334542; min_loss: 0.84589964; since_best_loss: 6; acc: 0.7096;
+FastEstimator-Train: step: 15000; loss: 0.3631234; examples/sec: 1416.6; progress: 42.9%;
+FastEstimator-Train: step: 15750; loss: 0.3753418; examples/sec: 1326.6; progress: 45.0%;
+FastEstimator-Eval: step: 16000; epoch: 15; loss: 0.9351049; min_loss: 0.84589964; since_best_loss: 7; acc: 0.7143;
+FastEstimator-Train: step: 16500; loss: 0.3983784; examples/sec: 1386.3; progress: 47.1%;
+FastEstimator-Eval: step: 17000; epoch: 16; loss: 0.9699541; min_loss: 0.84589964; since_best_loss: 8; acc: 0.7068;
+FastEstimator-Train: step: 17250; loss: 0.8026924; examples/sec: 1409.8; progress: 49.3%;
+FastEstimator-Eval: step: 18000; epoch: 17; loss: 1.0405009; min_loss: 0.84589964; since_best_loss: 9; acc: 0.7092;
+FastEstimator-Train: step: 18000; loss: 0.2966534; examples/sec: 1392.0; progress: 51.4%;
+FastEstimator-Train: step: 18750; loss: 0.3240081; examples/sec: 1380.8; progress: 53.6%;
+FastEstimator-Eval: step: 19000; epoch: 18; loss: 1.0830307; min_loss: 0.84589964; since_best_loss: 10; acc: 0.6979;
+FastEstimator-Train: step: 19500; loss: 0.2596785; examples/sec: 1272.7; progress: 55.7%;
+FastEstimator-Eval: step: 20000; epoch: 19; loss: 1.1409403; min_loss: 0.84589964; since_best_loss: 11; acc: 0.6978;
+FastEstimator-Train: step: 20250; loss: 0.2304578; examples/sec: 1327.9; progress: 57.9%;
+FastEstimator-Eval: step: 21000; epoch: 20; loss: 1.1332737; min_loss: 0.84589964; since_best_loss: 12; acc: 0.6968;
+FastEstimator-Train: step: 21000; loss: 0.3295046; examples/sec: 1328.5; progress: 60.0%;
+FastEstimator-Train: step: 21750; loss: 0.1731121; examples/sec: 1409.9; progress: 62.1%;
+FastEstimator-Eval: step: 22000; epoch: 21; loss: 1.1821457; min_loss: 0.84589964; since_best_loss: 13; acc: 0.707;
+FastEstimator-Train: step: 22500; loss: 0.4336742; examples/sec: 1352.4; progress: 64.3%;
+FastEstimator-Eval: step: 23000; epoch: 22; loss: 1.2123183; min_loss: 0.84589964; since_best_loss: 14; acc: 0.7007;
+FastEstimator-Train: step: 23250; loss: 0.4531382; examples/sec: 1356.6; progress: 66.4%;
+FastEstimator-Eval: step: 24000; epoch: 23; loss: 1.3681846; min_loss: 0.84589964; since_best_loss: 15; acc: 0.6902;
+FastEstimator-Train: step: 24000; loss: 0.1203288; examples/sec: 1321.5; progress: 68.6%;
+FastEstimator-Train: step: 24750; loss: 0.4227715; examples/sec: 1430.0; progress: 70.7%;
+FastEstimator-Eval: step: 25000; epoch: 24; loss: 1.3090713; min_loss: 0.84589964; since_best_loss: 16; acc: 0.6991;
+FastEstimator-Train: step: 25500; loss: 0.2697889; examples/sec: 1434.5; progress: 72.9%;
+FastEstimator-Eval: step: 26000; epoch: 25; loss: 1.3569603; min_loss: 0.84589964; since_best_loss: 17; acc: 0.7042;
+FastEstimator-Train: step: 26250; loss: 0.176522; examples/sec: 1391.3; progress: 75.0%;
+FastEstimator-Eval: step: 27000; epoch: 26; loss: 1.4096411; min_loss: 0.84589964; since_best_loss: 18; acc: 0.6992;
+FastEstimator-Train: step: 27000; loss: 0.169631; examples/sec: 1435.4; progress: 77.1%;
+FastEstimator-Train: step: 27750; loss: 0.1861947; examples/sec: 1441.5; progress: 79.3%;
+FastEstimator-Eval: step: 28000; epoch: 27; loss: 1.4584777; min_loss: 0.84589964; since_best_loss: 19; acc: 0.6939;
+FastEstimator-Train: step: 28500; loss: 0.0766525; examples/sec: 1426.6; progress: 81.4%;
+FastEstimator-Eval: step: 29000; epoch: 28; loss: 1.5798118; min_loss: 0.84589964; since_best_loss: 20; acc: 0.6951;
+FastEstimator-Train: step: 29250; loss: 0.2569139; examples/sec: 1425.9; progress: 83.6%;
+FastEstimator-Eval: step: 30000; epoch: 29; loss: 1.639139; min_loss: 0.84589964; since_best_loss: 21; acc: 0.6984;
+FastEstimator-Train: step: 30000; loss: 0.1210424; examples/sec: 1383.9; progress: 85.7%;
+FastEstimator-Train: step: 30750; loss: 0.1564893; examples/sec: 1478.5; progress: 87.9%;
+FastEstimator-Eval: step: 31000; epoch: 30; loss: 1.6667398; min_loss: 0.84589964; since_best_loss: 22; acc: 0.6848;
+FastEstimator-Train: step: 31500; loss: 0.0912744; examples/sec: 1505.9; progress: 90.0%;
+FastEstimator-Eval: step: 32000; epoch: 31; loss: 1.7258862; min_loss: 0.84589964; since_best_loss: 23; acc: 0.6895;
+FastEstimator-Train: step: 32250; loss: 0.0238111; examples/sec: 1539.0; progress: 92.1%;
+FastEstimator-Eval: step: 33000; epoch: 32; loss: 1.747565; min_loss: 0.84589964; since_best_loss: 24; acc: 0.6897;
+FastEstimator-Train: step: 33000; loss: 0.1130405; examples/sec: 1551.6; progress: 94.3%;
+FastEstimator-Train: step: 33750; loss: 0.1497695; examples/sec: 1555.8; progress: 96.4%;
+FastEstimator-Eval: step: 34000; epoch: 33; loss: 1.8326926; min_loss: 0.84589964; since_best_loss: 25; acc: 0.6937;
+FastEstimator-Train: step: 34500; loss: 0.1434229; examples/sec: 1542.5; progress: 98.6%;
+FastEstimator-Eval: step: 35000; epoch: 34; loss: 1.9228554; min_loss: 0.84589964; since_best_loss: 26; acc: 0.6976;
+FastEstimator-Finish: step: 35000; total_time: 1341.29 sec; LeNet_lr: 0.001;
 </pre></div></div>
 </div>
 <p>Next we train the network using mixup. This process requires more epochs to converge since the training process is more difficult, though should get to around 75% evaluation accuracy.</p>
@@ -763,90 +772,90 @@ FastEstimator-Finish: step: 35000; total_time: 1239.61 sec; LeNet_lr: 0.001;
 
 
 FastEstimator-Warn: No ModelSaver Trace detected. Models will not be saved.
-FastEstimator-Start: step: 0; LeNet_lr: 0.001;
-FastEstimator-Train: step: 0; loss: 2.3050277;
-FastEstimator-Train: step: 750; loss: 1.2329942; examples/sec: 1373.03;
-FastEstimator-Eval: step: 1000; epoch: 0; loss: 1.2362754; min_loss: 1.2362754; since_best_loss: 0; acc: 0.56;
-FastEstimator-Train: step: 1500; loss: 1.5889217; examples/sec: 1168.11;
-FastEstimator-Eval: step: 2000; epoch: 1; loss: 1.1370281; min_loss: 1.1370281; since_best_loss: 0; acc: 0.61;
-FastEstimator-Train: step: 2250; loss: 1.7115589; examples/sec: 1234.72;
-FastEstimator-Eval: step: 3000; epoch: 2; loss: 1.1399623; min_loss: 1.1370281; since_best_loss: 1; acc: 0.6159;
-FastEstimator-Train: step: 3000; loss: 1.7995199; examples/sec: 1468.72;
-FastEstimator-Train: step: 3750; loss: 1.6051363; examples/sec: 1369.12;
-FastEstimator-Eval: step: 4000; epoch: 3; loss: 0.9902823; min_loss: 0.9902823; since_best_loss: 0; acc: 0.6673;
-FastEstimator-Train: step: 4500; loss: 1.6753731; examples/sec: 1481.96;
-FastEstimator-Eval: step: 5000; epoch: 4; loss: 0.97858477; min_loss: 0.97858477; since_best_loss: 0; acc: 0.6793;
-FastEstimator-Train: step: 5250; loss: 0.89845765; examples/sec: 1267.88;
-FastEstimator-Eval: step: 6000; epoch: 5; loss: 0.93976164; min_loss: 0.93976164; since_best_loss: 0; acc: 0.696;
-FastEstimator-Train: step: 6000; loss: 1.4075922; examples/sec: 1272.96;
-FastEstimator-Train: step: 6750; loss: 0.65945655; examples/sec: 1381.51;
-FastEstimator-Eval: step: 7000; epoch: 6; loss: 0.9643959; min_loss: 0.93976164; since_best_loss: 1; acc: 0.6733;
-FastEstimator-Train: step: 7500; loss: 1.5823562; examples/sec: 1489.68;
-FastEstimator-Eval: step: 8000; epoch: 7; loss: 0.91102815; min_loss: 0.91102815; since_best_loss: 0; acc: 0.7008;
-FastEstimator-Train: step: 8250; loss: 1.287049; examples/sec: 1438.67;
-FastEstimator-Eval: step: 9000; epoch: 8; loss: 0.8704463; min_loss: 0.8704463; since_best_loss: 0; acc: 0.7186;
-FastEstimator-Train: step: 9000; loss: 1.3481679; examples/sec: 1350.14;
-FastEstimator-Train: step: 9750; loss: 1.6758894; examples/sec: 1532.79;
-FastEstimator-Eval: step: 10000; epoch: 9; loss: 0.8930283; min_loss: 0.8704463; since_best_loss: 1; acc: 0.7062;
-FastEstimator-Train: step: 10500; loss: 1.0667714; examples/sec: 1590.89;
-FastEstimator-Eval: step: 11000; epoch: 10; loss: 0.90948486; min_loss: 0.8704463; since_best_loss: 2; acc: 0.6993;
-FastEstimator-Train: step: 11250; loss: 1.5658528; examples/sec: 1492.57;
-FastEstimator-Eval: step: 12000; epoch: 11; loss: 0.903228; min_loss: 0.8704463; since_best_loss: 3; acc: 0.7031;
-FastEstimator-Train: step: 12000; loss: 1.5563731; examples/sec: 1531.84;
-FastEstimator-Train: step: 12750; loss: 1.4091307; examples/sec: 1569.81;
-FastEstimator-Eval: step: 13000; epoch: 12; loss: 0.8647963; min_loss: 0.8647963; since_best_loss: 0; acc: 0.7134;
-FastEstimator-Train: step: 13500; loss: 1.3482661; examples/sec: 1441.95;
-FastEstimator-Eval: step: 14000; epoch: 13; loss: 0.8308042; min_loss: 0.8308042; since_best_loss: 0; acc: 0.7316;
-FastEstimator-Train: step: 14250; loss: 1.3974802; examples/sec: 1454.76;
-FastEstimator-Eval: step: 15000; epoch: 14; loss: 0.8170932; min_loss: 0.8170932; since_best_loss: 0; acc: 0.7401;
-FastEstimator-Train: step: 15000; loss: 1.7568474; examples/sec: 1115.59;
-FastEstimator-Train: step: 15750; loss: 1.3449237; examples/sec: 1130.62;
-FastEstimator-Eval: step: 16000; epoch: 15; loss: 0.8104291; min_loss: 0.8104291; since_best_loss: 0; acc: 0.7389;
-FastEstimator-Train: step: 16500; loss: 1.1720655; examples/sec: 1114.4;
-FastEstimator-Eval: step: 17000; epoch: 16; loss: 0.8699782; min_loss: 0.8104291; since_best_loss: 1; acc: 0.7159;
-FastEstimator-Train: step: 17250; loss: 1.665534; examples/sec: 1343.65;
-FastEstimator-Eval: step: 18000; epoch: 17; loss: 0.8421028; min_loss: 0.8104291; since_best_loss: 2; acc: 0.7266;
-FastEstimator-Train: step: 18000; loss: 1.4973474; examples/sec: 1473.67;
-FastEstimator-Train: step: 18750; loss: 1.5317241; examples/sec: 1532.47;
-FastEstimator-Eval: step: 19000; epoch: 18; loss: 0.8198788; min_loss: 0.8104291; since_best_loss: 3; acc: 0.7323;
-FastEstimator-Train: step: 19500; loss: 1.2788459; examples/sec: 1470.78;
-FastEstimator-Eval: step: 20000; epoch: 19; loss: 0.8278583; min_loss: 0.8104291; since_best_loss: 4; acc: 0.7348;
-FastEstimator-Train: step: 20250; loss: 1.4489079; examples/sec: 1562.45;
-FastEstimator-Eval: step: 21000; epoch: 20; loss: 0.80829793; min_loss: 0.80829793; since_best_loss: 0; acc: 0.7366;
-FastEstimator-Train: step: 21000; loss: 1.1787478; examples/sec: 1442.06;
-FastEstimator-Train: step: 21750; loss: 1.2706674; examples/sec: 1404.14;
-FastEstimator-Eval: step: 22000; epoch: 21; loss: 0.8009184; min_loss: 0.8009184; since_best_loss: 0; acc: 0.7384;
-FastEstimator-Train: step: 22500; loss: 1.3208407; examples/sec: 1375.65;
-FastEstimator-Eval: step: 23000; epoch: 22; loss: 0.84265536; min_loss: 0.8009184; since_best_loss: 1; acc: 0.7299;
-FastEstimator-Train: step: 23250; loss: 1.1396755; examples/sec: 1469.97;
-FastEstimator-Eval: step: 24000; epoch: 23; loss: 0.8309843; min_loss: 0.8009184; since_best_loss: 2; acc: 0.7342;
-FastEstimator-Train: step: 24000; loss: 0.90322864; examples/sec: 1468.02;
-FastEstimator-Train: step: 24750; loss: 1.5739613; examples/sec: 1523.72;
-FastEstimator-Eval: step: 25000; epoch: 24; loss: 0.8032286; min_loss: 0.8009184; since_best_loss: 3; acc: 0.7401;
-FastEstimator-Train: step: 25500; loss: 1.5887469; examples/sec: 1626.95;
-FastEstimator-Eval: step: 26000; epoch: 25; loss: 0.7872876; min_loss: 0.7872876; since_best_loss: 0; acc: 0.7522;
-FastEstimator-Train: step: 26250; loss: 0.9834486; examples/sec: 1598.45;
-FastEstimator-Eval: step: 27000; epoch: 26; loss: 0.82741946; min_loss: 0.7872876; since_best_loss: 1; acc: 0.7413;
-FastEstimator-Train: step: 27000; loss: 0.7272983; examples/sec: 1543.82;
-FastEstimator-Train: step: 27750; loss: 1.6221609; examples/sec: 1598.44;
-FastEstimator-Eval: step: 28000; epoch: 27; loss: 0.8151908; min_loss: 0.7872876; since_best_loss: 2; acc: 0.7396;
-FastEstimator-Train: step: 28500; loss: 1.4443974; examples/sec: 1546.31;
-FastEstimator-Eval: step: 29000; epoch: 28; loss: 0.8135513; min_loss: 0.7872876; since_best_loss: 3; acc: 0.7363;
-FastEstimator-Train: step: 29250; loss: 1.0464164; examples/sec: 1580.03;
-FastEstimator-Eval: step: 30000; epoch: 29; loss: 0.79337555; min_loss: 0.7872876; since_best_loss: 4; acc: 0.7483;
-FastEstimator-Train: step: 30000; loss: 1.2425506; examples/sec: 1564.66;
-FastEstimator-Train: step: 30750; loss: 1.5266876; examples/sec: 1579.66;
-FastEstimator-Eval: step: 31000; epoch: 30; loss: 0.78999907; min_loss: 0.7872876; since_best_loss: 5; acc: 0.7493;
-FastEstimator-Train: step: 31500; loss: 1.460784; examples/sec: 1572.32;
-FastEstimator-Eval: step: 32000; epoch: 31; loss: 0.7770506; min_loss: 0.7770506; since_best_loss: 0; acc: 0.7525;
-FastEstimator-Train: step: 32250; loss: 0.85922897; examples/sec: 1548.95;
-FastEstimator-Eval: step: 33000; epoch: 32; loss: 0.7902287; min_loss: 0.7770506; since_best_loss: 1; acc: 0.749;
-FastEstimator-Train: step: 33000; loss: 1.2443095; examples/sec: 1548.14;
-FastEstimator-Train: step: 33750; loss: 1.4547554; examples/sec: 1425.78;
-FastEstimator-Eval: step: 34000; epoch: 33; loss: 0.771873; min_loss: 0.771873; since_best_loss: 0; acc: 0.753;
-FastEstimator-Train: step: 34500; loss: 0.9054517; examples/sec: 1200.91;
-FastEstimator-Eval: step: 35000; epoch: 34; loss: 0.8120081; min_loss: 0.771873; since_best_loss: 1; acc: 0.7409;
-FastEstimator-Finish: step: 35000; total_time: 1287.34 sec; LeNet_lr: 0.001;
+FastEstimator-Start: step: 0; total_train_steps: 35000; LeNet_lr: 0.001;
+FastEstimator-Train: step: 0; loss: 2.2784815;
+FastEstimator-Train: step: 750; loss: 1.4856188; examples/sec: 1524.5; progress: 2.1%;
+FastEstimator-Eval: step: 1000; epoch: 0; loss: 1.3363686; min_loss: 1.3363686; since_best_loss: 0; acc: 0.5172;
+FastEstimator-Train: step: 1500; loss: 1.2233111; examples/sec: 1456.1; progress: 4.3%;
+FastEstimator-Eval: step: 2000; epoch: 1; loss: 1.2171823; min_loss: 1.2171823; since_best_loss: 0; acc: 0.5863;
+FastEstimator-Train: step: 2250; loss: 1.1668144; examples/sec: 1406.4; progress: 6.4%;
+FastEstimator-Eval: step: 3000; epoch: 2; loss: 1.0894121; min_loss: 1.0894121; since_best_loss: 0; acc: 0.6292;
+FastEstimator-Train: step: 3000; loss: 1.2570294; examples/sec: 1492.3; progress: 8.6%;
+FastEstimator-Train: step: 3750; loss: 1.3939685; examples/sec: 1502.1; progress: 10.7%;
+FastEstimator-Eval: step: 4000; epoch: 3; loss: 1.0413618; min_loss: 1.0413618; since_best_loss: 0; acc: 0.6493;
+FastEstimator-Train: step: 4500; loss: 1.8250064; examples/sec: 1450.0; progress: 12.9%;
+FastEstimator-Eval: step: 5000; epoch: 4; loss: 1.0359317; min_loss: 1.0359317; since_best_loss: 0; acc: 0.6562;
+FastEstimator-Train: step: 5250; loss: 1.7612226; examples/sec: 1371.1; progress: 15.0%;
+FastEstimator-Eval: step: 6000; epoch: 5; loss: 0.9976663; min_loss: 0.9976663; since_best_loss: 0; acc: 0.6709;
+FastEstimator-Train: step: 6000; loss: 0.9774529; examples/sec: 1471.8; progress: 17.1%;
+FastEstimator-Train: step: 6750; loss: 1.9741082; examples/sec: 1495.6; progress: 19.3%;
+FastEstimator-Eval: step: 7000; epoch: 6; loss: 0.9284982; min_loss: 0.9284982; since_best_loss: 0; acc: 0.6851;
+FastEstimator-Train: step: 7500; loss: 0.9885097; examples/sec: 1484.0; progress: 21.4%;
+FastEstimator-Eval: step: 8000; epoch: 7; loss: 0.9322959; min_loss: 0.9284982; since_best_loss: 1; acc: 0.7013;
+FastEstimator-Train: step: 8250; loss: 1.6311705; examples/sec: 1508.1; progress: 23.6%;
+FastEstimator-Eval: step: 9000; epoch: 8; loss: 0.9396379; min_loss: 0.9284982; since_best_loss: 2; acc: 0.6862;
+FastEstimator-Train: step: 9000; loss: 1.6651527; examples/sec: 1521.2; progress: 25.7%;
+FastEstimator-Train: step: 9750; loss: 1.7490898; examples/sec: 1533.8; progress: 27.9%;
+FastEstimator-Eval: step: 10000; epoch: 9; loss: 0.9156775; min_loss: 0.91567755; since_best_loss: 0; acc: 0.7085;
+FastEstimator-Train: step: 10500; loss: 1.8863173; examples/sec: 1499.8; progress: 30.0%;
+FastEstimator-Eval: step: 11000; epoch: 10; loss: 0.8908026; min_loss: 0.8908026; since_best_loss: 0; acc: 0.709;
+FastEstimator-Train: step: 11250; loss: 1.6603231; examples/sec: 1488.4; progress: 32.1%;
+FastEstimator-Eval: step: 12000; epoch: 11; loss: 0.8871776; min_loss: 0.8871776; since_best_loss: 0; acc: 0.7129;
+FastEstimator-Train: step: 12000; loss: 0.7897728; examples/sec: 1487.1; progress: 34.3%;
+FastEstimator-Train: step: 12750; loss: 1.672348; examples/sec: 1518.3; progress: 36.4%;
+FastEstimator-Eval: step: 13000; epoch: 12; loss: 0.891498; min_loss: 0.8871776; since_best_loss: 1; acc: 0.7163;
+FastEstimator-Train: step: 13500; loss: 0.9792987; examples/sec: 1502.4; progress: 38.6%;
+FastEstimator-Eval: step: 14000; epoch: 13; loss: 0.8771259; min_loss: 0.87712586; since_best_loss: 0; acc: 0.715;
+FastEstimator-Train: step: 14250; loss: 0.8483901; examples/sec: 1520.3; progress: 40.7%;
+FastEstimator-Eval: step: 15000; epoch: 14; loss: 0.8443844; min_loss: 0.84438443; since_best_loss: 0; acc: 0.7252;
+FastEstimator-Train: step: 15000; loss: 1.4111552; examples/sec: 1509.3; progress: 42.9%;
+FastEstimator-Train: step: 15750; loss: 0.8739895; examples/sec: 1459.3; progress: 45.0%;
+FastEstimator-Eval: step: 16000; epoch: 15; loss: 0.8628039; min_loss: 0.84438443; since_best_loss: 1; acc: 0.7267;
+FastEstimator-Train: step: 16500; loss: 0.9846738; examples/sec: 1495.6; progress: 47.1%;
+FastEstimator-Eval: step: 17000; epoch: 16; loss: 0.8365366; min_loss: 0.8365366; since_best_loss: 0; acc: 0.7314;
+FastEstimator-Train: step: 17250; loss: 1.5324712; examples/sec: 1502.5; progress: 49.3%;
+FastEstimator-Eval: step: 18000; epoch: 17; loss: 0.888; min_loss: 0.8365366; since_best_loss: 1; acc: 0.7077;
+FastEstimator-Train: step: 18000; loss: 1.6160111; examples/sec: 1421.9; progress: 51.4%;
+FastEstimator-Train: step: 18750; loss: 1.2287451; examples/sec: 1509.9; progress: 53.6%;
+FastEstimator-Eval: step: 19000; epoch: 18; loss: 0.8122694; min_loss: 0.81226945; since_best_loss: 0; acc: 0.7446;
+FastEstimator-Train: step: 19500; loss: 1.8419383; examples/sec: 1513.6; progress: 55.7%;
+FastEstimator-Eval: step: 20000; epoch: 19; loss: 0.8234974; min_loss: 0.81226945; since_best_loss: 1; acc: 0.7313;
+FastEstimator-Train: step: 20250; loss: 1.6550089; examples/sec: 1517.8; progress: 57.9%;
+FastEstimator-Eval: step: 21000; epoch: 20; loss: 0.8587535; min_loss: 0.81226945; since_best_loss: 2; acc: 0.7251;
+FastEstimator-Train: step: 21000; loss: 1.4547342; examples/sec: 1459.3; progress: 60.0%;
+FastEstimator-Train: step: 21750; loss: 1.4801158; examples/sec: 1379.7; progress: 62.1%;
+FastEstimator-Eval: step: 22000; epoch: 21; loss: 0.8384032; min_loss: 0.81226945; since_best_loss: 3; acc: 0.7371;
+FastEstimator-Train: step: 22500; loss: 1.3591273; examples/sec: 1545.7; progress: 64.3%;
+FastEstimator-Eval: step: 23000; epoch: 22; loss: 0.8036346; min_loss: 0.80363464; since_best_loss: 0; acc: 0.7443;
+FastEstimator-Train: step: 23250; loss: 1.0346556; examples/sec: 1518.1; progress: 66.4%;
+FastEstimator-Eval: step: 24000; epoch: 23; loss: 0.836709; min_loss: 0.80363464; since_best_loss: 1; acc: 0.7331;
+FastEstimator-Train: step: 24000; loss: 1.0664824; examples/sec: 1510.4; progress: 68.6%;
+FastEstimator-Train: step: 24750; loss: 1.7216514; examples/sec: 1554.6; progress: 70.7%;
+FastEstimator-Eval: step: 25000; epoch: 24; loss: 0.8503023; min_loss: 0.80363464; since_best_loss: 2; acc: 0.7273;
+FastEstimator-Train: step: 25500; loss: 0.8602405; examples/sec: 1530.3; progress: 72.9%;
+FastEstimator-Eval: step: 26000; epoch: 25; loss: 0.8132642; min_loss: 0.80363464; since_best_loss: 3; acc: 0.7411;
+FastEstimator-Train: step: 26250; loss: 1.4390676; examples/sec: 1513.1; progress: 75.0%;
+FastEstimator-Eval: step: 27000; epoch: 26; loss: 0.8023642; min_loss: 0.8023642; since_best_loss: 0; acc: 0.7435;
+FastEstimator-Train: step: 27000; loss: 1.7524374; examples/sec: 1540.7; progress: 77.1%;
+FastEstimator-Train: step: 27750; loss: 1.3336357; examples/sec: 1594.5; progress: 79.3%;
+FastEstimator-Eval: step: 28000; epoch: 27; loss: 0.8116911; min_loss: 0.8023642; since_best_loss: 1; acc: 0.7395;
+FastEstimator-Train: step: 28500; loss: 1.0761751; examples/sec: 1556.6; progress: 81.4%;
+FastEstimator-Eval: step: 29000; epoch: 28; loss: 0.8441216; min_loss: 0.8023642; since_best_loss: 2; acc: 0.7324;
+FastEstimator-Train: step: 29250; loss: 1.1422424; examples/sec: 1554.9; progress: 83.6%;
+FastEstimator-Eval: step: 30000; epoch: 29; loss: 0.8132516; min_loss: 0.8023642; since_best_loss: 3; acc: 0.7362;
+FastEstimator-Train: step: 30000; loss: 1.694069; examples/sec: 1553.7; progress: 85.7%;
+FastEstimator-Train: step: 30750; loss: 0.6191846; examples/sec: 1560.7; progress: 87.9%;
+FastEstimator-Eval: step: 31000; epoch: 30; loss: 0.8216836; min_loss: 0.8023642; since_best_loss: 4; acc: 0.7424;
+FastEstimator-Train: step: 31500; loss: 0.7421934; examples/sec: 1544.9; progress: 90.0%;
+FastEstimator-Eval: step: 32000; epoch: 31; loss: 0.8028535; min_loss: 0.8023642; since_best_loss: 5; acc: 0.741;
+FastEstimator-Train: step: 32250; loss: 0.745209; examples/sec: 1552.0; progress: 92.1%;
+FastEstimator-Eval: step: 33000; epoch: 32; loss: 0.8225112; min_loss: 0.8023642; since_best_loss: 6; acc: 0.7458;
+FastEstimator-Train: step: 33000; loss: 1.7576869; examples/sec: 1546.8; progress: 94.3%;
+FastEstimator-Train: step: 33750; loss: 1.3495349; examples/sec: 1543.0; progress: 96.4%;
+FastEstimator-Eval: step: 34000; epoch: 33; loss: 0.8259973; min_loss: 0.8023642; since_best_loss: 7; acc: 0.7348;
+FastEstimator-Train: step: 34500; loss: 1.6177179; examples/sec: 1439.8; progress: 98.6%;
+FastEstimator-Eval: step: 35000; epoch: 34; loss: 0.8024238; min_loss: 0.8023642; since_best_loss: 8; acc: 0.741;
+FastEstimator-Finish: step: 35000; total_time: 1227.67 sec; LeNet_lr: 0.001;
 </pre></div></div>
 </div>
 </div>
@@ -854,11 +863,11 @@ FastEstimator-Finish: step: 35000; total_time: 1287.34 sec; LeNet_lr: 0.001;
 <h2>Step 5: Comparing Results<a class="headerlink" href="#Step-5:-Comparing-Results" title="Permalink to this headline">¶</a></h2>
 <p>As the performance logs make clear, the mixup training method is extremely effective in combatting overfitting. Whereas the regular model begins to overfit around epoch 7, the network with mixup training continues to improve even after 35 epochs.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="kn">from</span> <span class="nn">fastestimator.visualization.logs</span> <span class="k">import</span> <span class="n">visualize_logs</span>
+<span></span><span class="kn">from</span> <span class="nn">fastestimator.summary</span> <span class="k">import</span> <span class="n">visualize_logs</span>
 
 <span class="n">visualize_logs</span><span class="p">([</span><span class="n">simple_summary</span><span class="p">,</span> <span class="n">mixup_summary</span><span class="p">],</span> <span class="n">ignore_metrics</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;LeNet_lr&quot;</span><span class="p">})</span>
 </pre></div>
@@ -868,7 +877,7 @@ FastEstimator-Finish: step: 35000; total_time: 1287.34 sec; LeNet_lr: 0.001;
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../../../_images/apphub_image_classification_lenet_cifar10_mixup_lenet_cifar10_mixup_29_0.png" src="../../../_images/apphub_image_classification_lenet_cifar10_mixup_lenet_cifar10_mixup_29_0.png" />
+<img alt="../../../_images/apphub_image_classification_lenet_cifar10_mixup_lenet_cifar10_mixup_30_0.png" src="../../../_images/apphub_image_classification_lenet_cifar10_mixup_lenet_cifar10_mixup_30_0.png" />
 </div>
 </div>
 <div class="nbinput nblast docutils container">
@@ -883,7 +892,7 @@ FastEstimator-Finish: step: 35000; total_time: 1287.34 sec; LeNet_lr: 0.001;
 </div>
 </div>
 <p>—</p>
-<p><a class="reference external" href="https://github.com/fastestimator/fastestimator/blob/master/apphub/image_classification/lenet_cifar10_mixup/lenet_cifar10_mixup.ipynb">Link to GitHub</a></p>
+<p><a class="reference external" href="https://github.com/fastestimator/fastestimator/blob/master/apphub/image_classification/lenet_cifar10_mixup/lenet_cifar10_mixup.ipynb">Example Link to GitHub</a></p>
 
 
            </div>
@@ -896,7 +905,7 @@ FastEstimator-Finish: step: 35000; total_time: 1287.34 sec; LeNet_lr: 0.001;
         <a href="../lenet_mnist/lenet_mnist.html" class="btn btn-neutral float-right" title="MNIST Image Classification Using LeNet" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="../lenet_cifar10_adversarial/lenet_cifar10_adversarial.html" class="btn btn-neutral float-left" title="CIFAR10 Image Classification Using LeNet" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="../lenet_cifar10_adversarial/lenet_cifar10_adversarial.html" class="btn btn-neutral float-left" title="CIFAR10 Image Classification Using LeNet with adversarial samples" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

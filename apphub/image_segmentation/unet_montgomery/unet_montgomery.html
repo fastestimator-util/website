@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Lung Segmentation - Montgomery Dataset &mdash; FastEstimator 0.0.1 documentation</title>
+  <title>Lung Segmentation - Montgomery Dataset &mdash; FastEstimator 1.0a0 documentation</title>
   
 
   
@@ -65,7 +65,7 @@
             
             
               <div class="version">
-                1.0a0
+                1.0
               </div>
             
           
@@ -98,13 +98,15 @@
 <li class="toctree-l2"><a class="reference internal" href="../../image_generation.html">Image Generation</a></li>
 <li class="toctree-l2 current"><a class="reference internal" href="../../image_segmentation.html">Image Segmentation</a><ul class="current">
 <li class="toctree-l3"><a class="reference internal" href="../unet_cub200/unet_cub200.html">Image Segmation: Caltech-UCSD Birds 200 Dataset</a></li>
-<li class="toctree-l3 current"><a class="current reference internal" href="#">Lung Segmentation - Montgomery Dataset</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#Download-and-prepare-the-montgomery-dataset">Download and prepare the montgomery dataset</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#Create-TF-Records-from-input-image-and-mask">Create TF Records from input image and mask</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#Create-data-pipeline">Create data pipeline</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#Check-the-results-of-preprocessing">Check the results of preprocessing</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#Creation-of-the-network">Creation of the network</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#Let’s-do-Inference">Let’s do Inference</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Lung Segmentation - Montgomery Dataset</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#Download-and-prepare-the-montgomery-dataset">Download and prepare the montgomery dataset</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Create-TF-Records-from-input-image-and-mask">Create TF Records from input image and mask</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Create-data-pipeline">Create data pipeline</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Check-the-results-of-preprocessing">Check the results of preprocessing</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Creation-of-the-network">Creation of the network</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Let’s-do-Inference">Let’s do Inference</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../../image_styletransfer.html">Image Style Transfer</a></li>
@@ -411,7 +413,6 @@ div.rendered_html tbody tr:hover {
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="o">%</span><span class="k">reload_ext</span> autoreload
 <span class="o">%</span><span class="k">autoreload</span> 2
-<span class="o">%</span><span class="k">matplotlib</span> inline
 </pre></div>
 </div>
 </div>
@@ -439,19 +440,16 @@ div.rendered_html tbody tr:hover {
 <span></span><span class="kn">import</span> <span class="nn">fastestimator</span> <span class="k">as</span> <span class="nn">fe</span>
 <span class="kn">from</span> <span class="nn">fastestimator.architecture</span> <span class="k">import</span> <span class="n">UNet</span>
 <span class="kn">from</span> <span class="nn">fastestimator.dataset</span> <span class="k">import</span> <span class="n">montgomery</span>
-<span class="kn">from</span> <span class="nn">fastestimator.estimator.trace</span> <span class="k">import</span> <span class="n">Dice</span><span class="p">,</span> <span class="n">ModelSaver</span>
-<span class="kn">from</span> <span class="nn">fastestimator.network.loss</span> <span class="k">import</span> <span class="n">BinaryCrossentropy</span>
-<span class="kn">from</span> <span class="nn">fastestimator.network.model</span> <span class="k">import</span> <span class="n">FEModel</span><span class="p">,</span> <span class="n">ModelOp</span>
-<span class="kn">from</span> <span class="nn">fastestimator.pipeline.augmentation</span> <span class="k">import</span> <span class="n">Augmentation2D</span>
-<span class="kn">from</span> <span class="nn">fastestimator.pipeline.processing</span> <span class="k">import</span> <span class="n">Minmax</span>
-<span class="kn">from</span> <span class="nn">fastestimator.record.preprocess</span> <span class="k">import</span> <span class="n">ImageReader</span><span class="p">,</span> <span class="n">Reshape</span><span class="p">,</span> <span class="n">Resize</span>
-<span class="kn">from</span> <span class="nn">fastestimator.util.op</span> <span class="k">import</span> <span class="n">NumpyOp</span>
+<span class="kn">from</span> <span class="nn">fastestimator.trace</span> <span class="k">import</span> <span class="n">Dice</span><span class="p">,</span> <span class="n">ModelSaver</span>
+<span class="kn">from</span> <span class="nn">fastestimator.op.numpyop</span> <span class="k">import</span> <span class="n">ImageReader</span><span class="p">,</span> <span class="n">Reshape</span><span class="p">,</span> <span class="n">Resize</span>
+<span class="kn">from</span> <span class="nn">fastestimator.op.tensorop</span> <span class="k">import</span> <span class="n">Augmentation2D</span><span class="p">,</span> <span class="n">BinaryCrossentropy</span><span class="p">,</span> <span class="n">Minmax</span><span class="p">,</span> <span class="n">ModelOp</span>
+<span class="kn">from</span> <span class="nn">fastestimator.op</span> <span class="k">import</span> <span class="n">NumpyOp</span>
+<span class="kn">from</span> <span class="nn">fastestimator.util</span> <span class="k">import</span> <span class="n">RecordWriter</span>
 </pre></div>
 </div>
 </div>
-</div>
 <div class="section" id="Download-and-prepare-the-montgomery-dataset">
-<h1>Download and prepare the montgomery dataset<a class="headerlink" href="#Download-and-prepare-the-montgomery-dataset" title="Permalink to this headline">¶</a></h1>
+<h2>Download and prepare the montgomery dataset<a class="headerlink" href="#Download-and-prepare-the-montgomery-dataset" title="Permalink to this headline">¶</a></h2>
 <p>The montgomery dataset API will generate a summary CSV file for the data. The path of the csv file is returned as csv_path. The dataset path is returned as path. Inside the CSV file, the file paths are all relative to path.</p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
@@ -537,7 +535,7 @@ div.rendered_html tbody tr:hover {
 </div>
 </div>
 <div class="section" id="Create-TF-Records-from-input-image-and-mask">
-<h1>Create TF Records from input image and mask<a class="headerlink" href="#Create-TF-Records-from-input-image-and-mask" title="Permalink to this headline">¶</a></h1>
+<h2>Create TF Records from input image and mask<a class="headerlink" href="#Create-TF-Records-from-input-image-and-mask" title="Permalink to this headline">¶</a></h2>
 <p>RecordWriter api shall convert the training images and masks into ‘TF Records’. Writing of training dataset into TF-Records is preceded by the following processing of the feature ‘image’, ‘mask_left’ and ‘mask_left’.</p>
 <p>Processing( transformation ) are carried out using ‘Operations’. Operation can be seen as processing step over feature(s). Operation can generate newer feature(s) or can update existing feature(s).</p>
 <p>Preprocessing step for feature ‘image’ : ‘image’ = ImageReader(‘image’) ‘image’ = Resize(‘image’) ‘image’ = Reshape(‘image’)</p>
@@ -561,7 +559,7 @@ div.rendered_html tbody tr:hover {
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">writer</span> <span class="o">=</span> <span class="n">fe</span><span class="o">.</span><span class="n">RecordWriter</span><span class="p">(</span>
+<span></span><span class="n">writer</span> <span class="o">=</span> <span class="n">RecordWriter</span><span class="p">(</span>
         <span class="n">save_dir</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s2">&quot;FEdata&quot;</span><span class="p">),</span>
         <span class="n">train_data</span><span class="o">=</span><span class="n">train_csv_path</span><span class="p">,</span>
         <span class="n">validation_data</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span>
@@ -581,7 +579,7 @@ div.rendered_html tbody tr:hover {
 </div>
 </div>
 <div class="section" id="Create-data-pipeline">
-<h1>Create data pipeline<a class="headerlink" href="#Create-data-pipeline" title="Permalink to this headline">¶</a></h1>
+<h2>Create data pipeline<a class="headerlink" href="#Create-data-pipeline" title="Permalink to this headline">¶</a></h2>
 <p>Pipeline api generates sample batches one at a time, from TF Records. Preprocessing steps on feature ‘image’ and ‘mask’ are as follow: ‘image’ = Augmentation(‘image’) - rotation and flip being the type of augmentation ‘mask’ = Augmentation(‘mask’) - rotation and flip ‘image’ = Minmax(‘image’) ‘mask’ = Minmax(‘mask’)</p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
@@ -590,6 +588,7 @@ div.rendered_html tbody tr:hover {
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="n">batch_size</span><span class="o">=</span><span class="mi">4</span>
 <span class="n">epochs</span> <span class="o">=</span> <span class="mi">25</span>
+<span class="n">steps_per_epoch</span> <span class="o">=</span> <span class="kc">None</span>
 </pre></div>
 </div>
 </div>
@@ -611,7 +610,7 @@ div.rendered_html tbody tr:hover {
 </div>
 </div>
 <div class="section" id="Check-the-results-of-preprocessing">
-<h1>Check the results of preprocessing<a class="headerlink" href="#Check-the-results-of-preprocessing" title="Permalink to this headline">¶</a></h1>
+<h2>Check the results of preprocessing<a class="headerlink" href="#Check-the-results-of-preprocessing" title="Permalink to this headline">¶</a></h2>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
 </pre></div>
@@ -667,7 +666,7 @@ FastEstimator: Found 27 examples for eval in /tmp/.fe/MONTGOMERY/FEdata/eval_sum
 </div>
 </div>
 <div class="section" id="Creation-of-the-network">
-<h1>Creation of the network<a class="headerlink" href="#Creation-of-the-network" title="Permalink to this headline">¶</a></h1>
+<h2>Creation of the network<a class="headerlink" href="#Creation-of-the-network" title="Permalink to this headline">¶</a></h2>
 <p>FEModel api enables to create a model for training. It accepts a function as argument which return tf.keras.model, it also accept optimizer type to perform optimization on network weights.</p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
@@ -676,9 +675,10 @@ FastEstimator: Found 27 examples for eval in /tmp/.fe/MONTGOMERY/FEdata/eval_sum
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="n">model_dir</span><span class="o">=</span><span class="n">tempfile</span><span class="o">.</span><span class="n">mkdtemp</span><span class="p">()</span>
 
-<span class="n">model</span> <span class="o">=</span> <span class="n">FEModel</span><span class="p">(</span><span class="n">model_def</span><span class="o">=</span><span class="k">lambda</span><span class="p">:</span> <span class="n">UNet</span><span class="p">(</span><span class="n">input_size</span><span class="o">=</span><span class="p">(</span><span class="mi">512</span><span class="p">,</span> <span class="mi">512</span><span class="p">,</span> <span class="mi">1</span><span class="p">)),</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">fe</span><span class="o">.</span><span class="n">build</span><span class="p">(</span><span class="n">model_def</span><span class="o">=</span><span class="k">lambda</span><span class="p">:</span> <span class="n">UNet</span><span class="p">(</span><span class="n">input_size</span><span class="o">=</span><span class="p">(</span><span class="mi">512</span><span class="p">,</span> <span class="mi">512</span><span class="p">,</span> <span class="mi">1</span><span class="p">)),</span>
                     <span class="n">model_name</span><span class="o">=</span><span class="s2">&quot;lung_segmentation&quot;</span><span class="p">,</span>
-                    <span class="n">optimizer</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">optimizers</span><span class="o">.</span><span class="n">Adam</span><span class="p">(</span><span class="n">learning_rate</span><span class="o">=</span><span class="mf">0.0001</span><span class="p">))</span>
+                    <span class="n">optimizer</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">optimizers</span><span class="o">.</span><span class="n">Adam</span><span class="p">(</span><span class="n">learning_rate</span><span class="o">=</span><span class="mf">0.0001</span><span class="p">),</span>
+                    <span class="n">loss_name</span><span class="o">=</span><span class="s2">&quot;loss&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -693,7 +693,7 @@ FastEstimator: Found 27 examples for eval in /tmp/.fe/MONTGOMERY/FEdata/eval_sum
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="n">network</span> <span class="o">=</span> <span class="n">fe</span><span class="o">.</span><span class="n">Network</span><span class="p">(</span><span class="n">ops</span><span class="o">=</span><span class="p">[</span>
     <span class="n">ModelOp</span><span class="p">(</span><span class="n">inputs</span><span class="o">=</span><span class="s2">&quot;image&quot;</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">,</span> <span class="n">outputs</span><span class="o">=</span><span class="s2">&quot;pred_segment&quot;</span><span class="p">),</span>
-    <span class="n">BinaryCrossentropy</span><span class="p">(</span><span class="n">y_true</span><span class="o">=</span><span class="s2">&quot;mask&quot;</span><span class="p">,</span> <span class="n">y_pred</span><span class="o">=</span><span class="s2">&quot;pred_segment&quot;</span><span class="p">)</span>
+    <span class="n">BinaryCrossentropy</span><span class="p">(</span><span class="n">y_true</span><span class="o">=</span><span class="s2">&quot;mask&quot;</span><span class="p">,</span> <span class="n">y_pred</span><span class="o">=</span><span class="s2">&quot;pred_segment&quot;</span><span class="p">,</span> <span class="n">outputs</span><span class="o">=</span><span class="s2">&quot;loss&quot;</span><span class="p">)</span>
 <span class="p">])</span>
 </pre></div>
 </div>
@@ -717,7 +717,8 @@ FastEstimator: Found 27 examples for eval in /tmp/.fe/MONTGOMERY/FEdata/eval_sum
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">estimator</span> <span class="o">=</span> <span class="n">fe</span><span class="o">.</span><span class="n">Estimator</span><span class="p">(</span><span class="n">network</span><span class="o">=</span><span class="n">network</span><span class="p">,</span> <span class="n">pipeline</span><span class="o">=</span><span class="n">pipeline</span><span class="p">,</span> <span class="n">epochs</span><span class="o">=</span><span class="n">epochs</span><span class="p">,</span> <span class="n">log_steps</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">traces</span><span class="o">=</span><span class="n">traces</span><span class="p">)</span>
+<span></span><span class="n">estimator</span> <span class="o">=</span> <span class="n">fe</span><span class="o">.</span><span class="n">Estimator</span><span class="p">(</span><span class="n">network</span><span class="o">=</span><span class="n">network</span><span class="p">,</span> <span class="n">pipeline</span><span class="o">=</span><span class="n">pipeline</span><span class="p">,</span> <span class="n">epochs</span><span class="o">=</span><span class="n">epochs</span><span class="p">,</span> <span class="n">log_steps</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span>
+                         <span class="n">traces</span><span class="o">=</span><span class="n">traces</span><span class="p">,</span> <span class="n">steps_per_epoch</span><span class="o">=</span><span class="n">steps_per_epoch</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -732,7 +733,7 @@ FastEstimator: Found 27 examples for eval in /tmp/.fe/MONTGOMERY/FEdata/eval_sum
 </div>
 </div>
 <div class="section" id="Let’s-do-Inference">
-<h1>Let’s do Inference<a class="headerlink" href="#Let’s-do-Inference" title="Permalink to this headline">¶</a></h1>
+<h2>Let’s do Inference<a class="headerlink" href="#Let’s-do-Inference" title="Permalink to this headline">¶</a></h2>
 <p>Inference in done here on validation batch set.</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[19]:
@@ -834,8 +835,9 @@ FastEstimator: Found 27 examples for eval in /tmp/.fe/MONTGOMERY/FEdata/eval_sum
 </div>
 </div>
 </div>
+</div>
 <p>—</p>
-<p><a class="reference external" href="https://github.com/fastestimator/fastestimator/blob/master/apphub/image_segmentation/unet_montgomery/unet_montgomery.ipynb">Link to GitHub</a></p>
+<p><a class="reference external" href="https://github.com/fastestimator/fastestimator/blob/master/apphub/image_segmentation/unet_montgomery/unet_montgomery.ipynb">Example Link to GitHub</a></p>
 
 
            </div>

@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>IMDB Reviews Sentiments prediction with LSTM &mdash; FastEstimator 0.0.1 documentation</title>
+  <title>IMDB Reviews Sentiments prediction with LSTM &mdash; FastEstimator 1.0a0 documentation</title>
   
 
   
@@ -65,7 +65,7 @@
             
             
               <div class="version">
-                1.0a0
+                1.0
               </div>
             
           
@@ -94,11 +94,13 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../learn.html">Learn</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../../../apphub.html">Example</a><ul class="current">
 <li class="toctree-l2 current"><a class="reference internal" href="../../NLP.html">NLP</a><ul class="current">
-<li class="toctree-l3 current"><a class="current reference internal" href="#">IMDB Reviews Sentiments prediction with LSTM</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#Step-1-:-Prepare-training-and-evaluation-dataset,-define-FastEstimator-Pipeline">Step 1 : Prepare training and evaluation dataset, define FastEstimator Pipeline</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#Step-2:-Create-model-and-FastEstimator-Network">Step 2: Create model and FastEstimator Network</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#Step-3:-Prepare-estimator-and-configure-the-training-loop">Step 3: Prepare estimator and configure the training loop</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#Inferencing">Inferencing</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">IMDB Reviews Sentiments prediction with LSTM</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#Step-1-:-Prepare-training-and-evaluation-dataset,-define-FastEstimator-Pipeline">Step 1 : Prepare training and evaluation dataset, define FastEstimator Pipeline</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Step-2:-Create-model-and-FastEstimator-Network">Step 2: Create model and FastEstimator Network</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Step-3:-Prepare-estimator-and-configure-the-training-loop">Step 3: Prepare estimator and configure the training loop</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Inferencing">Inferencing</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../../image_classification.html">Image Classification</a></li>
@@ -414,10 +416,8 @@ div.rendered_html tbody tr:hover {
 <span class="kn">import</span> <span class="nn">fastestimator</span> <span class="k">as</span> <span class="nn">fe</span>
 
 <span class="kn">from</span> <span class="nn">tensorflow.python.keras</span> <span class="k">import</span> <span class="n">layers</span>
-<span class="kn">from</span> <span class="nn">fastestimator.pipeline.processing</span> <span class="k">import</span> <span class="n">Reshape</span>
-<span class="kn">from</span> <span class="nn">fastestimator.network.model</span> <span class="k">import</span> <span class="n">FEModel</span><span class="p">,</span> <span class="n">ModelOp</span>
-<span class="kn">from</span> <span class="nn">fastestimator.network.loss</span> <span class="k">import</span> <span class="n">BinaryCrossentropy</span>
-<span class="kn">from</span> <span class="nn">fastestimator.estimator.trace</span> <span class="k">import</span> <span class="n">Accuracy</span><span class="p">,</span> <span class="n">ModelSaver</span>
+<span class="kn">from</span> <span class="nn">fastestimator.op.tensorop</span> <span class="k">import</span> <span class="n">BinaryCrossentropy</span><span class="p">,</span> <span class="n">ModelOp</span><span class="p">,</span> <span class="n">Reshape</span>
+<span class="kn">from</span> <span class="nn">fastestimator.trace</span> <span class="k">import</span> <span class="n">Accuracy</span><span class="p">,</span> <span class="n">ModelSaver</span>
 <span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s1">&#39;ignore&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -432,12 +432,12 @@ div.rendered_html tbody tr:hover {
 <span class="n">MAX_LEN</span> <span class="o">=</span> <span class="mi">500</span>
 <span class="n">batch_size</span> <span class="o">=</span> <span class="mi">64</span>
 <span class="n">epochs</span> <span class="o">=</span> <span class="mi">10</span>
+<span class="n">steps_per_epoch</span><span class="o">=</span><span class="kc">None</span>
 </pre></div>
 </div>
 </div>
-</div>
 <div class="section" id="Step-1-:-Prepare-training-and-evaluation-dataset,-define-FastEstimator-Pipeline">
-<h1>Step 1 : Prepare training and evaluation dataset, define FastEstimator Pipeline<a class="headerlink" href="#Step-1-:-Prepare-training-and-evaluation-dataset,-define-FastEstimator-Pipeline" title="Permalink to this headline">¶</a></h1>
+<h2>Step 1 : Prepare training and evaluation dataset, define FastEstimator Pipeline<a class="headerlink" href="#Step-1-:-Prepare-training-and-evaluation-dataset,-define-FastEstimator-Pipeline" title="Permalink to this headline">¶</a></h2>
 <p>We are loading the dataset from the tf.keras.datasets.imdb which contains movie reviews and sentiment scores. All the words have been replaced with the integers that specifies the popularity of the word in corpus. To ensure all the sequences are of same length we need to pad the input sequences before defining the Pipeline.</p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[55]:
@@ -481,7 +481,7 @@ div.rendered_html tbody tr:hover {
 </div>
 </div>
 <div class="section" id="Step-2:-Create-model-and-FastEstimator-Network">
-<h1>Step 2: Create model and FastEstimator Network<a class="headerlink" href="#Step-2:-Create-model-and-FastEstimator-Network" title="Permalink to this headline">¶</a></h1>
+<h2>Step 2: Create model and FastEstimator Network<a class="headerlink" href="#Step-2:-Create-model-and-FastEstimator-Network" title="Permalink to this headline">¶</a></h2>
 <p>Following function define the architecture of the model. Model consists of one dimensional convolution layers and LSTM layers to handle longer sequences. The architecture definition needs to be fed into FEModel along with model name and optimizer.</p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[65]:
@@ -506,20 +506,18 @@ div.rendered_html tbody tr:hover {
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">model</span> <span class="o">=</span> <span class="n">FEModel</span><span class="p">(</span><span class="n">model_def</span><span class="o">=</span><span class="n">create_lstm</span><span class="p">,</span>
-                    <span class="n">model_name</span><span class="o">=</span><span class="s1">&#39;lstm_imdb&#39;</span><span class="p">,</span>
-                  <span class="n">optimizer</span><span class="o">=</span><span class="s1">&#39;adam&#39;</span><span class="p">)</span>
+<span></span><span class="n">model</span> <span class="o">=</span> <span class="n">fe</span><span class="o">.</span><span class="n">build</span><span class="p">(</span><span class="n">model_def</span><span class="o">=</span><span class="n">create_lstm</span><span class="p">,</span> <span class="n">model_name</span><span class="o">=</span><span class="s1">&#39;lstm_imdb&#39;</span><span class="p">,</span> <span class="n">optimizer</span><span class="o">=</span><span class="s1">&#39;adam&#39;</span><span class="p">,</span> <span class="n">loss_name</span><span class="o">=</span><span class="s2">&quot;loss&quot;</span><span class="p">)</span>
 <span class="c1">#define the network</span>
 <span class="n">network</span> <span class="o">=</span> <span class="n">fe</span><span class="o">.</span><span class="n">Network</span><span class="p">(</span><span class="n">ops</span><span class="o">=</span><span class="p">[</span>
         <span class="n">ModelOp</span><span class="p">(</span><span class="n">inputs</span><span class="o">=</span><span class="s2">&quot;x&quot;</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">,</span> <span class="n">outputs</span><span class="o">=</span><span class="s2">&quot;y_pred&quot;</span><span class="p">),</span>
-                        <span class="n">BinaryCrossentropy</span><span class="p">(</span><span class="n">y_true</span><span class="o">=</span><span class="s2">&quot;y&quot;</span><span class="p">,</span> <span class="n">y_pred</span><span class="o">=</span><span class="s2">&quot;y_pred&quot;</span><span class="p">)</span>
+                        <span class="n">BinaryCrossentropy</span><span class="p">(</span><span class="n">y_true</span><span class="o">=</span><span class="s2">&quot;y&quot;</span><span class="p">,</span> <span class="n">y_pred</span><span class="o">=</span><span class="s2">&quot;y_pred&quot;</span><span class="p">,</span> <span class="n">outputs</span><span class="o">=</span><span class="s2">&quot;loss&quot;</span><span class="p">)</span>
     <span class="p">])</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="section" id="Step-3:-Prepare-estimator-and-configure-the-training-loop">
-<h1>Step 3: Prepare estimator and configure the training loop<a class="headerlink" href="#Step-3:-Prepare-estimator-and-configure-the-training-loop" title="Permalink to this headline">¶</a></h1>
+<h2>Step 3: Prepare estimator and configure the training loop<a class="headerlink" href="#Step-3:-Prepare-estimator-and-configure-the-training-loop" title="Permalink to this headline">¶</a></h2>
 <p>In the training loop, we want to measure the validation loss and save the model that has the minimum loss. ModelSaver and Accuracy in the Trace class provide this convenient feature of storing the model.</p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[67]:
@@ -538,9 +536,7 @@ div.rendered_html tbody tr:hover {
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">estimator</span> <span class="o">=</span> <span class="n">fe</span><span class="o">.</span><span class="n">Estimator</span><span class="p">(</span><span class="n">network</span><span class="o">=</span><span class="n">network</span><span class="p">,</span>
-                             <span class="n">pipeline</span><span class="o">=</span><span class="n">pipeline</span><span class="p">,</span>
-                             <span class="n">epochs</span><span class="o">=</span><span class="n">epochs</span><span class="p">,</span>
+<span></span><span class="n">estimator</span> <span class="o">=</span> <span class="n">fe</span><span class="o">.</span><span class="n">Estimator</span><span class="p">(</span><span class="n">network</span><span class="o">=</span><span class="n">network</span><span class="p">,</span> <span class="n">steps_per_epoch</span><span class="o">=</span><span class="n">steps_per_epoch</span><span class="p">,</span> <span class="n">pipeline</span><span class="o">=</span><span class="n">pipeline</span><span class="p">,</span> <span class="n">epochs</span><span class="o">=</span><span class="n">epochs</span><span class="p">,</span>
                              <span class="n">traces</span><span class="o">=</span><span class="n">traces</span><span class="p">)</span>
 <span class="n">estimator</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
 </pre></div>
@@ -618,7 +614,7 @@ FastEstimator-Finish: step: 3900; total_time: 1034.67 sec; lstm_imdb_lr: 0.001;
 </div>
 </div>
 <div class="section" id="Inferencing">
-<h1>Inferencing<a class="headerlink" href="#Inferencing" title="Permalink to this headline">¶</a></h1>
+<h2>Inferencing<a class="headerlink" href="#Inferencing" title="Permalink to this headline">¶</a></h2>
 <p>The best model is stored in temporary directory. We can load the model and perform the inference on sampled sequence from evaluation set.</p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[69]:
@@ -664,8 +660,9 @@ Prediction for the input sequence:  [[0.01495596]]
 </div>
 </div>
 </div>
+</div>
 <p>—</p>
-<p><a class="reference external" href="https://github.com/fastestimator/fastestimator/blob/master/apphub/NLP/lstm_imdb/lstm_imdb.ipynb">Link to GitHub</a></p>
+<p><a class="reference external" href="https://github.com/fastestimator/fastestimator/blob/master/apphub/NLP/lstm_imdb/lstm_imdb.ipynb">Example Link to GitHub</a></p>
 
 
            </div>

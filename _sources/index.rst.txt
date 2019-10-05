@@ -8,4 +8,3 @@ Welcome to FastEstimator's documentation!
    learn
    apphub
    api
-  

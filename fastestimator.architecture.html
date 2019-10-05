@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>architecture &mdash; FastEstimator 0.0.1 documentation</title>
+  <title>architecture &mdash; FastEstimator 1.0a0 documentation</title>
   
 
   
@@ -65,7 +65,7 @@
             
             
               <div class="version">
-                1.0a0
+                1.0
               </div>
             
           
@@ -476,12 +476,23 @@ for each.</p>
 <p>U-Net architecture.</p>
 <dl class="function">
 <dt id="fastestimator.architecture.unet.UNet">
-<code class="sig-prename descclassname">fastestimator.architecture.unet.</code><code class="sig-name descname">UNet</code><span class="sig-paren">(</span><em class="sig-param">input_size=(128</em>, <em class="sig-param">128</em>, <em class="sig-param">3)</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/architecture/unet.html#UNet"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.architecture.unet.UNet" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">fastestimator.architecture.unet.</code><code class="sig-name descname">UNet</code><span class="sig-paren">(</span><em class="sig-param">input_size=(128</em>, <em class="sig-param">128</em>, <em class="sig-param">3)</em>, <em class="sig-param">dropout=0.5</em>, <em class="sig-param">nchannels=(64</em>, <em class="sig-param">128</em>, <em class="sig-param">256</em>, <em class="sig-param">512</em>, <em class="sig-param">1024)</em>, <em class="sig-param">nclasses=1</em>, <em class="sig-param">bn=None</em>, <em class="sig-param">activation='relu'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/architecture/unet.html#UNet"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.architecture.unet.UNet" title="Permalink to this definition">¶</a></dt>
 <dd><p>Creates a U-Net model.
-This U-Net model is composed of 5 “contracting blocks” and 5 “expansive blocks”.</p>
+This U-Net model is composed of len(nchannels) “contracting blocks” and len(nchannels) “expansive blocks”.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>input_size</strong> (<em>tuple</em><em>, </em><em>optional</em>) – Shape of input image. Defaults to (128, 128, 3).</p>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>input_size</strong> (<em>tuple</em><em>, </em><em>optional</em>) – Shape of input image. Defaults to (128, 128, 3).</p></li>
+<li><p><strong>dropout</strong> – If None, applies no dropout; Otherwise, applies dropout of probability equal
+to the parameter value (0-1 only)</p></li>
+<li><p><strong>nchannels</strong> – Number of channels for each conv block; len(nchannels) decides number of blocks</p></li>
+<li><p><strong>nclasses</strong> – Number of target classes for segmentation</p></li>
+<li><p><strong>bn</strong> – [None, before, after] adds batchnorm layers across every convolution,
+before indicates adding BN before activation function is applied
+after indicates adding BN after activation function is applied
+Check <a class="reference external" href="https://github.com/ducha-aiki/caffenet-benchmark/blob/master/batchnorm.md">https://github.com/ducha-aiki/caffenet-benchmark/blob/master/batchnorm.md</a> for related ablations!</p></li>
+<li><p><strong>activation</strong> – Standard Keras activation functions</p></li>
+</ul>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>U-Net model.</p>
@@ -491,6 +502,21 @@ This U-Net model is composed of 5 “contracting blocks” and 5 “expansive bl
 </dd>
 </dl>
 </dd></dl>
+
+<dl class="function">
+<dt id="fastestimator.architecture.unet.conv_block">
+<code class="sig-prename descclassname">fastestimator.architecture.unet.</code><code class="sig-name descname">conv_block</code><span class="sig-paren">(</span><em class="sig-param">inp</em>, <em class="sig-param">nchannels</em>, <em class="sig-param">window</em>, <em class="sig-param">config</em>, <em class="sig-param">pooling=None</em>, <em class="sig-param">dropout=None</em>, <em class="sig-param">bn=False</em>, <em class="sig-param">activation=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/architecture/unet.html#conv_block"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.architecture.unet.conv_block" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="fastestimator.architecture.unet.upsample">
+<code class="sig-prename descclassname">fastestimator.architecture.unet.</code><code class="sig-name descname">upsample</code><span class="sig-paren">(</span><em class="sig-param">inp</em>, <em class="sig-param">factor</em>, <em class="sig-param">nchannels</em>, <em class="sig-param">config</em>, <em class="sig-param">bn=None</em>, <em class="sig-param">activation=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/architecture/unet.html#upsample"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.architecture.unet.upsample" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="fastestimator.architecture.unet.up_concat">
+<code class="sig-prename descclassname">fastestimator.architecture.unet.</code><code class="sig-name descname">up_concat</code><span class="sig-paren">(</span><em class="sig-param">conv_pooled</em>, <em class="sig-param">conv</em>, <em class="sig-param">factor</em>, <em class="sig-param">nchannels</em>, <em class="sig-param">window</em>, <em class="sig-param">config</em>, <em class="sig-param">dropout=None</em>, <em class="sig-param">bn=None</em>, <em class="sig-param">activation=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/architecture/unet.html#up_concat"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.architecture.unet.up_concat" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
 </div>
 </div>

@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Convolutional Variational Autoencoder example using MNIST dataset &mdash; FastEstimator 0.0.1 documentation</title>
+  <title>Convolutional Variational Autoencoder example using MNIST dataset &mdash; FastEstimator 1.0a0 documentation</title>
   
 
   
@@ -65,7 +65,7 @@
             
             
               <div class="version">
-                1.0a0
+                1.0
               </div>
             
           
@@ -425,10 +425,10 @@ div.rendered_html tbody tr:hover {
 <span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
 
 <span class="kn">import</span> <span class="nn">fastestimator</span> <span class="k">as</span> <span class="nn">fe</span>
-<span class="kn">from</span> <span class="nn">fastestimator.estimator.trace</span> <span class="k">import</span> <span class="n">ModelSaver</span>
-<span class="kn">from</span> <span class="nn">fastestimator.network.loss</span> <span class="k">import</span> <span class="n">Loss</span>
-<span class="kn">from</span> <span class="nn">fastestimator.network.model</span> <span class="k">import</span> <span class="n">FEModel</span><span class="p">,</span> <span class="n">ModelOp</span>
-<span class="kn">from</span> <span class="nn">fastestimator.util.op</span> <span class="k">import</span> <span class="n">TensorOp</span>
+<span class="kn">from</span> <span class="nn">fastestimator.trace</span> <span class="k">import</span> <span class="n">ModelSaver</span>
+<span class="kn">from</span> <span class="nn">fastestimator.op</span> <span class="k">import</span> <span class="n">TensorOp</span>
+<span class="kn">from</span> <span class="nn">fastestimator.op.tensorop</span> <span class="k">import</span> <span class="n">Loss</span><span class="p">,</span> <span class="n">ModelOp</span>
+<span class="kn">from</span> <span class="nn">fastestimator.trace</span> <span class="k">import</span> <span class="n">ModelSaver</span>
 </pre></div>
 </div>
 </div>
@@ -449,6 +449,18 @@ div.rendered_html tbody tr:hover {
 <div class="section" id="Step-1---Data-and-pipeline-preparation">
 <h2>Step 1 - Data and pipeline preparation<a class="headerlink" href="#Step-1---Data-and-pipeline-preparation" title="Permalink to this headline">¶</a></h2>
 <p>In this step, we will load MNIST training and validation datasets and prepare FastEstimator’s pipeline.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="c1">#training parameters</span>
+<span class="n">epochs</span> <span class="o">=</span> <span class="mi">100</span>
+<span class="n">batch_size</span> <span class="o">=</span> <span class="mi">100</span>
+<span class="n">steps_per_epoch</span> <span class="o">=</span> <span class="kc">None</span>
+</pre></div>
+</div>
+</div>
 <div class="section" id="Dataset">
 <h3>Dataset<a class="headerlink" href="#Dataset" title="Permalink to this headline">¶</a></h3>
 <div class="nbinput docutils container">
@@ -474,7 +486,7 @@ div.rendered_html tbody tr:hover {
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../../../_images/apphub_image_generation_cvae_mnist_cvae_mnist_8_0.png" src="../../../_images/apphub_image_generation_cvae_mnist_cvae_mnist_8_0.png" />
+<img alt="../../../_images/apphub_image_generation_cvae_mnist_cvae_mnist_9_0.png" src="../../../_images/apphub_image_generation_cvae_mnist_cvae_mnist_9_0.png" />
 </div>
 </div>
 </div>
@@ -522,11 +534,7 @@ div.rendered_html tbody tr:hover {
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="c1"># Prepare pipeline for a specific batch size</span>
-
-<span class="n">batch_size</span><span class="o">=</span><span class="mi">100</span>
-
-<span class="c1"># We indicate in a dictionary data names for each dataset and the corresponding array.</span>
+<span></span><span class="c1"># We indicate in a dictionary data names for each dataset and the corresponding array.</span>
 <span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;train&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;x&quot;</span><span class="p">:</span> <span class="n">x_train</span><span class="p">},</span> <span class="s2">&quot;eval&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;x&quot;</span><span class="p">:</span> <span class="n">x_eval</span><span class="p">}}</span>
 
 <span class="c1"># Pipeline compiles batch size, datasets and preprocessing</span>
@@ -639,7 +647,7 @@ div.rendered_html tbody tr:hover {
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="c1"># Prepare/Compile models</span>
 
-<span class="n">enc_model</span> <span class="o">=</span> <span class="n">FEModel</span><span class="p">(</span><span class="n">model_def</span><span class="o">=</span><span class="n">encoder_net</span><span class="p">,</span>
+<span class="n">enc_model</span> <span class="o">=</span> <span class="n">fe</span><span class="o">.</span><span class="n">build</span><span class="p">(</span><span class="n">model_def</span><span class="o">=</span><span class="n">encoder_net</span><span class="p">,</span>
 
                       <span class="n">model_name</span><span class="o">=</span><span class="s2">&quot;encoder&quot;</span><span class="p">,</span>
 
@@ -647,7 +655,7 @@ div.rendered_html tbody tr:hover {
 
                       <span class="n">optimizer</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">optimizers</span><span class="o">.</span><span class="n">Adam</span><span class="p">(</span><span class="mf">1e-4</span><span class="p">))</span>
 
-<span class="n">gen_model</span> <span class="o">=</span> <span class="n">FEModel</span><span class="p">(</span><span class="n">model_def</span><span class="o">=</span><span class="n">generative_net</span><span class="p">,</span>
+<span class="n">gen_model</span> <span class="o">=</span> <span class="n">fe</span><span class="o">.</span><span class="n">build</span><span class="p">(</span><span class="n">model_def</span><span class="o">=</span><span class="n">generative_net</span><span class="p">,</span>
 
                     <span class="n">model_name</span><span class="o">=</span><span class="s2">&quot;decoder&quot;</span><span class="p">,</span>
 
@@ -752,7 +760,7 @@ div.rendered_html tbody tr:hover {
 
     <span class="n">ModelOp</span><span class="p">(</span><span class="n">inputs</span><span class="o">=</span><span class="s2">&quot;z&quot;</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">gen_model</span><span class="p">,</span> <span class="n">outputs</span><span class="o">=</span><span class="s2">&quot;x_logit&quot;</span><span class="p">),</span>
 
-    <span class="n">CVAELoss</span><span class="p">(</span><span class="n">inputs</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;x&quot;</span><span class="p">,</span> <span class="s2">&quot;mean&quot;</span><span class="p">,</span> <span class="s2">&quot;logvar&quot;</span><span class="p">,</span> <span class="s2">&quot;z&quot;</span><span class="p">,</span> <span class="s2">&quot;x_logit&quot;</span><span class="p">),</span> <span class="n">mode</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+    <span class="n">CVAELoss</span><span class="p">(</span><span class="n">inputs</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;x&quot;</span><span class="p">,</span> <span class="s2">&quot;mean&quot;</span><span class="p">,</span> <span class="s2">&quot;logvar&quot;</span><span class="p">,</span> <span class="s2">&quot;z&quot;</span><span class="p">,</span> <span class="s2">&quot;x_logit&quot;</span><span class="p">),</span> <span class="n">mode</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">outputs</span><span class="o">=</span><span class="s2">&quot;loss&quot;</span><span class="p">)</span>
 
 <span class="p">])</span>
 </pre></div>
@@ -768,10 +776,7 @@ div.rendered_html tbody tr:hover {
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="c1"># Parameters</span>
-<span class="n">epochs</span><span class="o">=</span><span class="mi">100</span>
-
-<span class="n">model_dir</span><span class="o">=</span><span class="n">tempfile</span><span class="o">.</span><span class="n">mkdtemp</span><span class="p">()</span>
+<span></span><span class="n">model_dir</span><span class="o">=</span><span class="n">tempfile</span><span class="o">.</span><span class="n">mkdtemp</span><span class="p">()</span>
 
 <span class="c1"># Estimator</span>
 <span class="n">estimator</span> <span class="o">=</span> <span class="n">fe</span><span class="o">.</span><span class="n">Estimator</span><span class="p">(</span><span class="n">network</span><span class="o">=</span><span class="n">network</span><span class="p">,</span>
@@ -779,6 +784,8 @@ div.rendered_html tbody tr:hover {
                          <span class="n">pipeline</span><span class="o">=</span><span class="n">pipeline</span><span class="p">,</span>
 
                          <span class="n">epochs</span><span class="o">=</span><span class="n">epochs</span><span class="p">,</span>
+
+                         <span class="n">steps_per_epoch</span><span class="o">=</span><span class="n">steps_per_epoch</span><span class="p">,</span>
 
                          <span class="n">traces</span><span class="o">=</span><span class="p">[</span><span class="n">ModelSaver</span><span class="p">(</span><span class="n">model_name</span><span class="o">=</span><span class="s2">&quot;decoder&quot;</span><span class="p">,</span> <span class="n">save_dir</span><span class="o">=</span><span class="n">model_dir</span><span class="p">,</span> <span class="n">save_best</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
                                  <span class="n">ModelSaver</span><span class="p">(</span><span class="n">model_name</span><span class="o">=</span><span class="s2">&quot;encoder&quot;</span><span class="p">,</span> <span class="n">save_dir</span><span class="o">=</span><span class="n">model_dir</span><span class="p">,</span> <span class="n">save_best</span><span class="o">=</span><span class="kc">True</span><span class="p">)])</span>
@@ -900,7 +907,7 @@ test image idx 3760
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../../../_images/apphub_image_generation_cvae_mnist_cvae_mnist_46_0.png" src="../../../_images/apphub_image_generation_cvae_mnist_cvae_mnist_46_0.png" />
+<img alt="../../../_images/apphub_image_generation_cvae_mnist_cvae_mnist_47_0.png" src="../../../_images/apphub_image_generation_cvae_mnist_cvae_mnist_47_0.png" />
 </div>
 </div>
 <div class="nbinput nblast docutils container">
@@ -916,7 +923,7 @@ test image idx 3760
 </div>
 </div>
 <p>—</p>
-<p><a class="reference external" href="https://github.com/fastestimator/fastestimator/blob/master/apphub/image_generation/cvae_mnist/cvae_mnist.ipynb">Link to GitHub</a></p>
+<p><a class="reference external" href="https://github.com/fastestimator/fastestimator/blob/master/apphub/image_generation/cvae_mnist/cvae_mnist.ipynb">Example Link to GitHub</a></p>
 
 
            </div>

@@ -7,7 +7,8 @@ op
    :show-inheritance:
 
 .. toctree::
-
+   :maxdepth: 1
+   
    fastestimator.op.numpyop
    fastestimator.op.tensorop
 

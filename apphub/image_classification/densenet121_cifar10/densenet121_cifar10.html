@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Cifar10 Image Classification Using DenseNet-121 &mdash; FastEstimator 0.0.1 documentation</title>
+  <title>CIFAR10 Image Classification Using DenseNet-121 &mdash; FastEstimator 1.0a0 documentation</title>
   
 
   
@@ -40,7 +40,7 @@
   <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" />
-    <link rel="next" title="CIFAR10 Image Classification Using LeNet" href="../lenet_cifar10_adversarial/lenet_cifar10_adversarial.html" />
+    <link rel="next" title="CIFAR10 Image Classification Using LeNet with adversarial samples" href="../lenet_cifar10_adversarial/lenet_cifar10_adversarial.html" />
     <link rel="prev" title="Image Classification" href="../../image_classification.html" /> 
 </head>
 
@@ -65,7 +65,7 @@
             
             
               <div class="version">
-                1.0a0
+                1.0
               </div>
             
           
@@ -95,7 +95,7 @@
 <li class="toctree-l1 current"><a class="reference internal" href="../../../apphub.html">Example</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="../../NLP.html">NLP</a></li>
 <li class="toctree-l2 current"><a class="reference internal" href="../../image_classification.html">Image Classification</a><ul class="current">
-<li class="toctree-l3 current"><a class="current reference internal" href="#">Cifar10 Image Classification Using DenseNet-121</a><ul>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">CIFAR10 Image Classification Using DenseNet-121</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#Basic-import">Basic import</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#Step1:-Create-FastEstimator-Pipeline">Step1: Create FastEstimator <code class="docutils literal notranslate"><span class="pre">Pipeline</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#Step2:-Create-FastEstimator-Network">Step2: Create FastEstimator <code class="docutils literal notranslate"><span class="pre">Network</span></code></a></li>
@@ -104,11 +104,9 @@
 <li class="toctree-l4"><a class="reference internal" href="#Validate-Model">Validate Model</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="../lenet_cifar10_adversarial/lenet_cifar10_adversarial.html">CIFAR10 Image Classification Using LeNet</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../lenet_cifar10_mixup/lenet_cifar10_mixup.html">CIFAR10 Image Classification Using LeNet</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../lenet_cifar10_adversarial/lenet_cifar10_adversarial.html">CIFAR10 Image Classification Using LeNet with adversarial samples</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../lenet_cifar10_mixup/lenet_cifar10_mixup.html">CIFAR10 Image Classification Using LeNet with mixup</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../lenet_mnist/lenet_mnist.html">MNIST Image Classification Using LeNet</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../lenet_mnist/lenet_mnist.html#Step-3:-Configure-training,-create-Estimator">Step 3: Configure training, create <code class="docutils literal notranslate"><span class="pre">Estimator</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="../lenet_mnist/lenet_mnist.html#Start-Training">Start Training</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../../image_generation.html">Image Generation</a></li>
@@ -167,7 +165,7 @@
         
           <li><a href="../../image_classification.html">Image Classification</a> &raquo;</li>
         
-      <li>Cifar10 Image Classification Using DenseNet-121</li>
+      <li>CIFAR10 Image Classification Using DenseNet-121</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -408,8 +406,8 @@ div.rendered_html tbody tr:hover {
     text-align: unset;
 }
 </style>
-<div class="section" id="Cifar10-Image-Classification-Using-DenseNet-121">
-<h1>Cifar10 Image Classification Using DenseNet-121<a class="headerlink" href="#Cifar10-Image-Classification-Using-DenseNet-121" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="CIFAR10-Image-Classification-Using-DenseNet-121">
+<h1>CIFAR10 Image Classification Using DenseNet-121<a class="headerlink" href="#CIFAR10-Image-Classification-Using-DenseNet-121" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="Basic-import">
 <h2>Basic import<a class="headerlink" href="#Basic-import" title="Permalink to this headline">¶</a></h2>
 <div class="nbinput nblast docutils container">
@@ -454,17 +452,29 @@ eval image shape is (10000, 32, 32, 3)
 eval label shape is (10000, 1)
 </pre></div></div>
 </div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="c1">#Parameters</span>
+<span class="n">epochs</span> <span class="o">=</span> <span class="mi">50</span>
+<span class="n">steps_per_epoch</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="n">batch_size</span> <span class="o">=</span> <span class="mi">64</span>
+</pre></div>
+</div>
+</div>
 </div>
 <div class="section" id="Define-Pipeline">
 <h3>Define <code class="docutils literal notranslate"><span class="pre">Pipeline</span></code><a class="headerlink" href="#Define-Pipeline" title="Permalink to this headline">¶</a></h3>
 <p><code class="docutils literal notranslate"><span class="pre">Pipeline</span></code> is the object that define how the training and evaulation data being ingested to the network. It has three basic arguments: * <strong>batch_size</strong>: (int) The batch size * <strong>data</strong>: (dict) the data source. It should be the nested dictionary like {“mode1”: {“feature1”: numpy_array, “feature2”: numpy_array, …}, …} * <strong>ops</strong>: (list, obj) The list of pipeline processs block. For this example, we only use Minmax, so it can be the object.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="kn">from</span> <span class="nn">fastestimator.pipeline.processing</span> <span class="k">import</span> <span class="n">Minmax</span>
-<span class="n">batch_size</span> <span class="o">=</span> <span class="mi">64</span>
+<span></span><span class="kn">from</span> <span class="nn">fastestimator.op.tensorop</span> <span class="k">import</span> <span class="n">Minmax</span>
+<span class="n">batch_size</span> <span class="o">=</span> <span class="n">batch_size</span>
 <span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;train&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;x&quot;</span><span class="p">:</span> <span class="n">x_train</span><span class="p">,</span>
                   <span class="s2">&quot;y&quot;</span><span class="p">:</span> <span class="n">y_train</span><span class="p">},</span>
         <span class="s2">&quot;eval&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;x&quot;</span><span class="p">:</span> <span class="n">x_eval</span><span class="p">,</span>
@@ -480,7 +490,7 @@ eval label shape is (10000, 1)
 <p>Once the pipeline was created, it is better to validate it with pipeline method, <strong>show_results</strong>, which will return a sample batch of pipeline data that give you a clue of how it works.</p>
 <p>Because the pipeline has two different modes, “train” and “eval”, we can take a looks of both examples.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -515,7 +525,7 @@ the shape of eval label batch is (64, 1)
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../../../_images/apphub_image_classification_densenet121_cifar10_densenet121_cifar10_8_1.png" src="../../../_images/apphub_image_classification_densenet121_cifar10_densenet121_cifar10_8_1.png" />
+<img alt="../../../_images/apphub_image_classification_densenet121_cifar10_densenet121_cifar10_9_1.png" src="../../../_images/apphub_image_classification_densenet121_cifar10_densenet121_cifar10_9_1.png" />
 </div>
 </div>
 </div>
@@ -524,7 +534,7 @@ the shape of eval label batch is (64, 1)
 <p>There are totally three keys in the pipeline 1. “y”: the label 2. “x”: the input image 3. “x2”: the processed output image. In the previous example we only validate the input image. We still need to validate the processed output image, since it will be the actual input data source for the network after all.</p>
 <p>The image process chain only has Minmax operation, which will map the minimum pixel value to 0 and maximum to 1.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -555,7 +565,7 @@ In eval_sample[&#34;x2&#34;] the max is 1.0, the min is 0.0
 <h3>Define Keras Model Function<a class="headerlink" href="#Define-Keras-Model-Function" title="Permalink to this headline">¶</a></h3>
 <p>The Model architecture of Fastestimator is defined by Tensorflow API (Keras). Here we used the pre-defined Keras function for building DensNet-121, and follow it by the custom layer to make it fit the Cifar10 dataset.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -576,14 +586,13 @@ In eval_sample[&#34;x2&#34;] the max is 1.0, the min is 0.0
 <h3>Define <code class="docutils literal notranslate"><span class="pre">FEModel</span></code> from Keras<a class="headerlink" href="#Define-FEModel-from-Keras" title="Permalink to this headline">¶</a></h3>
 <p>Here We build <code class="docutils literal notranslate"><span class="pre">FEModel</span></code> from Keras model function. It has four arguments: * <strong>model_def</strong>: The model definition function. * <strong>model_name</strong>: The name of the model. It will be used when storing the model. * <strong>optimizer</strong>: The optimizer. It can either be str or tf.optimizers object. * <strong>loss_name</strong>: The name of the loss. Pleas be aware it is the dictionary key name and will be used in <code class="docutils literal notranslate"><span class="pre">Network</span></code> definition.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="kn">from</span> <span class="nn">fastestimator.network.model</span> <span class="k">import</span> <span class="n">FEModel</span><span class="p">,</span> <span class="n">ModelOp</span>
-<span class="kn">from</span> <span class="nn">fastestimator.network.loss</span> <span class="k">import</span> <span class="n">SparseCategoricalCrossentropy</span>
+<span></span><span class="kn">from</span> <span class="nn">fastestimator.op.tensorop</span> <span class="k">import</span> <span class="n">ModelOp</span><span class="p">,</span> <span class="n">SparseCategoricalCrossentropy</span>
 
-<span class="n">model</span> <span class="o">=</span> <span class="n">FEModel</span><span class="p">(</span><span class="n">model_def</span><span class="o">=</span><span class="n">DenseNet121_cifar10</span><span class="p">,</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">fe</span><span class="o">.</span><span class="n">build</span><span class="p">(</span><span class="n">model_def</span><span class="o">=</span><span class="n">DenseNet121_cifar10</span><span class="p">,</span>
                 <span class="n">model_name</span><span class="o">=</span><span class="s2">&quot;densenet121&quot;</span><span class="p">,</span>
                 <span class="n">optimizer</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">optimizers</span><span class="o">.</span><span class="n">Adam</span><span class="p">(</span><span class="n">lr</span><span class="o">=</span><span class="mf">0.1</span><span class="p">),</span>
                 <span class="n">loss_name</span><span class="o">=</span><span class="s2">&quot;loss&quot;</span><span class="p">)</span>
@@ -595,7 +604,7 @@ In eval_sample[&#34;x2&#34;] the max is 1.0, the min is 0.0
 <h3>Define <code class="docutils literal notranslate"><span class="pre">Network</span></code> from <code class="docutils literal notranslate"><span class="pre">FEMode</span></code><a class="headerlink" href="#Define-Network-from-FEMode" title="Permalink to this headline">¶</a></h3>
 <p>So far we already have <code class="docutils literal notranslate"><span class="pre">FEmodel</span></code> and <code class="docutils literal notranslate"><span class="pre">Pipeline</span></code>, but how those networks connect to each other is still not defined yet. <code class="docutils literal notranslate"><span class="pre">Network</span></code> API is created for this reason. Its input argument is a list of operations each have IO “keys”. By sharing the keys, those operations can connect in the way you like.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -614,19 +623,20 @@ In eval_sample[&#34;x2&#34;] the max is 1.0, the min is 0.0
 <p><code class="docutils literal notranslate"><span class="pre">Estimator</span></code> is the APi that wrap up the <code class="docutils literal notranslate"><span class="pre">Pipeline</span></code>, <code class="docutils literal notranslate"><span class="pre">Network</span></code> and other training metadata together. The <code class="docutils literal notranslate"><span class="pre">Estimator</span></code> basically have 4 arguments: * <strong>pipeline</strong>: the pipeline * <strong>network</strong> the network * <strong>epoch</strong> the epoch number of training * <strong>traces</strong> the list of <code class="docutils literal notranslate"><span class="pre">trace</span></code> object. They are pretty like the callbacks of Keras. The trace object will be called on specific timing during the training. Here we used <strong>Accuracy</strong> for getting model accuracy, <strong>ModelSaver</strong> for saving the best
 model checkpoint, and <strong>LRController</strong> for adapting learning rate.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[30]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="kn">import</span> <span class="nn">tempfile.mkdtemp</span><span class="p">()</span>
-<span class="kn">from</span> <span class="nn">fastestimator.estimator.trace</span> <span class="k">import</span> <span class="n">Accuracy</span><span class="p">,</span> <span class="n">ModelSaver</span><span class="p">,</span> <span class="n">LRController</span><span class="p">,</span> <span class="n">TensorBoard</span>
+<span></span><span class="kn">import</span> <span class="nn">tempfile</span>
+<span class="kn">from</span> <span class="nn">fastestimator.trace</span> <span class="k">import</span> <span class="n">Accuracy</span><span class="p">,</span> <span class="n">ModelSaver</span><span class="p">,</span> <span class="n">LRController</span><span class="p">,</span> <span class="n">TensorBoard</span>
 
 <span class="n">save_dir</span> <span class="o">=</span> <span class="n">tempfile</span><span class="o">.</span><span class="n">mkdtemp</span><span class="p">()</span>
 
 <span class="n">estimator</span> <span class="o">=</span> <span class="n">fe</span><span class="o">.</span><span class="n">Estimator</span><span class="p">(</span>
     <span class="n">network</span><span class="o">=</span><span class="n">network</span><span class="p">,</span>
     <span class="n">pipeline</span><span class="o">=</span><span class="n">pipeline</span><span class="p">,</span>
-    <span class="n">epochs</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span>
+    <span class="n">epochs</span><span class="o">=</span><span class="n">epochs</span><span class="p">,</span>
+    <span class="n">steps_per_epoch</span><span class="o">=</span><span class="n">steps_per_epoch</span><span class="p">,</span>
     <span class="n">traces</span><span class="o">=</span><span class="p">[</span>
         <span class="n">Accuracy</span><span class="p">(</span><span class="n">true_key</span><span class="o">=</span><span class="s2">&quot;y&quot;</span><span class="p">,</span> <span class="n">pred_key</span><span class="o">=</span><span class="s2">&quot;y_pred&quot;</span><span class="p">),</span>
         <span class="n">ModelSaver</span><span class="p">(</span><span class="n">model_name</span><span class="o">=</span><span class="s2">&quot;densenet121&quot;</span><span class="p">,</span> <span class="n">save_dir</span><span class="o">=</span><span class="n">save_dir</span><span class="p">,</span> <span class="n">save_best</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
@@ -714,13 +724,13 @@ the ground truth label is [1], and the prediction is [1]
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../../../_images/apphub_image_classification_densenet121_cifar10_densenet121_cifar10_27_1.png" src="../../../_images/apphub_image_classification_densenet121_cifar10_densenet121_cifar10_27_1.png" />
+<img alt="../../../_images/apphub_image_classification_densenet121_cifar10_densenet121_cifar10_28_1.png" src="../../../_images/apphub_image_classification_densenet121_cifar10_densenet121_cifar10_28_1.png" />
 </div>
 </div>
 </div>
 </div>
 <p>—</p>
-<p><a class="reference external" href="https://github.com/fastestimator/fastestimator/blob/master/apphub/image_classification/densenet121_cifar10/densenet121_cifar10.ipynb">Link to GitHub</a></p>
+<p><a class="reference external" href="https://github.com/fastestimator/fastestimator/blob/master/apphub/image_classification/densenet121_cifar10/densenet121_cifar10.ipynb">Example Link to GitHub</a></p>
 
 
            </div>
@@ -730,7 +740,7 @@ the ground truth label is [1], and the prediction is [1]
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../lenet_cifar10_adversarial/lenet_cifar10_adversarial.html" class="btn btn-neutral float-right" title="CIFAR10 Image Classification Using LeNet" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="../lenet_cifar10_adversarial/lenet_cifar10_adversarial.html" class="btn btn-neutral float-right" title="CIFAR10 Image Classification Using LeNet with adversarial samples" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="../../image_classification.html" class="btn btn-neutral float-left" title="Image Classification" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>

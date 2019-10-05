@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Fast Style Transfer with FastEstimator &mdash; FastEstimator 0.0.1 documentation</title>
+  <title>Fast Style Transfer with FastEstimator &mdash; FastEstimator 1.0a0 documentation</title>
   
 
   
@@ -65,7 +65,7 @@
             
             
               <div class="version">
-                1.0a0
+                1.0
               </div>
             
           
@@ -423,7 +423,7 @@ image</em>. In <a class="reference external" href="https://cs.stanford.edu/peopl
 </div>
 <p>In this notebook we will use <em>Wassily Kandinsky’s Composition 7</em> as a style image. We will also resize the style image to <span class="math notranslate nohighlight">\(256 \times 256\)</span> to make the dimension consistent with that of COCO images.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[38]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -449,6 +449,20 @@ image</em>. In <a class="reference external" href="https://cs.stanford.edu/peopl
 </div>
 <div class="output_area docutils container">
 <img alt="../../../_images/apphub_image_styletransfer_fst_coco_fst_coco_3_0.png" src="../../../_images/apphub_image_styletransfer_fst_coco_fst_coco_3_0.png" />
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="c1">#Parameters</span>
+<span class="n">batch_size</span> <span class="o">=</span> <span class="mi">4</span>
+<span class="n">epochs</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="n">steps_per_epoch</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="n">img_path</span> <span class="o">=</span> <span class="s1">&#39;panda.jpeg&#39;</span>
+<span class="n">saved_model_path</span> <span class="o">=</span> <span class="s1">&#39;style_transfer_net_epoch_1_step_41390.h5&#39;</span>
+</pre></div>
 </div>
 </div>
 <div class="section" id="Step-1:-Input-Pipeline">
@@ -480,7 +494,7 @@ reusing existing dataset
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="kn">from</span> <span class="nn">fastestimator.util.op</span> <span class="k">import</span> <span class="n">TensorOp</span>
+<span></span><span class="kn">from</span> <span class="nn">fastestimator.op</span> <span class="k">import</span> <span class="n">TensorOp</span>
 
 <span class="k">class</span> <span class="nc">Rescale</span><span class="p">(</span><span class="n">TensorOp</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">state</span><span class="p">):</span>
@@ -497,9 +511,10 @@ reusing existing dataset
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="kn">from</span> <span class="nn">fastestimator.record.preprocess</span> <span class="k">import</span> <span class="n">ImageReader</span><span class="p">,</span> <span class="n">Resize</span>
+<span></span><span class="kn">from</span> <span class="nn">fastestimator.op.numpyop</span> <span class="k">import</span> <span class="n">ImageReader</span><span class="p">,</span> <span class="n">Resize</span>
+<span class="kn">from</span> <span class="nn">fastestimator.util</span> <span class="k">import</span> <span class="n">RecordWriter</span>
 <span class="n">tfr_save_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s1">&#39;FEdata&#39;</span><span class="p">)</span>
-<span class="n">writer</span> <span class="o">=</span> <span class="n">fe</span><span class="o">.</span><span class="n">RecordWriter</span><span class="p">(</span>
+<span class="n">writer</span> <span class="o">=</span> <span class="n">RecordWriter</span><span class="p">(</span>
     <span class="n">train_data</span><span class="o">=</span><span class="n">train_csv</span><span class="p">,</span>
     <span class="n">save_dir</span><span class="o">=</span><span class="n">tfr_save_dir</span><span class="p">,</span>
     <span class="n">ops</span><span class="o">=</span><span class="p">[</span>
@@ -518,7 +533,7 @@ reusing existing dataset
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">pipeline</span> <span class="o">=</span> <span class="n">fe</span><span class="o">.</span><span class="n">Pipeline</span><span class="p">(</span><span class="n">batch_size</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">writer</span><span class="p">,</span> <span class="n">ops</span><span class="o">=</span><span class="p">[</span><span class="n">Rescale</span><span class="p">(</span><span class="n">inputs</span><span class="o">=</span><span class="s2">&quot;image&quot;</span><span class="p">,</span> <span class="n">outputs</span><span class="o">=</span><span class="s2">&quot;image&quot;</span><span class="p">)])</span>
+<span></span><span class="n">pipeline</span> <span class="o">=</span> <span class="n">fe</span><span class="o">.</span><span class="n">Pipeline</span><span class="p">(</span><span class="n">batch_size</span><span class="o">=</span><span class="n">batch_size</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">writer</span><span class="p">,</span> <span class="n">ops</span><span class="o">=</span><span class="p">[</span><span class="n">Rescale</span><span class="p">(</span><span class="n">inputs</span><span class="o">=</span><span class="s2">&quot;image&quot;</span><span class="p">,</span> <span class="n">outputs</span><span class="o">=</span><span class="s2">&quot;image&quot;</span><span class="p">)])</span>
 </pre></div>
 </div>
 </div>
@@ -537,9 +552,8 @@ reusing existing dataset
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="kn">from</span> <span class="nn">fastestimator.architecture.stnet</span> <span class="k">import</span> <span class="n">styleTransferNet</span>
-<span class="kn">from</span> <span class="nn">fastestimator.network.model</span> <span class="k">import</span> <span class="n">FEModel</span>
 
-<span class="n">model</span> <span class="o">=</span> <span class="n">FEModel</span><span class="p">(</span><span class="n">model_def</span><span class="o">=</span><span class="n">styleTransferNet</span><span class="p">,</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">fe</span><span class="o">.</span><span class="n">build</span><span class="p">(</span><span class="n">model_def</span><span class="o">=</span><span class="n">styleTransferNet</span><span class="p">,</span>
                 <span class="n">model_name</span><span class="o">=</span><span class="s2">&quot;style_transfer_net&quot;</span><span class="p">,</span>
                 <span class="n">loss_name</span><span class="o">=</span><span class="s2">&quot;loss&quot;</span><span class="p">,</span>
                 <span class="n">optimizer</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">optimizers</span><span class="o">.</span><span class="n">Adam</span><span class="p">(</span><span class="mf">1e-3</span><span class="p">))</span>
@@ -558,7 +572,7 @@ difference in <code class="docutils literal notranslate"><span class="pre">relu3
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="kn">from</span> <span class="nn">fastestimator.architecture.stnet</span> <span class="k">import</span> <span class="n">lossNet</span>
-<span class="kn">from</span> <span class="nn">fastestimator.network.loss</span> <span class="k">import</span> <span class="n">Loss</span>
+<span class="kn">from</span> <span class="nn">fastestimator.op.tensorop</span> <span class="k">import</span> <span class="n">Loss</span>
 
 <span class="k">class</span> <span class="nc">ExtractVGGFeatures</span><span class="p">(</span><span class="n">TensorOp</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">inputs</span><span class="p">,</span> <span class="n">outputs</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
@@ -627,7 +641,7 @@ difference in <code class="docutils literal notranslate"><span class="pre">relu3
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="kn">from</span> <span class="nn">fastestimator.network.model</span> <span class="k">import</span> <span class="n">ModelOp</span>
+<span></span><span class="kn">from</span> <span class="nn">fastestimator.op.tensorop</span> <span class="k">import</span> <span class="n">ModelOp</span>
 
 <span class="n">style_weight</span><span class="o">=</span><span class="mf">5.0</span>
 <span class="n">content_weight</span><span class="o">=</span><span class="mf">1.0</span>
@@ -653,17 +667,18 @@ difference in <code class="docutils literal notranslate"><span class="pre">relu3
 <h2>Step 3: Estimator<a class="headerlink" href="#Step-3:-Estimator" title="Permalink to this headline">¶</a></h2>
 <p>Having defined <code class="docutils literal notranslate"><span class="pre">Pipeline</span></code> and <code class="docutils literal notranslate"><span class="pre">Network</span></code>, we can now define <code class="docutils literal notranslate"><span class="pre">Estimator</span></code>. We will use <code class="docutils literal notranslate"><span class="pre">Trace</span></code> to save intermediate models.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="kn">from</span> <span class="nn">fastestimator.estimator.trace</span> <span class="k">import</span> <span class="n">ModelSaver</span>
+<span></span><span class="kn">from</span> <span class="nn">fastestimator.trace</span> <span class="k">import</span> <span class="n">ModelSaver</span>
 
-<span class="n">model_dir</span><span class="o">=</span><span class="s1">&#39;/tmp/.fe/cycleGAN/ModelSaver/&#39;</span>
+<span class="n">model_dir</span><span class="o">=</span><span class="s1">&#39;/tmp/.fe/fst/ModelSaver/&#39;</span>
 <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">model_dir</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="n">estimator</span> <span class="o">=</span> <span class="n">fe</span><span class="o">.</span><span class="n">Estimator</span><span class="p">(</span><span class="n">network</span><span class="o">=</span><span class="n">network</span><span class="p">,</span>
                          <span class="n">pipeline</span><span class="o">=</span><span class="n">pipeline</span><span class="p">,</span>
-                         <span class="n">epochs</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+                         <span class="n">epochs</span><span class="o">=</span><span class="n">epochs</span><span class="p">,</span>
+                         <span class="n">steps_per_epoch</span><span class="o">=</span><span class="n">steps_per_epoch</span><span class="p">,</span>
                          <span class="n">traces</span><span class="o">=</span><span class="n">ModelSaver</span><span class="p">(</span><span class="n">model_name</span><span class="o">=</span><span class="s2">&quot;style_transfer_net&quot;</span><span class="p">,</span> <span class="n">save_dir</span><span class="o">=</span><span class="n">model_dir</span><span class="p">))</span>
 </pre></div>
 </div>
@@ -683,11 +698,11 @@ difference in <code class="docutils literal notranslate"><span class="pre">relu3
 <h2>Inference<a class="headerlink" href="#Inference" title="Permalink to this headline">¶</a></h2>
 <p>Once the training is finished, we will apply the model to perform the style transfer on arbitrary images. Here we use a photo of a panda.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[74]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">test_img</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">imread</span><span class="p">(</span><span class="s1">&#39;panda.jpeg&#39;</span><span class="p">)</span>
+<span></span><span class="n">test_img</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">imread</span><span class="p">(</span><span class="n">img_path</span><span class="p">)</span>
 <span class="n">test_img</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">resize</span><span class="p">(</span><span class="n">test_img</span><span class="p">,</span> <span class="p">(</span><span class="mi">256</span><span class="p">,</span> <span class="mi">256</span><span class="p">))</span>
 <span class="n">test_img</span> <span class="o">=</span> <span class="p">(</span><span class="n">test_img</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span> <span class="o">-</span> <span class="mf">127.5</span><span class="p">)</span> <span class="o">/</span> <span class="mf">127.5</span>
 <span class="n">test_img_t</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">expand_dims</span><span class="p">(</span><span class="n">test_img</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
@@ -699,8 +714,12 @@ difference in <code class="docutils literal notranslate"><span class="pre">relu3
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">model_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">model_dir</span><span class="p">,</span> <span class="s1">&#39;style_transfer_net_epoch_1_step_41390.h5&#39;</span><span class="p">)</span>
-<span class="n">trained_model</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">models</span><span class="o">.</span><span class="n">load_model</span><span class="p">(</span><span class="n">model_path</span><span class="p">,</span> <span class="nb">compile</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span></span><span class="n">model_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">model_dir</span><span class="p">,</span> <span class="n">saved_model_path</span><span class="p">)</span>
+<span class="n">trained_model</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">models</span><span class="o">.</span><span class="n">load_model</span><span class="p">(</span><span class="n">model_path</span><span class="p">,</span>
+                                           <span class="n">custom_objects</span><span class="o">=</span><span class="p">{</span>
+                                               <span class="s2">&quot;ReflectionPadding2D&quot;</span><span class="p">:</span><span class="n">fe</span><span class="o">.</span><span class="n">architecture</span><span class="o">.</span><span class="n">stnet</span><span class="o">.</span><span class="n">ReflectionPadding2D</span><span class="p">,</span>
+                                               <span class="s2">&quot;InstanceNormalization&quot;</span><span class="p">:</span><span class="n">fe</span><span class="o">.</span><span class="n">architecture</span><span class="o">.</span><span class="n">stnet</span><span class="o">.</span><span class="n">InstanceNormalization</span><span class="p">},</span>
+                                           <span class="nb">compile</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 <span class="n">output_img</span> <span class="o">=</span> <span class="n">trained_model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">test_img_t</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -725,7 +744,7 @@ difference in <code class="docutils literal notranslate"><span class="pre">relu3
 <span class="n">plt</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;off&#39;</span><span class="p">);</span>
 
 <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">133</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">cv2</span><span class="o">.</span><span class="n">cvtColor</span><span class="p">(</span><span class="n">output_img_disp</span><span class="o">.</span><span class="n">numpy</span><span class="p">(),</span> <span class="n">cv2</span><span class="o">.</span><span class="n">COLOR_BGR2RGB</span><span class="p">));</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">cv2</span><span class="o">.</span><span class="n">cvtColor</span><span class="p">(</span><span class="n">output_img_disp</span><span class="p">,</span> <span class="n">cv2</span><span class="o">.</span><span class="n">COLOR_BGR2RGB</span><span class="p">));</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Transferred Image&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;off&#39;</span><span class="p">);</span>
 </pre></div>
@@ -735,7 +754,7 @@ difference in <code class="docutils literal notranslate"><span class="pre">relu3
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../../../_images/apphub_image_styletransfer_fst_coco_fst_coco_25_0.png" src="../../../_images/apphub_image_styletransfer_fst_coco_fst_coco_25_0.png" />
+<img alt="../../../_images/apphub_image_styletransfer_fst_coco_fst_coco_26_0.png" src="../../../_images/apphub_image_styletransfer_fst_coco_fst_coco_26_0.png" />
 </div>
 </div>
 <div class="nbinput nblast docutils container">
@@ -750,7 +769,7 @@ difference in <code class="docutils literal notranslate"><span class="pre">relu3
 </div>
 </div>
 <p>—</p>
-<p><a class="reference external" href="https://github.com/fastestimator/fastestimator/blob/master/apphub/image_styletransfer/fst_coco/fst_coco.ipynb">Link to GitHub</a></p>
+<p><a class="reference external" href="https://github.com/fastestimator/fastestimator/blob/master/apphub/image_styletransfer/fst_coco/fst_coco.ipynb">Example Link to GitHub</a></p>
 
 
            </div>

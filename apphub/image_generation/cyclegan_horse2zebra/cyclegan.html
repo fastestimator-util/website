@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Horse to Zebra Unpaired Image Translation with CycleGAN in FastEstimator &mdash; FastEstimator 0.0.1 documentation</title>
+  <title>Horse to Zebra Unpaired Image Translation with CycleGAN in FastEstimator &mdash; FastEstimator 1.0a0 documentation</title>
   
 
   
@@ -65,7 +65,7 @@
             
             
               <div class="version">
-                1.0a0
+                1.0
               </div>
             
           
@@ -441,10 +441,11 @@ div.rendered_html tbody tr:hover {
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="kn">from</span> <span class="nn">fastestimator.record.preprocess</span> <span class="k">import</span> <span class="n">ImageReader</span>
+<span></span><span class="kn">from</span> <span class="nn">fastestimator.op.numpyop</span> <span class="k">import</span> <span class="n">ImageReader</span>
+<span class="kn">from</span> <span class="nn">fastestimator.util</span> <span class="k">import</span> <span class="n">RecordWriter</span>
 
 <span class="n">tfr_save_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">parent_path</span><span class="p">,</span> <span class="s1">&#39;FEdata&#39;</span><span class="p">)</span>
-<span class="n">writer</span> <span class="o">=</span> <span class="n">fe</span><span class="o">.</span><span class="n">RecordWriter</span><span class="p">(</span>
+<span class="n">writer</span> <span class="o">=</span> <span class="n">RecordWriter</span><span class="p">(</span>
     <span class="n">train_data</span><span class="o">=</span><span class="p">(</span><span class="n">trainA_csv</span><span class="p">,</span> <span class="n">trainB_csv</span><span class="p">),</span>
     <span class="n">save_dir</span><span class="o">=</span><span class="n">tfr_save_dir</span><span class="p">,</span>
     <span class="n">ops</span><span class="o">=</span><span class="p">([</span><span class="n">ImageReader</span><span class="p">(</span><span class="n">inputs</span><span class="o">=</span><span class="s2">&quot;imgA&quot;</span><span class="p">,</span> <span class="n">outputs</span><span class="o">=</span><span class="s2">&quot;imgA&quot;</span><span class="p">,</span> <span class="n">parent_path</span><span class="o">=</span><span class="n">parent_path</span><span class="p">)],</span>
@@ -458,7 +459,7 @@ div.rendered_html tbody tr:hover {
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="kn">from</span> <span class="nn">fastestimator.util.op</span> <span class="k">import</span> <span class="n">TensorOp</span>
+<span></span><span class="kn">from</span> <span class="nn">fastestimator.op</span> <span class="k">import</span> <span class="n">TensorOp</span>
 
 <span class="k">class</span> <span class="nc">Myrescale</span><span class="p">(</span><span class="n">TensorOp</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">state</span><span class="p">):</span>
@@ -481,6 +482,18 @@ div.rendered_html tbody tr:hover {
 </pre></div>
 </div>
 </div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="c1">#Parameters</span>
+<span class="n">epochs</span> <span class="o">=</span> <span class="mi">50</span>
+<span class="n">batch_size</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">steps_per_epoch</span> <span class="o">=</span> <span class="kc">None</span>
+</pre></div>
+</div>
+</div>
 <p>Given these operators and <em>tfrecord</em> writer, we can now define <code class="docutils literal notranslate"><span class="pre">Pipeline</span></code> object.</p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
@@ -489,7 +502,7 @@ div.rendered_html tbody tr:hover {
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="n">pipeline</span> <span class="o">=</span> <span class="n">fe</span><span class="o">.</span><span class="n">Pipeline</span><span class="p">(</span>
     <span class="n">data</span><span class="o">=</span><span class="n">writer</span><span class="p">,</span>
-    <span class="n">batch_size</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">batch_size</span><span class="o">=</span><span class="n">batch_size</span><span class="p">,</span>
     <span class="n">ops</span><span class="o">=</span><span class="p">[</span>
         <span class="n">Myrescale</span><span class="p">(</span><span class="n">inputs</span><span class="o">=</span><span class="s2">&quot;imgA&quot;</span><span class="p">,</span> <span class="n">outputs</span><span class="o">=</span><span class="s2">&quot;imgA&quot;</span><span class="p">),</span>
         <span class="n">RandomAug</span><span class="p">(</span><span class="n">inputs</span><span class="o">=</span><span class="s2">&quot;imgA&quot;</span><span class="p">,</span> <span class="n">outputs</span><span class="o">=</span><span class="s2">&quot;real_A&quot;</span><span class="p">),</span>
@@ -554,7 +567,7 @@ FastEstimator: Found 1067 examples for train in /tmp/.fe/HORSE2ZEBRA/FEdata/trai
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../../../_images/apphub_image_generation_cyclegan_horse2zebra_cyclegan_13_1.png" src="../../../_images/apphub_image_generation_cyclegan_horse2zebra_cyclegan_13_1.png" />
+<img alt="../../../_images/apphub_image_generation_cyclegan_horse2zebra_cyclegan_14_1.png" src="../../../_images/apphub_image_generation_cyclegan_horse2zebra_cyclegan_14_1.png" />
 </div>
 </div>
 </div>
@@ -569,23 +582,23 @@ FastEstimator: Found 1067 examples for train in /tmp/.fe/HORSE2ZEBRA/FEdata/trai
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="kn">from</span> <span class="nn">fastestimator.architecture.cyclegan</span> <span class="k">import</span> <span class="n">build_generator</span><span class="p">,</span> <span class="n">build_discriminator</span>
-<span class="kn">from</span> <span class="nn">fastestimator.network.model</span> <span class="k">import</span> <span class="n">FEModel</span>
-<span class="n">g_AtoB</span> <span class="o">=</span> <span class="n">FEModel</span><span class="p">(</span><span class="n">model_def</span><span class="o">=</span><span class="n">build_generator</span><span class="p">,</span>
+
+<span class="n">g_AtoB</span> <span class="o">=</span> <span class="n">fe</span><span class="o">.</span><span class="n">build</span><span class="p">(</span><span class="n">model_def</span><span class="o">=</span><span class="n">build_generator</span><span class="p">,</span>
                  <span class="n">model_name</span><span class="o">=</span><span class="s2">&quot;g_AtoB&quot;</span><span class="p">,</span>
                  <span class="n">loss_name</span><span class="o">=</span><span class="s2">&quot;g_AtoB_loss&quot;</span><span class="p">,</span>
                  <span class="n">optimizer</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">optimizers</span><span class="o">.</span><span class="n">Adam</span><span class="p">(</span><span class="mf">2e-4</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">))</span>
 
-<span class="n">g_BtoA</span> <span class="o">=</span> <span class="n">FEModel</span><span class="p">(</span><span class="n">model_def</span><span class="o">=</span><span class="n">build_generator</span><span class="p">,</span>
+<span class="n">g_BtoA</span> <span class="o">=</span> <span class="n">fe</span><span class="o">.</span><span class="n">build</span><span class="p">(</span><span class="n">model_def</span><span class="o">=</span><span class="n">build_generator</span><span class="p">,</span>
                  <span class="n">model_name</span><span class="o">=</span><span class="s2">&quot;g_BtoA&quot;</span><span class="p">,</span>
                  <span class="n">loss_name</span><span class="o">=</span><span class="s2">&quot;g_BtoA_loss&quot;</span><span class="p">,</span>
                  <span class="n">optimizer</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">optimizers</span><span class="o">.</span><span class="n">Adam</span><span class="p">(</span><span class="mf">2e-4</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">))</span>
 
-<span class="n">d_A</span> <span class="o">=</span> <span class="n">FEModel</span><span class="p">(</span><span class="n">model_def</span><span class="o">=</span><span class="n">build_discriminator</span><span class="p">,</span>
+<span class="n">d_A</span> <span class="o">=</span> <span class="n">fe</span><span class="o">.</span><span class="n">build</span><span class="p">(</span><span class="n">model_def</span><span class="o">=</span><span class="n">build_discriminator</span><span class="p">,</span>
               <span class="n">model_name</span><span class="o">=</span><span class="s2">&quot;d_A&quot;</span><span class="p">,</span>
               <span class="n">loss_name</span><span class="o">=</span><span class="s2">&quot;d_A_loss&quot;</span><span class="p">,</span>
               <span class="n">optimizer</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">optimizers</span><span class="o">.</span><span class="n">Adam</span><span class="p">(</span><span class="mf">2e-4</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">))</span>
 
-<span class="n">d_B</span> <span class="o">=</span> <span class="n">FEModel</span><span class="p">(</span><span class="n">model_def</span><span class="o">=</span><span class="n">build_discriminator</span><span class="p">,</span>
+<span class="n">d_B</span> <span class="o">=</span> <span class="n">fe</span><span class="o">.</span><span class="n">build</span><span class="p">(</span><span class="n">model_def</span><span class="o">=</span><span class="n">build_discriminator</span><span class="p">,</span>
               <span class="n">model_name</span><span class="o">=</span><span class="s2">&quot;d_B&quot;</span><span class="p">,</span>
               <span class="n">loss_name</span><span class="o">=</span><span class="s2">&quot;d_B_loss&quot;</span><span class="p">,</span>
               <span class="n">optimizer</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">optimizers</span><span class="o">.</span><span class="n">Adam</span><span class="p">(</span><span class="mf">2e-4</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">))</span>
@@ -605,7 +618,7 @@ and the output of <code class="docutils literal notranslate"><span class="pre">g
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="kn">from</span> <span class="nn">fastestimator.network.loss</span> <span class="k">import</span> <span class="n">Loss</span>
+<span></span><span class="kn">from</span> <span class="nn">fastestimator.op.tensorop</span> <span class="k">import</span> <span class="n">Loss</span>
 <span class="n">LAMBDA</span> <span class="o">=</span> <span class="mi">10</span>
 <span class="k">class</span> <span class="nc">GLoss</span><span class="p">(</span><span class="n">Loss</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">inputs</span><span class="p">,</span> <span class="n">weight</span><span class="p">,</span> <span class="n">outputs</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
@@ -651,7 +664,7 @@ and the output of <code class="docutils literal notranslate"><span class="pre">g
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="kn">from</span> <span class="nn">fastestimator.network.model</span> <span class="k">import</span> <span class="n">ModelOp</span>
+<span></span><span class="kn">from</span> <span class="nn">fastestimator.op.tensorop</span> <span class="k">import</span> <span class="n">ModelOp</span>
 
 <span class="n">network</span> <span class="o">=</span> <span class="n">fe</span><span class="o">.</span><span class="n">Network</span><span class="p">(</span><span class="n">ops</span><span class="o">=</span><span class="p">[</span>
     <span class="n">ModelOp</span><span class="p">(</span><span class="n">inputs</span><span class="o">=</span><span class="s2">&quot;real_A&quot;</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">g_AtoB</span><span class="p">,</span> <span class="n">outputs</span><span class="o">=</span><span class="s2">&quot;fake_B&quot;</span><span class="p">),</span>
@@ -678,7 +691,7 @@ and the output of <code class="docutils literal notranslate"><span class="pre">g
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="kn">from</span> <span class="nn">fastestimator.estimator.trace</span> <span class="k">import</span> <span class="n">ModelSaver</span>
+<span></span><span class="kn">from</span> <span class="nn">fastestimator.trace</span> <span class="k">import</span> <span class="n">ModelSaver</span>
 <span class="n">model_dir</span><span class="o">=</span><span class="s1">&#39;/tmp/.fe/cycleGAN/ModelSaver/&#39;</span>
 <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">model_dir</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="n">traces</span> <span class="o">=</span> <span class="p">[</span>
@@ -694,8 +707,7 @@ and the output of <code class="docutils literal notranslate"><span class="pre">g
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">epochs</span> <span class="o">=</span> <span class="mi">50</span>
-<span class="n">estimator</span> <span class="o">=</span> <span class="n">fe</span><span class="o">.</span><span class="n">Estimator</span><span class="p">(</span><span class="n">network</span><span class="o">=</span><span class="n">network</span><span class="p">,</span> <span class="n">pipeline</span><span class="o">=</span><span class="n">pipeline</span><span class="p">,</span> <span class="n">epochs</span><span class="o">=</span><span class="n">epochs</span><span class="p">,</span> <span class="n">traces</span><span class="o">=</span><span class="n">traces</span><span class="p">)</span>
+<span></span><span class="n">estimator</span> <span class="o">=</span> <span class="n">fe</span><span class="o">.</span><span class="n">Estimator</span><span class="p">(</span><span class="n">network</span><span class="o">=</span><span class="n">network</span><span class="p">,</span> <span class="n">pipeline</span><span class="o">=</span><span class="n">pipeline</span><span class="p">,</span> <span class="n">epochs</span><span class="o">=</span><span class="n">epochs</span><span class="p">,</span> <span class="n">steps_per_epoch</span><span class="o">=</span><span class="n">steps_per_epoch</span><span class="p">,</span> <span class="n">traces</span><span class="o">=</span><span class="n">traces</span><span class="p">)</span>
 <span class="n">estimator</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
 </pre></div>
 </div>
@@ -888,7 +900,7 @@ FastEstimator-Train: step: 9800; g_AtoB_loss: 4.5108128; g_BtoA_loss: 6.4232073;
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../../../_images/apphub_image_generation_cyclegan_horse2zebra_cyclegan_28_0.png" src="../../../_images/apphub_image_generation_cyclegan_horse2zebra_cyclegan_28_0.png" />
+<img alt="../../../_images/apphub_image_generation_cyclegan_horse2zebra_cyclegan_29_0.png" src="../../../_images/apphub_image_generation_cyclegan_horse2zebra_cyclegan_29_0.png" />
 </div>
 </div>
 <p>Note the addition of zebra-like stripe texture on top of horses when translating from horses to zebras. When translating zebras to horses, we can observe that generator removes the stripe texture from zebras.</p>
@@ -904,7 +916,7 @@ FastEstimator-Train: step: 9800; g_AtoB_loss: 4.5108128; g_BtoA_loss: 6.4232073;
 </div>
 </div>
 <p>—</p>
-<p><a class="reference external" href="https://github.com/fastestimator/fastestimator/blob/master/apphub/image_generation/cyclegan_horse2zebra/cyclegan.ipynb">Link to GitHub</a></p>
+<p><a class="reference external" href="https://github.com/fastestimator/fastestimator/blob/master/apphub/image_generation/cyclegan_horse2zebra/cyclegan.ipynb">Example Link to GitHub</a></p>
 
 
            </div>

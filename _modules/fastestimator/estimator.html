@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>fastestimator.estimator &mdash; FastEstimator 0.0.1 documentation</title>
+  <title>fastestimator.estimator &mdash; FastEstimator 1.0a0 documentation</title>
   
 
   
@@ -63,7 +63,7 @@
             
             
               <div class="version">
-                1.0a0
+                1.0
               </div>
             
           
@@ -402,11 +402,7 @@
                 <span class="s2">&quot;batch_size&quot;</span><span class="p">:</span> <span class="n">global_batch_size</span>
             <span class="p">})</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">distribute_strategy</span><span class="p">:</span>
-                <span class="n">prediction</span><span class="p">,</span> <span class="n">batch</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_forward_step_parallel</span><span class="p">(</span><span class="n">batch</span><span class="p">,</span> <span class="n">ops</span><span class="p">,</span>
-                                                                <span class="n">model_list</span><span class="p">,</span>
-                                                                <span class="n">epoch_losses</span><span class="p">,</span> <span class="p">{</span>
-                                                                    <span class="s2">&quot;mode&quot;</span><span class="p">:</span> <span class="n">mode</span><span class="p">,</span> <span class="s2">&quot;batch_size&quot;</span><span class="p">:</span> <span class="n">global_batch_size</span>
-                                                                <span class="p">})</span>
+                <span class="n">prediction</span><span class="p">,</span> <span class="n">batch</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_forward_step_parallel</span><span class="p">(</span><span class="n">batch</span><span class="p">,</span> <span class="n">ops</span><span class="p">,</span> <span class="n">model_list</span><span class="p">,</span> <span class="n">epoch_losses</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;mode&quot;</span><span class="p">:</span> <span class="n">mode</span><span class="p">,</span> <span class="s2">&quot;batch_size&quot;</span><span class="p">:</span> <span class="n">global_batch_size</span><span class="p">})</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="n">prediction</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_forward_step</span><span class="p">(</span><span class="n">batch</span><span class="p">,</span>
                                                 <span class="n">ops</span><span class="p">,</span>
@@ -483,6 +479,10 @@
     <span class="nd">@tf</span><span class="o">.</span><span class="n">function</span>
     <span class="k">def</span> <span class="nf">_forward_step</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">batch</span><span class="p">,</span> <span class="n">ops</span><span class="p">,</span> <span class="n">model_list</span><span class="p">,</span> <span class="n">epoch_losses</span><span class="p">,</span> <span class="n">state</span><span class="p">):</span>
         <span class="n">prediction</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">network</span><span class="o">.</span><span class="n">run_step</span><span class="p">(</span><span class="n">batch</span><span class="p">,</span> <span class="n">ops</span><span class="p">,</span> <span class="n">model_list</span><span class="p">,</span> <span class="n">epoch_losses</span><span class="p">,</span> <span class="n">state</span><span class="p">)</span>
+        <span class="c1">#expand dimension on scalar value for consistency with distributed training</span>
+        <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">prediction</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">value</span><span class="o">.</span><span class="n">shape</span><span class="o">.</span><span class="n">rank</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">prediction</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">expand_dims</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">prediction</span>
 
     <span class="nd">@tf</span><span class="o">.</span><span class="n">function</span>
@@ -502,7 +502,10 @@
     <span class="k">def</span> <span class="nf">_per_replica_to_global</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
         <span class="n">new_data</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-            <span class="n">new_data</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span><span class="n">value</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">value</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="o">.</span><span class="n">rank</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">new_data</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">stack</span><span class="p">(</span><span class="n">value</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">new_data</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span><span class="n">value</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">new_data</span></div>
 </pre></div>
 

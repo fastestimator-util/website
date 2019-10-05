@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Tutorial 10: Dataset with unpaired features &mdash; FastEstimator 0.0.1 documentation</title>
+  <title>Tutorial 10: Dataset with unpaired features &mdash; FastEstimator 1.0a0 documentation</title>
   
 
   
@@ -65,7 +65,7 @@
             
             
               <div class="version">
-                1.0a0
+                1.0
               </div>
             
           
@@ -92,19 +92,18 @@
               <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../install.html">Installation</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../learn.html">Learn</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="t01_basic_usage.html">Tutorial 1: Basic Usage of FastEstimator</a></li>
-<li class="toctree-l2"><a class="reference internal" href="t02_using_data_in_disk.html">Tutorial 2: Using In-Disk Data in FastEstimator</a></li>
+<li class="toctree-l2"><a class="reference internal" href="t01_basic_usage.html">Tutorial 1: Getting started with FastEstimator</a></li>
+<li class="toctree-l2"><a class="reference internal" href="t02_using_data_in_disk.html">Tutorial 2: Dealing with large datasets with FastEstimator</a></li>
 <li class="toctree-l2"><a class="reference internal" href="t03_operator.html">Tutorial 3: Operator</a></li>
 <li class="toctree-l2"><a class="reference internal" href="t04_pipeline_debug_benchmark.html">Tutorial 4: Pipeline debugging and benchmarking</a></li>
 <li class="toctree-l2"><a class="reference internal" href="t05_trace_debug_training.html">Tutorial 5: Trace - training control and debugging</a></li>
-<li class="toctree-l2"><a class="reference internal" href="t06_TensorFilter_imbalanced_training.html">Tutorial 6: TensorFilter - imbalanced training</a></li>
-<li class="toctree-l2"><a class="reference internal" href="t07_expand_data_dimension.html">Tutorial 7: expanding data dimension in recordwriter and pipeline</a></li>
-<li class="toctree-l2"><a class="reference internal" href="t08_scheduler_progressive_training.html">Tutorial 8: Scheduler - changing hyperparameters during the training</a></li>
+<li class="toctree-l2"><a class="reference internal" href="t06_TensorFilter_imbalanced_training.html">Tutorial 6: Dealing with imbalanced dataset using TensorFilter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="t07_expand_data_dimension.html">Tutorial 7: Expanding data dimension in RecordWriter and Pipeline</a></li>
+<li class="toctree-l2"><a class="reference internal" href="t08_scheduler_progressive_training.html">Tutorial 8: Changing hyperparameters during training with Scheduler</a></li>
 <li class="toctree-l2"><a class="reference internal" href="t09_learning_rate_controller.html">Tutorial 9: Learning Rate Controller</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">Tutorial 10: Dataset with unpaired features</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#Prepare-some-data">Prepare some data</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#visualize-data">visualize data</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#RecordWriter:-read-unpaired-features-using-tuple">RecordWriter: read unpaired features using tuple</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Step-0---Data-preparation-and-visualization">Step 0 - Data preparation and visualization</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Step-1---RecordWriter:-read-unpaired-features-using-a-tuple">Step 1 - RecordWriter: read unpaired features using a tuple</a></li>
 </ul>
 </li>
 </ul>
@@ -402,35 +401,55 @@ div.rendered_html tbody tr:hover {
 <div class="section" id="Tutorial-10:-Dataset-with-unpaired-features">
 <h1>Tutorial 10: Dataset with unpaired features<a class="headerlink" href="#Tutorial-10:-Dataset-with-unpaired-features" title="Permalink to this headline">¶</a></h1>
 <p>In almost all deep learning applications, different features within a dataset are paired together as single example. For instance, image and label(s) are paired in image classification, image and mask(s) are paired in image segmentation.</p>
-<p>However, in image-image translation, sometimes the features in dataset are unpaired. For example, we may have 500 horse images and 700 zebra iamges. During the training, we need to randomly select one horse image and one zerba image.</p>
-<p>In FastEstimator, unpaired features are handled by <code class="docutils literal notranslate"><span class="pre">RecordWriter</span></code>. If there are multiple unpaired features, express them as <strong>tuple</strong> and in the <code class="docutils literal notranslate"><span class="pre">train_data</span></code>, <code class="docutils literal notranslate"><span class="pre">valdiation_data</span></code> and <code class="docutils literal notranslate"><span class="pre">ops</span></code> argument of <code class="docutils literal notranslate"><span class="pre">RecordWriter</span></code>.</p>
-<div class="section" id="Prepare-some-data">
-<h2>Prepare some data<a class="headerlink" href="#Prepare-some-data" title="Permalink to this headline">¶</a></h2>
+<p>However, in image-image translation, sometimes the features in dataset are unpaired. For example, we may have 500 horse images for 700 zebra images. During the training, we will then need to randomly select one horse image and one zebra image.</p>
+<p>In FastEstimator, unpaired features are handled by <code class="docutils literal notranslate"><span class="pre">RecordWriter</span></code>. If there are multiple unpaired features, express them as <strong>tuple</strong> in the <code class="docutils literal notranslate"><span class="pre">train_data</span></code>, <code class="docutils literal notranslate"><span class="pre">validation_data</span></code> and <code class="docutils literal notranslate"><span class="pre">ops</span></code> argument of <code class="docutils literal notranslate"><span class="pre">RecordWriter</span></code>.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="kn">from</span> <span class="nn">fastestimator.dataset.horse2zebra</span> <span class="k">import</span> <span class="n">load_data</span>
-
-<span class="n">trainA_csv</span><span class="p">,</span> <span class="n">trainB_csv</span><span class="p">,</span> <span class="n">valA_csv</span><span class="p">,</span> <span class="n">valB_csv</span><span class="p">,</span> <span class="n">parent_path</span> <span class="o">=</span> <span class="n">load_data</span><span class="p">()</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;horse image is stored in </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">trainA_csv</span><span class="p">))</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;zebra image is stored in </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">trainB_csv</span><span class="p">))</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="section" id="visualize-data">
-<h2>visualize data<a class="headerlink" href="#visualize-data" title="Permalink to this headline">¶</a></h2>
-<div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 <span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">fastestimator</span> <span class="k">as</span> <span class="nn">fe</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="Step-0---Data-preparation-and-visualization">
+<h2>Step 0 - Data preparation and visualization<a class="headerlink" href="#Step-0---Data-preparation-and-visualization" title="Permalink to this headline">¶</a></h2>
+<p>We will here use the horse2zebra dataset.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">fastestimator.dataset.horse2zebra</span> <span class="k">import</span> <span class="n">load_data</span>
 
+<span class="c1"># Use load_data from our dataset API to load the dataset.</span>
+<span class="n">trainA_csv</span><span class="p">,</span> <span class="n">trainB_csv</span><span class="p">,</span> <span class="n">valA_csv</span><span class="p">,</span> <span class="n">valB_csv</span><span class="p">,</span> <span class="n">parent_path</span> <span class="o">=</span> <span class="n">load_data</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;horse image is stored in </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">trainA_csv</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;zebra image is stored in </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">trainB_csv</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Downloading data to /tmp/.fe/HORSE2ZEBRA:
+
+Extracting files...
+horse image is stored in /tmp/.fe/HORSE2ZEBRA/trainA.csv
+zebra image is stored in /tmp/.fe/HORSE2ZEBRA/trainB.csv
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="c1"># Let&#39;s take a look at the data, by loading the csv file with all images path information.</span>
 <span class="n">df_train_A</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">trainA_csv</span><span class="p">)</span>
 <span class="n">df_train_B</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">trainB_csv</span><span class="p">)</span>
 
@@ -438,6 +457,7 @@ div.rendered_html tbody tr:hover {
 <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;off&#39;</span><span class="p">)</span>
 <span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;off&#39;</span><span class="p">)</span>
 
+<span class="c1"># We select one image of horse and one of zebra and plot them.</span>
 <span class="n">img1</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">imread</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">parent_path</span><span class="p">,</span> <span class="n">df_train_A</span><span class="p">[</span><span class="s2">&quot;imgA&quot;</span><span class="p">][</span><span class="mi">2</span><span class="p">]))</span>
 <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">img1</span><span class="p">)</span>
 
@@ -447,11 +467,11 @@ div.rendered_html tbody tr:hover {
 </div>
 </div>
 <div class="nboutput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
 </pre></div>
 </div>
 <div class="output_area highlight-none notranslate"><div class="highlight"><pre>
-<span></span>&lt;matplotlib.image.AxesImage at 0x108ecf208&gt;
+<span></span>&lt;matplotlib.image.AxesImage at 0x7fb8967eed30&gt;
 </pre></div>
 </div>
 </div>
@@ -463,32 +483,120 @@ div.rendered_html tbody tr:hover {
 </div>
 </div>
 </div>
-<div class="section" id="RecordWriter:-read-unpaired-features-using-tuple">
-<h2>RecordWriter: read unpaired features using tuple<a class="headerlink" href="#RecordWriter:-read-unpaired-features-using-tuple" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="Step-1---RecordWriter:-read-unpaired-features-using-a-tuple">
+<h2>Step 1 - RecordWriter: read unpaired features using a tuple<a class="headerlink" href="#Step-1---RecordWriter:-read-unpaired-features-using-a-tuple" title="Permalink to this headline">¶</a></h2>
+<p>We deal with the unpaired images in RecordWriter. In ops, we specify a tuple of two ops: to load the first image and to load the second one (here using ImageReader).</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="kn">import</span> <span class="nn">fastestimator</span> <span class="k">as</span> <span class="nn">fe</span>
-<span class="kn">from</span> <span class="nn">fastestimator.record.preprocess</span> <span class="k">import</span> <span class="n">ImageReader</span>
+<span></span><span class="kn">from</span> <span class="nn">fastestimator.op.numpyop</span> <span class="k">import</span> <span class="n">ImageReader</span>
+<span class="kn">from</span> <span class="nn">fastestimator.util</span> <span class="k">import</span> <span class="n">RecordWriter</span>
 
-<span class="n">writer</span> <span class="o">=</span> <span class="n">fe</span><span class="o">.</span><span class="n">RecordWriter</span><span class="p">(</span><span class="n">save_dir</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">parent_path</span><span class="p">,</span> <span class="s1">&#39;FEdata&#39;</span><span class="p">),</span>
+<span class="c1"># Create a RecordWriter with a tuple of two ops to pair images.</span>
+<span class="n">writer</span> <span class="o">=</span> <span class="n">RecordWriter</span><span class="p">(</span><span class="n">save_dir</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">parent_path</span><span class="p">,</span> <span class="s1">&#39;FEdata&#39;</span><span class="p">),</span>
                          <span class="n">train_data</span><span class="o">=</span><span class="p">(</span><span class="n">trainA_csv</span><span class="p">,</span> <span class="n">trainB_csv</span><span class="p">),</span>
                          <span class="n">validation_data</span> <span class="o">=</span> <span class="p">(</span><span class="n">valA_csv</span><span class="p">,</span> <span class="n">valB_csv</span><span class="p">),</span>
-                         <span class="n">ops</span><span class="o">=</span><span class="p">([</span><span class="n">ImageReader</span><span class="p">(</span><span class="n">inputs</span><span class="o">=</span><span class="s2">&quot;imgA&quot;</span><span class="p">,</span> <span class="n">outputs</span><span class="o">=</span><span class="s2">&quot;imgA&quot;</span><span class="p">,</span> <span class="n">parent_path</span><span class="o">=</span><span class="n">parent_path</span><span class="p">)],</span>
-                              <span class="p">[</span><span class="n">ImageReader</span><span class="p">(</span><span class="n">inputs</span><span class="o">=</span><span class="s2">&quot;imgB&quot;</span><span class="p">,</span> <span class="n">outputs</span><span class="o">=</span><span class="s2">&quot;imgB&quot;</span><span class="p">,</span> <span class="n">parent_path</span><span class="o">=</span><span class="n">parent_path</span><span class="p">)]))</span>
+                         <span class="n">ops</span><span class="o">=</span><span class="p">([</span><span class="n">ImageReader</span><span class="p">(</span><span class="n">inputs</span><span class="o">=</span><span class="s2">&quot;imgA&quot;</span><span class="p">,</span> <span class="n">outputs</span><span class="o">=</span><span class="s2">&quot;imgA&quot;</span><span class="p">,</span> <span class="n">parent_path</span><span class="o">=</span><span class="n">parent_path</span><span class="p">)],</span> <span class="c1"># first tuple element</span>
+                              <span class="p">[</span><span class="n">ImageReader</span><span class="p">(</span><span class="n">inputs</span><span class="o">=</span><span class="s2">&quot;imgB&quot;</span><span class="p">,</span> <span class="n">outputs</span><span class="o">=</span><span class="s2">&quot;imgB&quot;</span><span class="p">,</span> <span class="n">parent_path</span><span class="o">=</span><span class="n">parent_path</span><span class="p">)]))</span> <span class="c1"># second tuple element</span>
 </pre></div>
 </div>
 </div>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">writer</span><span class="o">.</span><span class="n">write</span><span class="p">()</span>
+<span></span><span class="c1"># We write the data to the disk using the write method</span>
+<span class="n">writer</span><span class="o">.</span><span class="n">write</span><span class="p">()</span>
 </pre></div>
 </div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+FastEstimator: Saving tfrecord to /tmp/.fe/HORSE2ZEBRA/FEdata
+FastEstimator: Converting Train TFRecords 0.0%, Speed: 0.00 record/sec
+FastEstimator: Converting Train TFRecords 4.5%, Speed: 4313.58 record/sec
+FastEstimator: Converting Train TFRecords 9.0%, Speed: 2424.66 record/sec
+FastEstimator: Converting Train TFRecords 13.4%, Speed: 1786.19 record/sec
+FastEstimator: Converting Train TFRecords 17.9%, Speed: 1318.75 record/sec
+FastEstimator: Converting Train TFRecords 22.4%, Speed: 1098.64 record/sec
+FastEstimator: Converting Train TFRecords 26.9%, Speed: 989.28 record/sec
+FastEstimator: Converting Train TFRecords 31.3%, Speed: 916.51 record/sec
+FastEstimator: Converting Train TFRecords 35.8%, Speed: 820.70 record/sec
+FastEstimator: Converting Train TFRecords 40.3%, Speed: 793.69 record/sec
+FastEstimator: Converting Train TFRecords 44.8%, Speed: 768.86 record/sec
+FastEstimator: Converting Train TFRecords 49.3%, Speed: 769.77 record/sec
+FastEstimator: Converting Train TFRecords 53.7%, Speed: 740.47 record/sec
+FastEstimator: Converting Train TFRecords 58.2%, Speed: 737.33 record/sec
+FastEstimator: Converting Train TFRecords 62.7%, Speed: 731.48 record/sec
+FastEstimator: Converting Train TFRecords 67.2%, Speed: 718.53 record/sec
+FastEstimator: Converting Train TFRecords 71.6%, Speed: 714.81 record/sec
+FastEstimator: Converting Train TFRecords 76.1%, Speed: 705.03 record/sec
+FastEstimator: Converting Train TFRecords 80.6%, Speed: 695.65 record/sec
+FastEstimator: Converting Train TFRecords 85.1%, Speed: 697.76 record/sec
+FastEstimator: Converting Train TFRecords 89.6%, Speed: 715.10 record/sec
+FastEstimator: Converting Train TFRecords 94.0%, Speed: 691.78 record/sec
+FastEstimator: Converting Train TFRecords 98.5%, Speed: 685.72 record/sec
+FastEstimator: Converting Eval TFRecords 0.0%, Speed: 0.00 record/sec
+FastEstimator: Converting Eval TFRecords 6.7%, Speed: 4015.28 record/sec
+FastEstimator: Converting Eval TFRecords 13.3%, Speed: 4454.58 record/sec
+FastEstimator: Converting Eval TFRecords 20.0%, Speed: 4964.16 record/sec
+FastEstimator: Converting Eval TFRecords 26.7%, Speed: 4883.10 record/sec
+FastEstimator: Converting Eval TFRecords 33.3%, Speed: 4890.41 record/sec
+FastEstimator: Converting Eval TFRecords 40.0%, Speed: 2183.47 record/sec
+FastEstimator: Converting Eval TFRecords 46.7%, Speed: 2367.76 record/sec
+FastEstimator: Converting Eval TFRecords 53.3%, Speed: 2531.42 record/sec
+FastEstimator: Converting Eval TFRecords 60.0%, Speed: 2688.52 record/sec
+FastEstimator: Converting Eval TFRecords 66.7%, Speed: 2806.57 record/sec
+FastEstimator: Converting Eval TFRecords 73.3%, Speed: 2911.10 record/sec
+FastEstimator: Converting Eval TFRecords 80.0%, Speed: 3009.28 record/sec
+FastEstimator: Converting Eval TFRecords 86.7%, Speed: 3127.22 record/sec
+FastEstimator: Converting Eval TFRecords 93.3%, Speed: 1888.62 record/sec
+FastEstimator: Converting Train TFRecords 0.0%, Speed: 0.00 record/sec
+FastEstimator: Converting Train TFRecords 4.8%, Speed: 5892.39 record/sec
+FastEstimator: Converting Train TFRecords 9.6%, Speed: 2365.16 record/sec
+FastEstimator: Converting Train TFRecords 14.4%, Speed: 1968.03 record/sec
+FastEstimator: Converting Train TFRecords 19.2%, Speed: 1531.53 record/sec
+FastEstimator: Converting Train TFRecords 24.0%, Speed: 1133.96 record/sec
+FastEstimator: Converting Train TFRecords 28.7%, Speed: 1035.89 record/sec
+FastEstimator: Converting Train TFRecords 33.5%, Speed: 929.04 record/sec
+FastEstimator: Converting Train TFRecords 38.3%, Speed: 887.58 record/sec
+FastEstimator: Converting Train TFRecords 43.1%, Speed: 847.28 record/sec
+FastEstimator: Converting Train TFRecords 47.9%, Speed: 827.97 record/sec
+FastEstimator: Converting Train TFRecords 52.7%, Speed: 818.50 record/sec
+FastEstimator: Converting Train TFRecords 57.5%, Speed: 795.98 record/sec
+FastEstimator: Converting Train TFRecords 62.3%, Speed: 778.55 record/sec
+FastEstimator: Converting Train TFRecords 67.1%, Speed: 772.14 record/sec
+FastEstimator: Converting Train TFRecords 71.9%, Speed: 763.08 record/sec
+FastEstimator: Converting Train TFRecords 76.6%, Speed: 751.30 record/sec
+FastEstimator: Converting Train TFRecords 81.4%, Speed: 752.45 record/sec
+FastEstimator: Converting Train TFRecords 86.2%, Speed: 752.14 record/sec
+FastEstimator: Converting Train TFRecords 91.0%, Speed: 733.96 record/sec
+FastEstimator: Converting Train TFRecords 95.8%, Speed: 733.14 record/sec
+FastEstimator: Converting Eval TFRecords 0.0%, Speed: 0.00 record/sec
+FastEstimator: Converting Eval TFRecords 5.6%, Speed: 4190.56 record/sec
+FastEstimator: Converting Eval TFRecords 11.1%, Speed: 4535.17 record/sec
+FastEstimator: Converting Eval TFRecords 16.7%, Speed: 4301.78 record/sec
+FastEstimator: Converting Eval TFRecords 22.2%, Speed: 4486.24 record/sec
+FastEstimator: Converting Eval TFRecords 27.8%, Speed: 4838.26 record/sec
+FastEstimator: Converting Eval TFRecords 33.3%, Speed: 4708.93 record/sec
+FastEstimator: Converting Eval TFRecords 38.9%, Speed: 2320.99 record/sec
+FastEstimator: Converting Eval TFRecords 44.4%, Speed: 2530.33 record/sec
+FastEstimator: Converting Eval TFRecords 50.0%, Speed: 2692.21 record/sec
+FastEstimator: Converting Eval TFRecords 55.6%, Speed: 2809.45 record/sec
+FastEstimator: Converting Eval TFRecords 61.1%, Speed: 2920.30 record/sec
+FastEstimator: Converting Eval TFRecords 66.7%, Speed: 3058.17 record/sec
+FastEstimator: Converting Eval TFRecords 72.2%, Speed: 3197.14 record/sec
+FastEstimator: Converting Eval TFRecords 77.8%, Speed: 3264.37 record/sec
+FastEstimator: Converting Eval TFRecords 83.3%, Speed: 2000.44 record/sec
+FastEstimator: Converting Eval TFRecords 88.9%, Speed: 2074.30 record/sec
+FastEstimator: Converting Eval TFRecords 94.4%, Speed: 2140.27 record/sec
+</pre></div></div>
 </div>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
@@ -502,7 +610,7 @@ div.rendered_html tbody tr:hover {
 </div>
 </div>
 <p>—</p>
-<p><a class="reference external" href="https://github.com/fastestimator/fastestimator/blob/master/tutorial/t10_unpaired_dataset.ipynb">Link to GitHub</a></p>
+<p><a class="reference external" href="https://github.com/fastestimator/fastestimator/blob/master/tutorial/t10_unpaired_dataset.ipynb">Example Link to GitHub</a></p>
 
 
            </div>

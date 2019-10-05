@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Image Segmation: Caltech-UCSD Birds 200 Dataset &mdash; FastEstimator 0.0.1 documentation</title>
+  <title>Image Segmation: Caltech-UCSD Birds 200 Dataset &mdash; FastEstimator 1.0a0 documentation</title>
   
 
   
@@ -65,7 +65,7 @@
             
             
               <div class="version">
-                1.0a0
+                1.0
               </div>
             
           
@@ -107,12 +107,6 @@
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="../unet_montgomery/unet_montgomery.html">Lung Segmentation - Montgomery Dataset</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../unet_montgomery/unet_montgomery.html#Download-and-prepare-the-montgomery-dataset">Download and prepare the montgomery dataset</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../unet_montgomery/unet_montgomery.html#Create-TF-Records-from-input-image-and-mask">Create TF Records from input image and mask</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../unet_montgomery/unet_montgomery.html#Create-data-pipeline">Create data pipeline</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../unet_montgomery/unet_montgomery.html#Check-the-results-of-preprocessing">Check the results of preprocessing</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../unet_montgomery/unet_montgomery.html#Creation-of-the-network">Creation of the network</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../unet_montgomery/unet_montgomery.html#Let’s-do-Inference">Let’s do Inference</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../../image_styletransfer.html">Image Style Transfer</a></li>
@@ -428,12 +422,23 @@ div.rendered_html tbody tr:hover {
 <span class="kn">import</span> <span class="nn">fastestimator</span> <span class="k">as</span> <span class="nn">fe</span>
 <span class="kn">from</span> <span class="nn">fastestimator.architecture.unet</span> <span class="k">import</span> <span class="n">UNet</span>
 <span class="kn">from</span> <span class="nn">fastestimator.dataset</span> <span class="k">import</span> <span class="n">cub200</span>
-<span class="kn">from</span> <span class="nn">fastestimator.estimator.trace</span> <span class="k">import</span> <span class="n">Dice</span><span class="p">,</span> <span class="n">ModelSaver</span>
-<span class="kn">from</span> <span class="nn">fastestimator.network.loss</span> <span class="k">import</span> <span class="n">BinaryCrossentropy</span>
-<span class="kn">from</span> <span class="nn">fastestimator.network.model</span> <span class="k">import</span> <span class="n">FEModel</span><span class="p">,</span> <span class="n">ModelOp</span>
-<span class="kn">from</span> <span class="nn">fastestimator.pipeline.processing</span> <span class="k">import</span> <span class="n">Minmax</span>
-<span class="kn">from</span> <span class="nn">fastestimator.record.preprocess</span> <span class="k">import</span> <span class="n">ImageReader</span><span class="p">,</span> <span class="n">MatReader</span><span class="p">,</span> <span class="n">Reshape</span><span class="p">,</span> <span class="n">Resize</span>
-<span class="kn">from</span> <span class="nn">fastestimator.util.op</span> <span class="k">import</span> <span class="n">NumpyOp</span>
+<span class="kn">from</span> <span class="nn">fastestimator.trace</span> <span class="k">import</span> <span class="n">Dice</span><span class="p">,</span> <span class="n">ModelSaver</span>
+<span class="kn">from</span> <span class="nn">fastestimator.op.tensorop</span> <span class="k">import</span> <span class="n">BinaryCrossentropy</span><span class="p">,</span> <span class="n">ModelOp</span><span class="p">,</span> <span class="n">Minmax</span>
+<span class="kn">from</span> <span class="nn">fastestimator.op.numpyop</span> <span class="k">import</span> <span class="n">ImageReader</span><span class="p">,</span> <span class="n">MatReader</span><span class="p">,</span> <span class="n">Reshape</span><span class="p">,</span> <span class="n">Resize</span>
+<span class="kn">from</span> <span class="nn">fastestimator.op</span> <span class="k">import</span> <span class="n">NumpyOp</span>
+<span class="kn">from</span> <span class="nn">fastestimator.util</span> <span class="k">import</span> <span class="n">RecordWriter</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="c1">#parameters</span>
+<span class="n">epochs</span> <span class="o">=</span> <span class="mi">10</span>
+<span class="n">batch_size</span> <span class="o">=</span> <span class="mi">64</span>
+<span class="n">steps_per_epoch</span> <span class="o">=</span> <span class="kc">None</span>
 </pre></div>
 </div>
 </div>
@@ -485,7 +490,7 @@ div.rendered_html tbody tr:hover {
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">writer</span> <span class="o">=</span> <span class="n">fe</span><span class="o">.</span><span class="n">RecordWriter</span><span class="p">(</span>
+<span></span><span class="n">writer</span> <span class="o">=</span> <span class="n">RecordWriter</span><span class="p">(</span>
     <span class="n">save_dir</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s2">&quot;FEdata&quot;</span><span class="p">),</span>
     <span class="n">train_data</span><span class="o">=</span><span class="n">csv_path</span><span class="p">,</span>
     <span class="n">validation_data</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span>
@@ -506,7 +511,7 @@ div.rendered_html tbody tr:hover {
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">pipeline</span> <span class="o">=</span> <span class="n">fe</span><span class="o">.</span><span class="n">Pipeline</span><span class="p">(</span><span class="n">batch_size</span><span class="o">=</span><span class="mi">64</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">writer</span><span class="p">,</span> <span class="n">ops</span><span class="o">=</span><span class="n">Minmax</span><span class="p">(</span><span class="n">inputs</span><span class="o">=</span><span class="s1">&#39;image&#39;</span><span class="p">,</span> <span class="n">outputs</span><span class="o">=</span><span class="s1">&#39;image&#39;</span><span class="p">))</span>
+<span></span><span class="n">pipeline</span> <span class="o">=</span> <span class="n">fe</span><span class="o">.</span><span class="n">Pipeline</span><span class="p">(</span><span class="n">batch_size</span><span class="o">=</span><span class="n">batch_size</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">writer</span><span class="p">,</span> <span class="n">ops</span><span class="o">=</span><span class="n">Minmax</span><span class="p">(</span><span class="n">inputs</span><span class="o">=</span><span class="s1">&#39;image&#39;</span><span class="p">,</span> <span class="n">outputs</span><span class="o">=</span><span class="s1">&#39;image&#39;</span><span class="p">))</span>
 </pre></div>
 </div>
 </div>
@@ -567,7 +572,7 @@ FastEstimator: Found 1206 examples for eval in /tmp/.fe/CUB200/FEdata/eval_summa
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../../../_images/apphub_image_segmentation_unet_cub200_unet_cub200_17_1.png" src="../../../_images/apphub_image_segmentation_unet_cub200_unet_cub200_17_1.png" />
+<img alt="../../../_images/apphub_image_segmentation_unet_cub200_unet_cub200_18_1.png" src="../../../_images/apphub_image_segmentation_unet_cub200_unet_cub200_18_1.png" />
 </div>
 </div>
 </div>
@@ -580,7 +585,7 @@ FastEstimator: Found 1206 examples for eval in /tmp/.fe/CUB200/FEdata/eval_summa
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">model</span> <span class="o">=</span> <span class="n">FEModel</span><span class="p">(</span><span class="n">model_def</span><span class="o">=</span><span class="n">UNet</span><span class="p">,</span> <span class="n">model_name</span><span class="o">=</span><span class="s2">&quot;unet_cub&quot;</span><span class="p">,</span> <span class="n">optimizer</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">optimizers</span><span class="o">.</span><span class="n">Adam</span><span class="p">(</span><span class="n">lr</span><span class="o">=</span><span class="mf">0.001</span><span class="p">))</span>
+<span></span><span class="n">model</span> <span class="o">=</span> <span class="n">fe</span><span class="o">.</span><span class="n">build</span><span class="p">(</span><span class="n">model_def</span><span class="o">=</span><span class="n">UNet</span><span class="p">,</span> <span class="n">model_name</span><span class="o">=</span><span class="s2">&quot;unet_cub&quot;</span><span class="p">,</span> <span class="n">optimizer</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">optimizers</span><span class="o">.</span><span class="n">Adam</span><span class="p">(</span><span class="n">lr</span><span class="o">=</span><span class="mf">0.001</span><span class="p">),</span> <span class="n">loss_name</span><span class="o">=</span><span class="s2">&quot;loss&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -592,7 +597,7 @@ FastEstimator: Found 1206 examples for eval in /tmp/.fe/CUB200/FEdata/eval_summa
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="n">network</span> <span class="o">=</span> <span class="n">fe</span><span class="o">.</span><span class="n">Network</span><span class="p">(</span><span class="n">ops</span><span class="o">=</span><span class="p">[</span>
     <span class="n">ModelOp</span><span class="p">(</span><span class="n">inputs</span><span class="o">=</span><span class="s1">&#39;image&#39;</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">,</span> <span class="n">outputs</span><span class="o">=</span><span class="s1">&#39;mask_pred&#39;</span><span class="p">),</span>
-    <span class="n">BinaryCrossentropy</span><span class="p">(</span><span class="n">y_true</span><span class="o">=</span><span class="s1">&#39;annotation&#39;</span><span class="p">,</span> <span class="n">y_pred</span><span class="o">=</span><span class="s1">&#39;mask_pred&#39;</span><span class="p">)</span>
+    <span class="n">BinaryCrossentropy</span><span class="p">(</span><span class="n">y_true</span><span class="o">=</span><span class="s1">&#39;annotation&#39;</span><span class="p">,</span> <span class="n">y_pred</span><span class="o">=</span><span class="s1">&#39;mask_pred&#39;</span><span class="p">,</span> <span class="n">outputs</span><span class="o">=</span><span class="s2">&quot;loss&quot;</span><span class="p">)</span>
 <span class="p">])</span>
 </pre></div>
 </div>
@@ -628,7 +633,7 @@ FastEstimator: Found 1206 examples for eval in /tmp/.fe/CUB200/FEdata/eval_summa
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">estimator</span> <span class="o">=</span> <span class="n">fe</span><span class="o">.</span><span class="n">Estimator</span><span class="p">(</span><span class="n">network</span><span class="o">=</span><span class="n">network</span><span class="p">,</span> <span class="n">pipeline</span><span class="o">=</span><span class="n">pipeline</span><span class="p">,</span> <span class="n">traces</span><span class="o">=</span><span class="n">traces</span><span class="p">,</span> <span class="n">epochs</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+<span></span><span class="n">estimator</span> <span class="o">=</span> <span class="n">fe</span><span class="o">.</span><span class="n">Estimator</span><span class="p">(</span><span class="n">network</span><span class="o">=</span><span class="n">network</span><span class="p">,</span> <span class="n">pipeline</span><span class="o">=</span><span class="n">pipeline</span><span class="p">,</span> <span class="n">traces</span><span class="o">=</span><span class="n">traces</span><span class="p">,</span> <span class="n">epochs</span><span class="o">=</span><span class="n">epochs</span><span class="p">,</span> <span class="n">steps_per_epoch</span><span class="o">=</span><span class="n">steps_per_epoch</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -768,13 +773,13 @@ W0918 16:41:14.391707 140255972329216 hdf5_format.py:171] No training configurat
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../../../_images/apphub_image_segmentation_unet_cub200_unet_cub200_34_1.png" src="../../../_images/apphub_image_segmentation_unet_cub200_unet_cub200_34_1.png" />
+<img alt="../../../_images/apphub_image_segmentation_unet_cub200_unet_cub200_35_1.png" src="../../../_images/apphub_image_segmentation_unet_cub200_unet_cub200_35_1.png" />
 </div>
 </div>
 </div>
 </div>
 <p>—</p>
-<p><a class="reference external" href="https://github.com/fastestimator/fastestimator/blob/master/apphub/image_segmentation/unet_cub200/unet_cub200.ipynb">Link to GitHub</a></p>
+<p><a class="reference external" href="https://github.com/fastestimator/fastestimator/blob/master/apphub/image_segmentation/unet_cub200/unet_cub200.ipynb">Example Link to GitHub</a></p>
 
 
            </div>
