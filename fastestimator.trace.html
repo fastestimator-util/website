@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>trace &mdash; FastEstimator 1.0a0 documentation</title>
+  <title>trace &mdash; FastEstimator 1.0b0 documentation</title>
   
 
   
@@ -19,39 +19,34 @@
   
 
   
-  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
-  
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
-        <script type="text/javascript" src="_static/jquery.js"></script>
-        <script type="text/javascript" src="_static/underscore.js"></script>
-        <script type="text/javascript" src="_static/doctools.js"></script>
-        <script type="text/javascript" src="_static/language_data.js"></script>
-        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
-        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
-    
-    <script type="text/javascript" src="_static/js/theme.js"></script>
 
+  
+  
     
 
   
+
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="adapt" href="fastestimator.trace.adapt.html" />
     <link rel="prev" title="logs" href="fastestimator.summary.logs.html" /> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
 </head>
 
 <body class="wy-body-for-nav">
 
    
   <div class="wy-grid-for-nav">
+
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search" >
+        <div class="wy-side-nav-search">
           
 
           
@@ -219,159 +214,184 @@
 <h2>trace<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="fastestimator.trace.trace.Trace">
-<em class="property">class </em><code class="sig-prename descclassname">fastestimator.trace.trace.</code><code class="sig-name descname">Trace</code><span class="sig-paren">(</span><em class="sig-param">inputs=None</em>, <em class="sig-param">outputs=None</em>, <em class="sig-param">mode=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/trace/trace.html#Trace"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.trace.trace.Trace" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">fastestimator.trace.trace.</code><code class="descname">Trace</code><span class="sig-paren">(</span><em>inputs=None</em>, <em>outputs=None</em>, <em>mode=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/trace/trace.html#Trace"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.trace.trace.Trace" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Trace base class. User can use <cite>Trace</cite> to customize their own operations during training, validation and testing.
 The <cite>Network</cite> instance can be accessible by <cite>self.network</cite>. Trace execution order will attempt to be inferred
 whenever possible based on the provided inputs and outputs variables.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>inputs</strong> (<em>str</em><em>, </em><em>list</em><em>, </em><em>set</em>) – A set of keys that this trace intends to read from the state dictionary as inputs</p></li>
-<li><p><strong>outputs</strong> (<em>str</em><em>, </em><em>list</em><em>, </em><em>set</em>) – A set of keys that this trace intends to write into the state dictionary</p></li>
-<li><p><strong>mode</strong> (<em>string</em>) – Restrict the trace to run only on given modes (‘train’, ‘eval’, ‘test’). None will always
-execute</p></li>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>inputs</strong> (<em>str</em><em>, </em><em>list</em><em>, </em><em>set</em>) – A set of keys that this trace intends to read from the state dictionary as inputs</li>
+<li><strong>outputs</strong> (<em>str</em><em>, </em><em>list</em><em>, </em><em>set</em>) – A set of keys that this trace intends to write into the state dictionary</li>
+<li><strong>mode</strong> (<em>string</em>) – Restrict the trace to run only on given modes (‘train’, ‘eval’, ‘test’). None will always
+execute</li>
 </ul>
-</dd>
-</dl>
+</td>
+</tr>
+</tbody>
+</table>
 <dl class="method">
 <dt id="fastestimator.trace.trace.Trace.on_begin">
-<code class="sig-name descname">on_begin</code><span class="sig-paren">(</span><em class="sig-param">state</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/trace/trace.html#Trace.on_begin"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.trace.trace.Trace.on_begin" title="Permalink to this definition">¶</a></dt>
+<code class="descname">on_begin</code><span class="sig-paren">(</span><em>state</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/trace/trace.html#Trace.on_begin"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.trace.trace.Trace.on_begin" title="Permalink to this definition">¶</a></dt>
 <dd><p>Runs once at the beginning of training</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>state</strong> (<em>ChainMap</em>) – <p>dictionary of run time that has the following key(s):</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>state</strong> (<em>ChainMap</em>) – <p>dictionary of run time that has the following key(s):</p>
 <ul class="simple">
-<li><p>”train_step” (int): current global training step starting from 0</p></li>
-<li><p>”num_devices” (int): number of devices(mainly gpu) that are being used, if cpu only, the number is 1</p></li>
-<li><p>”log_steps” (int): how many training steps between logging intervals</p></li>
-<li><p>”persist_summary” (bool): whether to persist the experiment history/summary</p></li>
-<li><p>”total_epochs” (int): how many epochs the training is scheduled to run for</p></li>
-<li><p>”total_train_steps” (int): how many training steps the training is scheduled to run for</p></li>
-<li><p>any keys written by ‘on_begin’ of previous traces</p></li>
+<li>”train_step” (int): current global training step starting from 0</li>
+<li>”num_devices” (int): number of devices(mainly gpu) that are being used, if cpu only, the number is 1</li>
+<li>”log_steps” (int): how many training steps between logging intervals</li>
+<li>”persist_summary” (bool): whether to persist the experiment history/summary</li>
+<li>”total_epochs” (int): how many epochs the training is scheduled to run for</li>
+<li>”total_train_steps” (int): how many training steps the training is scheduled to run for</li>
+<li>any keys written by ‘on_begin’ of previous traces</li>
 </ul>
-</p>
-</dd>
-</dl>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="method">
 <dt id="fastestimator.trace.trace.Trace.on_epoch_begin">
-<code class="sig-name descname">on_epoch_begin</code><span class="sig-paren">(</span><em class="sig-param">state</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/trace/trace.html#Trace.on_epoch_begin"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.trace.trace.Trace.on_epoch_begin" title="Permalink to this definition">¶</a></dt>
+<code class="descname">on_epoch_begin</code><span class="sig-paren">(</span><em>state</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/trace/trace.html#Trace.on_epoch_begin"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.trace.trace.Trace.on_epoch_begin" title="Permalink to this definition">¶</a></dt>
 <dd><p>Runs at the beginning of each epoch of the mode.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>state</strong> (<em>ChainMap</em>) – <p>dictionary of run time that has the following key(s):</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>state</strong> (<em>ChainMap</em>) – <p>dictionary of run time that has the following key(s):</p>
 <ul class="simple">
-<li><p>”mode” (str):  current run time mode, can be “train”, “eval” or “test”</p></li>
-<li><p>”epoch” (int): current epoch index starting from 0</p></li>
-<li><p>”train_step” (int): current global training step starting from 0</p></li>
-<li><p>any keys written by ‘on_epoch_begin’ of previous traces</p></li>
+<li>”mode” (str):  current run time mode, can be “train”, “eval” or “test”</li>
+<li>”epoch” (int): current epoch index starting from 0</li>
+<li>”train_step” (int): current global training step starting from 0</li>
+<li>any keys written by ‘on_epoch_begin’ of previous traces</li>
 </ul>
-</p>
-</dd>
-</dl>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="method">
 <dt id="fastestimator.trace.trace.Trace.on_batch_begin">
-<code class="sig-name descname">on_batch_begin</code><span class="sig-paren">(</span><em class="sig-param">state</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/trace/trace.html#Trace.on_batch_begin"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.trace.trace.Trace.on_batch_begin" title="Permalink to this definition">¶</a></dt>
+<code class="descname">on_batch_begin</code><span class="sig-paren">(</span><em>state</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/trace/trace.html#Trace.on_batch_begin"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.trace.trace.Trace.on_batch_begin" title="Permalink to this definition">¶</a></dt>
 <dd><p>Runs at the beginning of every batch of the mode.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>state</strong> (<em>ChainMap</em>) – <p>dictionary of run time that has the following key(s):</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>state</strong> (<em>ChainMap</em>) – <p>dictionary of run time that has the following key(s):</p>
 <ul class="simple">
-<li><p>”mode” (str): current run time mode, can be “train”, “eval” or “test”</p></li>
-<li><p>”epoch” (int): current epoch index starting from 0</p></li>
-<li><p>”train_step” (int): current global training step starting from 0</p></li>
-<li><p>”batch_idx” (int): current local step of the epoch starting from 0</p></li>
-<li><p>”batch_size” (int): current global batch size</p></li>
-<li><p>any keys written by ‘on_batch_begin’ of previous traces</p></li>
+<li>”mode” (str): current run time mode, can be “train”, “eval” or “test”</li>
+<li>”epoch” (int): current epoch index starting from 0</li>
+<li>”train_step” (int): current global training step starting from 0</li>
+<li>”batch_idx” (int): current local step of the epoch starting from 0</li>
+<li>”batch_size” (int): current global batch size</li>
+<li>any keys written by ‘on_batch_begin’ of previous traces</li>
 </ul>
-</p>
-</dd>
-</dl>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="method">
 <dt id="fastestimator.trace.trace.Trace.on_batch_end">
-<code class="sig-name descname">on_batch_end</code><span class="sig-paren">(</span><em class="sig-param">state</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/trace/trace.html#Trace.on_batch_end"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.trace.trace.Trace.on_batch_end" title="Permalink to this definition">¶</a></dt>
+<code class="descname">on_batch_end</code><span class="sig-paren">(</span><em>state</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/trace/trace.html#Trace.on_batch_end"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.trace.trace.Trace.on_batch_end" title="Permalink to this definition">¶</a></dt>
 <dd><p>Runs at the end of every batch of the mode. Anything written to the top level of the state dictionary will be
 printed in the logs. Things written only to the batch sub-dictionary will not be logged</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>state</strong> (<em>ChainMap</em>) – <p>dictionary of run time that has the following key(s):</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>state</strong> (<em>ChainMap</em>) – <p>dictionary of run time that has the following key(s):</p>
 <ul class="simple">
-<li><p>”mode” (str):  current run time mode, can be “train”, “eval” or “test”</p></li>
-<li><p>”epoch” (int): current epoch index starting from 0</p></li>
-<li><p>”train_step” (int): current global training step starting from 0</p></li>
-<li><p>”batch_idx” (int): current local step of the epoch starting from 0</p></li>
-<li><p>”batch_size” (int): current global batch size</p></li>
-<li><p>”batch” (dict): the batch data after the Network execution</p></li>
-<li><p>&lt;loss_name&gt; defined in model (float): loss of current batch (only available when mode is “train”)</p></li>
-<li><p>any keys written by ‘on_batch_end’ of previous traces</p></li>
+<li>”mode” (str):  current run time mode, can be “train”, “eval” or “test”</li>
+<li>”epoch” (int): current epoch index starting from 0</li>
+<li>”train_step” (int): current global training step starting from 0</li>
+<li>”batch_idx” (int): current local step of the epoch starting from 0</li>
+<li>”batch_size” (int): current global batch size</li>
+<li>”batch” (dict): the batch data after the Network execution</li>
+<li>&lt;loss_name&gt; defined in model (float): loss of current batch (only available when mode is “train”)</li>
+<li>any keys written by ‘on_batch_end’ of previous traces</li>
 </ul>
-</p>
-</dd>
-</dl>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="method">
 <dt id="fastestimator.trace.trace.Trace.on_epoch_end">
-<code class="sig-name descname">on_epoch_end</code><span class="sig-paren">(</span><em class="sig-param">state</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/trace/trace.html#Trace.on_epoch_end"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.trace.trace.Trace.on_epoch_end" title="Permalink to this definition">¶</a></dt>
+<code class="descname">on_epoch_end</code><span class="sig-paren">(</span><em>state</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/trace/trace.html#Trace.on_epoch_end"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.trace.trace.Trace.on_epoch_end" title="Permalink to this definition">¶</a></dt>
 <dd><p>Runs at the end of every epoch of the mode. Anything written into the state dictionary will be logged</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>state</strong> (<em>ChainMap</em>) – <p>dictionary of run time that has the following key(s):</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>state</strong> (<em>ChainMap</em>) – <p>dictionary of run time that has the following key(s):</p>
 <ul class="simple">
-<li><p>”mode” (str):  current run time mode, can be “train”, “eval” or “test”</p></li>
-<li><p>”epoch” (int): current epoch index starting from 0</p></li>
-<li><p>”train_step” (int): current global training step starting from 0</p></li>
-<li><p>&lt;loss_name&gt; defined in model (float): average loss of the epoch (only available when mode is “eval”)</p></li>
-<li><p>any keys written by ‘on_epoch_end’ of previous traces</p></li>
+<li>”mode” (str):  current run time mode, can be “train”, “eval” or “test”</li>
+<li>”epoch” (int): current epoch index starting from 0</li>
+<li>”train_step” (int): current global training step starting from 0</li>
+<li>&lt;loss_name&gt; defined in model (float): average loss of the epoch (only available when mode is “eval”)</li>
+<li>any keys written by ‘on_epoch_end’ of previous traces</li>
 </ul>
-</p>
-</dd>
-</dl>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="method">
 <dt id="fastestimator.trace.trace.Trace.on_end">
-<code class="sig-name descname">on_end</code><span class="sig-paren">(</span><em class="sig-param">state</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/trace/trace.html#Trace.on_end"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.trace.trace.Trace.on_end" title="Permalink to this definition">¶</a></dt>
+<code class="descname">on_end</code><span class="sig-paren">(</span><em>state</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/trace/trace.html#Trace.on_end"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.trace.trace.Trace.on_end" title="Permalink to this definition">¶</a></dt>
 <dd><p>Runs once at the end training. Anything written into the state dictionary will be logged</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>state</strong> (<em>ChainMap</em>) – <p>dictionary of run time that has the following key(s):</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>state</strong> (<em>ChainMap</em>) – <p>dictionary of run time that has the following key(s):</p>
 <ul class="simple">
-<li><p>”train_step” (int): current global training step starting from 0</p></li>
-<li><p>”epoch” (int): current epoch index starting from 0</p></li>
-<li><p>”num_devices” (int): number of devices (mainly gpu) that are being used. If cpu only, the number is 1</p></li>
-<li><p>”summary” (Experiment): will be returned from estimator.fit() if a summary input was specified</p></li>
-<li><p>any keys written by ‘on_end’ of previous traces</p></li>
+<li>”train_step” (int): current global training step starting from 0</li>
+<li>”epoch” (int): current epoch index starting from 0</li>
+<li>”num_devices” (int): number of devices (mainly gpu) that are being used. If cpu only, the number is 1</li>
+<li>”summary” (Experiment): will be returned from estimator.fit() if a summary input was specified</li>
+<li>any keys written by ‘on_end’ of previous traces</li>
 </ul>
-</p>
-</dd>
-</dl>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 </dd></dl>
 
 <dl class="class">
 <dt id="fastestimator.trace.trace.TrainInfo">
-<em class="property">class </em><code class="sig-prename descclassname">fastestimator.trace.trace.</code><code class="sig-name descname">TrainInfo</code><a class="reference internal" href="_modules/fastestimator/trace/trace.html#TrainInfo"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.trace.trace.TrainInfo" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">fastestimator.trace.trace.</code><code class="descname">TrainInfo</code><a class="reference internal" href="_modules/fastestimator/trace/trace.html#TrainInfo"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.trace.trace.TrainInfo" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#fastestimator.trace.trace.Trace" title="fastestimator.trace.trace.Trace"><code class="xref py py-class docutils literal notranslate"><span class="pre">fastestimator.trace.trace.Trace</span></code></a></p>
 <p>Essential training information for logging during training. Please don’t add this trace into an estimator
 manually. An estimator will add it automatically.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>log_steps</strong> (<em>int</em>) – Interval steps of logging</p>
-</dd>
-</dl>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>log_steps</strong> (<em>int</em>) – Interval steps of logging</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="class">
 <dt id="fastestimator.trace.trace.MonitorLoss">
-<em class="property">class </em><code class="sig-prename descclassname">fastestimator.trace.trace.</code><code class="sig-name descname">MonitorLoss</code><a class="reference internal" href="_modules/fastestimator/trace/trace.html#MonitorLoss"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.trace.trace.MonitorLoss" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">fastestimator.trace.trace.</code><code class="descname">MonitorLoss</code><a class="reference internal" href="_modules/fastestimator/trace/trace.html#MonitorLoss"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.trace.trace.MonitorLoss" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#fastestimator.trace.trace.Trace" title="fastestimator.trace.trace.Trace"><code class="xref py py-class docutils literal notranslate"><span class="pre">fastestimator.trace.trace.Trace</span></code></a></p>
 <p>Records loss value. Please don’t add this trace into an estimator manually. An estimator will add it
 automatically.</p>
@@ -391,7 +411,7 @@ automatically.</p>
         <a href="fastestimator.trace.adapt.html" class="btn btn-neutral float-right" title="adapt" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="fastestimator.summary.logs.html" class="btn btn-neutral float-left" title="logs" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="fastestimator.summary.logs.html" class="btn btn-neutral" title="logs" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -417,16 +437,37 @@ automatically.</p>
   
 
 
+  
+
+    
+    
+      <script type="text/javascript">
+          var DOCUMENTATION_OPTIONS = {
+              URL_ROOT:'./',
+              VERSION:'1.0b0',
+              LANGUAGE:'None',
+              COLLAPSE_INDEX:false,
+              FILE_SUFFIX:'.html',
+              HAS_SOURCE:  true,
+              SOURCELINK_SUFFIX: '.txt'
+          };
+      </script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    
+
+  
+
+  <script type="text/javascript" src="_static/js/theme.js"></script>
+
   <script type="text/javascript">
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script>
-
-  
-  
-    
-   
+  </script> 
 
 </body>
 </html>

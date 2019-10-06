@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Tutorial 9: Learning Rate Controller &mdash; FastEstimator 1.0a0 documentation</title>
+  <title>Tutorial 9: Learning Rate Controller &mdash; FastEstimator 1.0b0 documentation</title>
   
 
   
@@ -19,39 +19,34 @@
   
 
   
-  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
-  
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-        <script type="text/javascript" src="../_static/jquery.js"></script>
-        <script type="text/javascript" src="../_static/underscore.js"></script>
-        <script type="text/javascript" src="../_static/doctools.js"></script>
-        <script type="text/javascript" src="../_static/language_data.js"></script>
-        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
-        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
-    
-    <script type="text/javascript" src="../_static/js/theme.js"></script>
 
+  
+  
     
 
   
+
   <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Tutorial 10: Dataset with unpaired features" href="t10_unpaired_dataset.html" />
     <link rel="prev" title="Tutorial 8: Changing hyperparameters during training with Scheduler" href="t08_scheduler_progressive_training.html" /> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
 </head>
 
 <body class="wy-body-for-nav">
 
    
   <div class="wy-grid-for-nav">
+
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search" >
+        <div class="wy-side-nav-search">
           
 
           
@@ -407,7 +402,7 @@ div.rendered_html tbody tr:hover {
 <p>In this tutorial, we are going to show you how to use a specific Trace - <code class="docutils literal notranslate"><span class="pre">LRController</span></code> to <strong>change your learning rate during the training</strong>. In general, <code class="docutils literal notranslate"><span class="pre">LRController</span></code> takes care of both learning rate scheduling as well as changing learning rate on validation.</p>
 <p>If you are a keras user, you can see <code class="docutils literal notranslate"><span class="pre">LRController</span></code> as a combination of LRScheduler and ReduceLROnPlateau.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -421,7 +416,7 @@ div.rendered_html tbody tr:hover {
 <div class="section" id="Step-0--Preparation">
 <h2>Step 0- Preparation<a class="headerlink" href="#Step-0--Preparation" title="Permalink to this headline">¶</a></h2>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -452,7 +447,7 @@ div.rendered_html tbody tr:hover {
 <h2>Option 1- Customize the learning rate: step-wise control<a class="headerlink" href="#Option-1--Customize-the-learning-rate:-step-wise-control" title="Permalink to this headline">¶</a></h2>
 <p>Let’s define our learning rate scheduler to be 0.001 * (1 + step // 500).</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -477,8 +472,8 @@ div.rendered_html tbody tr:hover {
 </pre></div>
 </div>
 </div>
-<div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -487,66 +482,9 @@ div.rendered_html tbody tr:hover {
 </pre></div>
 </div>
 </div>
-<div class="nboutput nblast docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area docutils container">
-<div class="highlight"><pre>
-    ______           __  ______     __  _                 __
-   / ____/___ ______/ /_/ ____/____/ /_(_)___ ___  ____ _/ /_____  _____
-  / /_  / __ `/ ___/ __/ __/ / ___/ __/ / __ `__ \/ __ `/ __/ __ \/ ___/
- / __/ / /_/ (__  ) /_/ /___(__  ) /_/ / / / / / / /_/ / /_/ /_/ / /
-/_/    \__,_/____/\__/_____/____/\__/_/_/ /_/ /_/\__,_/\__/\____/_/
-
-
-FastEstimator-Warn: No ModelSaver Trace detected. Models will not be saved.
-FastEstimator-Start: step: 0; total_train_steps: 3750; lenet_lr: 0.001;
-FastEstimator-Train: step: 0; my_loss: 2.2888482; lenet_lr: 0.001;
-FastEstimator-Train: step: 100; my_loss: 0.5100794; examples/sec: 3896.0; progress: 2.7%; lenet_lr: 0.001;
-FastEstimator-Train: step: 200; my_loss: 0.2533394; examples/sec: 3931.9; progress: 5.3%; lenet_lr: 0.001;
-FastEstimator-Train: step: 300; my_loss: 0.128243; examples/sec: 3961.0; progress: 8.0%; lenet_lr: 0.001;
-FastEstimator-Train: step: 400; my_loss: 0.1083025; examples/sec: 3972.0; progress: 10.7%; lenet_lr: 0.001;
-FastEstimator-Train: step: 500; my_loss: 0.1250492; examples/sec: 3957.0; progress: 13.3%; lenet_lr: 0.002;
-FastEstimator-Train: step: 600; my_loss: 0.0620192; examples/sec: 3950.9; progress: 16.0%; lenet_lr: 0.002;
-FastEstimator-Train: step: 700; my_loss: 0.009061; examples/sec: 3970.8; progress: 18.7%; lenet_lr: 0.002;
-FastEstimator-Train: step: 800; my_loss: 0.0284444; examples/sec: 3972.0; progress: 21.3%; lenet_lr: 0.002;
-FastEstimator-Train: step: 900; my_loss: 0.0203179; examples/sec: 3968.6; progress: 24.0%; lenet_lr: 0.002;
-FastEstimator-Train: step: 1000; my_loss: 0.1013497; examples/sec: 3973.1; progress: 26.7%; lenet_lr: 0.003;
-FastEstimator-Train: step: 1100; my_loss: 0.0853087; examples/sec: 3979.9; progress: 29.3%; lenet_lr: 0.003;
-FastEstimator-Train: step: 1200; my_loss: 0.0444975; examples/sec: 3988.6; progress: 32.0%; lenet_lr: 0.003;
-FastEstimator-Train: step: 1300; my_loss: 0.0625045; examples/sec: 3948.5; progress: 34.7%; lenet_lr: 0.003;
-FastEstimator-Train: step: 1400; my_loss: 0.0714587; examples/sec: 3969.4; progress: 37.3%; lenet_lr: 0.003;
-FastEstimator-Train: step: 1500; my_loss: 0.2313882; examples/sec: 3952.5; progress: 40.0%; lenet_lr: 0.004;
-FastEstimator-Train: step: 1600; my_loss: 0.0008636; examples/sec: 3948.7; progress: 42.7%; lenet_lr: 0.004;
-FastEstimator-Train: step: 1700; my_loss: 0.030587; examples/sec: 3915.9; progress: 45.3%; lenet_lr: 0.004;
-FastEstimator-Train: step: 1800; my_loss: 0.0263997; examples/sec: 3952.1; progress: 48.0%; lenet_lr: 0.004;
-FastEstimator-Eval: step: 1875; epoch: 0; my_loss: 0.0822457; min_my_loss: 0.08224571; since_best_loss: 0;
-FastEstimator-Train: step: 1900; my_loss: 0.0063102; examples/sec: 3599.3; progress: 50.7%; lenet_lr: 0.004;
-FastEstimator-Train: step: 2000; my_loss: 0.0005939; examples/sec: 3980.7; progress: 53.3%; lenet_lr: 0.005;
-FastEstimator-Train: step: 2100; my_loss: 0.0688064; examples/sec: 3962.6; progress: 56.0%; lenet_lr: 0.005;
-FastEstimator-Train: step: 2200; my_loss: 0.0392575; examples/sec: 3966.7; progress: 58.7%; lenet_lr: 0.005;
-FastEstimator-Train: step: 2300; my_loss: 0.1063022; examples/sec: 3984.8; progress: 61.3%; lenet_lr: 0.005;
-FastEstimator-Train: step: 2400; my_loss: 0.0855758; examples/sec: 4008.1; progress: 64.0%; lenet_lr: 0.005;
-FastEstimator-Train: step: 2500; my_loss: 0.0063999; examples/sec: 3994.5; progress: 66.7%; lenet_lr: 0.006;
-FastEstimator-Train: step: 2600; my_loss: 0.0134795; examples/sec: 4011.4; progress: 69.3%; lenet_lr: 0.006;
-FastEstimator-Train: step: 2700; my_loss: 0.0793164; examples/sec: 4016.5; progress: 72.0%; lenet_lr: 0.006;
-FastEstimator-Train: step: 2800; my_loss: 0.0005881; examples/sec: 4006.8; progress: 74.7%; lenet_lr: 0.006;
-FastEstimator-Train: step: 2900; my_loss: 0.0106941; examples/sec: 3953.2; progress: 77.3%; lenet_lr: 0.006;
-FastEstimator-Train: step: 3000; my_loss: 0.0131055; examples/sec: 4004.1; progress: 80.0%; lenet_lr: 0.007;
-FastEstimator-Train: step: 3100; my_loss: 0.1210043; examples/sec: 4019.9; progress: 82.7%; lenet_lr: 0.007;
-FastEstimator-Train: step: 3200; my_loss: 0.2668515; examples/sec: 3984.7; progress: 85.3%; lenet_lr: 0.007;
-FastEstimator-Train: step: 3300; my_loss: 0.000567; examples/sec: 3973.1; progress: 88.0%; lenet_lr: 0.007;
-FastEstimator-Train: step: 3400; my_loss: 0.0089378; examples/sec: 4012.1; progress: 90.7%; lenet_lr: 0.007;
-FastEstimator-Train: step: 3500; my_loss: 0.0057933; examples/sec: 3772.2; progress: 93.3%; lenet_lr: 0.008;
-FastEstimator-Train: step: 3600; my_loss: 0.0400752; examples/sec: 3645.9; progress: 96.0%; lenet_lr: 0.008;
-FastEstimator-Train: step: 3700; my_loss: 0.3283464; examples/sec: 3608.5; progress: 98.7%; lenet_lr: 0.008;
-FastEstimator-Eval: step: 3750; epoch: 1; my_loss: 0.1096223; min_my_loss: 0.08224571; since_best_loss: 1;
-FastEstimator-Finish: step: 3750; total_time: 33.55 sec; lenet_lr: 0.008;
-</pre></div></div>
-</div>
 <p>We will use visualize_logs to plot the learning rate. We only want to display this metric, so we specify the others in ignore_metrics.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[24]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -569,7 +507,7 @@ FastEstimator-Finish: step: 3750; total_time: 33.55 sec; lenet_lr: 0.008;
 <h2>Option 2 - Customize the learning rate: epoch-wise control<a class="headerlink" href="#Option-2---Customize-the-learning-rate:-epoch-wise-control" title="Permalink to this headline">¶</a></h2>
 <p>Let’s now define learning rate to be (epoch +1 ) * 0.002. The only change will be in schedule_mode.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -594,8 +532,8 @@ FastEstimator-Finish: step: 3750; total_time: 33.55 sec; lenet_lr: 0.008;
 </pre></div>
 </div>
 </div>
-<div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -604,65 +542,8 @@ FastEstimator-Finish: step: 3750; total_time: 33.55 sec; lenet_lr: 0.008;
 </pre></div>
 </div>
 </div>
-<div class="nboutput nblast docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area docutils container">
-<div class="highlight"><pre>
-    ______           __  ______     __  _                 __
-   / ____/___ ______/ /_/ ____/____/ /_(_)___ ___  ____ _/ /_____  _____
-  / /_  / __ `/ ___/ __/ __/ / ___/ __/ / __ `__ \/ __ `/ __/ __ \/ ___/
- / __/ / /_/ (__  ) /_/ /___(__  ) /_/ / / / / / / /_/ / /_/ /_/ / /
-/_/    \__,_/____/\__/_____/____/\__/_/_/ /_/ /_/\__,_/\__/\____/_/
-
-
-FastEstimator-Warn: No ModelSaver Trace detected. Models will not be saved.
-FastEstimator-Start: step: 0; total_train_steps: 3750; lenet_lr: 0.001;
-FastEstimator-Train: step: 0; my_loss: 2.3025756; lenet_lr: 0.002;
-FastEstimator-Train: step: 100; my_loss: 0.2721966; examples/sec: 3960.2; progress: 2.7%; lenet_lr: 0.002;
-FastEstimator-Train: step: 200; my_loss: 0.0717329; examples/sec: 3978.8; progress: 5.3%; lenet_lr: 0.002;
-FastEstimator-Train: step: 300; my_loss: 0.0273904; examples/sec: 3937.9; progress: 8.0%; lenet_lr: 0.002;
-FastEstimator-Train: step: 400; my_loss: 0.0704985; examples/sec: 3984.2; progress: 10.7%; lenet_lr: 0.002;
-FastEstimator-Train: step: 500; my_loss: 0.3219198; examples/sec: 3938.5; progress: 13.3%; lenet_lr: 0.002;
-FastEstimator-Train: step: 600; my_loss: 0.0063683; examples/sec: 3947.9; progress: 16.0%; lenet_lr: 0.002;
-FastEstimator-Train: step: 700; my_loss: 0.0867924; examples/sec: 3963.6; progress: 18.7%; lenet_lr: 0.002;
-FastEstimator-Train: step: 800; my_loss: 0.0173541; examples/sec: 3991.8; progress: 21.3%; lenet_lr: 0.002;
-FastEstimator-Train: step: 900; my_loss: 0.0335448; examples/sec: 3978.6; progress: 24.0%; lenet_lr: 0.002;
-FastEstimator-Train: step: 1000; my_loss: 0.0663465; examples/sec: 3996.2; progress: 26.7%; lenet_lr: 0.002;
-FastEstimator-Train: step: 1100; my_loss: 0.0953021; examples/sec: 3968.9; progress: 29.3%; lenet_lr: 0.002;
-FastEstimator-Train: step: 1200; my_loss: 0.0047956; examples/sec: 3956.1; progress: 32.0%; lenet_lr: 0.002;
-FastEstimator-Train: step: 1300; my_loss: 0.0494369; examples/sec: 3979.5; progress: 34.7%; lenet_lr: 0.002;
-FastEstimator-Train: step: 1400; my_loss: 0.1418585; examples/sec: 3959.6; progress: 37.3%; lenet_lr: 0.002;
-FastEstimator-Train: step: 1500; my_loss: 0.0980848; examples/sec: 3974.9; progress: 40.0%; lenet_lr: 0.002;
-FastEstimator-Train: step: 1600; my_loss: 0.0177652; examples/sec: 3997.4; progress: 42.7%; lenet_lr: 0.002;
-FastEstimator-Train: step: 1700; my_loss: 0.0085248; examples/sec: 4004.5; progress: 45.3%; lenet_lr: 0.002;
-FastEstimator-Train: step: 1800; my_loss: 0.0104187; examples/sec: 4014.2; progress: 48.0%; lenet_lr: 0.002;
-FastEstimator-Eval: step: 1875; epoch: 0; my_loss: 0.0491042; min_my_loss: 0.049104225; since_best_loss: 0;
-FastEstimator-Train: step: 1900; my_loss: 0.0066214; examples/sec: 3548.5; progress: 50.7%; lenet_lr: 0.004;
-FastEstimator-Train: step: 2000; my_loss: 0.043445; examples/sec: 3987.6; progress: 53.3%; lenet_lr: 0.004;
-FastEstimator-Train: step: 2100; my_loss: 0.0026124; examples/sec: 3999.8; progress: 56.0%; lenet_lr: 0.004;
-FastEstimator-Train: step: 2200; my_loss: 0.1719017; examples/sec: 4037.8; progress: 58.7%; lenet_lr: 0.004;
-FastEstimator-Train: step: 2300; my_loss: 0.081366; examples/sec: 4015.9; progress: 61.3%; lenet_lr: 0.004;
-FastEstimator-Train: step: 2400; my_loss: 0.246665; examples/sec: 4018.9; progress: 64.0%; lenet_lr: 0.004;
-FastEstimator-Train: step: 2500; my_loss: 0.0325989; examples/sec: 4017.0; progress: 66.7%; lenet_lr: 0.004;
-FastEstimator-Train: step: 2600; my_loss: 0.0941026; examples/sec: 4002.8; progress: 69.3%; lenet_lr: 0.004;
-FastEstimator-Train: step: 2700; my_loss: 0.0014212; examples/sec: 4043.3; progress: 72.0%; lenet_lr: 0.004;
-FastEstimator-Train: step: 2800; my_loss: 0.0614315; examples/sec: 4024.2; progress: 74.7%; lenet_lr: 0.004;
-FastEstimator-Train: step: 2900; my_loss: 0.0232563; examples/sec: 3983.9; progress: 77.3%; lenet_lr: 0.004;
-FastEstimator-Train: step: 3000; my_loss: 0.0777129; examples/sec: 4009.2; progress: 80.0%; lenet_lr: 0.004;
-FastEstimator-Train: step: 3100; my_loss: 0.002428; examples/sec: 4037.0; progress: 82.7%; lenet_lr: 0.004;
-FastEstimator-Train: step: 3200; my_loss: 0.0102054; examples/sec: 3997.5; progress: 85.3%; lenet_lr: 0.004;
-FastEstimator-Train: step: 3300; my_loss: 0.1672973; examples/sec: 4008.3; progress: 88.0%; lenet_lr: 0.004;
-FastEstimator-Train: step: 3400; my_loss: 0.0197177; examples/sec: 3998.7; progress: 90.7%; lenet_lr: 0.004;
-FastEstimator-Train: step: 3500; my_loss: 0.0255214; examples/sec: 4046.8; progress: 93.3%; lenet_lr: 0.004;
-FastEstimator-Train: step: 3600; my_loss: 0.0055491; examples/sec: 4016.5; progress: 96.0%; lenet_lr: 0.004;
-FastEstimator-Train: step: 3700; my_loss: 0.1649434; examples/sec: 4060.2; progress: 98.7%; lenet_lr: 0.004;
-FastEstimator-Eval: step: 3750; epoch: 1; my_loss: 0.0591261; min_my_loss: 0.049104225; since_best_loss: 1;
-FastEstimator-Finish: step: 3750; total_time: 32.34 sec; lenet_lr: 0.004;
-</pre></div></div>
-</div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[25]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -684,7 +565,7 @@ FastEstimator-Finish: step: 3750; total_time: 32.34 sec; lenet_lr: 0.004;
 <p>FastEstimator provides many pre-implemented popular learning rate shedulers for users. Here, we are going to use <code class="docutils literal notranslate"><span class="pre">CyclicLRSchedule</span></code>: it is a generalization of many learning rate schedulers.</p>
 <p>In the next example, let’s decay the learning rate by half of cosine curve.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -703,8 +584,8 @@ FastEstimator-Finish: step: 3750; total_time: 32.34 sec; lenet_lr: 0.004;
 </pre></div>
 </div>
 </div>
-<div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -713,65 +594,8 @@ FastEstimator-Finish: step: 3750; total_time: 32.34 sec; lenet_lr: 0.004;
 </pre></div>
 </div>
 </div>
-<div class="nboutput nblast docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area docutils container">
-<div class="highlight"><pre>
-    ______           __  ______     __  _                 __
-   / ____/___ ______/ /_/ ____/____/ /_(_)___ ___  ____ _/ /_____  _____
-  / /_  / __ `/ ___/ __/ __/ / ___/ __/ / __ `__ \/ __ `/ __/ __ \/ ___/
- / __/ / /_/ (__  ) /_/ /___(__  ) /_/ / / / / / / /_/ / /_/ /_/ / /
-/_/    \__,_/____/\__/_____/____/\__/_/_/ /_/ /_/\__,_/\__/\____/_/
-
-
-FastEstimator-Warn: No ModelSaver Trace detected. Models will not be saved.
-FastEstimator-Start: step: 0; total_train_steps: 3750; lenet_lr: 0.001;
-FastEstimator-Train: step: 0; my_loss: 2.3278143; lenet_lr: 0.001;
-FastEstimator-Train: step: 100; my_loss: 0.3265492; examples/sec: 3873.0; progress: 2.7%; lenet_lr: 0.000998;
-FastEstimator-Train: step: 200; my_loss: 0.287258; examples/sec: 3884.8; progress: 5.3%; lenet_lr: 0.000993;
-FastEstimator-Train: step: 300; my_loss: 0.0871949; examples/sec: 3880.9; progress: 8.0%; lenet_lr: 0.000984;
-FastEstimator-Train: step: 400; my_loss: 0.1784107; examples/sec: 3902.9; progress: 10.7%; lenet_lr: 0.000972;
-FastEstimator-Train: step: 500; my_loss: 0.4700381; examples/sec: 3891.6; progress: 13.3%; lenet_lr: 0.000957;
-FastEstimator-Train: step: 600; my_loss: 0.4894411; examples/sec: 3884.8; progress: 16.0%; lenet_lr: 0.000938;
-FastEstimator-Train: step: 700; my_loss: 0.0916378; examples/sec: 3899.4; progress: 18.7%; lenet_lr: 0.000917;
-FastEstimator-Train: step: 800; my_loss: 0.0553569; examples/sec: 3873.1; progress: 21.3%; lenet_lr: 0.000892;
-FastEstimator-Train: step: 900; my_loss: 0.0268171; examples/sec: 3847.3; progress: 24.0%; lenet_lr: 0.000865;
-FastEstimator-Train: step: 1000; my_loss: 0.0134905; examples/sec: 3842.8; progress: 26.7%; lenet_lr: 0.000835;
-FastEstimator-Train: step: 1100; my_loss: 0.0094531; examples/sec: 3855.9; progress: 29.3%; lenet_lr: 0.000802;
-FastEstimator-Train: step: 1200; my_loss: 0.0722081; examples/sec: 3870.4; progress: 32.0%; lenet_lr: 0.000768;
-FastEstimator-Train: step: 1300; my_loss: 0.0195664; examples/sec: 3839.9; progress: 34.7%; lenet_lr: 0.000732;
-FastEstimator-Train: step: 1400; my_loss: 0.083041; examples/sec: 3803.7; progress: 37.3%; lenet_lr: 0.000694;
-FastEstimator-Train: step: 1500; my_loss: 0.0126162; examples/sec: 3847.0; progress: 40.0%; lenet_lr: 0.000655;
-FastEstimator-Train: step: 1600; my_loss: 0.0284383; examples/sec: 3870.3; progress: 42.7%; lenet_lr: 0.000615;
-FastEstimator-Train: step: 1700; my_loss: 0.0383853; examples/sec: 3880.3; progress: 45.3%; lenet_lr: 0.000573;
-FastEstimator-Train: step: 1800; my_loss: 0.0065974; examples/sec: 3866.2; progress: 48.0%; lenet_lr: 0.000532;
-FastEstimator-Eval: step: 1875; epoch: 0; my_loss: 0.0393224; min_my_loss: 0.039322365; since_best_loss: 0;
-FastEstimator-Train: step: 1900; my_loss: 0.0055467; examples/sec: 3498.4; progress: 50.7%; lenet_lr: 0.00049;
-FastEstimator-Train: step: 2000; my_loss: 0.2105115; examples/sec: 3839.9; progress: 53.3%; lenet_lr: 0.000448;
-FastEstimator-Train: step: 2100; my_loss: 0.0120957; examples/sec: 3856.4; progress: 56.0%; lenet_lr: 0.000407;
-FastEstimator-Train: step: 2200; my_loss: 0.0149627; examples/sec: 3883.0; progress: 58.7%; lenet_lr: 0.000366;
-FastEstimator-Train: step: 2300; my_loss: 0.0017223; examples/sec: 3871.7; progress: 61.3%; lenet_lr: 0.000326;
-FastEstimator-Train: step: 2400; my_loss: 0.0814043; examples/sec: 3884.7; progress: 64.0%; lenet_lr: 0.000288;
-FastEstimator-Train: step: 2500; my_loss: 0.0039133; examples/sec: 3857.8; progress: 66.7%; lenet_lr: 0.000251;
-FastEstimator-Train: step: 2600; my_loss: 0.0296291; examples/sec: 3850.4; progress: 69.3%; lenet_lr: 0.000215;
-FastEstimator-Train: step: 2700; my_loss: 0.0182726; examples/sec: 3860.1; progress: 72.0%; lenet_lr: 0.000182;
-FastEstimator-Train: step: 2800; my_loss: 0.0261605; examples/sec: 3828.7; progress: 74.7%; lenet_lr: 0.000151;
-FastEstimator-Train: step: 2900; my_loss: 0.0161429; examples/sec: 3851.5; progress: 77.3%; lenet_lr: 0.000122;
-FastEstimator-Train: step: 3000; my_loss: 0.0009559; examples/sec: 3860.0; progress: 80.0%; lenet_lr: 9.6e-05;
-FastEstimator-Train: step: 3100; my_loss: 0.0025788; examples/sec: 3832.8; progress: 82.7%; lenet_lr: 7.3e-05;
-FastEstimator-Train: step: 3200; my_loss: 0.0119457; examples/sec: 3867.7; progress: 85.3%; lenet_lr: 5.3e-05;
-FastEstimator-Train: step: 3300; my_loss: 0.0342976; examples/sec: 3863.0; progress: 88.0%; lenet_lr: 3.6e-05;
-FastEstimator-Train: step: 3400; my_loss: 0.0155578; examples/sec: 3848.9; progress: 90.7%; lenet_lr: 2.2e-05;
-FastEstimator-Train: step: 3500; my_loss: 0.0474691; examples/sec: 3843.4; progress: 93.3%; lenet_lr: 1.2e-05;
-FastEstimator-Train: step: 3600; my_loss: 0.0010362; examples/sec: 3854.9; progress: 96.0%; lenet_lr: 5e-06;
-FastEstimator-Train: step: 3700; my_loss: 0.0025958; examples/sec: 3857.6; progress: 98.7%; lenet_lr: 1e-06;
-FastEstimator-Eval: step: 3750; epoch: 1; my_loss: 0.0273828; min_my_loss: 0.027382798; since_best_loss: 0;
-FastEstimator-Finish: step: 3750; total_time: 33.51 sec; lenet_lr: 1e-06;
-</pre></div></div>
-</div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[26]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -792,7 +616,7 @@ FastEstimator-Finish: step: 3750; total_time: 33.51 sec; lenet_lr: 1e-06;
 <h2>Option 3- Built-in Cyclic Learning Rate: example 2<a class="headerlink" href="#Option-3--Built-in-Cyclic-Learning-Rate:-example-2" title="Permalink to this headline">¶</a></h2>
 <p>Users can also choose to add more cycles of the learning rate with <code class="docutils literal notranslate"><span class="pre">num_cycle</span></code>, and to change the subsequent cycle length using <code class="docutils literal notranslate"><span class="pre">cycle_multiplier</span></code>. If <code class="docutils literal notranslate"><span class="pre">cycle_multiplier=2</span></code>, the second cycle will be twice as long as the first one.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -813,8 +637,8 @@ FastEstimator-Finish: step: 3750; total_time: 33.51 sec; lenet_lr: 1e-06;
 </pre></div>
 </div>
 </div>
-<div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -823,65 +647,8 @@ FastEstimator-Finish: step: 3750; total_time: 33.51 sec; lenet_lr: 1e-06;
 </pre></div>
 </div>
 </div>
-<div class="nboutput nblast docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area docutils container">
-<div class="highlight"><pre>
-    ______           __  ______     __  _                 __
-   / ____/___ ______/ /_/ ____/____/ /_(_)___ ___  ____ _/ /_____  _____
-  / /_  / __ `/ ___/ __/ __/ / ___/ __/ / __ `__ \/ __ `/ __/ __ \/ ___/
- / __/ / /_/ (__  ) /_/ /___(__  ) /_/ / / / / / / /_/ / /_/ /_/ / /
-/_/    \__,_/____/\__/_____/____/\__/_/_/ /_/ /_/\__,_/\__/\____/_/
-
-
-FastEstimator-Warn: No ModelSaver Trace detected. Models will not be saved.
-FastEstimator-Start: step: 0; total_train_steps: 3750; lenet_lr: 0.001;
-FastEstimator-Train: step: 0; my_loss: 2.3363483; lenet_lr: 0.001;
-FastEstimator-Train: step: 100; my_loss: 0.4472597; examples/sec: 3835.6; progress: 2.7%; lenet_lr: 0.000984;
-FastEstimator-Train: step: 200; my_loss: 0.0681025; examples/sec: 3878.6; progress: 5.3%; lenet_lr: 0.000938;
-FastEstimator-Train: step: 300; my_loss: 0.2049414; examples/sec: 3850.5; progress: 8.0%; lenet_lr: 0.000865;
-FastEstimator-Train: step: 400; my_loss: 0.117719; examples/sec: 3822.1; progress: 10.7%; lenet_lr: 0.000768;
-FastEstimator-Train: step: 500; my_loss: 0.0960631; examples/sec: 3875.0; progress: 13.3%; lenet_lr: 0.000655;
-FastEstimator-Train: step: 600; my_loss: 0.0856763; examples/sec: 3831.9; progress: 16.0%; lenet_lr: 0.000532;
-FastEstimator-Train: step: 700; my_loss: 0.0560528; examples/sec: 3852.8; progress: 18.7%; lenet_lr: 0.000407;
-FastEstimator-Train: step: 800; my_loss: 0.1688411; examples/sec: 3857.3; progress: 21.3%; lenet_lr: 0.000288;
-FastEstimator-Train: step: 900; my_loss: 0.0903378; examples/sec: 3835.5; progress: 24.0%; lenet_lr: 0.000182;
-FastEstimator-Train: step: 1000; my_loss: 0.0260965; examples/sec: 3885.5; progress: 26.7%; lenet_lr: 9.6e-05;
-FastEstimator-Train: step: 1100; my_loss: 0.0482137; examples/sec: 3896.7; progress: 29.3%; lenet_lr: 3.6e-05;
-FastEstimator-Train: step: 1200; my_loss: 0.0449507; examples/sec: 3871.9; progress: 32.0%; lenet_lr: 5e-06;
-FastEstimator-Train: step: 1300; my_loss: 0.0407426; examples/sec: 3882.5; progress: 34.7%; lenet_lr: 0.000999;
-FastEstimator-Train: step: 1400; my_loss: 0.2899769; examples/sec: 3825.4; progress: 37.3%; lenet_lr: 0.000991;
-FastEstimator-Train: step: 1500; my_loss: 0.0407275; examples/sec: 3820.4; progress: 40.0%; lenet_lr: 0.000976;
-FastEstimator-Train: step: 1600; my_loss: 0.0748142; examples/sec: 3860.1; progress: 42.7%; lenet_lr: 0.000952;
-FastEstimator-Train: step: 1700; my_loss: 0.2303891; examples/sec: 3846.0; progress: 45.3%; lenet_lr: 0.000922;
-FastEstimator-Train: step: 1800; my_loss: 0.0568271; examples/sec: 3839.6; progress: 48.0%; lenet_lr: 0.000885;
-FastEstimator-Eval: step: 1875; epoch: 0; my_loss: 0.0642645; min_my_loss: 0.064264506; since_best_loss: 0;
-FastEstimator-Train: step: 1900; my_loss: 0.0113349; examples/sec: 3485.6; progress: 50.7%; lenet_lr: 0.000842;
-FastEstimator-Train: step: 2000; my_loss: 0.0372576; examples/sec: 3861.8; progress: 53.3%; lenet_lr: 0.000794;
-FastEstimator-Train: step: 2100; my_loss: 0.0041966; examples/sec: 3869.0; progress: 56.0%; lenet_lr: 0.000741;
-FastEstimator-Train: step: 2200; my_loss: 0.2365212; examples/sec: 3835.5; progress: 58.7%; lenet_lr: 0.000684;
-FastEstimator-Train: step: 2300; my_loss: 0.0074239; examples/sec: 3851.6; progress: 61.3%; lenet_lr: 0.000625;
-FastEstimator-Train: step: 2400; my_loss: 0.0461862; examples/sec: 3872.3; progress: 64.0%; lenet_lr: 0.000563;
-FastEstimator-Train: step: 2500; my_loss: 0.0036448; examples/sec: 3856.0; progress: 66.7%; lenet_lr: 0.000501;
-FastEstimator-Train: step: 2600; my_loss: 0.0125788; examples/sec: 3826.4; progress: 69.3%; lenet_lr: 0.000438;
-FastEstimator-Train: step: 2700; my_loss: 0.1092658; examples/sec: 3854.7; progress: 72.0%; lenet_lr: 0.000376;
-FastEstimator-Train: step: 2800; my_loss: 0.0226009; examples/sec: 3832.1; progress: 74.7%; lenet_lr: 0.000317;
-FastEstimator-Train: step: 2900; my_loss: 0.0243355; examples/sec: 3833.5; progress: 77.3%; lenet_lr: 0.00026;
-FastEstimator-Train: step: 3000; my_loss: 0.0244148; examples/sec: 3855.0; progress: 80.0%; lenet_lr: 0.000207;
-FastEstimator-Train: step: 3100; my_loss: 0.1402043; examples/sec: 3853.1; progress: 82.7%; lenet_lr: 0.000159;
-FastEstimator-Train: step: 3200; my_loss: 0.0158897; examples/sec: 3855.0; progress: 85.3%; lenet_lr: 0.000116;
-FastEstimator-Train: step: 3300; my_loss: 0.0320151; examples/sec: 3854.8; progress: 88.0%; lenet_lr: 7.9e-05;
-FastEstimator-Train: step: 3400; my_loss: 0.1201441; examples/sec: 3869.7; progress: 90.7%; lenet_lr: 4.9e-05;
-FastEstimator-Train: step: 3500; my_loss: 0.0432729; examples/sec: 3872.7; progress: 93.3%; lenet_lr: 2.5e-05;
-FastEstimator-Train: step: 3600; my_loss: 0.017112; examples/sec: 3854.4; progress: 96.0%; lenet_lr: 1e-05;
-FastEstimator-Train: step: 3700; my_loss: 0.0080384; examples/sec: 3874.0; progress: 98.7%; lenet_lr: 2e-06;
-FastEstimator-Eval: step: 3750; epoch: 1; my_loss: 0.0279318; min_my_loss: 0.027931781; since_best_loss: 0;
-FastEstimator-Finish: step: 3750; total_time: 33.42 sec; lenet_lr: 1e-06;
-</pre></div></div>
-</div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[27]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -898,15 +665,6 @@ FastEstimator-Finish: step: 3750; total_time: 33.42 sec; lenet_lr: 1e-06;
 </div>
 </div>
 <p>We observe that we have two cycles of decreasing learning rate, and the second one is twice as long as the first one.</p>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span>
-</pre></div>
-</div>
-</div>
 </div>
 </div>
 <p>—</p>
@@ -923,7 +681,7 @@ FastEstimator-Finish: step: 3750; total_time: 33.42 sec; lenet_lr: 1e-06;
         <a href="t10_unpaired_dataset.html" class="btn btn-neutral float-right" title="Tutorial 10: Dataset with unpaired features" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="t08_scheduler_progressive_training.html" class="btn btn-neutral float-left" title="Tutorial 8: Changing hyperparameters during training with Scheduler" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="t08_scheduler_progressive_training.html" class="btn btn-neutral" title="Tutorial 8: Changing hyperparameters during training with Scheduler" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -949,16 +707,37 @@ FastEstimator-Finish: step: 3750; total_time: 33.42 sec; lenet_lr: 1e-06;
   
 
 
+  
+
+    
+    
+      <script type="text/javascript">
+          var DOCUMENTATION_OPTIONS = {
+              URL_ROOT:'../',
+              VERSION:'1.0b0',
+              LANGUAGE:'None',
+              COLLAPSE_INDEX:false,
+              FILE_SUFFIX:'.html',
+              HAS_SOURCE:  true,
+              SOURCELINK_SUFFIX: '.txt'
+          };
+      </script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    
+
+  
+
+  <script type="text/javascript" src="../_static/js/theme.js"></script>
+
   <script type="text/javascript">
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script>
-
-  
-  
-    
-   
+  </script> 
 
 </body>
 </html>

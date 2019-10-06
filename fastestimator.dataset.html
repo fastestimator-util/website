@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>dataset &mdash; FastEstimator 1.0a0 documentation</title>
+  <title>dataset &mdash; FastEstimator 1.0b0 documentation</title>
   
 
   
@@ -19,39 +19,34 @@
   
 
   
-  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
-  
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
-        <script type="text/javascript" src="_static/jquery.js"></script>
-        <script type="text/javascript" src="_static/underscore.js"></script>
-        <script type="text/javascript" src="_static/doctools.js"></script>
-        <script type="text/javascript" src="_static/language_data.js"></script>
-        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
-        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
-    
-    <script type="text/javascript" src="_static/js/theme.js"></script>
 
+  
+  
     
 
   
+
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="interpretation" href="fastestimator.interpretation.html" />
     <link rel="prev" title="cli" href="fastestimator.cli.html" /> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
 </head>
 
 <body class="wy-body-for-nav">
 
    
   <div class="wy-grid-for-nav">
+
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search" >
+        <div class="wy-side-nav-search">
           
 
           
@@ -213,55 +208,63 @@
 <hr class="docutils" />
 <div class="section" id="module-fastestimator.dataset.cub200">
 <span id="cub200"></span><h2>cub200<a class="headerlink" href="#module-fastestimator.dataset.cub200" title="Permalink to this headline">¶</a></h2>
-<p>Download Caltech-UCSD Birds 200 dataset.
-<a class="reference external" href="http://www.vision.caltech.edu/visipedia/CUB-200.html">http://www.vision.caltech.edu/visipedia/CUB-200.html</a></p>
+<p>Download Caltech-UCSD Birds 200 dataset from <a class="reference external" href="http://www.vision.caltech.edu/visipedia/CUB-200.html">http://www.vision.caltech.edu/visipedia/CUB-200.html</a>.</p>
 <dl class="function">
 <dt id="fastestimator.dataset.cub200.load_data">
-<code class="sig-prename descclassname">fastestimator.dataset.cub200.</code><code class="sig-name descname">load_data</code><span class="sig-paren">(</span><em class="sig-param">path=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/dataset/cub200.html#load_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.dataset.cub200.load_data" title="Permalink to this definition">¶</a></dt>
-<dd><p>Downloads the CUB200 dataset to local storage, if not already downloaded. This will generate a cub200.csv file,
+<code class="descclassname">fastestimator.dataset.cub200.</code><code class="descname">load_data</code><span class="sig-paren">(</span><em>path=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/dataset/cub200.html#load_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.dataset.cub200.load_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Download the CUB200 dataset to local storage, if not already downloaded. This will generate a cub200.csv file,
 which contains all the path information.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>path</strong> (<em>str</em><em>, </em><em>optional</em>) – The path to store the CUB200 data. Defaults to None, will save at <cite>tempfile.gettempdir()</cite>.</p>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>path to csv file.
-string: path to data directory.</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>string</p>
-</dd>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>path</strong> (<em>str</em><em>, </em><em>optional</em>) – The path to store the CUB200 data. When <cite>path</cite> is not provided, will save at
+<cite>fastestimator_data</cite> under user’s home directory.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="docutils">
+<dt>tuple containing:</dt>
+<dd>csv_path (str): Path to the summary csv file.
+path (str): Path to data root directory.</dd>
 </dl>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">(tuple)</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 </div>
 <hr class="docutils" />
 <div class="section" id="module-fastestimator.dataset.horse2zebra">
 <span id="horse2zebra"></span><h2>horse2zebra<a class="headerlink" href="#module-fastestimator.dataset.horse2zebra" title="Permalink to this headline">¶</a></h2>
-<p>Download horse2zebra dataset from <a class="reference external" href="https://people.eecs.berkeley.edu/~taesung_park/CycleGAN/datasets/horse2zebra.zip">https://people.eecs.berkeley.edu/~taesung_park/CycleGAN/datasets/horse2zebra.zip</a></p>
+<p>Download horse2zebra dataset from <a class="reference external" href="https://people.eecs.berkeley.edu/~taesung_park/CycleGAN/datasets/horse2zebra.zip">https://people.eecs.berkeley.edu/~taesung_park/CycleGAN/datasets/horse2zebra.zip</a>.</p>
 <dl class="function">
 <dt id="fastestimator.dataset.horse2zebra.load_data">
-<code class="sig-prename descclassname">fastestimator.dataset.horse2zebra.</code><code class="sig-name descname">load_data</code><span class="sig-paren">(</span><em class="sig-param">path=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/dataset/horse2zebra.html#load_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.dataset.horse2zebra.load_data" title="Permalink to this definition">¶</a></dt>
-<dd><p>Downloads the horse2zebra dataset to local storage, if not already downloaded. This will generate 4 csv files
+<code class="descclassname">fastestimator.dataset.horse2zebra.</code><code class="descname">load_data</code><span class="sig-paren">(</span><em>path=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/dataset/horse2zebra.html#load_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.dataset.horse2zebra.load_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Download the horse2zebra dataset to local storage, if not already downloaded. This will generate 4 csv files
 (trainA, trainB, testA, testB), which contain all the path information.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>path</strong> (<em>str</em><em>, </em><em>optional</em>) – The path to store the horse2zebra data. Defaults to None, will save at</p></li>
-<li><p><strong>tempfile.gettempdir</strong><strong>(</strong><strong>)</strong><strong></strong> – </p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>path to trainA csv file.
-string: path to trainB csv file.
-string: path to testA csv file.
-string: path to testB csv file.
-string: path to data directory.</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>string</p>
-</dd>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>path</strong> (<em>str</em><em>, </em><em>optional</em>) – The path to store the horse2zebra data. When <cite>path</cite> is not provided, will save at
+<cite>fastestimator_data</cite> under user’s home directory.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="docutils">
+<dt>tuple containing:</dt>
+<dd>train_a_csv (str): Path to trainA csv file.
+train_b_csv (str): Path to trainB csv file.
+test_a_csv (str): Path to testA csv file.
+test_b_csv (str): Path to testB csv file.
+path (str): Path to data root directory.</dd>
 </dl>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">(tuple)</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 </div>
@@ -269,194 +272,156 @@ string: path to data directory.</p>
 <div class="section" id="module-fastestimator.dataset.mendeley">
 <span id="mendeley"></span><h2>mendeley<a class="headerlink" href="#module-fastestimator.dataset.mendeley" title="Permalink to this headline">¶</a></h2>
 <p>Mendeley dataset API.
-Kermany, Daniel; Zhang, Kang; Goldbaum, Michael (2018), “Labeled Optical Coherence Tomography (OCT) and Chest X-Ray Images for Classification”, Mendeley Data, v2
-<a class="reference external" href="http://dx.doi.org/10.17632/rscbjbr9sj.2">http://dx.doi.org/10.17632/rscbjbr9sj.2</a></p>
+Kermany, Daniel; Zhang, Kang; Goldbaum, Michael (2018), “Labeled Optical Coherence Tomography (OCT) and Chest X-Ray
+Images for Classification”, Mendeley Data, v2 <a class="reference external" href="http://dx.doi.org/10.17632/rscbjbr9sj.2">http://dx.doi.org/10.17632/rscbjbr9sj.2</a></p>
 <p>CC BY 4.0 licence:
 <a class="reference external" href="https://creativecommons.org/licenses/by/4.0/">https://creativecommons.org/licenses/by/4.0/</a></p>
 <dl class="function">
-<dt id="fastestimator.dataset.mendeley.img_data_constructor">
-<code class="sig-prename descclassname">fastestimator.dataset.mendeley.</code><code class="sig-name descname">img_data_constructor</code><span class="sig-paren">(</span><em class="sig-param">data_folder</em>, <em class="sig-param">mode</em>, <em class="sig-param">csv_path</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/dataset/mendeley.html#img_data_constructor"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.dataset.mendeley.img_data_constructor" title="Permalink to this definition">¶</a></dt>
-<dd><p>Creates the csv file containing all paths to images for the indicated mode and their labels.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>data_folder</strong> (<em>string</em>) – path to data directory.</p></li>
-<li><p><strong>mode</strong> (<em>string</em>) – training or testing.</p></li>
-<li><p><strong>csv_path</strong> (<em>string</em>) – path where to save csv file.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>DataFrame containing the paths to each image x and corresponding labels y.</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>DataFrame</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="function">
 <dt id="fastestimator.dataset.mendeley.load_data">
-<code class="sig-prename descclassname">fastestimator.dataset.mendeley.</code><code class="sig-name descname">load_data</code><span class="sig-paren">(</span><em class="sig-param">path=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/dataset/mendeley.html#load_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.dataset.mendeley.load_data" title="Permalink to this definition">¶</a></dt>
-<dd><p>Downloads the Mendeley dataset to local storage, if not already downloaded. This will generate 2 csv files
-(train and test), which contain all the path information.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>path</strong> (<em>str</em><em>, </em><em>optional</em>) – The path to store the Mendeley data. Defaults to None, will save at</p></li>
-<li><p><strong>tempfile.gettempdir</strong><strong>(</strong><strong>)</strong><strong></strong> – </p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>path to train csv file.
-string: path to test csv file.
-string: path to data directory.</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>string</p>
-</dd>
+<code class="descclassname">fastestimator.dataset.mendeley.</code><code class="descname">load_data</code><span class="sig-paren">(</span><em>path=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/dataset/mendeley.html#load_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.dataset.mendeley.load_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Download the Mendeley dataset to local storage, if not already downloaded. This will generate 2 csv files
+(train, test), which contain all the path information.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>path</strong> (<em>str</em><em>, </em><em>optional</em>) – The path to store the Mendeley data. When <cite>path</cite> is not provided, will save at
+<cite>fastestimator_data</cite> under user’s home directory.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="docutils">
+<dt>tuple containing:</dt>
+<dd>train_csv (str): Path to train csv file.
+test_csv (str): Path to test csv file.
+path (str): Path to data root directory.</dd>
 </dl>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">(tuple)</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 </div>
 <hr class="docutils" />
 <div class="section" id="module-fastestimator.dataset.mnist">
 <span id="mnist"></span><h2>mnist<a class="headerlink" href="#module-fastestimator.dataset.mnist" title="Permalink to this headline">¶</a></h2>
-<dl class="function">
-<dt id="fastestimator.dataset.mnist.write_images_serial">
-<code class="sig-prename descclassname">fastestimator.dataset.mnist.</code><code class="sig-name descname">write_images_serial</code><span class="sig-paren">(</span><em class="sig-param">start_idx</em>, <em class="sig-param">end_idx</em>, <em class="sig-param">data</em>, <em class="sig-param">image_path</em>, <em class="sig-param">mode</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/dataset/mnist.html#write_images_serial"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.dataset.mnist.write_images_serial" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="function">
-<dt id="fastestimator.dataset.mnist.write_images_parallel">
-<code class="sig-prename descclassname">fastestimator.dataset.mnist.</code><code class="sig-name descname">write_images_parallel</code><span class="sig-paren">(</span><em class="sig-param">x</em>, <em class="sig-param">image_path</em>, <em class="sig-param">mode</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/dataset/mnist.html#write_images_parallel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.dataset.mnist.write_images_parallel" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="function">
-<dt id="fastestimator.dataset.mnist.write_csv">
-<code class="sig-prename descclassname">fastestimator.dataset.mnist.</code><code class="sig-name descname">write_csv</code><span class="sig-paren">(</span><em class="sig-param">y</em>, <em class="sig-param">csv_path</em>, <em class="sig-param">mode</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/dataset/mnist.html#write_csv"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.dataset.mnist.write_csv" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
+<p>Download MNIST Dataset.</p>
 <dl class="function">
 <dt id="fastestimator.dataset.mnist.load_data">
-<code class="sig-prename descclassname">fastestimator.dataset.mnist.</code><code class="sig-name descname">load_data</code><span class="sig-paren">(</span><em class="sig-param">path=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/dataset/mnist.html#load_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.dataset.mnist.load_data" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<code class="descclassname">fastestimator.dataset.mnist.</code><code class="descname">load_data</code><span class="sig-paren">(</span><em>path=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/dataset/mnist.html#load_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.dataset.mnist.load_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Download the MNIST dataset to local storage, if not already downloaded. This will generate 2 csv files
+(train, eval), which contain all the path information.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>path</strong> (<em>str</em><em>, </em><em>optional</em>) – The path to store the MNIST data. When <cite>path</cite> is not provided, will save at
+<cite>fastestimator_data</cite> under user’s home directory.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="docutils">
+<dt>tuple containing:</dt>
+<dd>train_csv (str): Path to train csv file.
+eval_csv (str): Path to test csv file.
+path (str): Path to data root directory.</dd>
+</dl>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">(tuple)</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
 
 </div>
 <hr class="docutils" />
 <div class="section" id="module-fastestimator.dataset.montgomery">
 <span id="montgomery"></span><h2>montgomery<a class="headerlink" href="#module-fastestimator.dataset.montgomery" title="Permalink to this headline">¶</a></h2>
-<p>Download montgomery  dataset from  <a class="reference external" href="http://openi.nlm.nih.gov/imgs/collections/NLM-MontgomeryCXRSet.zip">http://openi.nlm.nih.gov/imgs/collections/NLM-MontgomeryCXRSet.zip</a></p>
+<p>Download Montgomery dataset from  <a class="reference external" href="http://openi.nlm.nih.gov/imgs/collections/NLM-MontgomeryCXRSet.zip">http://openi.nlm.nih.gov/imgs/collections/NLM-MontgomeryCXRSet.zip</a>.</p>
 <dl class="function">
 <dt id="fastestimator.dataset.montgomery.load_data">
-<code class="sig-prename descclassname">fastestimator.dataset.montgomery.</code><code class="sig-name descname">load_data</code><span class="sig-paren">(</span><em class="sig-param">path=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/dataset/montgomery.html#load_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.dataset.montgomery.load_data" title="Permalink to this definition">¶</a></dt>
-<dd><p>Downloads the Montgomery dataset to local storage, if not already downloaded. This will generate one csv file montgomery.csv, which contains all the path
-information.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>path</strong> (<em>str</em><em>, </em><em>optional</em>) – The path to store the Montgomery data. Defaults to None, will save at <cite>tempfile.gettempdir()</cite>.</p>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>path to csv file.
-string: path to data directory.</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>string</p>
-</dd>
+<code class="descclassname">fastestimator.dataset.montgomery.</code><code class="descname">load_data</code><span class="sig-paren">(</span><em>path=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/dataset/montgomery.html#load_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.dataset.montgomery.load_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Download the Montgomery dataset to local storage, if not already downloaded. This will generate a montgomery.csv
+file, which contains all the path information.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>path</strong> (<em>str</em><em>, </em><em>optional</em>) – The path to store the Montgomery data. When <cite>path</cite> is not provided, will save at
+<cite>fastestimator_data</cite> under user’s home directory.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="docutils">
+<dt>tuple containing:</dt>
+<dd>csv_path (str): Path to the summary csv file.
+path (str): Path to data root directory.</dd>
 </dl>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">(tuple)</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 </div>
 <hr class="docutils" />
 <div class="section" id="module-fastestimator.dataset.mscoco">
 <span id="mscoco"></span><h2>mscoco<a class="headerlink" href="#module-fastestimator.dataset.mscoco" title="Permalink to this headline">¶</a></h2>
+<p>Download MS COCO 2014 dataset.</p>
 <dl class="function">
 <dt id="fastestimator.dataset.mscoco.load_data">
-<code class="sig-prename descclassname">fastestimator.dataset.mscoco.</code><code class="sig-name descname">load_data</code><span class="sig-paren">(</span><em class="sig-param">path=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/dataset/mscoco.html#load_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.dataset.mscoco.load_data" title="Permalink to this definition">¶</a></dt>
-<dd><p>Downloads the Coco dataset to local storage, if not already downloaded. This will generate one csv file
-coco_train.csv, which contains all the path information.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>path</strong> (<em>str</em><em>, </em><em>optional</em>) – The path to store the Coco data. Defaults to None, will save at <cite>tempfile.gettempdir()</cite>.</p>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>path to csv file.
-string: path to data directory.</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>string</p>
-</dd>
+<code class="descclassname">fastestimator.dataset.mscoco.</code><code class="descname">load_data</code><span class="sig-paren">(</span><em>path=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/dataset/mscoco.html#load_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.dataset.mscoco.load_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Download the COCO dataset to local storage, if not already downloaded. This will generate a
+coco_train.csv file, which contains all the path information.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>path</strong> (<em>str</em><em>, </em><em>optional</em>) – The path to store the COCO data. When <cite>path</cite> is not provided, will save at
+<cite>fastestimator_data</cite> under user’s home directory.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="docutils">
+<dt>tuple containing:</dt>
+<dd>csv_path (str): Path to the summary csv file.
+path (str): Path to data root directory.</dd>
 </dl>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">(tuple)</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 </div>
 <hr class="docutils" />
 <div class="section" id="module-fastestimator.dataset.svhn">
 <span id="svhn"></span><h2>svhn<a class="headerlink" href="#module-fastestimator.dataset.svhn" title="Permalink to this headline">¶</a></h2>
-<dl class="function">
-<dt id="fastestimator.dataset.svhn.get_name">
-<code class="sig-prename descclassname">fastestimator.dataset.svhn.</code><code class="sig-name descname">get_name</code><span class="sig-paren">(</span><em class="sig-param">index</em>, <em class="sig-param">hdf5_data</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/dataset/svhn.html#get_name"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.dataset.svhn.get_name" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="function">
-<dt id="fastestimator.dataset.svhn.get_bbox">
-<code class="sig-prename descclassname">fastestimator.dataset.svhn.</code><code class="sig-name descname">get_bbox</code><span class="sig-paren">(</span><em class="sig-param">index</em>, <em class="sig-param">hdf5_data</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/dataset/svhn.html#get_bbox"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.dataset.svhn.get_bbox" title="Permalink to this definition">¶</a></dt>
-<dd><p>Retrieves the bounding box from hdf5 data for a specific index.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>index</strong> (<em>int</em>) – index of image.</p></li>
-<li><p><strong>hdf5_data</strong> (<em>h5py file</em>) – h5py file containing bounding box information.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>label, left, top, width and height values for the bounding box.</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>dictionnary</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="function">
-<dt id="fastestimator.dataset.svhn.img_boundingbox_data_constructor">
-<code class="sig-prename descclassname">fastestimator.dataset.svhn.</code><code class="sig-name descname">img_boundingbox_data_constructor</code><span class="sig-paren">(</span><em class="sig-param">data_folder</em>, <em class="sig-param">mode</em>, <em class="sig-param">csv_path</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/dataset/svhn.html#img_boundingbox_data_constructor"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.dataset.svhn.img_boundingbox_data_constructor" title="Permalink to this definition">¶</a></dt>
-<dd><p>Creates bounding boxes for all images. This will generate a csv file indicating for each image the label and
-bounding box coordinates and return the corresponding DataFrame.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>data_folder</strong> (<em>string</em>) – path to data directory containing digitStruct.mat file.</p></li>
-<li><p><strong>mode</strong> (<em>string</em>) – training or testing.</p></li>
-<li><p><strong>csv_path</strong> (<em>string</em>) – path to save the csv file containing the bounding boxes information.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>bounding boxes information (image, label and coordinates)</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>DataFrame</p>
-</dd>
-</dl>
-</dd></dl>
-
+<p>Download The Street View House Numbers (SVHN) dataset.</p>
 <dl class="function">
 <dt id="fastestimator.dataset.svhn.load_data">
-<code class="sig-prename descclassname">fastestimator.dataset.svhn.</code><code class="sig-name descname">load_data</code><span class="sig-paren">(</span><em class="sig-param">path=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/dataset/svhn.html#load_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.dataset.svhn.load_data" title="Permalink to this definition">¶</a></dt>
-<dd><p>Downloads the svhn dataset to local storage, if not already downloaded. This will generate 2 csv files
+<code class="descclassname">fastestimator.dataset.svhn.</code><code class="descname">load_data</code><span class="sig-paren">(</span><em>path=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/dataset/svhn.html#load_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.dataset.svhn.load_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Download the SVHN dataset to local storage, if not already downloaded. This will generate 2 csv files
 (train and test), which contain all the path information.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>path</strong> (<em>str</em><em>, </em><em>optional</em>) – The path to store the svhn data. Defaults to None, will save at <cite>tempfile.gettempdir()</cite>.</p>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>path to train csv file.
-string: path to test csv file.
-string: path to data directory.</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>string</p>
-</dd>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>path</strong> (<em>str</em><em>, </em><em>optional</em>) – The path to store the SVHN data. When <cite>path</cite> is not provided, will save at
+<cite>fastestimator_data</cite> under user’s home directory.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="docutils">
+<dt>tuple containing:</dt>
+<dd>train_csv (str): Path to train csv file.
+test_csv (str): Path to test csv file.
+path (str): Path to data root directory.</dd>
 </dl>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">(tuple)</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 </div>
@@ -473,7 +438,7 @@ string: path to data directory.</p>
         <a href="fastestimator.interpretation.html" class="btn btn-neutral float-right" title="interpretation" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="fastestimator.cli.html" class="btn btn-neutral float-left" title="cli" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="fastestimator.cli.html" class="btn btn-neutral" title="cli" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -499,16 +464,37 @@ string: path to data directory.</p>
   
 
 
+  
+
+    
+    
+      <script type="text/javascript">
+          var DOCUMENTATION_OPTIONS = {
+              URL_ROOT:'./',
+              VERSION:'1.0b0',
+              LANGUAGE:'None',
+              COLLAPSE_INDEX:false,
+              FILE_SUFFIX:'.html',
+              HAS_SOURCE:  true,
+              SOURCELINK_SUFFIX: '.txt'
+          };
+      </script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    
+
+  
+
+  <script type="text/javascript" src="_static/js/theme.js"></script>
+
   <script type="text/javascript">
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script>
-
-  
-  
-    
-   
+  </script> 
 
 </body>
 </html>

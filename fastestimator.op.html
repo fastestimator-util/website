@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>op &mdash; FastEstimator 1.0a0 documentation</title>
+  <title>op &mdash; FastEstimator 1.0b0 documentation</title>
   
 
   
@@ -19,39 +19,34 @@
   
 
   
-  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
-  
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
-        <script type="text/javascript" src="_static/jquery.js"></script>
-        <script type="text/javascript" src="_static/underscore.js"></script>
-        <script type="text/javascript" src="_static/doctools.js"></script>
-        <script type="text/javascript" src="_static/language_data.js"></script>
-        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
-        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
-    
-    <script type="text/javascript" src="_static/js/theme.js"></script>
 
+  
+  
     
 
   
+
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="numpyop" href="fastestimator.op.numpyop.html" />
     <link rel="prev" title="layers" href="fastestimator.layers.html" /> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
 </head>
 
 <body class="wy-body-for-nav">
 
    
   <div class="wy-grid-for-nav">
+
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search" >
+        <div class="wy-side-nav-search">
           
 
           
@@ -217,49 +212,49 @@
 <h2>op<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
 <span class="target" id="module-fastestimator.op.op"></span><dl class="class">
 <dt id="fastestimator.op.op.TensorOp">
-<em class="property">class </em><code class="sig-prename descclassname">fastestimator.op.op.</code><code class="sig-name descname">TensorOp</code><span class="sig-paren">(</span><em class="sig-param">inputs=None</em>, <em class="sig-param">outputs=None</em>, <em class="sig-param">mode=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/op/op.html#TensorOp"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.op.op.TensorOp" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">fastestimator.op.op.</code><code class="descname">TensorOp</code><span class="sig-paren">(</span><em>inputs=None</em>, <em>outputs=None</em>, <em>mode=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/op/op.html#TensorOp"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.op.op.TensorOp" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <dl class="method">
 <dt id="fastestimator.op.op.TensorOp.forward">
-<code class="sig-name descname">forward</code><span class="sig-paren">(</span><em class="sig-param">data</em>, <em class="sig-param">state</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/op/op.html#TensorOp.forward"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.op.op.TensorOp.forward" title="Permalink to this definition">¶</a></dt>
+<code class="descname">forward</code><span class="sig-paren">(</span><em>data</em>, <em>state</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/op/op.html#TensorOp.forward"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.op.op.TensorOp.forward" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
 
 <dl class="class">
 <dt id="fastestimator.op.op.NumpyOp">
-<em class="property">class </em><code class="sig-prename descclassname">fastestimator.op.op.</code><code class="sig-name descname">NumpyOp</code><span class="sig-paren">(</span><em class="sig-param">inputs=None</em>, <em class="sig-param">outputs=None</em>, <em class="sig-param">mode=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/op/op.html#NumpyOp"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.op.op.NumpyOp" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">fastestimator.op.op.</code><code class="descname">NumpyOp</code><span class="sig-paren">(</span><em>inputs=None</em>, <em>outputs=None</em>, <em>mode=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/op/op.html#NumpyOp"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.op.op.NumpyOp" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <dl class="method">
 <dt id="fastestimator.op.op.NumpyOp.forward">
-<code class="sig-name descname">forward</code><span class="sig-paren">(</span><em class="sig-param">data</em>, <em class="sig-param">state</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/op/op.html#NumpyOp.forward"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.op.op.NumpyOp.forward" title="Permalink to this definition">¶</a></dt>
+<code class="descname">forward</code><span class="sig-paren">(</span><em>data</em>, <em>state</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/op/op.html#NumpyOp.forward"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.op.op.NumpyOp.forward" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
 
 <dl class="function">
 <dt id="fastestimator.op.op.get_op_from_mode">
-<code class="sig-prename descclassname">fastestimator.op.op.</code><code class="sig-name descname">get_op_from_mode</code><span class="sig-paren">(</span><em class="sig-param">ops</em>, <em class="sig-param">current_mode</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/op/op.html#get_op_from_mode"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.op.op.get_op_from_mode" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">fastestimator.op.op.</code><code class="descname">get_op_from_mode</code><span class="sig-paren">(</span><em>ops</em>, <em>current_mode</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/op/op.html#get_op_from_mode"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.op.op.get_op_from_mode" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="function">
 <dt id="fastestimator.op.op.get_inputs_by_op">
-<code class="sig-prename descclassname">fastestimator.op.op.</code><code class="sig-name descname">get_inputs_by_op</code><span class="sig-paren">(</span><em class="sig-param">op</em>, <em class="sig-param">store</em>, <em class="sig-param">default=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/op/op.html#get_inputs_by_op"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.op.op.get_inputs_by_op" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">fastestimator.op.op.</code><code class="descname">get_inputs_by_op</code><span class="sig-paren">(</span><em>op</em>, <em>store</em>, <em>default=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/op/op.html#get_inputs_by_op"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.op.op.get_inputs_by_op" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="function">
 <dt id="fastestimator.op.op.get_inputs_by_key">
-<code class="sig-prename descclassname">fastestimator.op.op.</code><code class="sig-name descname">get_inputs_by_key</code><span class="sig-paren">(</span><em class="sig-param">store</em>, <em class="sig-param">inputs_key</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/op/op.html#get_inputs_by_key"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.op.op.get_inputs_by_key" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">fastestimator.op.op.</code><code class="descname">get_inputs_by_key</code><span class="sig-paren">(</span><em>store</em>, <em>inputs_key</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/op/op.html#get_inputs_by_key"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.op.op.get_inputs_by_key" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="function">
 <dt id="fastestimator.op.op.write_outputs_by_key">
-<code class="sig-prename descclassname">fastestimator.op.op.</code><code class="sig-name descname">write_outputs_by_key</code><span class="sig-paren">(</span><em class="sig-param">store</em>, <em class="sig-param">output</em>, <em class="sig-param">outputs_key</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/op/op.html#write_outputs_by_key"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.op.op.write_outputs_by_key" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">fastestimator.op.op.</code><code class="descname">write_outputs_by_key</code><span class="sig-paren">(</span><em>store</em>, <em>output</em>, <em>outputs_key</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/op/op.html#write_outputs_by_key"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.op.op.write_outputs_by_key" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="function">
 <dt id="fastestimator.op.op.verify_ops">
-<code class="sig-prename descclassname">fastestimator.op.op.</code><code class="sig-name descname">verify_ops</code><span class="sig-paren">(</span><em class="sig-param">ops</em>, <em class="sig-param">class_name</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/op/op.html#verify_ops"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.op.op.verify_ops" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">fastestimator.op.op.</code><code class="descname">verify_ops</code><span class="sig-paren">(</span><em>ops</em>, <em>class_name</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/op/op.html#verify_ops"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.op.op.verify_ops" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </div>
@@ -276,7 +271,7 @@
         <a href="fastestimator.op.numpyop.html" class="btn btn-neutral float-right" title="numpyop" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="fastestimator.layers.html" class="btn btn-neutral float-left" title="layers" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="fastestimator.layers.html" class="btn btn-neutral" title="layers" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -302,16 +297,37 @@
   
 
 
+  
+
+    
+    
+      <script type="text/javascript">
+          var DOCUMENTATION_OPTIONS = {
+              URL_ROOT:'./',
+              VERSION:'1.0b0',
+              LANGUAGE:'None',
+              COLLAPSE_INDEX:false,
+              FILE_SUFFIX:'.html',
+              HAS_SOURCE:  true,
+              SOURCELINK_SUFFIX: '.txt'
+          };
+      </script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    
+
+  
+
+  <script type="text/javascript" src="_static/js/theme.js"></script>
+
   <script type="text/javascript">
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script>
-
-  
-  
-    
-   
+  </script> 
 
 </body>
 </html>

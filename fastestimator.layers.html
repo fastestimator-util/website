@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>layers &mdash; FastEstimator 1.0a0 documentation</title>
+  <title>layers &mdash; FastEstimator 1.0b0 documentation</title>
   
 
   
@@ -19,39 +19,34 @@
   
 
   
-  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
-  
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
-        <script type="text/javascript" src="_static/jquery.js"></script>
-        <script type="text/javascript" src="_static/underscore.js"></script>
-        <script type="text/javascript" src="_static/doctools.js"></script>
-        <script type="text/javascript" src="_static/language_data.js"></script>
-        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
-        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
-    
-    <script type="text/javascript" src="_static/js/theme.js"></script>
 
+  
+  
     
 
   
+
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="op" href="fastestimator.op.html" />
     <link rel="prev" title="util" href="fastestimator.interpretation.util.html" /> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
 </head>
 
 <body class="wy-body-for-nav">
 
    
   <div class="wy-grid-for-nav">
+
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search" >
+        <div class="wy-side-nav-search">
           
 
           
@@ -209,17 +204,20 @@
 <span id="instance-norm"></span><h2>instance_norm<a class="headerlink" href="#module-fastestimator.layers.instance_norm" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="fastestimator.layers.instance_norm.InstanceNormalization">
-<em class="property">class </em><code class="sig-prename descclassname">fastestimator.layers.instance_norm.</code><code class="sig-name descname">InstanceNormalization</code><span class="sig-paren">(</span><em class="sig-param">epsilon=1e-05</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/layers/instance_norm.html#InstanceNormalization"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.layers.instance_norm.InstanceNormalization" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">fastestimator.layers.instance_norm.</code><code class="descname">InstanceNormalization</code><span class="sig-paren">(</span><em>epsilon=1e-05</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/layers/instance_norm.html#InstanceNormalization"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.layers.instance_norm.InstanceNormalization" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">tensorflow.python.keras.engine.base_layer.Layer</span></code></p>
 <p>Class for performing instance normalization. (See <a class="reference external" href="https://arxiv.org/abs/1607.08022">https://arxiv.org/abs/1607.08022</a>).</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>epsilon</strong> (<em>float</em><em>, </em><em>optional</em>) – value  of epsilon parameter that will be added to the variance. Defaults to 1e-5.</p>
-</dd>
-</dl>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>epsilon</strong> (<em>float</em><em>, </em><em>optional</em>) – value  of epsilon parameter that will be added to the variance. Defaults to 1e-5.</td>
+</tr>
+</tbody>
+</table>
 <dl class="method">
 <dt id="fastestimator.layers.instance_norm.InstanceNormalization.get_config">
-<code class="sig-name descname">get_config</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/layers/instance_norm.html#InstanceNormalization.get_config"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.layers.instance_norm.InstanceNormalization.get_config" title="Permalink to this definition">¶</a></dt>
+<code class="descname">get_config</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/layers/instance_norm.html#InstanceNormalization.get_config"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.layers.instance_norm.InstanceNormalization.get_config" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the config of the layer.</p>
 <p>A layer config is a Python dictionary (serializable)
 containing the configuration of a layer.
@@ -228,45 +226,55 @@ The same layer can be reinstantiated later
 <p>The config of a layer does not include connectivity
 information, nor the layer class name. These are handled
 by <cite>Network</cite> (one layer of abstraction above).</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>Python dictionary.</p>
-</dd>
-</dl>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Python dictionary.</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="method">
 <dt id="fastestimator.layers.instance_norm.InstanceNormalization.build">
-<code class="sig-name descname">build</code><span class="sig-paren">(</span><em class="sig-param">input_shape</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/layers/instance_norm.html#InstanceNormalization.build"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.layers.instance_norm.InstanceNormalization.build" title="Permalink to this definition">¶</a></dt>
+<code class="descname">build</code><span class="sig-paren">(</span><em>input_shape</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/layers/instance_norm.html#InstanceNormalization.build"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.layers.instance_norm.InstanceNormalization.build" title="Permalink to this definition">¶</a></dt>
 <dd><p>Creates the variables of the layer (optional, for subclass implementers).</p>
 <p>This is a method that implementers of subclasses of <cite>Layer</cite> or <cite>Model</cite>
 can override if they need a state-creation step in-between
 layer instantiation and layer call.</p>
 <p>This is typically used to create the weights of <cite>Layer</cite> subclasses.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>input_shape</strong> – Instance of <cite>TensorShape</cite>, or list of instances of
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>input_shape</strong> – Instance of <cite>TensorShape</cite>, or list of instances of
 <cite>TensorShape</cite> if the layer expects a list of inputs
-(one instance per input).</p>
-</dd>
-</dl>
+(one instance per input).</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="method">
 <dt id="fastestimator.layers.instance_norm.InstanceNormalization.call">
-<code class="sig-name descname">call</code><span class="sig-paren">(</span><em class="sig-param">x</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/layers/instance_norm.html#InstanceNormalization.call"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.layers.instance_norm.InstanceNormalization.call" title="Permalink to this definition">¶</a></dt>
+<code class="descname">call</code><span class="sig-paren">(</span><em>x</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/layers/instance_norm.html#InstanceNormalization.call"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.layers.instance_norm.InstanceNormalization.call" title="Permalink to this definition">¶</a></dt>
 <dd><p>This is where the layer’s logic lives.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>inputs</strong> – Input tensor, or list/tuple of input tensors.</p></li>
-<li><p><strong>**kwargs</strong> – Additional keyword arguments.</p></li>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>inputs</strong> – Input tensor, or list/tuple of input tensors.</li>
+<li><strong>**kwargs</strong> – Additional keyword arguments.</li>
 </ul>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>A tensor or list/tuple of tensors.</p>
-</dd>
-</dl>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">A tensor or list/tuple of tensors.</p>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 </dd></dl>
@@ -277,17 +285,20 @@ layer instantiation and layer call.</p>
 <span id="reflection-padding-2d"></span><h2>reflection_padding_2d<a class="headerlink" href="#module-fastestimator.layers.reflection_padding_2d" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="fastestimator.layers.reflection_padding_2d.ReflectionPadding2D">
-<em class="property">class </em><code class="sig-prename descclassname">fastestimator.layers.reflection_padding_2d.</code><code class="sig-name descname">ReflectionPadding2D</code><span class="sig-paren">(</span><em class="sig-param">padding=(1</em>, <em class="sig-param">1)</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/layers/reflection_padding_2d.html#ReflectionPadding2D"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.layers.reflection_padding_2d.ReflectionPadding2D" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">fastestimator.layers.reflection_padding_2d.</code><code class="descname">ReflectionPadding2D</code><span class="sig-paren">(</span><em>padding=(1</em>, <em>1)</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/layers/reflection_padding_2d.html#ReflectionPadding2D"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.layers.reflection_padding_2d.ReflectionPadding2D" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">tensorflow.python.keras.engine.base_layer.Layer</span></code></p>
 <p>Class for performing Reflection Padding on 2D arrays.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>padding</strong> (<em>tuple</em><em>, </em><em>optional</em>) – padding size. Defaults to (1, 1).</p>
-</dd>
-</dl>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>padding</strong> (<em>tuple</em><em>, </em><em>optional</em>) – padding size. Defaults to (1, 1).</td>
+</tr>
+</tbody>
+</table>
 <dl class="method">
 <dt id="fastestimator.layers.reflection_padding_2d.ReflectionPadding2D.get_config">
-<code class="sig-name descname">get_config</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/layers/reflection_padding_2d.html#ReflectionPadding2D.get_config"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.layers.reflection_padding_2d.ReflectionPadding2D.get_config" title="Permalink to this definition">¶</a></dt>
+<code class="descname">get_config</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/layers/reflection_padding_2d.html#ReflectionPadding2D.get_config"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.layers.reflection_padding_2d.ReflectionPadding2D.get_config" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the config of the layer.</p>
 <p>A layer config is a Python dictionary (serializable)
 containing the configuration of a layer.
@@ -296,34 +307,41 @@ The same layer can be reinstantiated later
 <p>The config of a layer does not include connectivity
 information, nor the layer class name. These are handled
 by <cite>Network</cite> (one layer of abstraction above).</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>Python dictionary.</p>
-</dd>
-</dl>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Python dictionary.</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="method">
 <dt id="fastestimator.layers.reflection_padding_2d.ReflectionPadding2D.compute_output_shape">
-<code class="sig-name descname">compute_output_shape</code><span class="sig-paren">(</span><em class="sig-param">s</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/layers/reflection_padding_2d.html#ReflectionPadding2D.compute_output_shape"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.layers.reflection_padding_2d.ReflectionPadding2D.compute_output_shape" title="Permalink to this definition">¶</a></dt>
+<code class="descname">compute_output_shape</code><span class="sig-paren">(</span><em>s</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/layers/reflection_padding_2d.html#ReflectionPadding2D.compute_output_shape"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.layers.reflection_padding_2d.ReflectionPadding2D.compute_output_shape" title="Permalink to this definition">¶</a></dt>
 <dd><p>If you are using “channels_last” configuration</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="fastestimator.layers.reflection_padding_2d.ReflectionPadding2D.call">
-<code class="sig-name descname">call</code><span class="sig-paren">(</span><em class="sig-param">x</em>, <em class="sig-param">mask=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/layers/reflection_padding_2d.html#ReflectionPadding2D.call"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.layers.reflection_padding_2d.ReflectionPadding2D.call" title="Permalink to this definition">¶</a></dt>
+<code class="descname">call</code><span class="sig-paren">(</span><em>x</em>, <em>mask=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/layers/reflection_padding_2d.html#ReflectionPadding2D.call"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.layers.reflection_padding_2d.ReflectionPadding2D.call" title="Permalink to this definition">¶</a></dt>
 <dd><p>This is where the layer’s logic lives.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>inputs</strong> – Input tensor, or list/tuple of input tensors.</p></li>
-<li><p><strong>**kwargs</strong> – Additional keyword arguments.</p></li>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>inputs</strong> – Input tensor, or list/tuple of input tensors.</li>
+<li><strong>**kwargs</strong> – Additional keyword arguments.</li>
 </ul>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>A tensor or list/tuple of tensors.</p>
-</dd>
-</dl>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">A tensor or list/tuple of tensors.</p>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 </dd></dl>
@@ -342,7 +360,7 @@ by <cite>Network</cite> (one layer of abstraction above).</p>
         <a href="fastestimator.op.html" class="btn btn-neutral float-right" title="op" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="fastestimator.interpretation.util.html" class="btn btn-neutral float-left" title="util" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="fastestimator.interpretation.util.html" class="btn btn-neutral" title="util" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -368,16 +386,37 @@ by <cite>Network</cite> (one layer of abstraction above).</p>
   
 
 
+  
+
+    
+    
+      <script type="text/javascript">
+          var DOCUMENTATION_OPTIONS = {
+              URL_ROOT:'./',
+              VERSION:'1.0b0',
+              LANGUAGE:'None',
+              COLLAPSE_INDEX:false,
+              FILE_SUFFIX:'.html',
+              HAS_SOURCE:  true,
+              SOURCELINK_SUFFIX: '.txt'
+          };
+      </script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    
+
+  
+
+  <script type="text/javascript" src="_static/js/theme.js"></script>
+
   <script type="text/javascript">
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script>
-
-  
-  
-    
-   
+  </script> 
 
 </body>
 </html>

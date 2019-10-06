@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>numpyop &mdash; FastEstimator 1.0a0 documentation</title>
+  <title>numpyop &mdash; FastEstimator 1.0b0 documentation</title>
   
 
   
@@ -19,39 +19,34 @@
   
 
   
-  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
-  
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
-        <script type="text/javascript" src="_static/jquery.js"></script>
-        <script type="text/javascript" src="_static/underscore.js"></script>
-        <script type="text/javascript" src="_static/doctools.js"></script>
-        <script type="text/javascript" src="_static/language_data.js"></script>
-        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
-        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
-    
-    <script type="text/javascript" src="_static/js/theme.js"></script>
 
+  
+  
     
 
   
+
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="tensorop" href="fastestimator.op.tensorop.html" />
     <link rel="prev" title="op" href="fastestimator.op.html" /> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
 </head>
 
 <body class="wy-body-for-nav">
 
    
   <div class="wy-grid-for-nav">
+
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search" >
+        <div class="wy-side-nav-search">
           
 
           
@@ -221,32 +216,40 @@
 <span id="image-reader"></span><h2>image_reader<a class="headerlink" href="#module-fastestimator.op.numpyop.image_reader" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="fastestimator.op.numpyop.image_reader.ImageReader">
-<em class="property">class </em><code class="sig-prename descclassname">fastestimator.op.numpyop.image_reader.</code><code class="sig-name descname">ImageReader</code><span class="sig-paren">(</span><em class="sig-param">inputs=None</em>, <em class="sig-param">outputs=None</em>, <em class="sig-param">mode=None</em>, <em class="sig-param">parent_path=''</em>, <em class="sig-param">grey_scale=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/op/numpyop/image_reader.html#ImageReader"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.op.numpyop.image_reader.ImageReader" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">fastestimator.op.numpyop.image_reader.</code><code class="descname">ImageReader</code><span class="sig-paren">(</span><em>inputs=None</em>, <em>outputs=None</em>, <em>mode=None</em>, <em>parent_path=''</em>, <em>grey_scale=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/op/numpyop/image_reader.html#ImageReader"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.op.numpyop.image_reader.ImageReader" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="fastestimator.op.html#fastestimator.op.op.NumpyOp" title="fastestimator.op.op.NumpyOp"><code class="xref py py-class docutils literal notranslate"><span class="pre">fastestimator.op.op.NumpyOp</span></code></a></p>
 <p>Class for reading png or jpg images</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>parent_path</strong> – Parent path that will be added on given path</p></li>
-<li><p><strong>grey_scale</strong> – Boolean to indicate whether or not to read image as grayscale</p></li>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>parent_path</strong> – Parent path that will be added on given path</li>
+<li><strong>grey_scale</strong> – Boolean to indicate whether or not to read image as grayscale</li>
 </ul>
-</dd>
-</dl>
+</td>
+</tr>
+</tbody>
+</table>
 <dl class="method">
 <dt id="fastestimator.op.numpyop.image_reader.ImageReader.forward">
-<code class="sig-name descname">forward</code><span class="sig-paren">(</span><em class="sig-param">path</em>, <em class="sig-param">state</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/op/numpyop/image_reader.html#ImageReader.forward"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.op.numpyop.image_reader.ImageReader.forward" title="Permalink to this definition">¶</a></dt>
+<code class="descname">forward</code><span class="sig-paren">(</span><em>path</em>, <em>state</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/op/numpyop/image_reader.html#ImageReader.forward"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.op.numpyop.image_reader.ImageReader.forward" title="Permalink to this definition">¶</a></dt>
 <dd><p>Reads numpy array from image path</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>path</strong> – path of the image</p></li>
-<li><p><strong>state</strong> – A dictionary containing background information such as ‘mode’</p></li>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>path</strong> – path of the image</li>
+<li><strong>state</strong> – A dictionary containing background information such as ‘mode’</li>
 </ul>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>Image as numpy array</p>
-</dd>
-</dl>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Image as numpy array</p>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 </dd></dl>
@@ -257,29 +260,36 @@
 <span id="mat-reader"></span><h2>mat_reader<a class="headerlink" href="#module-fastestimator.op.numpyop.mat_reader" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="fastestimator.op.numpyop.mat_reader.MatReader">
-<em class="property">class </em><code class="sig-prename descclassname">fastestimator.op.numpyop.mat_reader.</code><code class="sig-name descname">MatReader</code><span class="sig-paren">(</span><em class="sig-param">inputs=None</em>, <em class="sig-param">outputs=None</em>, <em class="sig-param">mode=None</em>, <em class="sig-param">parent_path=''</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/op/numpyop/mat_reader.html#MatReader"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.op.numpyop.mat_reader.MatReader" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">fastestimator.op.numpyop.mat_reader.</code><code class="descname">MatReader</code><span class="sig-paren">(</span><em>inputs=None</em>, <em>outputs=None</em>, <em>mode=None</em>, <em>parent_path=''</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/op/numpyop/mat_reader.html#MatReader"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.op.numpyop.mat_reader.MatReader" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="fastestimator.op.html#fastestimator.op.op.NumpyOp" title="fastestimator.op.op.NumpyOp"><code class="xref py py-class docutils literal notranslate"><span class="pre">fastestimator.op.op.NumpyOp</span></code></a></p>
 <p>Class for reading .mat files.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>parent_path</strong> – Parent path that will be added on given path.</p>
-</dd>
-</dl>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>parent_path</strong> – Parent path that will be added on given path.</td>
+</tr>
+</tbody>
+</table>
 <dl class="method">
 <dt id="fastestimator.op.numpyop.mat_reader.MatReader.forward">
-<code class="sig-name descname">forward</code><span class="sig-paren">(</span><em class="sig-param">data</em>, <em class="sig-param">state</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/op/numpyop/mat_reader.html#MatReader.forward"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.op.numpyop.mat_reader.MatReader.forward" title="Permalink to this definition">¶</a></dt>
+<code class="descname">forward</code><span class="sig-paren">(</span><em>data</em>, <em>state</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/op/numpyop/mat_reader.html#MatReader.forward"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.op.numpyop.mat_reader.MatReader.forward" title="Permalink to this definition">¶</a></dt>
 <dd><p>Reads mat file as dict.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>data</strong> – Path to the mat file.</p></li>
-<li><p><strong>state</strong> – A dictionary containing background information such as ‘mode’</p></li>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>data</strong> – Path to the mat file.</li>
+<li><strong>state</strong> – A dictionary containing background information such as ‘mode’</li>
 </ul>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>dict</p>
-</dd>
-</dl>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">dict</p>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 </dd></dl>
@@ -290,24 +300,28 @@
 <span id="minmax"></span><h2>minmax<a class="headerlink" href="#module-fastestimator.op.numpyop.minmax" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="fastestimator.op.numpyop.minmax.Minmax">
-<em class="property">class </em><code class="sig-prename descclassname">fastestimator.op.numpyop.minmax.</code><code class="sig-name descname">Minmax</code><span class="sig-paren">(</span><em class="sig-param">inputs=None</em>, <em class="sig-param">outputs=None</em>, <em class="sig-param">mode=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/op/numpyop/minmax.html#Minmax"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.op.numpyop.minmax.Minmax" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">fastestimator.op.numpyop.minmax.</code><code class="descname">Minmax</code><span class="sig-paren">(</span><em>inputs=None</em>, <em>outputs=None</em>, <em>mode=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/op/numpyop/minmax.html#Minmax"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.op.numpyop.minmax.Minmax" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="fastestimator.op.html#fastestimator.op.op.NumpyOp" title="fastestimator.op.op.NumpyOp"><code class="xref py py-class docutils literal notranslate"><span class="pre">fastestimator.op.op.NumpyOp</span></code></a></p>
 <p>Normalize data using the minmax method</p>
 <dl class="method">
 <dt id="fastestimator.op.numpyop.minmax.Minmax.forward">
-<code class="sig-name descname">forward</code><span class="sig-paren">(</span><em class="sig-param">data</em>, <em class="sig-param">state</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/op/numpyop/minmax.html#Minmax.forward"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.op.numpyop.minmax.Minmax.forward" title="Permalink to this definition">¶</a></dt>
+<code class="descname">forward</code><span class="sig-paren">(</span><em>data</em>, <em>state</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/op/numpyop/minmax.html#Minmax.forward"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.op.numpyop.minmax.Minmax.forward" title="Permalink to this definition">¶</a></dt>
 <dd><p>Normalizes the data</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>data</strong> – Data to be normalized</p></li>
-<li><p><strong>state</strong> – A dictionary containing background information such as ‘mode’</p></li>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>data</strong> – Data to be normalized</li>
+<li><strong>state</strong> – A dictionary containing background information such as ‘mode’</li>
 </ul>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>Normalized numpy array</p>
-</dd>
-</dl>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Normalized numpy array</p>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 </dd></dl>
@@ -318,29 +332,36 @@
 <span id="reshape"></span><h2>reshape<a class="headerlink" href="#module-fastestimator.op.numpyop.reshape" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="fastestimator.op.numpyop.reshape.Reshape">
-<em class="property">class </em><code class="sig-prename descclassname">fastestimator.op.numpyop.reshape.</code><code class="sig-name descname">Reshape</code><span class="sig-paren">(</span><em class="sig-param">shape</em>, <em class="sig-param">inputs=None</em>, <em class="sig-param">outputs=None</em>, <em class="sig-param">mode=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/op/numpyop/reshape.html#Reshape"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.op.numpyop.reshape.Reshape" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">fastestimator.op.numpyop.reshape.</code><code class="descname">Reshape</code><span class="sig-paren">(</span><em>shape</em>, <em>inputs=None</em>, <em>outputs=None</em>, <em>mode=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/op/numpyop/reshape.html#Reshape"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.op.numpyop.reshape.Reshape" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="fastestimator.op.html#fastestimator.op.op.NumpyOp" title="fastestimator.op.op.NumpyOp"><code class="xref py py-class docutils literal notranslate"><span class="pre">fastestimator.op.op.NumpyOp</span></code></a></p>
 <p>Preprocessing class for reshaping the data</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>shape</strong> – target shape</p>
-</dd>
-</dl>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>shape</strong> – target shape</td>
+</tr>
+</tbody>
+</table>
 <dl class="method">
 <dt id="fastestimator.op.numpyop.reshape.Reshape.forward">
-<code class="sig-name descname">forward</code><span class="sig-paren">(</span><em class="sig-param">data</em>, <em class="sig-param">state</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/op/numpyop/reshape.html#Reshape.forward"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.op.numpyop.reshape.Reshape.forward" title="Permalink to this definition">¶</a></dt>
+<code class="descname">forward</code><span class="sig-paren">(</span><em>data</em>, <em>state</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/op/numpyop/reshape.html#Reshape.forward"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.op.numpyop.reshape.Reshape.forward" title="Permalink to this definition">¶</a></dt>
 <dd><p>Reshapes data array</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>data</strong> – Data to be reshaped</p></li>
-<li><p><strong>state</strong> – A dictionary containing background information such as ‘mode’</p></li>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>data</strong> – Data to be reshaped</li>
+<li><strong>state</strong> – A dictionary containing background information such as ‘mode’</li>
 </ul>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>Reshaped array</p>
-</dd>
-</dl>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Reshaped array</p>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 </dd></dl>
@@ -351,24 +372,28 @@
 <span id="resize"></span><h2>resize<a class="headerlink" href="#module-fastestimator.op.numpyop.resize" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="fastestimator.op.numpyop.resize.Resize">
-<em class="property">class </em><code class="sig-prename descclassname">fastestimator.op.numpyop.resize.</code><code class="sig-name descname">Resize</code><span class="sig-paren">(</span><em class="sig-param">target_size</em>, <em class="sig-param">resize_method='bilinear'</em>, <em class="sig-param">keep_ratio=False</em>, <em class="sig-param">inputs=None</em>, <em class="sig-param">outputs=None</em>, <em class="sig-param">mode=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/op/numpyop/resize.html#Resize"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.op.numpyop.resize.Resize" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">fastestimator.op.numpyop.resize.</code><code class="descname">Resize</code><span class="sig-paren">(</span><em>target_size</em>, <em>resize_method='bilinear'</em>, <em>keep_ratio=False</em>, <em>inputs=None</em>, <em>outputs=None</em>, <em>mode=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/op/numpyop/resize.html#Resize"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.op.numpyop.resize.Resize" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="fastestimator.op.html#fastestimator.op.op.NumpyOp" title="fastestimator.op.op.NumpyOp"><code class="xref py py-class docutils literal notranslate"><span class="pre">fastestimator.op.op.NumpyOp</span></code></a></p>
 <p>Resize image.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>target_size</strong> (<em>tuple</em>) – Target image size in (height, width) format.</p></li>
-<li><p><strong>resize_method</strong> (<em>string</em>) – <cite>bilinear</cite>, <cite>nearest</cite>, <cite>area</cite>, and <cite>lanczos4</cite> are available.</p></li>
-<li><p><strong>keep_ratio</strong> (<em>bool</em>) – If <cite>True</cite>, the resulting image will be padded to keep the original aspect ratio.</p></li>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>target_size</strong> (<em>tuple</em>) – Target image size in (height, width) format.</li>
+<li><strong>resize_method</strong> (<em>string</em>) – <cite>bilinear</cite>, <cite>nearest</cite>, <cite>area</cite>, and <cite>lanczos4</cite> are available.</li>
+<li><strong>keep_ratio</strong> (<em>bool</em>) – If <cite>True</cite>, the resulting image will be padded to keep the original aspect ratio.</li>
 </ul>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>Resized <cite>np.ndarray</cite>.</p>
-</dd>
-</dl>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Resized <cite>np.ndarray</cite>.</p>
+</td>
+</tr>
+</tbody>
+</table>
 <dl class="method">
 <dt id="fastestimator.op.numpyop.resize.Resize.forward">
-<code class="sig-name descname">forward</code><span class="sig-paren">(</span><em class="sig-param">data</em>, <em class="sig-param">state</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/op/numpyop/resize.html#Resize.forward"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.op.numpyop.resize.Resize.forward" title="Permalink to this definition">¶</a></dt>
+<code class="descname">forward</code><span class="sig-paren">(</span><em>data</em>, <em>state</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/op/numpyop/resize.html#Resize.forward"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.op.numpyop.resize.Resize.forward" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -379,29 +404,36 @@
 <span id="scale"></span><h2>scale<a class="headerlink" href="#module-fastestimator.op.numpyop.scale" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="fastestimator.op.numpyop.scale.Scale">
-<em class="property">class </em><code class="sig-prename descclassname">fastestimator.op.numpyop.scale.</code><code class="sig-name descname">Scale</code><span class="sig-paren">(</span><em class="sig-param">scalar</em>, <em class="sig-param">inputs=None</em>, <em class="sig-param">outputs=None</em>, <em class="sig-param">mode=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/op/numpyop/scale.html#Scale"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.op.numpyop.scale.Scale" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">fastestimator.op.numpyop.scale.</code><code class="descname">Scale</code><span class="sig-paren">(</span><em>scalar</em>, <em>inputs=None</em>, <em>outputs=None</em>, <em>mode=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/op/numpyop/scale.html#Scale"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.op.numpyop.scale.Scale" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="fastestimator.op.html#fastestimator.op.op.NumpyOp" title="fastestimator.op.op.NumpyOp"><code class="xref py py-class docutils literal notranslate"><span class="pre">fastestimator.op.op.NumpyOp</span></code></a></p>
 <p>Preprocessing class for scaling dataset</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>scalar</strong> – Scalar for scaling the data</p>
-</dd>
-</dl>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>scalar</strong> – Scalar for scaling the data</td>
+</tr>
+</tbody>
+</table>
 <dl class="method">
 <dt id="fastestimator.op.numpyop.scale.Scale.forward">
-<code class="sig-name descname">forward</code><span class="sig-paren">(</span><em class="sig-param">data</em>, <em class="sig-param">state</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/op/numpyop/scale.html#Scale.forward"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.op.numpyop.scale.Scale.forward" title="Permalink to this definition">¶</a></dt>
+<code class="descname">forward</code><span class="sig-paren">(</span><em>data</em>, <em>state</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/op/numpyop/scale.html#Scale.forward"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.op.numpyop.scale.Scale.forward" title="Permalink to this definition">¶</a></dt>
 <dd><p>Scales the data tensor</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>data</strong> – Data to be scaled</p></li>
-<li><p><strong>state</strong> – A dictionary containing background information such as ‘mode’</p></li>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>data</strong> – Data to be scaled</li>
+<li><strong>state</strong> – A dictionary containing background information such as ‘mode’</li>
 </ul>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>Scaled data array</p>
-</dd>
-</dl>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Scaled data array</p>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 </dd></dl>
@@ -412,24 +444,28 @@
 <span id="z-score"></span><h2>z_score<a class="headerlink" href="#module-fastestimator.op.numpyop.z_score" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="fastestimator.op.numpyop.z_score.Zscore">
-<em class="property">class </em><code class="sig-prename descclassname">fastestimator.op.numpyop.z_score.</code><code class="sig-name descname">Zscore</code><span class="sig-paren">(</span><em class="sig-param">inputs=None</em>, <em class="sig-param">outputs=None</em>, <em class="sig-param">mode=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/op/numpyop/z_score.html#Zscore"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.op.numpyop.z_score.Zscore" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">fastestimator.op.numpyop.z_score.</code><code class="descname">Zscore</code><span class="sig-paren">(</span><em>inputs=None</em>, <em>outputs=None</em>, <em>mode=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/op/numpyop/z_score.html#Zscore"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.op.numpyop.z_score.Zscore" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="fastestimator.op.html#fastestimator.op.op.NumpyOp" title="fastestimator.op.op.NumpyOp"><code class="xref py py-class docutils literal notranslate"><span class="pre">fastestimator.op.op.NumpyOp</span></code></a></p>
 <p>Standardize data using zscore method</p>
 <dl class="method">
 <dt id="fastestimator.op.numpyop.z_score.Zscore.forward">
-<code class="sig-name descname">forward</code><span class="sig-paren">(</span><em class="sig-param">data</em>, <em class="sig-param">state</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/op/numpyop/z_score.html#Zscore.forward"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.op.numpyop.z_score.Zscore.forward" title="Permalink to this definition">¶</a></dt>
+<code class="descname">forward</code><span class="sig-paren">(</span><em>data</em>, <em>state</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/op/numpyop/z_score.html#Zscore.forward"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.op.numpyop.z_score.Zscore.forward" title="Permalink to this definition">¶</a></dt>
 <dd><p>Standardizes the data</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>data</strong> – Data to be standardized</p></li>
-<li><p><strong>state</strong> – A dictionary containing background information such as ‘mode’</p></li>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>data</strong> – Data to be standardized</li>
+<li><strong>state</strong> – A dictionary containing background information such as ‘mode’</li>
 </ul>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>Array containing standardized data</p>
-</dd>
-</dl>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Array containing standardized data</p>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 </dd></dl>
@@ -448,7 +484,7 @@
         <a href="fastestimator.op.tensorop.html" class="btn btn-neutral float-right" title="tensorop" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="fastestimator.op.html" class="btn btn-neutral float-left" title="op" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="fastestimator.op.html" class="btn btn-neutral" title="op" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -474,16 +510,37 @@
   
 
 
+  
+
+    
+    
+      <script type="text/javascript">
+          var DOCUMENTATION_OPTIONS = {
+              URL_ROOT:'./',
+              VERSION:'1.0b0',
+              LANGUAGE:'None',
+              COLLAPSE_INDEX:false,
+              FILE_SUFFIX:'.html',
+              HAS_SOURCE:  true,
+              SOURCELINK_SUFFIX: '.txt'
+          };
+      </script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    
+
+  
+
+  <script type="text/javascript" src="_static/js/theme.js"></script>
+
   <script type="text/javascript">
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script>
-
-  
-  
-    
-   
+  </script> 
 
 </body>
 </html>
