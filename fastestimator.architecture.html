@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>architecture &mdash; FastEstimator 1.0a0 documentation</title>
+  <title>architecture &mdash; FastEstimator 1.0b0 documentation</title>
   
 
   
@@ -19,39 +19,34 @@
   
 
   
-  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
-  
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
-        <script type="text/javascript" src="_static/jquery.js"></script>
-        <script type="text/javascript" src="_static/underscore.js"></script>
-        <script type="text/javascript" src="_static/doctools.js"></script>
-        <script type="text/javascript" src="_static/language_data.js"></script>
-        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
-        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
-    
-    <script type="text/javascript" src="_static/js/theme.js"></script>
 
+  
+  
     
 
   
+
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="cli" href="fastestimator.cli.html" />
     <link rel="prev" title="API" href="api.html" /> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
 </head>
 
 <body class="wy-body-for-nav">
 
    
   <div class="wy-grid-for-nav">
+
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search" >
+        <div class="wy-side-nav-search">
           
 
           
@@ -213,39 +208,44 @@
 <span id="cyclegan"></span><h2>cyclegan<a class="headerlink" href="#module-fastestimator.architecture.cyclegan" title="Permalink to this headline">¶</a></h2>
 <dl class="function">
 <dt id="fastestimator.architecture.cyclegan.build_discriminator">
-<code class="sig-prename descclassname">fastestimator.architecture.cyclegan.</code><code class="sig-name descname">build_discriminator</code><span class="sig-paren">(</span><em class="sig-param">input_shape=(256</em>, <em class="sig-param">256</em>, <em class="sig-param">3)</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/architecture/cyclegan.html#build_discriminator"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.architecture.cyclegan.build_discriminator" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">fastestimator.architecture.cyclegan.</code><code class="descname">build_discriminator</code><span class="sig-paren">(</span><em>input_shape=(256</em>, <em>256</em>, <em>3)</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/architecture/cyclegan.html#build_discriminator"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.architecture.cyclegan.build_discriminator" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the discriminator network of the GAN.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>input_shape</strong> (<em>tuple</em><em>, </em><em>optional</em>) – shape of the input image. Defaults to (256, 256, 3).</p>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>GAN discriminator.</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>‘Model’ object</p>
-</dd>
-</dl>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>input_shape</strong> (<em>tuple</em><em>, </em><em>optional</em>) – shape of the input image. Defaults to (256, 256, 3).</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">GAN discriminator.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">‘Model’ object</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="function">
 <dt id="fastestimator.architecture.cyclegan.build_generator">
-<code class="sig-prename descclassname">fastestimator.architecture.cyclegan.</code><code class="sig-name descname">build_generator</code><span class="sig-paren">(</span><em class="sig-param">input_shape=(256</em>, <em class="sig-param">256</em>, <em class="sig-param">3)</em>, <em class="sig-param">num_blocks=9</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/architecture/cyclegan.html#build_generator"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.architecture.cyclegan.build_generator" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">fastestimator.architecture.cyclegan.</code><code class="descname">build_generator</code><span class="sig-paren">(</span><em>input_shape=(256</em>, <em>256</em>, <em>3)</em>, <em>num_blocks=9</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/architecture/cyclegan.html#build_generator"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.architecture.cyclegan.build_generator" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the generator of the GAN.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>input_shape</strong> (<em>tuple</em><em>, </em><em>optional</em>) – shape of the input image. Defaults to (256, 256, 3).</p></li>
-<li><p><strong>num_blocks</strong> (<em>int</em><em>, </em><em>optional</em>) – number of resblocks for the generator. Defaults to 9.</p></li>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>input_shape</strong> (<em>tuple</em><em>, </em><em>optional</em>) – shape of the input image. Defaults to (256, 256, 3).</li>
+<li><strong>num_blocks</strong> (<em>int</em><em>, </em><em>optional</em>) – number of resblocks for the generator. Defaults to 9.</li>
 </ul>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>GAN generator.</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>‘Model’ object</p>
-</dd>
-</dl>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">GAN generator.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">‘Model’ object</p>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 </div>
@@ -254,22 +254,26 @@
 <span id="lenet"></span><h2>lenet<a class="headerlink" href="#module-fastestimator.architecture.lenet" title="Permalink to this headline">¶</a></h2>
 <dl class="function">
 <dt id="fastestimator.architecture.lenet.LeNet">
-<code class="sig-prename descclassname">fastestimator.architecture.lenet.</code><code class="sig-name descname">LeNet</code><span class="sig-paren">(</span><em class="sig-param">input_shape=(28</em>, <em class="sig-param">28</em>, <em class="sig-param">1)</em>, <em class="sig-param">classes=10</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/architecture/lenet.html#LeNet"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.architecture.lenet.LeNet" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">fastestimator.architecture.lenet.</code><code class="descname">LeNet</code><span class="sig-paren">(</span><em>input_shape=(28</em>, <em>28</em>, <em>1)</em>, <em>classes=10</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/architecture/lenet.html#LeNet"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.architecture.lenet.LeNet" title="Permalink to this definition">¶</a></dt>
 <dd><p>Creates a LeNet model with 3 convolutional and 2 dense layers.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>input_shape</strong> (<em>tuple</em><em>, </em><em>optional</em>) – shape of the input data. Defaults to (28, 28, 1).</p></li>
-<li><p><strong>classes</strong> (<em>int</em><em>, </em><em>optional</em>) – number of classes. Defaults to 10.</p></li>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>input_shape</strong> (<em>tuple</em><em>, </em><em>optional</em>) – shape of the input data. Defaults to (28, 28, 1).</li>
+<li><strong>classes</strong> (<em>int</em><em>, </em><em>optional</em>) – number of classes. Defaults to 10.</li>
 </ul>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>LeNet model.</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>‘Model’ object</p>
-</dd>
-</dl>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">LeNet model.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">‘Model’ object</p>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 </div>
@@ -278,147 +282,169 @@
 <span id="retinanet"></span><h2>retinanet<a class="headerlink" href="#module-fastestimator.architecture.retinanet" title="Permalink to this headline">¶</a></h2>
 <dl class="function">
 <dt id="fastestimator.architecture.retinanet.classification_sub_net">
-<code class="sig-prename descclassname">fastestimator.architecture.retinanet.</code><code class="sig-name descname">classification_sub_net</code><span class="sig-paren">(</span><em class="sig-param">num_classes</em>, <em class="sig-param">num_anchor=9</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/architecture/retinanet.html#classification_sub_net"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.architecture.retinanet.classification_sub_net" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">fastestimator.architecture.retinanet.</code><code class="descname">classification_sub_net</code><span class="sig-paren">(</span><em>num_classes</em>, <em>num_anchor=9</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/architecture/retinanet.html#classification_sub_net"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.architecture.retinanet.classification_sub_net" title="Permalink to this definition">¶</a></dt>
 <dd><p>Creates an object classification sub-network for the RetinaNet.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>num_classes</strong> (<em>int</em>) – number of classes.</p></li>
-<li><p><strong>num_anchor</strong> (<em>int</em><em>, </em><em>optional</em>) – number of anchor boxes. Defaults to 9.</p></li>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>num_classes</strong> (<em>int</em>) – number of classes.</li>
+<li><strong>num_anchor</strong> (<em>int</em><em>, </em><em>optional</em>) – number of anchor boxes. Defaults to 9.</li>
 </ul>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>classification sub-network.</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>‘Model’ object</p>
-</dd>
-</dl>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">classification sub-network.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">‘Model’ object</p>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="function">
 <dt id="fastestimator.architecture.retinanet.regression_sub_net">
-<code class="sig-prename descclassname">fastestimator.architecture.retinanet.</code><code class="sig-name descname">regression_sub_net</code><span class="sig-paren">(</span><em class="sig-param">num_anchor=9</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/architecture/retinanet.html#regression_sub_net"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.architecture.retinanet.regression_sub_net" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">fastestimator.architecture.retinanet.</code><code class="descname">regression_sub_net</code><span class="sig-paren">(</span><em>num_anchor=9</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/architecture/retinanet.html#regression_sub_net"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.architecture.retinanet.regression_sub_net" title="Permalink to this definition">¶</a></dt>
 <dd><p>Creates a regression sub-network for the RetinaNet.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>num_anchor</strong> (<em>int</em><em>, </em><em>optional</em>) – number of anchor boxes. Defaults to 9.</p>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>regression sub-network.</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>‘Model’ object</p>
-</dd>
-</dl>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>num_anchor</strong> (<em>int</em><em>, </em><em>optional</em>) – number of anchor boxes. Defaults to 9.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">regression sub-network.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">‘Model’ object</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="function">
 <dt id="fastestimator.architecture.retinanet.RetinaNet">
-<code class="sig-prename descclassname">fastestimator.architecture.retinanet.</code><code class="sig-name descname">RetinaNet</code><span class="sig-paren">(</span><em class="sig-param">input_shape</em>, <em class="sig-param">num_classes</em>, <em class="sig-param">num_anchor=9</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/architecture/retinanet.html#RetinaNet"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.architecture.retinanet.RetinaNet" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">fastestimator.architecture.retinanet.</code><code class="descname">RetinaNet</code><span class="sig-paren">(</span><em>input_shape</em>, <em>num_classes</em>, <em>num_anchor=9</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/architecture/retinanet.html#RetinaNet"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.architecture.retinanet.RetinaNet" title="Permalink to this definition">¶</a></dt>
 <dd><p>Creates the RetinaNet. RetinaNet is composed of an FPN, a classification sub-network and a localization
 regression sub-network.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>input_shape</strong> (<em>tuple</em>) – shape of input image.</p></li>
-<li><p><strong>num_classes</strong> (<em>int</em>) – number of classes.</p></li>
-<li><p><strong>num_anchor</strong> (<em>int</em><em>, </em><em>optional</em>) – number of anchor boxes. Defaults to 9.</p></li>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>input_shape</strong> (<em>tuple</em>) – shape of input image.</li>
+<li><strong>num_classes</strong> (<em>int</em>) – number of classes.</li>
+<li><strong>num_anchor</strong> (<em>int</em><em>, </em><em>optional</em>) – number of anchor boxes. Defaults to 9.</li>
 </ul>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>RetinaNet.</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>‘Model’ object</p>
-</dd>
-</dl>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">RetinaNet.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">‘Model’ object</p>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="function">
 <dt id="fastestimator.architecture.retinanet.get_fpn_anchor_box">
-<code class="sig-prename descclassname">fastestimator.architecture.retinanet.</code><code class="sig-name descname">get_fpn_anchor_box</code><span class="sig-paren">(</span><em class="sig-param">input_shape</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/architecture/retinanet.html#get_fpn_anchor_box"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.architecture.retinanet.get_fpn_anchor_box" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">fastestimator.architecture.retinanet.</code><code class="descname">get_fpn_anchor_box</code><span class="sig-paren">(</span><em>input_shape</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/architecture/retinanet.html#get_fpn_anchor_box"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.architecture.retinanet.get_fpn_anchor_box" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the anchor boxes of the Feature Pyramid Net.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>input_shape</strong> (<em>tuple</em>) – shape of input image.</p>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>numpy array with all anchor boxes.</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>array</p>
-</dd>
-</dl>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>input_shape</strong> (<em>tuple</em>) – shape of input image.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">numpy array with all anchor boxes.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">array</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="function">
 <dt id="fastestimator.architecture.retinanet.get_target">
-<code class="sig-prename descclassname">fastestimator.architecture.retinanet.</code><code class="sig-name descname">get_target</code><span class="sig-paren">(</span><em class="sig-param">anchorbox</em>, <em class="sig-param">label</em>, <em class="sig-param">x1</em>, <em class="sig-param">y1</em>, <em class="sig-param">x2</em>, <em class="sig-param">y2</em>, <em class="sig-param">num_classes=10</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/architecture/retinanet.html#get_target"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.architecture.retinanet.get_target" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">fastestimator.architecture.retinanet.</code><code class="descname">get_target</code><span class="sig-paren">(</span><em>anchorbox</em>, <em>label</em>, <em>x1</em>, <em>y1</em>, <em>x2</em>, <em>y2</em>, <em>num_classes=10</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/architecture/retinanet.html#get_target"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.architecture.retinanet.get_target" title="Permalink to this definition">¶</a></dt>
 <dd><p>Generates classification and localization ground-truths.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>anchorbox</strong> (<em>array</em>) – anchor boxes</p></li>
-<li><p><strong>label</strong> (<em>array</em>) – labels for each anchor box.</p></li>
-<li><p><strong>x1</strong> (<em>array</em>) – x-coordinate of top left point of the box.</p></li>
-<li><p><strong>y1</strong> (<em>array</em>) – y-coordinate of top left point of the box.</p></li>
-<li><p><strong>x2</strong> (<em>array</em>) – x-coordinate of bottom right point of the box.</p></li>
-<li><p><strong>y2</strong> (<em>array</em>) – x-coordinate of bottom right point of the box.</p></li>
-<li><p><strong>num_classes</strong> (<em>int</em><em>, </em><em>optional</em>) – number of classes. Defaults to 10.</p></li>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>anchorbox</strong> (<em>array</em>) – anchor boxes</li>
+<li><strong>label</strong> (<em>array</em>) – labels for each anchor box.</li>
+<li><strong>x1</strong> (<em>array</em>) – x-coordinate of top left point of the box.</li>
+<li><strong>y1</strong> (<em>array</em>) – y-coordinate of top left point of the box.</li>
+<li><strong>x2</strong> (<em>array</em>) – x-coordinate of bottom right point of the box.</li>
+<li><strong>y2</strong> (<em>array</em>) – x-coordinate of bottom right point of the box.</li>
+<li><strong>num_classes</strong> (<em>int</em><em>, </em><em>optional</em>) – number of classes. Defaults to 10.</li>
 </ul>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>classification groundtruths for each anchor box.
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">classification groundtruths for each anchor box.
 array: localization groundtruths for each anchor box.</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>array</p>
-</dd>
-</dl>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">array</p>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="function">
 <dt id="fastestimator.architecture.retinanet.get_loc_offset">
-<code class="sig-prename descclassname">fastestimator.architecture.retinanet.</code><code class="sig-name descname">get_loc_offset</code><span class="sig-paren">(</span><em class="sig-param">box_gt</em>, <em class="sig-param">box_anchor</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/architecture/retinanet.html#get_loc_offset"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.architecture.retinanet.get_loc_offset" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">fastestimator.architecture.retinanet.</code><code class="descname">get_loc_offset</code><span class="sig-paren">(</span><em>box_gt</em>, <em>box_anchor</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/architecture/retinanet.html#get_loc_offset"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.architecture.retinanet.get_loc_offset" title="Permalink to this definition">¶</a></dt>
 <dd><p>Computes the offset of a groundtruth box and an anchor box.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>box_gt</strong> (<em>array</em>) – groundtruth box.</p></li>
-<li><p><strong>box_anchor</strong> (<em>array</em>) – anchor box.</p></li>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>box_gt</strong> (<em>array</em>) – groundtruth box.</li>
+<li><strong>box_anchor</strong> (<em>array</em>) – anchor box.</li>
 </ul>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>offset between x1 coordinate of the two boxes.
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">offset between x1 coordinate of the two boxes.
 float: offset between y1 coordinate of the two boxes.
 float: offset between x2 coordinate of the two boxes.
 float: offset between y2 coordinate of the two boxes.</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>float</p>
-</dd>
-</dl>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">float</p>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="function">
 <dt id="fastestimator.architecture.retinanet.get_iou">
-<code class="sig-prename descclassname">fastestimator.architecture.retinanet.</code><code class="sig-name descname">get_iou</code><span class="sig-paren">(</span><em class="sig-param">box1</em>, <em class="sig-param">box2</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/architecture/retinanet.html#get_iou"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.architecture.retinanet.get_iou" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">fastestimator.architecture.retinanet.</code><code class="descname">get_iou</code><span class="sig-paren">(</span><em>box1</em>, <em>box2</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/architecture/retinanet.html#get_iou"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.architecture.retinanet.get_iou" title="Permalink to this definition">¶</a></dt>
 <dd><p>Computes the value of intersection over union (IoU) of two boxes.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>box1</strong> (<em>array</em>) – first box</p></li>
-<li><p><strong>box2</strong> (<em>array</em>) – second box</p></li>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>box1</strong> (<em>array</em>) – first box</li>
+<li><strong>box2</strong> (<em>array</em>) – second box</li>
 </ul>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>IoU value</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>float</p>
-</dd>
-</dl>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">IoU value</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">float</p>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 </div>
@@ -427,46 +453,54 @@ float: offset between y2 coordinate of the two boxes.</p>
 <span id="stnet"></span><h2>stnet<a class="headerlink" href="#module-fastestimator.architecture.stnet" title="Permalink to this headline">¶</a></h2>
 <dl class="function">
 <dt id="fastestimator.architecture.stnet.styleTransferNet">
-<code class="sig-prename descclassname">fastestimator.architecture.stnet.</code><code class="sig-name descname">styleTransferNet</code><span class="sig-paren">(</span><em class="sig-param">input_shape=(256</em>, <em class="sig-param">256</em>, <em class="sig-param">3)</em>, <em class="sig-param">num_resblock=5</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/architecture/stnet.html#styleTransferNet"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.architecture.stnet.styleTransferNet" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">fastestimator.architecture.stnet.</code><code class="descname">styleTransferNet</code><span class="sig-paren">(</span><em>input_shape=(256</em>, <em>256</em>, <em>3)</em>, <em>num_resblock=5</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/architecture/stnet.html#styleTransferNet"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.architecture.stnet.styleTransferNet" title="Permalink to this definition">¶</a></dt>
 <dd><p>Creates the style Transfer Network.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>input_shape</strong> (<em>tuple</em><em>, </em><em>optional</em>) – shape of input image. Defaults to (256, 256, 3).</p></li>
-<li><p><strong>num_resblock</strong> (<em>int</em><em>, </em><em>optional</em>) – number of resblocks for the network. Defaults to 5.</p></li>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>input_shape</strong> (<em>tuple</em><em>, </em><em>optional</em>) – shape of input image. Defaults to (256, 256, 3).</li>
+<li><strong>num_resblock</strong> (<em>int</em><em>, </em><em>optional</em>) – number of resblocks for the network. Defaults to 5.</li>
 </ul>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>style Transfer Network.</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>‘Model’ object</p>
-</dd>
-</dl>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">style Transfer Network.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">‘Model’ object</p>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="function">
 <dt id="fastestimator.architecture.stnet.lossNet">
-<code class="sig-prename descclassname">fastestimator.architecture.stnet.</code><code class="sig-name descname">lossNet</code><span class="sig-paren">(</span><em class="sig-param">input_shape=(256, 256, 3), styleLayers=['block1_conv2', 'block2_conv2', 'block3_conv3', 'block4_conv3'], contentLayers=['block3_conv3']</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/architecture/stnet.html#lossNet"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.architecture.stnet.lossNet" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">fastestimator.architecture.stnet.</code><code class="descname">lossNet</code><span class="sig-paren">(</span><em>input_shape=(256, 256, 3), styleLayers=['block1_conv2', 'block2_conv2', 'block3_conv3', 'block4_conv3'], contentLayers=['block3_conv3']</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/architecture/stnet.html#lossNet"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.architecture.stnet.lossNet" title="Permalink to this definition">¶</a></dt>
 <dd><p>Creates the network to compute the style loss.
 This network outputs a dictionary with outputs values for style and content, based on a list of layers from VGG16
 for each.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>input_shape</strong> (<em>tuple</em><em>, </em><em>optional</em>) – shape of input image. Defaults to (256, 256, 3).</p></li>
-<li><p><strong>styleLayers</strong> (<em>list</em><em>, </em><em>optional</em>) – list of style layers from VGG16. Defaults to [“block1_conv2”, “block2_conv2”,</p></li>
-<li><p><strong>&quot;block4_conv3&quot;</strong><strong>]</strong><strong></strong> (<em>&quot;block3_conv3&quot;</em><em>,</em>) – </p></li>
-<li><p><strong>contentLayers</strong> (<em>list</em><em>, </em><em>optional</em>) – list of content layers from VGG16. Defaults to [“block3_conv3”].</p></li>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>input_shape</strong> (<em>tuple</em><em>, </em><em>optional</em>) – shape of input image. Defaults to (256, 256, 3).</li>
+<li><strong>styleLayers</strong> (<em>list</em><em>, </em><em>optional</em>) – list of style layers from VGG16. Defaults to [“block1_conv2”, “block2_conv2”,</li>
+<li><strong>&quot;block4_conv3&quot;</strong><strong>]</strong><strong></strong> (<em>&quot;block3_conv3&quot;</em><em>,</em>) – </li>
+<li><strong>contentLayers</strong> (<em>list</em><em>, </em><em>optional</em>) – list of content layers from VGG16. Defaults to [“block3_conv3”].</li>
 </ul>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>style loss Network.</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>‘Model’ object</p>
-</dd>
-</dl>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">style loss Network.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">‘Model’ object</p>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 </div>
@@ -476,46 +510,50 @@ for each.</p>
 <p>U-Net architecture.</p>
 <dl class="function">
 <dt id="fastestimator.architecture.unet.UNet">
-<code class="sig-prename descclassname">fastestimator.architecture.unet.</code><code class="sig-name descname">UNet</code><span class="sig-paren">(</span><em class="sig-param">input_size=(128</em>, <em class="sig-param">128</em>, <em class="sig-param">3)</em>, <em class="sig-param">dropout=0.5</em>, <em class="sig-param">nchannels=(64</em>, <em class="sig-param">128</em>, <em class="sig-param">256</em>, <em class="sig-param">512</em>, <em class="sig-param">1024)</em>, <em class="sig-param">nclasses=1</em>, <em class="sig-param">bn=None</em>, <em class="sig-param">activation='relu'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/architecture/unet.html#UNet"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.architecture.unet.UNet" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">fastestimator.architecture.unet.</code><code class="descname">UNet</code><span class="sig-paren">(</span><em>input_size=(128</em>, <em>128</em>, <em>3)</em>, <em>dropout=0.5</em>, <em>nchannels=(64</em>, <em>128</em>, <em>256</em>, <em>512</em>, <em>1024)</em>, <em>nclasses=1</em>, <em>bn=None</em>, <em>activation='relu'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/architecture/unet.html#UNet"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.architecture.unet.UNet" title="Permalink to this definition">¶</a></dt>
 <dd><p>Creates a U-Net model.
 This U-Net model is composed of len(nchannels) “contracting blocks” and len(nchannels) “expansive blocks”.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>input_size</strong> (<em>tuple</em><em>, </em><em>optional</em>) – Shape of input image. Defaults to (128, 128, 3).</p></li>
-<li><p><strong>dropout</strong> – If None, applies no dropout; Otherwise, applies dropout of probability equal
-to the parameter value (0-1 only)</p></li>
-<li><p><strong>nchannels</strong> – Number of channels for each conv block; len(nchannels) decides number of blocks</p></li>
-<li><p><strong>nclasses</strong> – Number of target classes for segmentation</p></li>
-<li><p><strong>bn</strong> – [None, before, after] adds batchnorm layers across every convolution,
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>input_size</strong> (<em>tuple</em><em>, </em><em>optional</em>) – Shape of input image. Defaults to (128, 128, 3).</li>
+<li><strong>dropout</strong> – If None, applies no dropout; Otherwise, applies dropout of probability equal
+to the parameter value (0-1 only)</li>
+<li><strong>nchannels</strong> – Number of channels for each conv block; len(nchannels) decides number of blocks</li>
+<li><strong>nclasses</strong> – Number of target classes for segmentation</li>
+<li><strong>bn</strong> – [None, before, after] adds batchnorm layers across every convolution,
 before indicates adding BN before activation function is applied
 after indicates adding BN after activation function is applied
-Check <a class="reference external" href="https://github.com/ducha-aiki/caffenet-benchmark/blob/master/batchnorm.md">https://github.com/ducha-aiki/caffenet-benchmark/blob/master/batchnorm.md</a> for related ablations!</p></li>
-<li><p><strong>activation</strong> – Standard Keras activation functions</p></li>
+Check <a class="reference external" href="https://github.com/ducha-aiki/caffenet-benchmark/blob/master/batchnorm.md">https://github.com/ducha-aiki/caffenet-benchmark/blob/master/batchnorm.md</a> for related ablations!</li>
+<li><strong>activation</strong> – Standard Keras activation functions</li>
 </ul>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>U-Net model.</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>‘Model’ object</p>
-</dd>
-</dl>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">U-Net model.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">‘Model’ object</p>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="function">
 <dt id="fastestimator.architecture.unet.conv_block">
-<code class="sig-prename descclassname">fastestimator.architecture.unet.</code><code class="sig-name descname">conv_block</code><span class="sig-paren">(</span><em class="sig-param">inp</em>, <em class="sig-param">nchannels</em>, <em class="sig-param">window</em>, <em class="sig-param">config</em>, <em class="sig-param">pooling=None</em>, <em class="sig-param">dropout=None</em>, <em class="sig-param">bn=False</em>, <em class="sig-param">activation=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/architecture/unet.html#conv_block"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.architecture.unet.conv_block" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">fastestimator.architecture.unet.</code><code class="descname">conv_block</code><span class="sig-paren">(</span><em>inp</em>, <em>nchannels</em>, <em>window</em>, <em>config</em>, <em>pooling=None</em>, <em>dropout=None</em>, <em>bn=False</em>, <em>activation=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/architecture/unet.html#conv_block"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.architecture.unet.conv_block" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="function">
 <dt id="fastestimator.architecture.unet.upsample">
-<code class="sig-prename descclassname">fastestimator.architecture.unet.</code><code class="sig-name descname">upsample</code><span class="sig-paren">(</span><em class="sig-param">inp</em>, <em class="sig-param">factor</em>, <em class="sig-param">nchannels</em>, <em class="sig-param">config</em>, <em class="sig-param">bn=None</em>, <em class="sig-param">activation=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/architecture/unet.html#upsample"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.architecture.unet.upsample" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">fastestimator.architecture.unet.</code><code class="descname">upsample</code><span class="sig-paren">(</span><em>inp</em>, <em>factor</em>, <em>nchannels</em>, <em>config</em>, <em>bn=None</em>, <em>activation=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/architecture/unet.html#upsample"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.architecture.unet.upsample" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="function">
 <dt id="fastestimator.architecture.unet.up_concat">
-<code class="sig-prename descclassname">fastestimator.architecture.unet.</code><code class="sig-name descname">up_concat</code><span class="sig-paren">(</span><em class="sig-param">conv_pooled</em>, <em class="sig-param">conv</em>, <em class="sig-param">factor</em>, <em class="sig-param">nchannels</em>, <em class="sig-param">window</em>, <em class="sig-param">config</em>, <em class="sig-param">dropout=None</em>, <em class="sig-param">bn=None</em>, <em class="sig-param">activation=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/architecture/unet.html#up_concat"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.architecture.unet.up_concat" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">fastestimator.architecture.unet.</code><code class="descname">up_concat</code><span class="sig-paren">(</span><em>conv_pooled</em>, <em>conv</em>, <em>factor</em>, <em>nchannels</em>, <em>window</em>, <em>config</em>, <em>dropout=None</em>, <em>bn=None</em>, <em>activation=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/architecture/unet.html#up_concat"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.architecture.unet.up_concat" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </div>
@@ -532,7 +570,7 @@ Check <a class="reference external" href="https://github.com/ducha-aiki/caffenet
         <a href="fastestimator.cli.html" class="btn btn-neutral float-right" title="cli" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="api.html" class="btn btn-neutral float-left" title="API" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="api.html" class="btn btn-neutral" title="API" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -558,16 +596,37 @@ Check <a class="reference external" href="https://github.com/ducha-aiki/caffenet
   
 
 
+  
+
+    
+    
+      <script type="text/javascript">
+          var DOCUMENTATION_OPTIONS = {
+              URL_ROOT:'./',
+              VERSION:'1.0b0',
+              LANGUAGE:'None',
+              COLLAPSE_INDEX:false,
+              FILE_SUFFIX:'.html',
+              HAS_SOURCE:  true,
+              SOURCELINK_SUFFIX: '.txt'
+          };
+      </script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    
+
+  
+
+  <script type="text/javascript" src="_static/js/theme.js"></script>
+
   <script type="text/javascript">
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script>
-
-  
-  
-    
-   
+  </script> 
 
 </body>
 </html>

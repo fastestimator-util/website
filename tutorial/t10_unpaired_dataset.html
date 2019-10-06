@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Tutorial 10: Dataset with unpaired features &mdash; FastEstimator 1.0a0 documentation</title>
+  <title>Tutorial 10: Dataset with unpaired features &mdash; FastEstimator 1.0b0 documentation</title>
   
 
   
@@ -19,39 +19,34 @@
   
 
   
-  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
-  
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-        <script type="text/javascript" src="../_static/jquery.js"></script>
-        <script type="text/javascript" src="../_static/underscore.js"></script>
-        <script type="text/javascript" src="../_static/doctools.js"></script>
-        <script type="text/javascript" src="../_static/language_data.js"></script>
-        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
-        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
-    
-    <script type="text/javascript" src="../_static/js/theme.js"></script>
 
+  
+  
     
 
   
+
   <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Example" href="../apphub.html" />
     <link rel="prev" title="Tutorial 9: Learning Rate Controller" href="t09_learning_rate_controller.html" /> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
 </head>
 
 <body class="wy-body-for-nav">
 
    
   <div class="wy-grid-for-nav">
+
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search" >
+        <div class="wy-side-nav-search">
           
 
           
@@ -401,10 +396,10 @@ div.rendered_html tbody tr:hover {
 <div class="section" id="Tutorial-10:-Dataset-with-unpaired-features">
 <h1>Tutorial 10: Dataset with unpaired features<a class="headerlink" href="#Tutorial-10:-Dataset-with-unpaired-features" title="Permalink to this headline">¶</a></h1>
 <p>In almost all deep learning applications, different features within a dataset are paired together as single example. For instance, image and label(s) are paired in image classification, image and mask(s) are paired in image segmentation.</p>
-<p>However, in image-image translation, sometimes the features in dataset are unpaired. For example, we may have 500 horse images for 700 zebra images. During the training, we will then need to randomly select one horse image and one zebra image.</p>
+<p>However, in image-image translation, sometimes the features in dataset are unpaired. For example, we may have 500 horse images for 700 zebra images. During the training, we need to randomly select one horse image and one zebra image.</p>
 <p>In FastEstimator, unpaired features are handled by <code class="docutils literal notranslate"><span class="pre">RecordWriter</span></code>. If there are multiple unpaired features, express them as <strong>tuple</strong> in the <code class="docutils literal notranslate"><span class="pre">train_data</span></code>, <code class="docutils literal notranslate"><span class="pre">validation_data</span></code> and <code class="docutils literal notranslate"><span class="pre">ops</span></code> argument of <code class="docutils literal notranslate"><span class="pre">RecordWriter</span></code>.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -418,8 +413,8 @@ div.rendered_html tbody tr:hover {
 <div class="section" id="Step-0---Data-preparation-and-visualization">
 <h2>Step 0 - Data preparation and visualization<a class="headerlink" href="#Step-0---Data-preparation-and-visualization" title="Permalink to this headline">¶</a></h2>
 <p>We will here use the horse2zebra dataset.</p>
-<div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -431,18 +426,6 @@ div.rendered_html tbody tr:hover {
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;zebra image is stored in </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">trainB_csv</span><span class="p">))</span>
 </pre></div>
 </div>
-</div>
-<div class="nboutput nblast docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area docutils container">
-<div class="highlight"><pre>
-Downloading data to /tmp/.fe/HORSE2ZEBRA:
-
-Extracting files...
-horse image is stored in /tmp/.fe/HORSE2ZEBRA/trainA.csv
-zebra image is stored in /tmp/.fe/HORSE2ZEBRA/trainB.csv
-</pre></div></div>
 </div>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
@@ -471,7 +454,7 @@ zebra image is stored in /tmp/.fe/HORSE2ZEBRA/trainB.csv
 </pre></div>
 </div>
 <div class="output_area highlight-none notranslate"><div class="highlight"><pre>
-<span></span>&lt;matplotlib.image.AxesImage at 0x7fb8967eed30&gt;
+<span></span>&lt;matplotlib.image.AxesImage at 0x1a3ca42dd8&gt;
 </pre></div>
 </div>
 </div>
@@ -487,7 +470,7 @@ zebra image is stored in /tmp/.fe/HORSE2ZEBRA/trainB.csv
 <h2>Step 1 - RecordWriter: read unpaired features using a tuple<a class="headerlink" href="#Step-1---RecordWriter:-read-unpaired-features-using-a-tuple" title="Permalink to this headline">¶</a></h2>
 <p>We deal with the unpaired images in RecordWriter. In ops, we specify a tuple of two ops: to load the first image and to load the second one (here using ImageReader).</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -496,114 +479,20 @@ zebra image is stored in /tmp/.fe/HORSE2ZEBRA/trainB.csv
 
 <span class="c1"># Create a RecordWriter with a tuple of two ops to pair images.</span>
 <span class="n">writer</span> <span class="o">=</span> <span class="n">RecordWriter</span><span class="p">(</span><span class="n">save_dir</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">parent_path</span><span class="p">,</span> <span class="s1">&#39;FEdata&#39;</span><span class="p">),</span>
-                         <span class="n">train_data</span><span class="o">=</span><span class="p">(</span><span class="n">trainA_csv</span><span class="p">,</span> <span class="n">trainB_csv</span><span class="p">),</span>
-                         <span class="n">validation_data</span> <span class="o">=</span> <span class="p">(</span><span class="n">valA_csv</span><span class="p">,</span> <span class="n">valB_csv</span><span class="p">),</span>
+                         <span class="n">train_data</span><span class="o">=</span><span class="p">(</span><span class="n">trainA_csv</span><span class="p">,</span> <span class="n">trainB_csv</span><span class="p">),</span>   <span class="c1">#this is a tuple</span>
+                         <span class="n">validation_data</span> <span class="o">=</span> <span class="p">(</span><span class="n">valA_csv</span><span class="p">,</span> <span class="n">valB_csv</span><span class="p">),</span> <span class="c1">#this is a tuple</span>
                          <span class="n">ops</span><span class="o">=</span><span class="p">([</span><span class="n">ImageReader</span><span class="p">(</span><span class="n">inputs</span><span class="o">=</span><span class="s2">&quot;imgA&quot;</span><span class="p">,</span> <span class="n">outputs</span><span class="o">=</span><span class="s2">&quot;imgA&quot;</span><span class="p">,</span> <span class="n">parent_path</span><span class="o">=</span><span class="n">parent_path</span><span class="p">)],</span> <span class="c1"># first tuple element</span>
                               <span class="p">[</span><span class="n">ImageReader</span><span class="p">(</span><span class="n">inputs</span><span class="o">=</span><span class="s2">&quot;imgB&quot;</span><span class="p">,</span> <span class="n">outputs</span><span class="o">=</span><span class="s2">&quot;imgB&quot;</span><span class="p">,</span> <span class="n">parent_path</span><span class="o">=</span><span class="n">parent_path</span><span class="p">)]))</span> <span class="c1"># second tuple element</span>
 </pre></div>
 </div>
-</div>
-<div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="c1"># We write the data to the disk using the write method</span>
-<span class="n">writer</span><span class="o">.</span><span class="n">write</span><span class="p">()</span>
-</pre></div>
-</div>
-</div>
-<div class="nboutput nblast docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area docutils container">
-<div class="highlight"><pre>
-FastEstimator: Saving tfrecord to /tmp/.fe/HORSE2ZEBRA/FEdata
-FastEstimator: Converting Train TFRecords 0.0%, Speed: 0.00 record/sec
-FastEstimator: Converting Train TFRecords 4.5%, Speed: 4313.58 record/sec
-FastEstimator: Converting Train TFRecords 9.0%, Speed: 2424.66 record/sec
-FastEstimator: Converting Train TFRecords 13.4%, Speed: 1786.19 record/sec
-FastEstimator: Converting Train TFRecords 17.9%, Speed: 1318.75 record/sec
-FastEstimator: Converting Train TFRecords 22.4%, Speed: 1098.64 record/sec
-FastEstimator: Converting Train TFRecords 26.9%, Speed: 989.28 record/sec
-FastEstimator: Converting Train TFRecords 31.3%, Speed: 916.51 record/sec
-FastEstimator: Converting Train TFRecords 35.8%, Speed: 820.70 record/sec
-FastEstimator: Converting Train TFRecords 40.3%, Speed: 793.69 record/sec
-FastEstimator: Converting Train TFRecords 44.8%, Speed: 768.86 record/sec
-FastEstimator: Converting Train TFRecords 49.3%, Speed: 769.77 record/sec
-FastEstimator: Converting Train TFRecords 53.7%, Speed: 740.47 record/sec
-FastEstimator: Converting Train TFRecords 58.2%, Speed: 737.33 record/sec
-FastEstimator: Converting Train TFRecords 62.7%, Speed: 731.48 record/sec
-FastEstimator: Converting Train TFRecords 67.2%, Speed: 718.53 record/sec
-FastEstimator: Converting Train TFRecords 71.6%, Speed: 714.81 record/sec
-FastEstimator: Converting Train TFRecords 76.1%, Speed: 705.03 record/sec
-FastEstimator: Converting Train TFRecords 80.6%, Speed: 695.65 record/sec
-FastEstimator: Converting Train TFRecords 85.1%, Speed: 697.76 record/sec
-FastEstimator: Converting Train TFRecords 89.6%, Speed: 715.10 record/sec
-FastEstimator: Converting Train TFRecords 94.0%, Speed: 691.78 record/sec
-FastEstimator: Converting Train TFRecords 98.5%, Speed: 685.72 record/sec
-FastEstimator: Converting Eval TFRecords 0.0%, Speed: 0.00 record/sec
-FastEstimator: Converting Eval TFRecords 6.7%, Speed: 4015.28 record/sec
-FastEstimator: Converting Eval TFRecords 13.3%, Speed: 4454.58 record/sec
-FastEstimator: Converting Eval TFRecords 20.0%, Speed: 4964.16 record/sec
-FastEstimator: Converting Eval TFRecords 26.7%, Speed: 4883.10 record/sec
-FastEstimator: Converting Eval TFRecords 33.3%, Speed: 4890.41 record/sec
-FastEstimator: Converting Eval TFRecords 40.0%, Speed: 2183.47 record/sec
-FastEstimator: Converting Eval TFRecords 46.7%, Speed: 2367.76 record/sec
-FastEstimator: Converting Eval TFRecords 53.3%, Speed: 2531.42 record/sec
-FastEstimator: Converting Eval TFRecords 60.0%, Speed: 2688.52 record/sec
-FastEstimator: Converting Eval TFRecords 66.7%, Speed: 2806.57 record/sec
-FastEstimator: Converting Eval TFRecords 73.3%, Speed: 2911.10 record/sec
-FastEstimator: Converting Eval TFRecords 80.0%, Speed: 3009.28 record/sec
-FastEstimator: Converting Eval TFRecords 86.7%, Speed: 3127.22 record/sec
-FastEstimator: Converting Eval TFRecords 93.3%, Speed: 1888.62 record/sec
-FastEstimator: Converting Train TFRecords 0.0%, Speed: 0.00 record/sec
-FastEstimator: Converting Train TFRecords 4.8%, Speed: 5892.39 record/sec
-FastEstimator: Converting Train TFRecords 9.6%, Speed: 2365.16 record/sec
-FastEstimator: Converting Train TFRecords 14.4%, Speed: 1968.03 record/sec
-FastEstimator: Converting Train TFRecords 19.2%, Speed: 1531.53 record/sec
-FastEstimator: Converting Train TFRecords 24.0%, Speed: 1133.96 record/sec
-FastEstimator: Converting Train TFRecords 28.7%, Speed: 1035.89 record/sec
-FastEstimator: Converting Train TFRecords 33.5%, Speed: 929.04 record/sec
-FastEstimator: Converting Train TFRecords 38.3%, Speed: 887.58 record/sec
-FastEstimator: Converting Train TFRecords 43.1%, Speed: 847.28 record/sec
-FastEstimator: Converting Train TFRecords 47.9%, Speed: 827.97 record/sec
-FastEstimator: Converting Train TFRecords 52.7%, Speed: 818.50 record/sec
-FastEstimator: Converting Train TFRecords 57.5%, Speed: 795.98 record/sec
-FastEstimator: Converting Train TFRecords 62.3%, Speed: 778.55 record/sec
-FastEstimator: Converting Train TFRecords 67.1%, Speed: 772.14 record/sec
-FastEstimator: Converting Train TFRecords 71.9%, Speed: 763.08 record/sec
-FastEstimator: Converting Train TFRecords 76.6%, Speed: 751.30 record/sec
-FastEstimator: Converting Train TFRecords 81.4%, Speed: 752.45 record/sec
-FastEstimator: Converting Train TFRecords 86.2%, Speed: 752.14 record/sec
-FastEstimator: Converting Train TFRecords 91.0%, Speed: 733.96 record/sec
-FastEstimator: Converting Train TFRecords 95.8%, Speed: 733.14 record/sec
-FastEstimator: Converting Eval TFRecords 0.0%, Speed: 0.00 record/sec
-FastEstimator: Converting Eval TFRecords 5.6%, Speed: 4190.56 record/sec
-FastEstimator: Converting Eval TFRecords 11.1%, Speed: 4535.17 record/sec
-FastEstimator: Converting Eval TFRecords 16.7%, Speed: 4301.78 record/sec
-FastEstimator: Converting Eval TFRecords 22.2%, Speed: 4486.24 record/sec
-FastEstimator: Converting Eval TFRecords 27.8%, Speed: 4838.26 record/sec
-FastEstimator: Converting Eval TFRecords 33.3%, Speed: 4708.93 record/sec
-FastEstimator: Converting Eval TFRecords 38.9%, Speed: 2320.99 record/sec
-FastEstimator: Converting Eval TFRecords 44.4%, Speed: 2530.33 record/sec
-FastEstimator: Converting Eval TFRecords 50.0%, Speed: 2692.21 record/sec
-FastEstimator: Converting Eval TFRecords 55.6%, Speed: 2809.45 record/sec
-FastEstimator: Converting Eval TFRecords 61.1%, Speed: 2920.30 record/sec
-FastEstimator: Converting Eval TFRecords 66.7%, Speed: 3058.17 record/sec
-FastEstimator: Converting Eval TFRecords 72.2%, Speed: 3197.14 record/sec
-FastEstimator: Converting Eval TFRecords 77.8%, Speed: 3264.37 record/sec
-FastEstimator: Converting Eval TFRecords 83.3%, Speed: 2000.44 record/sec
-FastEstimator: Converting Eval TFRecords 88.9%, Speed: 2074.30 record/sec
-FastEstimator: Converting Eval TFRecords 94.4%, Speed: 2140.27 record/sec
-</pre></div></div>
 </div>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span>
+<span></span><span class="c1"># We write the data to the disk using the write method</span>
+<span class="n">writer</span><span class="o">.</span><span class="n">write</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -623,7 +512,7 @@ FastEstimator: Converting Eval TFRecords 94.4%, Speed: 2140.27 record/sec
         <a href="../apphub.html" class="btn btn-neutral float-right" title="Example" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="t09_learning_rate_controller.html" class="btn btn-neutral float-left" title="Tutorial 9: Learning Rate Controller" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="t09_learning_rate_controller.html" class="btn btn-neutral" title="Tutorial 9: Learning Rate Controller" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -649,16 +538,37 @@ FastEstimator: Converting Eval TFRecords 94.4%, Speed: 2140.27 record/sec
   
 
 
+  
+
+    
+    
+      <script type="text/javascript">
+          var DOCUMENTATION_OPTIONS = {
+              URL_ROOT:'../',
+              VERSION:'1.0b0',
+              LANGUAGE:'None',
+              COLLAPSE_INDEX:false,
+              FILE_SUFFIX:'.html',
+              HAS_SOURCE:  true,
+              SOURCELINK_SUFFIX: '.txt'
+          };
+      </script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    
+
+  
+
+  <script type="text/javascript" src="../_static/js/theme.js"></script>
+
   <script type="text/javascript">
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script>
-
-  
-  
-    
-   
+  </script> 
 
 </body>
 </html>

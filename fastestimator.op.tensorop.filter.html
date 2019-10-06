@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>filter &mdash; FastEstimator 1.0a0 documentation</title>
+  <title>filter &mdash; FastEstimator 1.0b0 documentation</title>
   
 
   
@@ -19,39 +19,34 @@
   
 
   
-  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
-  
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
-        <script type="text/javascript" src="_static/jquery.js"></script>
-        <script type="text/javascript" src="_static/underscore.js"></script>
-        <script type="text/javascript" src="_static/doctools.js"></script>
-        <script type="text/javascript" src="_static/language_data.js"></script>
-        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
-        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
-    
-    <script type="text/javascript" src="_static/js/theme.js"></script>
 
+  
+  
     
 
   
+
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="loss" href="fastestimator.op.tensorop.loss.html" />
     <link rel="prev" title="augmentation" href="fastestimator.op.tensorop.augmentation.html" /> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
 </head>
 
 <body class="wy-body-for-nav">
 
    
   <div class="wy-grid-for-nav">
+
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search" >
+        <div class="wy-side-nav-search">
           
 
           
@@ -228,54 +223,66 @@
 <h2>filter<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
 <span class="target" id="module-fastestimator.op.tensorop.filter.filter"></span><dl class="class">
 <dt id="fastestimator.op.tensorop.filter.filter.TensorFilter">
-<em class="property">class </em><code class="sig-prename descclassname">fastestimator.op.tensorop.filter.filter.</code><code class="sig-name descname">TensorFilter</code><span class="sig-paren">(</span><em class="sig-param">inputs</em>, <em class="sig-param">mode='train'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/op/tensorop/filter/filter.html#TensorFilter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.op.tensorop.filter.filter.TensorFilter" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">fastestimator.op.tensorop.filter.filter.</code><code class="descname">TensorFilter</code><span class="sig-paren">(</span><em>inputs</em>, <em>mode='train'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/op/tensorop/filter/filter.html#TensorFilter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.op.tensorop.filter.filter.TensorFilter" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="fastestimator.op.html#fastestimator.op.op.TensorOp" title="fastestimator.op.op.TensorOp"><code class="xref py py-class docutils literal notranslate"><span class="pre">fastestimator.op.op.TensorOp</span></code></a></p>
 <p>Base class for all the filtering TensorOps.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>inputs</strong> – Name of the key in the dataset that is to be filtered.</p></li>
-<li><p><strong>mode</strong> – Mode that the filter acts on. This could be either “train” or “eval”.</p></li>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>inputs</strong> – Name of the key in the dataset that is to be filtered.</li>
+<li><strong>mode</strong> – Mode that the filter acts on. This could be either “train” or “eval”.</li>
 </ul>
-</dd>
-</dl>
+</td>
+</tr>
+</tbody>
+</table>
 <dl class="method">
 <dt id="fastestimator.op.tensorop.filter.filter.TensorFilter.forward">
-<code class="sig-name descname">forward</code><span class="sig-paren">(</span><em class="sig-param">data</em>, <em class="sig-param">state</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/op/tensorop/filter/filter.html#TensorFilter.forward"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.op.tensorop.filter.filter.TensorFilter.forward" title="Permalink to this definition">¶</a></dt>
+<code class="descname">forward</code><span class="sig-paren">(</span><em>data</em>, <em>state</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/op/tensorop/filter/filter.html#TensorFilter.forward"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.op.tensorop.filter.filter.TensorFilter.forward" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
 
 <dl class="class">
 <dt id="fastestimator.op.tensorop.filter.filter.ScalarFilter">
-<em class="property">class </em><code class="sig-prename descclassname">fastestimator.op.tensorop.filter.filter.</code><code class="sig-name descname">ScalarFilter</code><span class="sig-paren">(</span><em class="sig-param">inputs</em>, <em class="sig-param">filter_value</em>, <em class="sig-param">keep_prob</em>, <em class="sig-param">mode='train'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/op/tensorop/filter/filter.html#ScalarFilter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.op.tensorop.filter.filter.ScalarFilter" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">fastestimator.op.tensorop.filter.filter.</code><code class="descname">ScalarFilter</code><span class="sig-paren">(</span><em>inputs</em>, <em>filter_value</em>, <em>keep_prob</em>, <em>mode='train'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/op/tensorop/filter/filter.html#ScalarFilter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.op.tensorop.filter.filter.ScalarFilter" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#fastestimator.op.tensorop.filter.filter.TensorFilter" title="fastestimator.op.tensorop.filter.filter.TensorFilter"><code class="xref py py-class docutils literal notranslate"><span class="pre">fastestimator.op.tensorop.filter.filter.TensorFilter</span></code></a></p>
 <p>Class for performing filtering on dataset based on scalar values.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>inputs</strong> – Name of the key in the dataset that is to be filtered.</p></li>
-<li><p><strong>filter_value</strong> – The values in the dataset that are to be filtered.</p></li>
-<li><p><strong>keep_prob</strong> – The probability of keeping the example.</p></li>
-<li><p><strong>mode</strong> – mode that the filter acts on.</p></li>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>inputs</strong> – Name of the key in the dataset that is to be filtered.</li>
+<li><strong>filter_value</strong> – The values in the dataset that are to be filtered.</li>
+<li><strong>keep_prob</strong> – The probability of keeping the example.</li>
+<li><strong>mode</strong> – mode that the filter acts on.</li>
 </ul>
-</dd>
-</dl>
+</td>
+</tr>
+</tbody>
+</table>
 <dl class="method">
 <dt id="fastestimator.op.tensorop.filter.filter.ScalarFilter.forward">
-<code class="sig-name descname">forward</code><span class="sig-paren">(</span><em class="sig-param">data</em>, <em class="sig-param">state</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/op/tensorop/filter/filter.html#ScalarFilter.forward"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.op.tensorop.filter.filter.ScalarFilter.forward" title="Permalink to this definition">¶</a></dt>
+<code class="descname">forward</code><span class="sig-paren">(</span><em>data</em>, <em>state</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/op/tensorop/filter/filter.html#ScalarFilter.forward"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.op.tensorop.filter.filter.ScalarFilter.forward" title="Permalink to this definition">¶</a></dt>
 <dd><p>Filters the data based on the scalar filter_value.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>data</strong> – Data to be filtered.</p></li>
-<li><p><strong>state</strong> – Information about the current execution context.</p></li>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>data</strong> – Data to be filtered.</li>
+<li><strong>state</strong> – Information about the current execution context.</li>
 </ul>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>Tensor containing filtered data.</p>
-</dd>
-</dl>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Tensor containing filtered data.</p>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 </dd></dl>
@@ -294,7 +301,7 @@
         <a href="fastestimator.op.tensorop.loss.html" class="btn btn-neutral float-right" title="loss" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="fastestimator.op.tensorop.augmentation.html" class="btn btn-neutral float-left" title="augmentation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="fastestimator.op.tensorop.augmentation.html" class="btn btn-neutral" title="augmentation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -320,16 +327,37 @@
   
 
 
+  
+
+    
+    
+      <script type="text/javascript">
+          var DOCUMENTATION_OPTIONS = {
+              URL_ROOT:'./',
+              VERSION:'1.0b0',
+              LANGUAGE:'None',
+              COLLAPSE_INDEX:false,
+              FILE_SUFFIX:'.html',
+              HAS_SOURCE:  true,
+              SOURCELINK_SUFFIX: '.txt'
+          };
+      </script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    
+
+  
+
+  <script type="text/javascript" src="_static/js/theme.js"></script>
+
   <script type="text/javascript">
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script>
-
-  
-  
-    
-   
+  </script> 
 
 </body>
 </html>
