@@ -664,8 +664,15 @@ ground truth of image is 0
 <div class="section" id="Key-take-aways:">
 <h2>Key take-aways:<a class="headerlink" href="#Key-take-aways:" title="Permalink to this headline">¶</a></h2>
 <p>As mentioned in tutorial 1, the preprocessing in the <code class="docutils literal notranslate"><span class="pre">RecordWriter</span></code> is a place for “once-for-all” type preprocessing. If a preprocessing function only needs to be done once (e,g, Resize and Rescale), then it is recommended to put them in <code class="docutils literal notranslate"><span class="pre">RecordWriter</span></code>. By doing this you can reduce the amount of computation needed during training and thereby train faster.</p>
-<p>Now, let’s summarize the <strong>conceptual workflow</strong> in FastEstimator for any deep learning task: &gt;0. <em>[Optional]</em> Do I have in-disk data or want to apply some preprocessing once and for all? <em>-&gt; Express this in ``RecordWriter``</em> &gt;1. How do I want my data to be processed during the training? <em>-&gt; Express this in ``Pipeline``</em> &gt;2. How do I want my network architecture and loss to be defined? what are the connections between networks if there are multiple of them? <em>-&gt; Express this in ``Network``</em> &gt;3.
-How long do I train the model? what do I need during training loop? <em>-&gt; Express this in ``Estimator``</em></p>
+<p>
+    Now, let’s summarize the <strong>conceptual workflow</strong> in FastEstimator for any deep learning task: 
+    <ul class="simple">
+    <li><p> 0. <em>[Optional]</em> Do I have in-disk data or want to apply some preprocessing once and for all? <em>-&gt; Express this in <code class="docutils literal notranslate"><span class="pre">RecordWriter</span></code> </em></p></li>
+    <li><p> 1. How do I want my data to be processed during the training? <em>-&gt; Express this in <code class="docutils literal notranslate"><span class="pre">Pipeline</span></code></em></p></li>
+    <li><p> 2. How do I want my network architecture and loss to be defined? what are the connections between networks if there are multiple of them? <em>-&gt; Express this in <code class="docutils literal notranslate"><span class="pre">Network</span></code></em></p></li>
+    <li><p> 3. How long do I train the model? what do I need during training loop? <em>-&gt; Express this in <code class="docutils literal notranslate"><span class="pre">Estimator</span></code></em></p></li>
+    </ul>
+</p>
 </div>
 </div>
 <p>—</p>
