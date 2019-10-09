@@ -19,34 +19,39 @@
   
 
   
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
 
-  
-  
     
 
   
-
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="io" href="fastestimator.trace.io.html" />
     <link rel="prev" title="trace" href="fastestimator.trace.html" /> 
-
-  
-  <script src="_static/js/modernizr.min.js"></script>
-
 </head>
 
 <body class="wy-body-for-nav">
 
    
   <div class="wy-grid-for-nav">
-
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search">
+        <div class="wy-side-nav-search" >
           
 
           
@@ -213,35 +218,31 @@
 <span id="early-stopping"></span><h2>early_stopping<a class="headerlink" href="#module-fastestimator.trace.adapt.early_stopping" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="fastestimator.trace.adapt.early_stopping.EarlyStopping">
-<em class="property">class </em><code class="descclassname">fastestimator.trace.adapt.early_stopping.</code><code class="descname">EarlyStopping</code><span class="sig-paren">(</span><em>monitor='loss'</em>, <em>min_delta=0</em>, <em>patience=0</em>, <em>verbose=0</em>, <em>compare='min'</em>, <em>baseline=None</em>, <em>restore_best_weights=False</em>, <em>mode='eval'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/trace/adapt/early_stopping.html#EarlyStopping"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.trace.adapt.early_stopping.EarlyStopping" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">fastestimator.trace.adapt.early_stopping.</code><code class="sig-name descname">EarlyStopping</code><span class="sig-paren">(</span><em class="sig-param">monitor='loss'</em>, <em class="sig-param">min_delta=0</em>, <em class="sig-param">patience=0</em>, <em class="sig-param">verbose=0</em>, <em class="sig-param">compare='min'</em>, <em class="sig-param">baseline=None</em>, <em class="sig-param">restore_best_weights=False</em>, <em class="sig-param">mode='eval'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/trace/adapt/early_stopping.html#EarlyStopping"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.trace.adapt.early_stopping.EarlyStopping" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="fastestimator.trace.html#fastestimator.trace.trace.Trace" title="fastestimator.trace.trace.Trace"><code class="xref py py-class docutils literal notranslate"><span class="pre">fastestimator.trace.trace.Trace</span></code></a></p>
 <p>Stop training when a monitored quantity has stopped improving.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>monitor</strong> (<em>str</em><em>, </em><em>optional</em>) – Quantity to be monitored.. Defaults to “loss”.</li>
-<li><strong>min_delta</strong> (<em>int</em><em>, </em><em>optional</em>) – Minimum change in the monitored quantity to qualify as an improvement, i.e. an
-absolute change of less than min_delta, will count as no improvement. Defaults to 0.</li>
-<li><strong>patience</strong> (<em>int</em><em>, </em><em>optional</em>) – Number of epochs with no improvement after which training will be stopped. Defaults
-to 0.</li>
-<li><strong>verbose</strong> (<em>int</em><em>, </em><em>optional</em>) – Verbosity mode.. Defaults to 0.</li>
-<li><strong>compare</strong> (<em>str</em><em>, </em><em>optional</em>) – One of {“min”, “max”}. In “min” mode, training will stop when the quantity monitored
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>monitor</strong> (<em>str</em><em>, </em><em>optional</em>) – Quantity to be monitored.. Defaults to “loss”.</p></li>
+<li><p><strong>min_delta</strong> (<em>int</em><em>, </em><em>optional</em>) – Minimum change in the monitored quantity to qualify as an improvement, i.e. an
+absolute change of less than min_delta, will count as no improvement. Defaults to 0.</p></li>
+<li><p><strong>patience</strong> (<em>int</em><em>, </em><em>optional</em>) – Number of epochs with no improvement after which training will be stopped. Defaults
+to 0.</p></li>
+<li><p><strong>verbose</strong> (<em>int</em><em>, </em><em>optional</em>) – Verbosity mode.. Defaults to 0.</p></li>
+<li><p><strong>compare</strong> (<em>str</em><em>, </em><em>optional</em>) – One of {“min”, “max”}. In “min” mode, training will stop when the quantity monitored
 has stopped decreasing; in <cite>max</cite> mode it will stop when the quantity monitored has stopped increasing.
-Defaults to ‘min’.</li>
-<li><strong>baseline</strong> (<em>float</em><em>, </em><em>optional</em>) – Baseline value for the monitored quantity. Training will stop if the model doesn’t
-show improvement over the baseline. Defaults to None.</li>
-<li><strong>restore_best_weights</strong> (<em>bool</em><em>, </em><em>optional</em>) – Whether to restore model weights from the epoch with the best value of
+Defaults to ‘min’.</p></li>
+<li><p><strong>baseline</strong> (<em>float</em><em>, </em><em>optional</em>) – Baseline value for the monitored quantity. Training will stop if the model doesn’t
+show improvement over the baseline. Defaults to None.</p></li>
+<li><p><strong>restore_best_weights</strong> (<em>bool</em><em>, </em><em>optional</em>) – Whether to restore model weights from the epoch with the best value of
 the monitored quantity. If False, the model weights obtained at the last step of training are used.
-Defaults to False.</li>
-<li><strong>mode</strong> (<em>str</em><em>, </em><em>optional</em>) – Restrict the trace to run only on given modes {‘train’, ‘eval’, ‘test’}. None will always
-execute. Defaults to ‘eval’.</li>
+Defaults to False.</p></li>
+<li><p><strong>mode</strong> (<em>str</em><em>, </em><em>optional</em>) – Restrict the trace to run only on given modes {‘train’, ‘eval’, ‘test’}. None will always
+execute. Defaults to ‘eval’.</p></li>
 </ul>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+</dl>
 </dd></dl>
 
 </div>
@@ -250,31 +251,27 @@ execute. Defaults to ‘eval’.</li>
 <span id="lr-controller"></span><h2>lr_controller<a class="headerlink" href="#module-fastestimator.trace.adapt.lr_controller" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="fastestimator.trace.adapt.lr_controller.LRController">
-<em class="property">class </em><code class="descclassname">fastestimator.trace.adapt.lr_controller.</code><code class="descname">LRController</code><span class="sig-paren">(</span><em>model_name</em>, <em>lr_schedule=None</em>, <em>reduce_on_eval=False</em>, <em>reduce_patience=10</em>, <em>reduce_factor=0.1</em>, <em>reduce_mode='min'</em>, <em>min_lr=1e-06</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/trace/adapt/lr_controller.html#LRController"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.trace.adapt.lr_controller.LRController" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">fastestimator.trace.adapt.lr_controller.</code><code class="sig-name descname">LRController</code><span class="sig-paren">(</span><em class="sig-param">model_name</em>, <em class="sig-param">lr_schedule=None</em>, <em class="sig-param">reduce_on_eval=False</em>, <em class="sig-param">reduce_patience=10</em>, <em class="sig-param">reduce_factor=0.1</em>, <em class="sig-param">reduce_mode='min'</em>, <em class="sig-param">min_lr=1e-06</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/trace/adapt/lr_controller.html#LRController"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.trace.adapt.lr_controller.LRController" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="fastestimator.trace.html#fastestimator.trace.trace.Trace" title="fastestimator.trace.trace.Trace"><code class="xref py py-class docutils literal notranslate"><span class="pre">fastestimator.trace.trace.Trace</span></code></a></p>
 <p>Learning rate controller that makes learning rate follow the custom schedule and optionally reduces learning
 rate whenever evaluation loss meets certain condition.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>model_name</strong> (<em>str</em>) – Model name of target model</li>
-<li><strong>lr_schedule</strong> (<em>object</em><em>, </em><em>optional</em>) – Scheduler that defines how learning rate changes. It should be <cite>LRSchedule</cite>
-object. Defaults to None.</li>
-<li><strong>reduce_on_eval</strong> (<em>bool</em><em>, </em><em>optional</em>) – If true, it will reduce the learning rate when evaluation loss have been not
-improving for several times. Defaults to False.</li>
-<li><strong>reduce_patience</strong> (<em>int</em><em>, </em><em>optional</em>) – Maximum accumulation of times of not being improving. Defaults to 10.</li>
-<li><strong>reduce_factor</strong> (<em>float</em><em>, </em><em>optional</em>) – Reduce factor of learning rate. Defaults to 0.1.</li>
-<li><strong>reduce_mode</strong> (<em>str</em><em>, </em><em>optional</em>) – It should be {“max”, “min”}. If “max”, the learning rate will reduce if
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>model_name</strong> (<em>str</em>) – Model name of target model</p></li>
+<li><p><strong>lr_schedule</strong> (<em>object</em><em>, </em><em>optional</em>) – Scheduler that defines how learning rate changes. It should be <cite>LRSchedule</cite>
+object. Defaults to None.</p></li>
+<li><p><strong>reduce_on_eval</strong> (<em>bool</em><em>, </em><em>optional</em>) – If true, it will reduce the learning rate when evaluation loss have been not
+improving for several times. Defaults to False.</p></li>
+<li><p><strong>reduce_patience</strong> (<em>int</em><em>, </em><em>optional</em>) – Maximum accumulation of times of not being improving. Defaults to 10.</p></li>
+<li><p><strong>reduce_factor</strong> (<em>float</em><em>, </em><em>optional</em>) – Reduce factor of learning rate. Defaults to 0.1.</p></li>
+<li><p><strong>reduce_mode</strong> (<em>str</em><em>, </em><em>optional</em>) – It should be {“max”, “min”}. If “max”, the learning rate will reduce if
 monitored number is too low. If “min”, the learning rate will reduce if target is too high. Defaults to
-“min”.</li>
-<li><strong>min_lr</strong> (<em>float</em><em>, </em><em>optional</em>) – Minimum learning rate. Defaults to 1e-6.</li>
+“min”.</p></li>
+<li><p><strong>min_lr</strong> (<em>float</em><em>, </em><em>optional</em>) – Minimum learning rate. Defaults to 1e-6.</p></li>
 </ul>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+</dl>
 </dd></dl>
 
 </div>
@@ -283,23 +280,20 @@ monitored number is too low. If “min”, the learning rate will reduce if targ
 <span id="terminate-on-nan"></span><h2>terminate_on_nan<a class="headerlink" href="#module-fastestimator.trace.adapt.terminate_on_nan" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="fastestimator.trace.adapt.terminate_on_nan.TerminateOnNaN">
-<em class="property">class </em><code class="descclassname">fastestimator.trace.adapt.terminate_on_nan.</code><code class="descname">TerminateOnNaN</code><span class="sig-paren">(</span><em>monitor_names=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/trace/adapt/terminate_on_nan.html#TerminateOnNaN"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.trace.adapt.terminate_on_nan.TerminateOnNaN" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">fastestimator.trace.adapt.terminate_on_nan.</code><code class="sig-name descname">TerminateOnNaN</code><span class="sig-paren">(</span><em class="sig-param">monitor_names=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/trace/adapt/terminate_on_nan.html#TerminateOnNaN"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.trace.adapt.terminate_on_nan.TerminateOnNaN" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="fastestimator.trace.html#fastestimator.trace.trace.Trace" title="fastestimator.trace.trace.Trace"><code class="xref py py-class docutils literal notranslate"><span class="pre">fastestimator.trace.trace.Trace</span></code></a></p>
 <p>End Training if a NaN value is detected. By default (inputs=None) it will monitor all loss values at the end
 of each batch. If one or more inputs are specified, it will only monitor those values. Inputs may be loss keys
 and/or the keys corresponding to the outputs of other traces (ex. accuracy) but then the other traces must be
 given before TerminateOnNaN in the trace list.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>monitor_names</strong> (<em>str</em><em>, </em><em>list</em><em>, </em><em>optional</em>) – What key(s) to monitor for NaN values.
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>monitor_names</strong> (<em>str</em><em>, </em><em>list</em><em>, </em><em>optional</em>) – What key(s) to monitor for NaN values.
 - None (default) will monitor all loss values.
 - “*” will monitor all state keys and losses.
-Defaults to None.</td>
-</tr>
-</tbody>
-</table>
+Defaults to None.</p>
+</dd>
+</dl>
 </dd></dl>
 
 </div>
@@ -316,7 +310,7 @@ Defaults to None.</td>
         <a href="fastestimator.trace.io.html" class="btn btn-neutral float-right" title="io" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="fastestimator.trace.html" class="btn btn-neutral" title="trace" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="fastestimator.trace.html" class="btn btn-neutral float-left" title="trace" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -342,37 +336,16 @@ Defaults to None.</td>
   
 
 
-  
-
-    
-    
-      <script type="text/javascript">
-          var DOCUMENTATION_OPTIONS = {
-              URL_ROOT:'./',
-              VERSION:'1.0b0',
-              LANGUAGE:'None',
-              COLLAPSE_INDEX:false,
-              FILE_SUFFIX:'.html',
-              HAS_SOURCE:  true,
-              SOURCELINK_SUFFIX: '.txt'
-          };
-      </script>
-        <script type="text/javascript" src="_static/jquery.js"></script>
-        <script type="text/javascript" src="_static/underscore.js"></script>
-        <script type="text/javascript" src="_static/doctools.js"></script>
-        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-    
-
-  
-
-  <script type="text/javascript" src="_static/js/theme.js"></script>
-
   <script type="text/javascript">
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script> 
+  </script>
+
+  
+  
+    
+   
 
 </body>
 </html>

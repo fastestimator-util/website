@@ -19,34 +19,39 @@
   
 
   
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
 
-  
-  
     
 
   
-
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="dataset" href="fastestimator.dataset.html" />
     <link rel="prev" title="architecture" href="fastestimator.architecture.html" /> 
-
-  
-  <script src="_static/js/modernizr.min.js"></script>
-
 </head>
 
 <body class="wy-body-for-nav">
 
    
   <div class="wy-grid-for-nav">
-
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search">
+        <div class="wy-side-nav-search" >
           
 
           
@@ -206,7 +211,7 @@
 <span id="cli-util"></span><h2>cli_util<a class="headerlink" href="#module-fastestimator.cli.cli_util" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="fastestimator.cli.cli_util.SaveAction">
-<em class="property">class </em><code class="descclassname">fastestimator.cli.cli_util.</code><code class="descname">SaveAction</code><span class="sig-paren">(</span><em>option_strings</em>, <em>dest</em>, <em>nargs='?'</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/cli/cli_util.html#SaveAction"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.cli.cli_util.SaveAction" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">fastestimator.cli.cli_util.</code><code class="sig-name descname">SaveAction</code><span class="sig-paren">(</span><em class="sig-param">option_strings</em>, <em class="sig-param">dest</em>, <em class="sig-param">nargs='?'</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/cli/cli_util.html#SaveAction"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.cli.cli_util.SaveAction" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">argparse.Action</span></code></p>
 <p>A custom save action which is used to populate a secondary variable inside of an exclusive group. Used if this file
 is invoked directly during argument parsing.</p>
@@ -214,139 +219,121 @@ is invoked directly during argument parsing.</p>
 
 <dl class="function">
 <dt id="fastestimator.cli.cli_util.draw">
-<code class="descclassname">fastestimator.cli.cli_util.</code><code class="descname">draw</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/cli/cli_util.html#draw"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.cli.cli_util.draw" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">fastestimator.cli.cli_util.</code><code class="sig-name descname">draw</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/cli/cli_util.html#draw"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.cli.cli_util.draw" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="function">
 <dt id="fastestimator.cli.cli_util.parse_cli_to_dictionary">
-<code class="descclassname">fastestimator.cli.cli_util.</code><code class="descname">parse_cli_to_dictionary</code><span class="sig-paren">(</span><em>input_list</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/cli/cli_util.html#parse_cli_to_dictionary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.cli.cli_util.parse_cli_to_dictionary" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>input_list</strong> – A list of input strings from a cli</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">A dictionary constructed from the input list, with values converted to python objects where applicable</td>
-</tr>
-</tbody>
-</table>
+<code class="sig-prename descclassname">fastestimator.cli.cli_util.</code><code class="sig-name descname">parse_cli_to_dictionary</code><span class="sig-paren">(</span><em class="sig-param">input_list</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/cli/cli_util.html#parse_cli_to_dictionary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.cli.cli_util.parse_cli_to_dictionary" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>input_list</strong> – A list of input strings from a cli</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A dictionary constructed from the input list, with values converted to python objects where applicable</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="function">
 <dt id="fastestimator.cli.cli_util.load_and_caricature">
-<code class="descclassname">fastestimator.cli.cli_util.</code><code class="descname">load_and_caricature</code><span class="sig-paren">(</span><em>model_path</em>, <em>input_paths</em>, <em>dictionary_path=None</em>, <em>save=False</em>, <em>save_dir=None</em>, <em>strip_alpha=False</em>, <em>layer_ids=None</em>, <em>print_layers=False</em>, <em>n_steps=512</em>, <em>learning_rate=0.05</em>, <em>blur=1</em>, <em>cossim_pow=0.5</em>, <em>sd=0.01</em>, <em>fft=True</em>, <em>decorrelate=True</em>, <em>sigmoid=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/cli/cli_util.html#load_and_caricature"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.cli.cli_util.load_and_caricature" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>model_path</strong> (<em>str</em>) – The path to a keras model to be inspected by the Caricature visualization</li>
-<li><strong>layer_ids</strong> (<em>int</em><em>, </em><em>list</em>) – The layer(s) of the model to be inspected by the Caricature visualization</li>
-<li><strong>input_paths</strong> (<em>list</em>) – Strings corresponding to image files to be visualized</li>
-<li><strong>dictionary_path</strong> (<em>string</em>) – A path to a dictionary mapping model outputs to class names</li>
-<li><strong>save</strong> (<em>bool</em>) – Whether to save (True) or display (False) the result</li>
-<li><strong>save_dir</strong> (<em>str</em>) – Where to save the image if save is True</li>
-<li><strong>strip_alpha</strong> (<em>bool</em>) – Whether to strip the alpha channel from input images</li>
-<li><strong>print_layers</strong> (<em>bool</em>) – Whether to skip visualization and instead just print out the available layers in a model                             (useful for deciding which layers you might want to caricature)</li>
-<li><strong>n_steps</strong> (<em>int</em>) – How many steps of optimization to run when computing caricatures (quality vs time trade)</li>
-<li><strong>learning_rate</strong> (<em>float</em>) – The learning rate of the caricature optimizer. Should be higher than usual</li>
-<li><strong>blur</strong> (<em>float</em>) – How much blur to add to images during caricature generation</li>
-<li><strong>cossim_pow</strong> (<em>float</em>) – How much should similarity in form be valued versus creative license</li>
-<li><strong>sd</strong> (<em>float</em>) – The standard deviation of the noise used to seed the caricature</li>
-<li><strong>fft</strong> (<em>bool</em>) – Whether to use fft space (True) or image space (False) to create caricatures</li>
-<li><strong>decorrelate</strong> (<em>bool</em>) – Whether to use an ImageNet-derived color correlation matrix to de-correlate
-colors in the caricature. Parameter has no effect on grey scale images.</li>
-<li><strong>sigmoid</strong> (<em>bool</em>) – Whether to use sigmoid (True) or clipping (False) to bound the caricature pixel values</li>
+<code class="sig-prename descclassname">fastestimator.cli.cli_util.</code><code class="sig-name descname">load_and_caricature</code><span class="sig-paren">(</span><em class="sig-param">model_path</em>, <em class="sig-param">input_paths</em>, <em class="sig-param">dictionary_path=None</em>, <em class="sig-param">save=False</em>, <em class="sig-param">save_dir=None</em>, <em class="sig-param">strip_alpha=False</em>, <em class="sig-param">layer_ids=None</em>, <em class="sig-param">print_layers=False</em>, <em class="sig-param">n_steps=512</em>, <em class="sig-param">learning_rate=0.05</em>, <em class="sig-param">blur=1</em>, <em class="sig-param">cossim_pow=0.5</em>, <em class="sig-param">sd=0.01</em>, <em class="sig-param">fft=True</em>, <em class="sig-param">decorrelate=True</em>, <em class="sig-param">sigmoid=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/cli/cli_util.html#load_and_caricature"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.cli.cli_util.load_and_caricature" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>model_path</strong> (<em>str</em>) – The path to a keras model to be inspected by the Caricature visualization</p></li>
+<li><p><strong>layer_ids</strong> (<em>int</em><em>, </em><em>list</em>) – The layer(s) of the model to be inspected by the Caricature visualization</p></li>
+<li><p><strong>input_paths</strong> (<em>list</em>) – Strings corresponding to image files to be visualized</p></li>
+<li><p><strong>dictionary_path</strong> (<em>string</em>) – A path to a dictionary mapping model outputs to class names</p></li>
+<li><p><strong>save</strong> (<em>bool</em>) – Whether to save (True) or display (False) the result</p></li>
+<li><p><strong>save_dir</strong> (<em>str</em>) – Where to save the image if save is True</p></li>
+<li><p><strong>strip_alpha</strong> (<em>bool</em>) – Whether to strip the alpha channel from input images</p></li>
+<li><p><strong>print_layers</strong> (<em>bool</em>) – Whether to skip visualization and instead just print out the available layers in a model                             (useful for deciding which layers you might want to caricature)</p></li>
+<li><p><strong>n_steps</strong> (<em>int</em>) – How many steps of optimization to run when computing caricatures (quality vs time trade)</p></li>
+<li><p><strong>learning_rate</strong> (<em>float</em>) – The learning rate of the caricature optimizer. Should be higher than usual</p></li>
+<li><p><strong>blur</strong> (<em>float</em>) – How much blur to add to images during caricature generation</p></li>
+<li><p><strong>cossim_pow</strong> (<em>float</em>) – How much should similarity in form be valued versus creative license</p></li>
+<li><p><strong>sd</strong> (<em>float</em>) – The standard deviation of the noise used to seed the caricature</p></li>
+<li><p><strong>fft</strong> (<em>bool</em>) – Whether to use fft space (True) or image space (False) to create caricatures</p></li>
+<li><p><strong>decorrelate</strong> (<em>bool</em>) – Whether to use an ImageNet-derived color correlation matrix to de-correlate
+colors in the caricature. Parameter has no effect on grey scale images.</p></li>
+<li><p><strong>sigmoid</strong> (<em>bool</em>) – Whether to use sigmoid (True) or clipping (False) to bound the caricature pixel values</p></li>
 </ul>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="function">
 <dt id="fastestimator.cli.cli_util.load_and_saliency">
-<code class="descclassname">fastestimator.cli.cli_util.</code><code class="descname">load_and_saliency</code><span class="sig-paren">(</span><em>model_path</em>, <em>input_paths</em>, <em>baseline=-1</em>, <em>dictionary_path=None</em>, <em>strip_alpha=False</em>, <em>smooth_factor=7</em>, <em>save=False</em>, <em>save_dir=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/cli/cli_util.html#load_and_saliency"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.cli.cli_util.load_and_saliency" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">fastestimator.cli.cli_util.</code><code class="sig-name descname">load_and_saliency</code><span class="sig-paren">(</span><em class="sig-param">model_path</em>, <em class="sig-param">input_paths</em>, <em class="sig-param">baseline=-1</em>, <em class="sig-param">dictionary_path=None</em>, <em class="sig-param">strip_alpha=False</em>, <em class="sig-param">smooth_factor=7</em>, <em class="sig-param">save=False</em>, <em class="sig-param">save_dir=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/cli/cli_util.html#load_and_saliency"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.cli.cli_util.load_and_saliency" title="Permalink to this definition">¶</a></dt>
 <dd><p>A helper class to load input and invoke the saliency api</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>model_path</strong> – The path the model file (str)</li>
-<li><strong>input_paths</strong> – The paths to model input files [(str),…] or to a folder of inputs [(str)]</li>
-<li><strong>baseline</strong> – Either a number corresponding to the baseline for integration, or a path to a baseline file</li>
-<li><strong>dictionary_path</strong> – The path to a dictionary file encoding a ‘class_idx’-&gt;’class_name’ mapping</li>
-<li><strong>strip_alpha</strong> – Whether to collapse alpha channels when loading an input (bool)</li>
-<li><strong>smooth_factor</strong> – How many iterations of the smoothing algorithm to run (int)</li>
-<li><strong>save</strong> – Whether to save (True) or display (False) the resulting image</li>
-<li><strong>save_dir</strong> – Where to save the image if save=True</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>model_path</strong> – The path the model file (str)</p></li>
+<li><p><strong>input_paths</strong> – The paths to model input files [(str),…] or to a folder of inputs [(str)]</p></li>
+<li><p><strong>baseline</strong> – Either a number corresponding to the baseline for integration, or a path to a baseline file</p></li>
+<li><p><strong>dictionary_path</strong> – The path to a dictionary file encoding a ‘class_idx’-&gt;’class_name’ mapping</p></li>
+<li><p><strong>strip_alpha</strong> – Whether to collapse alpha channels when loading an input (bool)</p></li>
+<li><p><strong>smooth_factor</strong> – How many iterations of the smoothing algorithm to run (int)</p></li>
+<li><p><strong>save</strong> – Whether to save (True) or display (False) the resulting image</p></li>
+<li><p><strong>save_dir</strong> – Where to save the image if save=True</p></li>
 </ul>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="function">
 <dt id="fastestimator.cli.cli_util.load_and_umap">
-<code class="descclassname">fastestimator.cli.cli_util.</code><code class="descname">load_and_umap</code><span class="sig-paren">(</span><em>model_path</em>, <em>input_root_path</em>, <em>print_layers=False</em>, <em>strip_alpha=False</em>, <em>layers=None</em>, <em>input_extension=None</em>, <em>batch=10</em>, <em>use_cache=True</em>, <em>cache_dir=None</em>, <em>dictionary_path=None</em>, <em>save=False</em>, <em>save_dir=None</em>, <em>legend_mode='shared'</em>, <em>umap_parameters=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/cli/cli_util.html#load_and_umap"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.cli.cli_util.load_and_umap" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">fastestimator.cli.cli_util.</code><code class="sig-name descname">load_and_umap</code><span class="sig-paren">(</span><em class="sig-param">model_path</em>, <em class="sig-param">input_root_path</em>, <em class="sig-param">print_layers=False</em>, <em class="sig-param">strip_alpha=False</em>, <em class="sig-param">layers=None</em>, <em class="sig-param">input_extension=None</em>, <em class="sig-param">batch=10</em>, <em class="sig-param">use_cache=True</em>, <em class="sig-param">cache_dir=None</em>, <em class="sig-param">dictionary_path=None</em>, <em class="sig-param">save=False</em>, <em class="sig-param">save_dir=None</em>, <em class="sig-param">legend_mode='shared'</em>, <em class="sig-param">umap_parameters=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/cli/cli_util.html#load_and_umap"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.cli.cli_util.load_and_umap" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="function">
 <dt id="fastestimator.cli.cli_util.parse_log_files">
-<code class="descclassname">fastestimator.cli.cli_util.</code><code class="descname">parse_log_files</code><span class="sig-paren">(</span><em>file_paths</em>, <em>log_extension='.txt'</em>, <em>smooth_factor=0</em>, <em>save=False</em>, <em>save_path=None</em>, <em>ignore_metrics=None</em>, <em>share_legend=True</em>, <em>pretty_names=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/cli/cli_util.html#parse_log_files"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.cli.cli_util.parse_log_files" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">fastestimator.cli.cli_util.</code><code class="sig-name descname">parse_log_files</code><span class="sig-paren">(</span><em class="sig-param">file_paths</em>, <em class="sig-param">log_extension='.txt'</em>, <em class="sig-param">smooth_factor=0</em>, <em class="sig-param">save=False</em>, <em class="sig-param">save_path=None</em>, <em class="sig-param">ignore_metrics=None</em>, <em class="sig-param">share_legend=True</em>, <em class="sig-param">pretty_names=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/cli/cli_util.html#parse_log_files"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.cli.cli_util.parse_log_files" title="Permalink to this definition">¶</a></dt>
 <dd><p>A function which will iterate through the given log file paths, parse them to extract metrics, remove any
 metrics which are blacklisted, and then pass the necessary information on the graphing function</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>file_paths</strong> – A list of paths to various log files</li>
-<li><strong>log_extension</strong> – The extension of the log files</li>
-<li><strong>smooth_factor</strong> – A non-negative float representing the magnitude of gaussian smoothing to apply (zero for none)</li>
-<li><strong>save</strong> – Whether to save (true) or display (false) the generated graph</li>
-<li><strong>save_path</strong> – Where to save the image if save is true. Defaults to dir_path if not provided</li>
-<li><strong>ignore_metrics</strong> – Any metrics within the log files which will not be visualized</li>
-<li><strong>share_legend</strong> – Whether to have one legend across all graphs (true) or one legend per graph (false)</li>
-<li><strong>pretty_names</strong> – Whether to modify the metric names in graph titles (true) or leave them alone (false)</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>file_paths</strong> – A list of paths to various log files</p></li>
+<li><p><strong>log_extension</strong> – The extension of the log files</p></li>
+<li><p><strong>smooth_factor</strong> – A non-negative float representing the magnitude of gaussian smoothing to apply (zero for none)</p></li>
+<li><p><strong>save</strong> – Whether to save (true) or display (false) the generated graph</p></li>
+<li><p><strong>save_path</strong> – Where to save the image if save is true. Defaults to dir_path if not provided</p></li>
+<li><p><strong>ignore_metrics</strong> – Any metrics within the log files which will not be visualized</p></li>
+<li><p><strong>share_legend</strong> – Whether to have one legend across all graphs (true) or one legend per graph (false)</p></li>
+<li><p><strong>pretty_names</strong> – Whether to modify the metric names in graph titles (true) or leave them alone (false)</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">None</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="function">
 <dt id="fastestimator.cli.cli_util.parse_log_dir">
-<code class="descclassname">fastestimator.cli.cli_util.</code><code class="descname">parse_log_dir</code><span class="sig-paren">(</span><em>dir_path</em>, <em>log_extension='.txt'</em>, <em>recursive_search=False</em>, <em>smooth_factor=1</em>, <em>save=False</em>, <em>save_path=None</em>, <em>ignore_metrics=None</em>, <em>share_legend=True</em>, <em>pretty_names=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/cli/cli_util.html#parse_log_dir"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.cli.cli_util.parse_log_dir" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">fastestimator.cli.cli_util.</code><code class="sig-name descname">parse_log_dir</code><span class="sig-paren">(</span><em class="sig-param">dir_path</em>, <em class="sig-param">log_extension='.txt'</em>, <em class="sig-param">recursive_search=False</em>, <em class="sig-param">smooth_factor=1</em>, <em class="sig-param">save=False</em>, <em class="sig-param">save_path=None</em>, <em class="sig-param">ignore_metrics=None</em>, <em class="sig-param">share_legend=True</em>, <em class="sig-param">pretty_names=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/cli/cli_util.html#parse_log_dir"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.cli.cli_util.parse_log_dir" title="Permalink to this definition">¶</a></dt>
 <dd><p>A function which will gather all log files within a given folder and pass them along for visualization</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>dir_path</strong> – The path to a directory containing log files</li>
-<li><strong>log_extension</strong> – The extension of the log files</li>
-<li><strong>recursive_search</strong> – Whether to recursively search sub-directories for log files</li>
-<li><strong>smooth_factor</strong> – A non-negative float representing the magnitude of gaussian smoothing to apply(zero for none)</li>
-<li><strong>save</strong> – Whether to save (true) or display (false) the generated graph</li>
-<li><strong>save_path</strong> – Where to save the image if save is true. Defaults to dir_path if not provided</li>
-<li><strong>ignore_metrics</strong> – Any metrics within the log files which will not be visualized</li>
-<li><strong>share_legend</strong> – Whether to have one legend across all graphs (true) or one legend per graph (false)</li>
-<li><strong>pretty_names</strong> – Whether to modify the metric names in graph titles (true) or leave them alone (false)</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>dir_path</strong> – The path to a directory containing log files</p></li>
+<li><p><strong>log_extension</strong> – The extension of the log files</p></li>
+<li><p><strong>recursive_search</strong> – Whether to recursively search sub-directories for log files</p></li>
+<li><p><strong>smooth_factor</strong> – A non-negative float representing the magnitude of gaussian smoothing to apply(zero for none)</p></li>
+<li><p><strong>save</strong> – Whether to save (true) or display (false) the generated graph</p></li>
+<li><p><strong>save_path</strong> – Where to save the image if save is true. Defaults to dir_path if not provided</p></li>
+<li><p><strong>ignore_metrics</strong> – Any metrics within the log files which will not be visualized</p></li>
+<li><p><strong>share_legend</strong> – Whether to have one legend across all graphs (true) or one legend per graph (false)</p></li>
+<li><p><strong>pretty_names</strong> – Whether to modify the metric names in graph titles (true) or leave them alone (false)</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">None</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
 </dd></dl>
 
 </div>
@@ -355,12 +342,12 @@ metrics which are blacklisted, and then pass the necessary information on the gr
 <span id="predict"></span><h2>predict<a class="headerlink" href="#module-fastestimator.cli.predict" title="Permalink to this headline">¶</a></h2>
 <dl class="function">
 <dt id="fastestimator.cli.predict.predict">
-<code class="descclassname">fastestimator.cli.predict.</code><code class="descname">predict</code><span class="sig-paren">(</span><em>args</em>, <em>unknown</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/cli/predict.html#predict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.cli.predict.predict" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">fastestimator.cli.predict.</code><code class="sig-name descname">predict</code><span class="sig-paren">(</span><em class="sig-param">args</em>, <em class="sig-param">unknown</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/cli/predict.html#predict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.cli.predict.predict" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="function">
 <dt id="fastestimator.cli.predict.configure_predict_parser">
-<code class="descclassname">fastestimator.cli.predict.</code><code class="descname">configure_predict_parser</code><span class="sig-paren">(</span><em>subparsers</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/cli/predict.html#configure_predict_parser"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.cli.predict.configure_predict_parser" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">fastestimator.cli.predict.</code><code class="sig-name descname">configure_predict_parser</code><span class="sig-paren">(</span><em class="sig-param">subparsers</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/cli/predict.html#configure_predict_parser"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.cli.predict.configure_predict_parser" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </div>
@@ -369,12 +356,12 @@ metrics which are blacklisted, and then pass the necessary information on the gr
 <span id="train"></span><h2>train<a class="headerlink" href="#module-fastestimator.cli.train" title="Permalink to this headline">¶</a></h2>
 <dl class="function">
 <dt id="fastestimator.cli.train.train">
-<code class="descclassname">fastestimator.cli.train.</code><code class="descname">train</code><span class="sig-paren">(</span><em>args</em>, <em>unknown</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/cli/train.html#train"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.cli.train.train" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">fastestimator.cli.train.</code><code class="sig-name descname">train</code><span class="sig-paren">(</span><em class="sig-param">args</em>, <em class="sig-param">unknown</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/cli/train.html#train"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.cli.train.train" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="function">
 <dt id="fastestimator.cli.train.configure_train_parser">
-<code class="descclassname">fastestimator.cli.train.</code><code class="descname">configure_train_parser</code><span class="sig-paren">(</span><em>subparsers</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/cli/train.html#configure_train_parser"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.cli.train.configure_train_parser" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">fastestimator.cli.train.</code><code class="sig-name descname">configure_train_parser</code><span class="sig-paren">(</span><em class="sig-param">subparsers</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/cli/train.html#configure_train_parser"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.cli.train.configure_train_parser" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </div>
@@ -383,47 +370,47 @@ metrics which are blacklisted, and then pass the necessary information on the gr
 <span id="visualize"></span><h2>visualize<a class="headerlink" href="#module-fastestimator.cli.visualize" title="Permalink to this headline">¶</a></h2>
 <dl class="function">
 <dt id="fastestimator.cli.visualize.logs">
-<code class="descclassname">fastestimator.cli.visualize.</code><code class="descname">logs</code><span class="sig-paren">(</span><em>args</em>, <em>unknown</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/cli/visualize.html#logs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.cli.visualize.logs" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">fastestimator.cli.visualize.</code><code class="sig-name descname">logs</code><span class="sig-paren">(</span><em class="sig-param">args</em>, <em class="sig-param">unknown</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/cli/visualize.html#logs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.cli.visualize.logs" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="function">
 <dt id="fastestimator.cli.visualize.configure_log_parser">
-<code class="descclassname">fastestimator.cli.visualize.</code><code class="descname">configure_log_parser</code><span class="sig-paren">(</span><em>subparsers</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/cli/visualize.html#configure_log_parser"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.cli.visualize.configure_log_parser" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">fastestimator.cli.visualize.</code><code class="sig-name descname">configure_log_parser</code><span class="sig-paren">(</span><em class="sig-param">subparsers</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/cli/visualize.html#configure_log_parser"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.cli.visualize.configure_log_parser" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="function">
 <dt id="fastestimator.cli.visualize.saliency">
-<code class="descclassname">fastestimator.cli.visualize.</code><code class="descname">saliency</code><span class="sig-paren">(</span><em>args</em>, <em>unknown</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/cli/visualize.html#saliency"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.cli.visualize.saliency" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">fastestimator.cli.visualize.</code><code class="sig-name descname">saliency</code><span class="sig-paren">(</span><em class="sig-param">args</em>, <em class="sig-param">unknown</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/cli/visualize.html#saliency"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.cli.visualize.saliency" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="function">
 <dt id="fastestimator.cli.visualize.configure_saliency_parser">
-<code class="descclassname">fastestimator.cli.visualize.</code><code class="descname">configure_saliency_parser</code><span class="sig-paren">(</span><em>subparsers</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/cli/visualize.html#configure_saliency_parser"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.cli.visualize.configure_saliency_parser" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">fastestimator.cli.visualize.</code><code class="sig-name descname">configure_saliency_parser</code><span class="sig-paren">(</span><em class="sig-param">subparsers</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/cli/visualize.html#configure_saliency_parser"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.cli.visualize.configure_saliency_parser" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="function">
 <dt id="fastestimator.cli.visualize.umap">
-<code class="descclassname">fastestimator.cli.visualize.</code><code class="descname">umap</code><span class="sig-paren">(</span><em>args</em>, <em>unknown</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/cli/visualize.html#umap"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.cli.visualize.umap" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">fastestimator.cli.visualize.</code><code class="sig-name descname">umap</code><span class="sig-paren">(</span><em class="sig-param">args</em>, <em class="sig-param">unknown</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/cli/visualize.html#umap"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.cli.visualize.umap" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="function">
 <dt id="fastestimator.cli.visualize.configure_umap_parser">
-<code class="descclassname">fastestimator.cli.visualize.</code><code class="descname">configure_umap_parser</code><span class="sig-paren">(</span><em>subparsers</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/cli/visualize.html#configure_umap_parser"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.cli.visualize.configure_umap_parser" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">fastestimator.cli.visualize.</code><code class="sig-name descname">configure_umap_parser</code><span class="sig-paren">(</span><em class="sig-param">subparsers</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/cli/visualize.html#configure_umap_parser"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.cli.visualize.configure_umap_parser" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="function">
 <dt id="fastestimator.cli.visualize.caricature">
-<code class="descclassname">fastestimator.cli.visualize.</code><code class="descname">caricature</code><span class="sig-paren">(</span><em>args</em>, <em>unknown</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/cli/visualize.html#caricature"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.cli.visualize.caricature" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">fastestimator.cli.visualize.</code><code class="sig-name descname">caricature</code><span class="sig-paren">(</span><em class="sig-param">args</em>, <em class="sig-param">unknown</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/cli/visualize.html#caricature"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.cli.visualize.caricature" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="function">
 <dt id="fastestimator.cli.visualize.configure_caricature_parser">
-<code class="descclassname">fastestimator.cli.visualize.</code><code class="descname">configure_caricature_parser</code><span class="sig-paren">(</span><em>subparsers</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/cli/visualize.html#configure_caricature_parser"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.cli.visualize.configure_caricature_parser" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">fastestimator.cli.visualize.</code><code class="sig-name descname">configure_caricature_parser</code><span class="sig-paren">(</span><em class="sig-param">subparsers</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/cli/visualize.html#configure_caricature_parser"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.cli.visualize.configure_caricature_parser" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="function">
 <dt id="fastestimator.cli.visualize.configure_visualization_parser">
-<code class="descclassname">fastestimator.cli.visualize.</code><code class="descname">configure_visualization_parser</code><span class="sig-paren">(</span><em>subparsers</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/cli/visualize.html#configure_visualization_parser"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.cli.visualize.configure_visualization_parser" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">fastestimator.cli.visualize.</code><code class="sig-name descname">configure_visualization_parser</code><span class="sig-paren">(</span><em class="sig-param">subparsers</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/cli/visualize.html#configure_visualization_parser"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.cli.visualize.configure_visualization_parser" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </div>
@@ -440,7 +427,7 @@ metrics which are blacklisted, and then pass the necessary information on the gr
         <a href="fastestimator.dataset.html" class="btn btn-neutral float-right" title="dataset" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="fastestimator.architecture.html" class="btn btn-neutral" title="architecture" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="fastestimator.architecture.html" class="btn btn-neutral float-left" title="architecture" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -466,37 +453,16 @@ metrics which are blacklisted, and then pass the necessary information on the gr
   
 
 
-  
-
-    
-    
-      <script type="text/javascript">
-          var DOCUMENTATION_OPTIONS = {
-              URL_ROOT:'./',
-              VERSION:'1.0b0',
-              LANGUAGE:'None',
-              COLLAPSE_INDEX:false,
-              FILE_SUFFIX:'.html',
-              HAS_SOURCE:  true,
-              SOURCELINK_SUFFIX: '.txt'
-          };
-      </script>
-        <script type="text/javascript" src="_static/jquery.js"></script>
-        <script type="text/javascript" src="_static/underscore.js"></script>
-        <script type="text/javascript" src="_static/doctools.js"></script>
-        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-    
-
-  
-
-  <script type="text/javascript" src="_static/js/theme.js"></script>
-
   <script type="text/javascript">
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script> 
+  </script>
+
+  
+  
+    
+   
 
 </body>
 </html>

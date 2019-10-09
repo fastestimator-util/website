@@ -19,34 +19,39 @@
   
 
   
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
 
-  
-  
     
 
   
-
   <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Tutorial 7: Expanding data dimension in RecordWriter and Pipeline" href="t07_expand_data_dimension.html" />
     <link rel="prev" title="Tutorial 5: Trace - training control and debugging" href="t05_trace_debug_training.html" /> 
-
-  
-  <script src="../_static/js/modernizr.min.js"></script>
-
 </head>
 
 <body class="wy-body-for-nav">
 
    
   <div class="wy-grid-for-nav">
-
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search">
+        <div class="wy-side-nav-search" >
           
 
           
@@ -94,8 +99,8 @@
 <li class="toctree-l2"><a class="reference internal" href="t05_trace_debug_training.html">Tutorial 5: Trace - training control and debugging</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">Tutorial 6: Dealing with imbalanced dataset using TensorFilter</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#Step-0---Data-preparation-(same-as-tutorial-1)">Step 0 - Data preparation <em>(same as tutorial 1)</em></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#Step-1---Customize-your-own-Filter...">Step 1 - Customize your own Filter…</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#...-or-use-a-pre-built-ScalarFilter">… or use a pre-built ScalarFilter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Step-1---Customize-your-own-Filter…">Step 1 - Customize your own Filter…</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#…-or-use-a-pre-built-ScalarFilter">… or use a pre-built ScalarFilter</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="t07_expand_data_dimension.html">Tutorial 7: Expanding data dimension in RecordWriter and Pipeline</a></li>
@@ -421,8 +426,8 @@ div.rendered_html tbody tr:hover {
 </div>
 </div>
 </div>
-<div class="section" id="Step-1---Customize-your-own-Filter...">
-<h2>Step 1 - Customize your own Filter…<a class="headerlink" href="#Step-1---Customize-your-own-Filter..." title="Permalink to this headline">¶</a></h2>
+<div class="section" id="Step-1---Customize-your-own-Filter…">
+<h2>Step 1 - Customize your own Filter…<a class="headerlink" href="#Step-1---Customize-your-own-Filter…" title="Permalink to this headline">¶</a></h2>
 <p>In this example, we will get rid of all images that have a label smaller than 5.</p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
@@ -464,8 +469,8 @@ tf.Tensor([5 9 6 9 8 8 9 6 5 8 9 6 8 9 5 9 6 7 5 8 7 5 7 5 6 6 9 8 6 5 6 5], sha
 </pre></div></div>
 </div>
 </div>
-<div class="section" id="...-or-use-a-pre-built-ScalarFilter">
-<h2>… or use a pre-built ScalarFilter<a class="headerlink" href="#...-or-use-a-pre-built-ScalarFilter" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="…-or-use-a-pre-built-ScalarFilter">
+<h2>… or use a pre-built ScalarFilter<a class="headerlink" href="#…-or-use-a-pre-built-ScalarFilter" title="Permalink to this headline">¶</a></h2>
 <div class="line-block">
 <div class="line">In FastEstimator, if user needs to filter out scalar values with a certain probability, one can use pre-built filter <code class="docutils literal notranslate"><span class="pre">ScalarFilter</span></code>.</div>
 <div class="line">Let’s filter out even numbers labels with 50% probability:</div>
@@ -539,7 +544,7 @@ in batch number 9, there are 25 odd labels and 7 even labels
         <a href="t07_expand_data_dimension.html" class="btn btn-neutral float-right" title="Tutorial 7: Expanding data dimension in RecordWriter and Pipeline" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="t05_trace_debug_training.html" class="btn btn-neutral" title="Tutorial 5: Trace - training control and debugging" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="t05_trace_debug_training.html" class="btn btn-neutral float-left" title="Tutorial 5: Trace - training control and debugging" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -565,37 +570,16 @@ in batch number 9, there are 25 odd labels and 7 even labels
   
 
 
-  
-
-    
-    
-      <script type="text/javascript">
-          var DOCUMENTATION_OPTIONS = {
-              URL_ROOT:'../',
-              VERSION:'1.0b0',
-              LANGUAGE:'None',
-              COLLAPSE_INDEX:false,
-              FILE_SUFFIX:'.html',
-              HAS_SOURCE:  true,
-              SOURCELINK_SUFFIX: '.txt'
-          };
-      </script>
-        <script type="text/javascript" src="../_static/jquery.js"></script>
-        <script type="text/javascript" src="../_static/underscore.js"></script>
-        <script type="text/javascript" src="../_static/doctools.js"></script>
-        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-    
-
-  
-
-  <script type="text/javascript" src="../_static/js/theme.js"></script>
-
   <script type="text/javascript">
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script> 
+  </script>
+
+  
+  
+    
+   
 
 </body>
 </html>

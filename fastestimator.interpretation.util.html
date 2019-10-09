@@ -19,34 +19,39 @@
   
 
   
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
 
-  
-  
     
 
   
-
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="layers" href="fastestimator.layers.html" />
     <link rel="prev" title="interpretation" href="fastestimator.interpretation.html" /> 
-
-  
-  <script src="_static/js/modernizr.min.js"></script>
-
 </head>
 
 <body class="wy-body-for-nav">
 
    
   <div class="wy-grid-for-nav">
-
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search">
+        <div class="wy-side-nav-search" >
           
 
           
@@ -215,7 +220,7 @@
 <span id="color-util"></span><h2>color_util<a class="headerlink" href="#module-fastestimator.interpretation.util.color_util" title="Permalink to this headline">¶</a></h2>
 <dl class="attribute">
 <dt id="fastestimator.interpretation.util.color_util.linear_decorelate_color">
-<code class="descclassname">fastestimator.interpretation.util.color_util.</code><code class="descname">linear_decorelate_color</code><a class="reference internal" href="_modules/fastestimator/interpretation/util/color_util.html#linear_decorelate_color"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.interpretation.util.color_util.linear_decorelate_color" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">fastestimator.interpretation.util.color_util.</code><code class="sig-name descname">linear_decorelate_color</code><a class="reference internal" href="_modules/fastestimator/interpretation/util/color_util.html#linear_decorelate_color"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.interpretation.util.color_util.linear_decorelate_color" title="Permalink to this definition">¶</a></dt>
 <dd><p>Multiply input by sqrt of empirical color correlation matrix.</p>
 <p>If you interpret an image’s innermost dimension as describing colors in a
 decorrelated version of the color space (which is a very natural way to
@@ -226,27 +231,23 @@ correlations.</p>
 
 <dl class="attribute">
 <dt id="fastestimator.interpretation.util.color_util.to_valid_rgb">
-<code class="descclassname">fastestimator.interpretation.util.color_util.</code><code class="descname">to_valid_rgb</code><a class="reference internal" href="_modules/fastestimator/interpretation/util/color_util.html#to_valid_rgb"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.interpretation.util.color_util.to_valid_rgb" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">fastestimator.interpretation.util.color_util.</code><code class="sig-name descname">to_valid_rgb</code><a class="reference internal" href="_modules/fastestimator/interpretation/util/color_util.html#to_valid_rgb"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.interpretation.util.color_util.to_valid_rgb" title="Permalink to this definition">¶</a></dt>
 <dd><p>Transform inner dimension of image to valid rgb colors.</p>
 <p>In practice this consists of two parts:
 (1) If requested, transform the colors from a decorrelated color space to RGB.
 (2) Constrain the color channels to be in [-1,1], either using a sigmoid function or clipping.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>image</strong> – input tensor, innermost dimension will be interpreted as colors and transformed/constrained.</li>
-<li><strong>decorrelate</strong> – should the input tensor’s colors be interpreted as coming from a whitened space or not?</li>
-<li><strong>sigmoid</strong> – should the colors be constrained using sigmoid (if True) or clipping (if False).</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>image</strong> – input tensor, innermost dimension will be interpreted as colors and transformed/constrained.</p></li>
+<li><p><strong>decorrelate</strong> – should the input tensor’s colors be interpreted as coming from a whitened space or not?</p></li>
+<li><p><strong>sigmoid</strong> – should the colors be constrained using sigmoid (if True) or clipping (if False).</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">‘image’ with the innermost dimension transformed.</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>‘image’ with the innermost dimension transformed.</p>
+</dd>
+</dl>
 </dd></dl>
 
 </div>
@@ -255,118 +256,102 @@ correlations.</p>
 <span id="fft-util"></span><h2>fft_util<a class="headerlink" href="#module-fastestimator.interpretation.util.fft_util" title="Permalink to this headline">¶</a></h2>
 <dl class="attribute">
 <dt id="fastestimator.interpretation.util.fft_util.gaussian_kernel">
-<code class="descclassname">fastestimator.interpretation.util.fft_util.</code><code class="descname">gaussian_kernel</code><a class="reference internal" href="_modules/fastestimator/interpretation/util/fft_util.html#gaussian_kernel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.interpretation.util.fft_util.gaussian_kernel" title="Permalink to this definition">¶</a></dt>
-<dd><p><a href="#id1"><span class="problematic" id="id2">**</span></a>Args* –     mean* –</p>
-<dl class="docutils">
-<dt>The center of the normal distribution</dt>
-<dd>std: The standard deviation of the normal distribution</dd>
+<code class="sig-prename descclassname">fastestimator.interpretation.util.fft_util.</code><code class="sig-name descname">gaussian_kernel</code><a class="reference internal" href="_modules/fastestimator/interpretation/util/fft_util.html#gaussian_kernel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.interpretation.util.fft_util.gaussian_kernel" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>mean</strong> – The center of the normal distribution</p></li>
+<li><p><strong>std</strong> – The standard deviation of the normal distribution</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A gaussian kernel defined by the specified normal distribution, expanded for multiplication against a
+3-channel image</p>
+</dd>
 </dl>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">A gaussian kernel defined by the specified normal distribution, expanded for multiplication against a
-3-channel image</td>
-</tr>
-</tbody>
-</table>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="fastestimator.interpretation.util.fft_util.blur_image">
-<code class="descclassname">fastestimator.interpretation.util.fft_util.</code><code class="descname">blur_image</code><a class="reference internal" href="_modules/fastestimator/interpretation/util/fft_util.html#blur_image"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.interpretation.util.fft_util.blur_image" title="Permalink to this definition">¶</a></dt>
-<dd><p><a href="#id3"><span class="problematic" id="id4">**</span></a>Args* –     image* –</p>
-<dl class="docutils">
-<dt>A 3 channel input image</dt>
-<dd>std: The standard deviation of the gaussian filter to be applied</dd>
+<code class="sig-prename descclassname">fastestimator.interpretation.util.fft_util.</code><code class="sig-name descname">blur_image</code><a class="reference internal" href="_modules/fastestimator/interpretation/util/fft_util.html#blur_image"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.interpretation.util.fft_util.blur_image" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>image</strong> – A 3 channel input image</p></li>
+<li><p><strong>std</strong> – The standard deviation of the gaussian filter to be applied</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>‘image’ blurred by a gaussian filter</p>
+</dd>
 </dl>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">‘image’ blurred by a gaussian filter</td>
-</tr>
-</tbody>
-</table>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="fastestimator.interpretation.util.fft_util.blur_image_fft">
-<code class="descclassname">fastestimator.interpretation.util.fft_util.</code><code class="descname">blur_image_fft</code><a class="reference internal" href="_modules/fastestimator/interpretation/util/fft_util.html#blur_image_fft"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.interpretation.util.fft_util.blur_image_fft" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">fastestimator.interpretation.util.fft_util.</code><code class="sig-name descname">blur_image_fft</code><a class="reference internal" href="_modules/fastestimator/interpretation/util/fft_util.html#blur_image_fft"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.interpretation.util.fft_util.blur_image_fft" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method is equivalent to blur_image(), but is slower right now due to a bug in tensorflow related to graph
 construction for the irfft2d function. TODO re-evaluate performance trade-off as new version of TF2 are released</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>image</strong> – An n-channel input image</li>
-<li><strong>std</strong> – The standard deviation of the gaussian filter to be applied</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>image</strong> – An n-channel input image</p></li>
+<li><p><strong>std</strong> – The standard deviation of the gaussian filter to be applied</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">‘image’ blurred by a gaussian filter</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>‘image’ blurred by a gaussian filter</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="function">
 <dt id="fastestimator.interpretation.util.fft_util.rfft2d_freqs">
-<code class="descclassname">fastestimator.interpretation.util.fft_util.</code><code class="descname">rfft2d_freqs</code><span class="sig-paren">(</span><em>h</em>, <em>w</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/interpretation/util/fft_util.html#rfft2d_freqs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.interpretation.util.fft_util.rfft2d_freqs" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>h</strong> – height of an image</li>
-<li><strong>w</strong> – width of an image</li>
+<code class="sig-prename descclassname">fastestimator.interpretation.util.fft_util.</code><code class="sig-name descname">rfft2d_freqs</code><span class="sig-paren">(</span><em class="sig-param">h</em>, <em class="sig-param">w</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/interpretation/util/fft_util.html#rfft2d_freqs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.interpretation.util.fft_util.rfft2d_freqs" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>h</strong> – height of an image</p></li>
+<li><p><strong>w</strong> – width of an image</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">A 2d fourier spectrum corresponding to the given image dimensions</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A 2d fourier spectrum corresponding to the given image dimensions</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="fastestimator.interpretation.util.fft_util.fft_vars_to_whitened_im">
-<code class="descclassname">fastestimator.interpretation.util.fft_util.</code><code class="descname">fft_vars_to_whitened_im</code><a class="reference internal" href="_modules/fastestimator/interpretation/util/fft_util.html#fft_vars_to_whitened_im"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.interpretation.util.fft_util.fft_vars_to_whitened_im" title="Permalink to this definition">¶</a></dt>
-<dd><p><a href="#id5"><span class="problematic" id="id6">**</span></a>Args* –     fft_vars* –</p>
-<dl class="docutils">
-<dt>A tensor of dimension: real/imaginary X batch X channel X height X width</dt>
-<dd>scale: A matrix which normalizes the energy of an image
-width: The true width of the pixel image (needed to resolve ambiguity introduced by the fourier transform)</dd>
+<code class="sig-prename descclassname">fastestimator.interpretation.util.fft_util.</code><code class="sig-name descname">fft_vars_to_whitened_im</code><a class="reference internal" href="_modules/fastestimator/interpretation/util/fft_util.html#fft_vars_to_whitened_im"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.interpretation.util.fft_util.fft_vars_to_whitened_im" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>fft_vars</strong> – A tensor of dimension: real/imaginary X batch X channel X height X width</p></li>
+<li><p><strong>scale</strong> – A matrix which normalizes the energy of an image</p></li>
+<li><p><strong>width</strong> – The true width of the pixel image (needed to resolve ambiguity introduced by the fourier transform)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A pixel-space image corresponding to the given input variables, after applying a normalization by ‘scale’</p>
+</dd>
 </dl>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">A pixel-space image corresponding to the given input variables, after applying a normalization by ‘scale’</td>
-</tr>
-</tbody>
-</table>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="fastestimator.interpretation.util.fft_util.fft_vars_to_im">
-<code class="descclassname">fastestimator.interpretation.util.fft_util.</code><code class="descname">fft_vars_to_im</code><a class="reference internal" href="_modules/fastestimator/interpretation/util/fft_util.html#fft_vars_to_im"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.interpretation.util.fft_util.fft_vars_to_im" title="Permalink to this definition">¶</a></dt>
-<dd><p><a href="#id7"><span class="problematic" id="id8">**</span></a>Args* –     fft_vars* –</p>
-<dl class="docutils">
-<dt>A tensor of dimension: real/imaginary X batch X channel X height X width</dt>
-<dd>width: The true width of the pixel image (needed to resolve ambiguity introduced by the fourier transform)</dd>
+<code class="sig-prename descclassname">fastestimator.interpretation.util.fft_util.</code><code class="sig-name descname">fft_vars_to_im</code><a class="reference internal" href="_modules/fastestimator/interpretation/util/fft_util.html#fft_vars_to_im"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.interpretation.util.fft_util.fft_vars_to_im" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>fft_vars</strong> – A tensor of dimension: real/imaginary X batch X channel X height X width</p></li>
+<li><p><strong>width</strong> – The true width of the pixel image (needed to resolve ambiguity introduced by the fourier transform)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A pixel-space image corresponding to the given input variables</p>
+</dd>
 </dl>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">A pixel-space image corresponding to the given input variables</td>
-</tr>
-</tbody>
-</table>
 </dd></dl>
 
 </div>
@@ -375,99 +360,92 @@ width: The true width of the pixel image (needed to resolve ambiguity introduced
 <span id="saliency-util"></span><h2>saliency_util<a class="headerlink" href="#module-fastestimator.interpretation.util.saliency_util" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="fastestimator.interpretation.util.saliency_util.SaliencyMask">
-<em class="property">class </em><code class="descclassname">fastestimator.interpretation.util.saliency_util.</code><code class="descname">SaliencyMask</code><span class="sig-paren">(</span><em>model</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/interpretation/util/saliency_util.html#SaliencyMask"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.interpretation.util.saliency_util.SaliencyMask" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">fastestimator.interpretation.util.saliency_util.</code><code class="sig-name descname">SaliencyMask</code><span class="sig-paren">(</span><em class="sig-param">model</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/interpretation/util/saliency_util.html#SaliencyMask"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.interpretation.util.saliency_util.SaliencyMask" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Base class for saliency masks. Alone, this class doesn’t do anything.
 This code was adapted from <a class="reference external" href="https://github.com/PAIR-code/saliency">https://github.com/PAIR-code/saliency</a> to be compatible with TensorFlow 2.0</p>
 <dl class="attribute">
 <dt id="fastestimator.interpretation.util.saliency_util.SaliencyMask.get_mask">
-<code class="descname">get_mask</code><a class="reference internal" href="_modules/fastestimator/interpretation/util/saliency_util.html#SaliencyMask.get_mask"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.interpretation.util.saliency_util.SaliencyMask.get_mask" title="Permalink to this definition">¶</a></dt>
-<dd><p><a href="#id9"><span class="problematic" id="id10">**</span></a>Args* –     model_input* – Input tensor, shaped for the model ex. (1, 299, 299, 3)
-:returns: A saliency mask</p>
+<code class="sig-name descname">get_mask</code><a class="reference internal" href="_modules/fastestimator/interpretation/util/saliency_util.html#SaliencyMask.get_mask"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.interpretation.util.saliency_util.SaliencyMask.get_mask" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>model_input</strong> – Input tensor, shaped for the model ex. (1, 299, 299, 3)</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A saliency mask</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="fastestimator.interpretation.util.saliency_util.SaliencyMask.get_smoothed_mask">
-<code class="descname">get_smoothed_mask</code><span class="sig-paren">(</span><em>model_input</em>, <em>stdev_spread=0.15</em>, <em>nsamples=25</em>, <em>magnitude=True</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/interpretation/util/saliency_util.html#SaliencyMask.get_smoothed_mask"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.interpretation.util.saliency_util.SaliencyMask.get_smoothed_mask" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>model_input</strong> – Input tensor, shaped for the model ex. (1, 299, 299, 3)</li>
-<li><strong>stdev_spread</strong> – Amount of noise to add to the input, as fraction of the
-total spread (x_max - x_min). Defaults to 15%.</li>
-<li><strong>nsamples</strong> – Number of samples to average across to get the smooth gradient.</li>
-<li><strong>magnitude</strong> – If true, computes the sum of squares of gradients instead of
-just the sum. Defaults to true.</li>
+<code class="sig-name descname">get_smoothed_mask</code><span class="sig-paren">(</span><em class="sig-param">model_input</em>, <em class="sig-param">stdev_spread=0.15</em>, <em class="sig-param">nsamples=25</em>, <em class="sig-param">magnitude=True</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/interpretation/util/saliency_util.html#SaliencyMask.get_smoothed_mask"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.interpretation.util.saliency_util.SaliencyMask.get_smoothed_mask" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>model_input</strong> – Input tensor, shaped for the model ex. (1, 299, 299, 3)</p></li>
+<li><p><strong>stdev_spread</strong> – Amount of noise to add to the input, as fraction of the
+total spread (x_max - x_min). Defaults to 15%.</p></li>
+<li><p><strong>nsamples</strong> – Number of samples to average across to get the smooth gradient.</p></li>
+<li><p><strong>magnitude</strong> – If true, computes the sum of squares of gradients instead of
+just the sum. Defaults to true.</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">A saliency mask that is smoothed with the SmoothGrad method</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A saliency mask that is smoothed with the SmoothGrad method</p>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>
 
 <dl class="class">
 <dt id="fastestimator.interpretation.util.saliency_util.GradientSaliency">
-<em class="property">class </em><code class="descclassname">fastestimator.interpretation.util.saliency_util.</code><code class="descname">GradientSaliency</code><span class="sig-paren">(</span><em>model</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/interpretation/util/saliency_util.html#GradientSaliency"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.interpretation.util.saliency_util.GradientSaliency" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">fastestimator.interpretation.util.saliency_util.</code><code class="sig-name descname">GradientSaliency</code><span class="sig-paren">(</span><em class="sig-param">model</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/interpretation/util/saliency_util.html#GradientSaliency"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.interpretation.util.saliency_util.GradientSaliency" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#fastestimator.interpretation.util.saliency_util.SaliencyMask" title="fastestimator.interpretation.util.saliency_util.SaliencyMask"><code class="xref py py-class docutils literal notranslate"><span class="pre">fastestimator.interpretation.util.saliency_util.SaliencyMask</span></code></a></p>
 <p>A SaliencyMask class that computes saliency masks with a gradient.</p>
 <dl class="attribute">
 <dt id="fastestimator.interpretation.util.saliency_util.GradientSaliency.get_mask">
-<code class="descname">get_mask</code><a class="reference internal" href="_modules/fastestimator/interpretation/util/saliency_util.html#GradientSaliency.get_mask"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.interpretation.util.saliency_util.GradientSaliency.get_mask" title="Permalink to this definition">¶</a></dt>
-<dd><p><a href="#id11"><span class="problematic" id="id12">**</span></a>Args* –     model_input* –</p>
-<dl class="docutils">
-<dt>Input tensor, shaped for the model ex. (1, 299, 299, 3)</dt>
-<dd><dl class="first last docutils">
-<dt>classes: A tensor describing which output index to consider for each element in the input batch.</dt>
-<dd>ex. [[0, 5], [1, 7]] for an input with batch size 2 where indexes 5 and 7 are the targets</dd>
-</dl>
+<code class="sig-name descname">get_mask</code><a class="reference internal" href="_modules/fastestimator/interpretation/util/saliency_util.html#GradientSaliency.get_mask"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.interpretation.util.saliency_util.GradientSaliency.get_mask" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>model_input</strong> – Input tensor, shaped for the model ex. (1, 299, 299, 3)</p></li>
+<li><p><strong>classes</strong> – A tensor describing which output index to consider for each element in the input batch.
+ex. [[0, 5], [1, 7]] for an input with batch size 2 where indexes 5 and 7 are the targets</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A vanilla gradient mask</p>
 </dd>
 </dl>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">A vanilla gradient mask</td>
-</tr>
-</tbody>
-</table>
 </dd></dl>
 
 </dd></dl>
 
 <dl class="class">
 <dt id="fastestimator.interpretation.util.saliency_util.IntegratedGradients">
-<em class="property">class </em><code class="descclassname">fastestimator.interpretation.util.saliency_util.</code><code class="descname">IntegratedGradients</code><span class="sig-paren">(</span><em>model</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/interpretation/util/saliency_util.html#IntegratedGradients"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.interpretation.util.saliency_util.IntegratedGradients" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">fastestimator.interpretation.util.saliency_util.</code><code class="sig-name descname">IntegratedGradients</code><span class="sig-paren">(</span><em class="sig-param">model</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/interpretation/util/saliency_util.html#IntegratedGradients"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.interpretation.util.saliency_util.IntegratedGradients" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#fastestimator.interpretation.util.saliency_util.GradientSaliency" title="fastestimator.interpretation.util.saliency_util.GradientSaliency"><code class="xref py py-class docutils literal notranslate"><span class="pre">fastestimator.interpretation.util.saliency_util.GradientSaliency</span></code></a></p>
 <p>A SaliencyMask class that implements the integrated gradients method.</p>
 <p><a class="reference external" href="https://arxiv.org/abs/1703.01365">https://arxiv.org/abs/1703.01365</a></p>
 <dl class="attribute">
 <dt id="fastestimator.interpretation.util.saliency_util.IntegratedGradients.get_mask">
-<code class="descname">get_mask</code><a class="reference internal" href="_modules/fastestimator/interpretation/util/saliency_util.html#IntegratedGradients.get_mask"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.interpretation.util.saliency_util.IntegratedGradients.get_mask" title="Permalink to this definition">¶</a></dt>
-<dd><p><a href="#id13"><span class="problematic" id="id14">**</span></a>Args* –     model_input* –</p>
-<dl class="docutils">
-<dt>Input tensor, shaped for the model ex. (1, 299, 299, 3)</dt>
-<dd><p class="first">input_baseline: Baseline value used in integration. Defaults to 0.
-steps: Number of integrated steps between baseline and image.
-classes: A tensor describing which output index to consider for each element in the input batch.</p>
-<blockquote class="last">
-<div>ex. [[0, 5], [1, 7]] for an input with batch size 2 where indexes 5 and 7 are the targets</div></blockquote>
+<code class="sig-name descname">get_mask</code><a class="reference internal" href="_modules/fastestimator/interpretation/util/saliency_util.html#IntegratedGradients.get_mask"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.interpretation.util.saliency_util.IntegratedGradients.get_mask" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>model_input</strong> – Input tensor, shaped for the model ex. (1, 299, 299, 3)</p></li>
+<li><p><strong>input_baseline</strong> – Baseline value used in integration. Defaults to 0.</p></li>
+<li><p><strong>steps</strong> – Number of integrated steps between baseline and image.</p></li>
+<li><p><strong>classes</strong> – A tensor describing which output index to consider for each element in the input batch.
+ex. [[0, 5], [1, 7]] for an input with batch size 2 where indexes 5 and 7 are the targets</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>An integrated gradients mask</p>
 </dd>
 </dl>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">An integrated gradients mask</td>
-</tr>
-</tbody>
-</table>
 </dd></dl>
 
 </dd></dl>
@@ -478,32 +456,32 @@ classes: A tensor describing which output index to consider for each element in 
 <span id="umap-util"></span><h2>umap_util<a class="headerlink" href="#module-fastestimator.interpretation.util.umap_util" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="fastestimator.interpretation.util.umap_util.Evaluator">
-<em class="property">class </em><code class="descclassname">fastestimator.interpretation.util.umap_util.</code><code class="descname">Evaluator</code><span class="sig-paren">(</span><em>model</em>, <em>layers=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/interpretation/util/umap_util.html#Evaluator"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.interpretation.util.umap_util.Evaluator" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">fastestimator.interpretation.util.umap_util.</code><code class="sig-name descname">Evaluator</code><span class="sig-paren">(</span><em class="sig-param">model</em>, <em class="sig-param">layers=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/interpretation/util/umap_util.html#Evaluator"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.interpretation.util.umap_util.Evaluator" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <dl class="method">
 <dt id="fastestimator.interpretation.util.umap_util.Evaluator.evaluate">
-<code class="descname">evaluate</code><span class="sig-paren">(</span><em>x</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/interpretation/util/umap_util.html#Evaluator.evaluate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.interpretation.util.umap_util.Evaluator.evaluate" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">evaluate</code><span class="sig-paren">(</span><em class="sig-param">x</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/interpretation/util/umap_util.html#Evaluator.evaluate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.interpretation.util.umap_util.Evaluator.evaluate" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
 
 <dl class="class">
 <dt id="fastestimator.interpretation.util.umap_util.FileCache">
-<em class="property">class </em><code class="descclassname">fastestimator.interpretation.util.umap_util.</code><code class="descname">FileCache</code><span class="sig-paren">(</span><em>root_path</em>, <em>layers</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/interpretation/util/umap_util.html#FileCache"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.interpretation.util.umap_util.FileCache" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">fastestimator.interpretation.util.umap_util.</code><code class="sig-name descname">FileCache</code><span class="sig-paren">(</span><em class="sig-param">root_path</em>, <em class="sig-param">layers</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/interpretation/util/umap_util.html#FileCache"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.interpretation.util.umap_util.FileCache" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <dl class="method">
 <dt id="fastestimator.interpretation.util.umap_util.FileCache.save">
-<code class="descname">save</code><span class="sig-paren">(</span><em>data</em>, <em>classes</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/interpretation/util/umap_util.html#FileCache.save"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.interpretation.util.umap_util.FileCache.save" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">save</code><span class="sig-paren">(</span><em class="sig-param">data</em>, <em class="sig-param">classes</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/interpretation/util/umap_util.html#FileCache.save"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.interpretation.util.umap_util.FileCache.save" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="fastestimator.interpretation.util.umap_util.FileCache.batch_cached">
-<code class="descname">batch_cached</code><span class="sig-paren">(</span><em>batch_id</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/interpretation/util/umap_util.html#FileCache.batch_cached"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.interpretation.util.umap_util.FileCache.batch_cached" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">batch_cached</code><span class="sig-paren">(</span><em class="sig-param">batch_id</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/interpretation/util/umap_util.html#FileCache.batch_cached"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.interpretation.util.umap_util.FileCache.batch_cached" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="fastestimator.interpretation.util.umap_util.FileCache.load">
-<code class="descname">load</code><span class="sig-paren">(</span><em>batches=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/interpretation/util/umap_util.html#FileCache.load"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.interpretation.util.umap_util.FileCache.load" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">load</code><span class="sig-paren">(</span><em class="sig-param">batches=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/interpretation/util/umap_util.html#FileCache.load"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.interpretation.util.umap_util.FileCache.load" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -514,61 +492,49 @@ classes: A tensor describing which output index to consider for each element in 
 <span id="vis-util"></span><h2>vis_util<a class="headerlink" href="#module-fastestimator.interpretation.util.vis_util" title="Permalink to this headline">¶</a></h2>
 <dl class="function">
 <dt id="fastestimator.interpretation.util.vis_util.show_text">
-<code class="descclassname">fastestimator.interpretation.util.vis_util.</code><code class="descname">show_text</code><span class="sig-paren">(</span><em>background</em>, <em>text</em>, <em>axis=None</em>, <em>title=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/interpretation/util/vis_util.html#show_text"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.interpretation.util.vis_util.show_text" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">fastestimator.interpretation.util.vis_util.</code><code class="sig-name descname">show_text</code><span class="sig-paren">(</span><em class="sig-param">background</em>, <em class="sig-param">text</em>, <em class="sig-param">axis=None</em>, <em class="sig-param">title=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/interpretation/util/vis_util.html#show_text"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.interpretation.util.vis_util.show_text" title="Permalink to this definition">¶</a></dt>
 <dd><p>Plots a given image onto an axis</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>axis</strong> – The matplotlib axis to plot on</li>
-<li><strong>background</strong> – A background image to display behind the text (useful for sizing the plot correctly)</li>
-<li><strong>text</strong> – The text to display</li>
-<li><strong>title</strong> – A title for the image</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>axis</strong> – The matplotlib axis to plot on</p></li>
+<li><p><strong>background</strong> – A background image to display behind the text (useful for sizing the plot correctly)</p></li>
+<li><p><strong>text</strong> – The text to display</p></li>
+<li><p><strong>title</strong> – A title for the image</p></li>
 </ul>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="function">
 <dt id="fastestimator.interpretation.util.vis_util.show_image">
-<code class="descclassname">fastestimator.interpretation.util.vis_util.</code><code class="descname">show_image</code><span class="sig-paren">(</span><em>im</em>, <em>axis=None</em>, <em>title=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/interpretation/util/vis_util.html#show_image"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.interpretation.util.vis_util.show_image" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">fastestimator.interpretation.util.vis_util.</code><code class="sig-name descname">show_image</code><span class="sig-paren">(</span><em class="sig-param">im</em>, <em class="sig-param">axis=None</em>, <em class="sig-param">title=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/interpretation/util/vis_util.html#show_image"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.interpretation.util.vis_util.show_image" title="Permalink to this definition">¶</a></dt>
 <dd><p>Plots a given image onto an axis</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>axis</strong> – The matplotlib axis to plot on, or None for a new plot</li>
-<li><strong>im</strong> – The image to display (width X height)</li>
-<li><strong>title</strong> – A title for the image</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>axis</strong> – The matplotlib axis to plot on, or None for a new plot</p></li>
+<li><p><strong>im</strong> – The image to display (width X height)</p></li>
+<li><p><strong>title</strong> – A title for the image</p></li>
 </ul>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="function">
 <dt id="fastestimator.interpretation.util.vis_util.show_gray_image">
-<code class="descclassname">fastestimator.interpretation.util.vis_util.</code><code class="descname">show_gray_image</code><span class="sig-paren">(</span><em>im</em>, <em>axis=None</em>, <em>title=None</em>, <em>color_map='inferno'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/interpretation/util/vis_util.html#show_gray_image"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.interpretation.util.vis_util.show_gray_image" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">fastestimator.interpretation.util.vis_util.</code><code class="sig-name descname">show_gray_image</code><span class="sig-paren">(</span><em class="sig-param">im</em>, <em class="sig-param">axis=None</em>, <em class="sig-param">title=None</em>, <em class="sig-param">color_map='inferno'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/interpretation/util/vis_util.html#show_gray_image"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.interpretation.util.vis_util.show_gray_image" title="Permalink to this definition">¶</a></dt>
 <dd><p>Plots a given image onto an axis</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>axis</strong> – The matplotlib axis to plot on, or None for a new plot</li>
-<li><strong>im</strong> – The image to display (width X height)</li>
-<li><strong>title</strong> – A title for the image</li>
-<li><strong>color_map</strong> – The color set to be used (since the image is gray scale)</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>axis</strong> – The matplotlib axis to plot on, or None for a new plot</p></li>
+<li><p><strong>im</strong> – The image to display (width X height)</p></li>
+<li><p><strong>title</strong> – A title for the image</p></li>
+<li><p><strong>color_map</strong> – The color set to be used (since the image is gray scale)</p></li>
 </ul>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+</dl>
 </dd></dl>
 
 </div>
@@ -585,7 +551,7 @@ classes: A tensor describing which output index to consider for each element in 
         <a href="fastestimator.layers.html" class="btn btn-neutral float-right" title="layers" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="fastestimator.interpretation.html" class="btn btn-neutral" title="interpretation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="fastestimator.interpretation.html" class="btn btn-neutral float-left" title="interpretation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -611,37 +577,16 @@ classes: A tensor describing which output index to consider for each element in 
   
 
 
-  
-
-    
-    
-      <script type="text/javascript">
-          var DOCUMENTATION_OPTIONS = {
-              URL_ROOT:'./',
-              VERSION:'1.0b0',
-              LANGUAGE:'None',
-              COLLAPSE_INDEX:false,
-              FILE_SUFFIX:'.html',
-              HAS_SOURCE:  true,
-              SOURCELINK_SUFFIX: '.txt'
-          };
-      </script>
-        <script type="text/javascript" src="_static/jquery.js"></script>
-        <script type="text/javascript" src="_static/underscore.js"></script>
-        <script type="text/javascript" src="_static/doctools.js"></script>
-        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-    
-
-  
-
-  <script type="text/javascript" src="_static/js/theme.js"></script>
-
   <script type="text/javascript">
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script> 
+  </script>
+
+  
+  
+    
+   
 
 </body>
 </html>

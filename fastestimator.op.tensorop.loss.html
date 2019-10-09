@@ -19,34 +19,39 @@
   
 
   
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
 
-  
-  
     
 
   
-
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="model" href="fastestimator.op.tensorop.model.html" />
     <link rel="prev" title="filter" href="fastestimator.op.tensorop.filter.html" /> 
-
-  
-  <script src="_static/js/modernizr.min.js"></script>
-
 </head>
 
 <body class="wy-body-for-nav">
 
    
   <div class="wy-grid-for-nav">
-
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search">
+        <div class="wy-side-nav-search" >
           
 
           
@@ -224,28 +229,24 @@
 <span id="binary-crossentropy"></span><h2>binary_crossentropy<a class="headerlink" href="#module-fastestimator.op.tensorop.loss.binary_crossentropy" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="fastestimator.op.tensorop.loss.binary_crossentropy.BinaryCrossentropy">
-<em class="property">class </em><code class="descclassname">fastestimator.op.tensorop.loss.binary_crossentropy.</code><code class="descname">BinaryCrossentropy</code><span class="sig-paren">(</span><em>y_true=None</em>, <em>y_pred=None</em>, <em>inputs=None</em>, <em>outputs=None</em>, <em>mode=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/op/tensorop/loss/binary_crossentropy.html#BinaryCrossentropy"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.op.tensorop.loss.binary_crossentropy.BinaryCrossentropy" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">fastestimator.op.tensorop.loss.binary_crossentropy.</code><code class="sig-name descname">BinaryCrossentropy</code><span class="sig-paren">(</span><em class="sig-param">y_true=None</em>, <em class="sig-param">y_pred=None</em>, <em class="sig-param">inputs=None</em>, <em class="sig-param">outputs=None</em>, <em class="sig-param">mode=None</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/op/tensorop/loss/binary_crossentropy.html#BinaryCrossentropy"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.op.tensorop.loss.binary_crossentropy.BinaryCrossentropy" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#fastestimator.op.tensorop.loss.loss.Loss" title="fastestimator.op.tensorop.loss.loss.Loss"><code class="xref py py-class docutils literal notranslate"><span class="pre">fastestimator.op.tensorop.loss.loss.Loss</span></code></a></p>
 <p>Calculate binary cross entropy, the rest of the keyword argument will be passed to tf.losses.BinaryCrossentropy</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>y_true</strong> – ground truth label key</li>
-<li><strong>y_pred</strong> – prediction label key</li>
-<li><strong>inputs</strong> – A tuple or list like: [&lt;y_true&gt;, &lt;y_pred&gt;]</li>
-<li><strong>outputs</strong> – Where to store the computed loss value (not required under normal use cases)</li>
-<li><strong>mode</strong> – ‘train’, ‘eval’, ‘test’, or None</li>
-<li><strong>kwargs</strong> – Arguments to be passed along to the tf.losses constructor</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>y_true</strong> – ground truth label key</p></li>
+<li><p><strong>y_pred</strong> – prediction label key</p></li>
+<li><p><strong>inputs</strong> – A tuple or list like: [&lt;y_true&gt;, &lt;y_pred&gt;]</p></li>
+<li><p><strong>outputs</strong> – Where to store the computed loss value (not required under normal use cases)</p></li>
+<li><p><strong>mode</strong> – ‘train’, ‘eval’, ‘test’, or None</p></li>
+<li><p><strong>kwargs</strong> – Arguments to be passed along to the tf.losses constructor</p></li>
 </ul>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+</dl>
 <dl class="method">
 <dt id="fastestimator.op.tensorop.loss.binary_crossentropy.BinaryCrossentropy.forward">
-<code class="descname">forward</code><span class="sig-paren">(</span><em>data</em>, <em>state</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/op/tensorop/loss/binary_crossentropy.html#BinaryCrossentropy.forward"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.op.tensorop.loss.binary_crossentropy.BinaryCrossentropy.forward" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">forward</code><span class="sig-paren">(</span><em class="sig-param">data</em>, <em class="sig-param">state</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/op/tensorop/loss/binary_crossentropy.html#BinaryCrossentropy.forward"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.op.tensorop.loss.binary_crossentropy.BinaryCrossentropy.forward" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -256,24 +257,21 @@
 <h2>loss<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
 <span class="target" id="module-fastestimator.op.tensorop.loss.loss"></span><dl class="class">
 <dt id="fastestimator.op.tensorop.loss.loss.Loss">
-<em class="property">class </em><code class="descclassname">fastestimator.op.tensorop.loss.loss.</code><code class="descname">Loss</code><span class="sig-paren">(</span><em>inputs=None</em>, <em>outputs=None</em>, <em>mode=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/op/tensorop/loss/loss.html#Loss"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.op.tensorop.loss.loss.Loss" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">fastestimator.op.tensorop.loss.loss.</code><code class="sig-name descname">Loss</code><span class="sig-paren">(</span><em class="sig-param">inputs=None</em>, <em class="sig-param">outputs=None</em>, <em class="sig-param">mode=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/op/tensorop/loss/loss.html#Loss"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.op.tensorop.loss.loss.Loss" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="fastestimator.op.html#fastestimator.op.op.TensorOp" title="fastestimator.op.op.TensorOp"><code class="xref py py-class docutils literal notranslate"><span class="pre">fastestimator.op.op.TensorOp</span></code></a></p>
 <p>A base class for loss operations. It can be used directly to perform value pass-through (see the adversarial
 training showcase for an example of when this is useful)</p>
-<dl class="staticmethod">
+<dl class="method">
 <dt id="fastestimator.op.tensorop.loss.loss.Loss.validate_loss_inputs">
-<em class="property">static </em><code class="descname">validate_loss_inputs</code><span class="sig-paren">(</span><em>inputs</em>, <em>*args</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/op/tensorop/loss/loss.html#Loss.validate_loss_inputs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.op.tensorop.loss.loss.Loss.validate_loss_inputs" title="Permalink to this definition">¶</a></dt>
+<em class="property">static </em><code class="sig-name descname">validate_loss_inputs</code><span class="sig-paren">(</span><em class="sig-param">inputs</em>, <em class="sig-param">*args</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/op/tensorop/loss/loss.html#Loss.validate_loss_inputs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.op.tensorop.loss.loss.Loss.validate_loss_inputs" title="Permalink to this definition">¶</a></dt>
 <dd><p>A method to ensure that either the inputs array or individual input arguments are specified, but not both
 :param inputs: None or a tuple/list of arguments
 :param *args: a tuple of arguments or Nones</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">either ‘inputs’ or the args tuple depending on which is populated</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>either ‘inputs’ or the args tuple depending on which is populated</p>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>
@@ -284,29 +282,25 @@ training showcase for an example of when this is useful)</p>
 <span id="mean-squared-error"></span><h2>mean_squared_error<a class="headerlink" href="#module-fastestimator.op.tensorop.loss.mean_squared_error" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="fastestimator.op.tensorop.loss.mean_squared_error.MeanSquaredError">
-<em class="property">class </em><code class="descclassname">fastestimator.op.tensorop.loss.mean_squared_error.</code><code class="descname">MeanSquaredError</code><span class="sig-paren">(</span><em>y_true=None</em>, <em>y_pred=None</em>, <em>inputs=None</em>, <em>outputs=None</em>, <em>mode=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/op/tensorop/loss/mean_squared_error.html#MeanSquaredError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.op.tensorop.loss.mean_squared_error.MeanSquaredError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">fastestimator.op.tensorop.loss.mean_squared_error.</code><code class="sig-name descname">MeanSquaredError</code><span class="sig-paren">(</span><em class="sig-param">y_true=None</em>, <em class="sig-param">y_pred=None</em>, <em class="sig-param">inputs=None</em>, <em class="sig-param">outputs=None</em>, <em class="sig-param">mode=None</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/op/tensorop/loss/mean_squared_error.html#MeanSquaredError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.op.tensorop.loss.mean_squared_error.MeanSquaredError" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#fastestimator.op.tensorop.loss.loss.Loss" title="fastestimator.op.tensorop.loss.loss.Loss"><code class="xref py py-class docutils literal notranslate"><span class="pre">fastestimator.op.tensorop.loss.loss.Loss</span></code></a></p>
 <p>Calculate mean squared error loss, the rest of the keyword argument will be passed to
 tf.losses.MeanSquaredError</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>y_true</strong> – ground truth label key</li>
-<li><strong>y_pred</strong> – prediction label key</li>
-<li><strong>inputs</strong> – A tuple or list like: [&lt;y_true&gt;, &lt;y_pred&gt;]</li>
-<li><strong>outputs</strong> – Where to store the computed loss value (not required under normal use cases)</li>
-<li><strong>mode</strong> – ‘train’, ‘eval’, ‘test’, or None</li>
-<li><strong>kwargs</strong> – Arguments to be passed along to the tf.losses constructor</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>y_true</strong> – ground truth label key</p></li>
+<li><p><strong>y_pred</strong> – prediction label key</p></li>
+<li><p><strong>inputs</strong> – A tuple or list like: [&lt;y_true&gt;, &lt;y_pred&gt;]</p></li>
+<li><p><strong>outputs</strong> – Where to store the computed loss value (not required under normal use cases)</p></li>
+<li><p><strong>mode</strong> – ‘train’, ‘eval’, ‘test’, or None</p></li>
+<li><p><strong>kwargs</strong> – Arguments to be passed along to the tf.losses constructor</p></li>
 </ul>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+</dl>
 <dl class="method">
 <dt id="fastestimator.op.tensorop.loss.mean_squared_error.MeanSquaredError.forward">
-<code class="descname">forward</code><span class="sig-paren">(</span><em>data</em>, <em>state</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/op/tensorop/loss/mean_squared_error.html#MeanSquaredError.forward"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.op.tensorop.loss.mean_squared_error.MeanSquaredError.forward" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">forward</code><span class="sig-paren">(</span><em class="sig-param">data</em>, <em class="sig-param">state</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/op/tensorop/loss/mean_squared_error.html#MeanSquaredError.forward"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.op.tensorop.loss.mean_squared_error.MeanSquaredError.forward" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -317,31 +311,27 @@ tf.losses.MeanSquaredError</p>
 <span id="mixup-loss"></span><h2>mixup_loss<a class="headerlink" href="#module-fastestimator.op.tensorop.loss.mixup_loss" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="fastestimator.op.tensorop.loss.mixup_loss.MixUpLoss">
-<em class="property">class </em><code class="descclassname">fastestimator.op.tensorop.loss.mixup_loss.</code><code class="descname">MixUpLoss</code><span class="sig-paren">(</span><em>loss</em>, <em>lam=None</em>, <em>y_true=None</em>, <em>y_pred=None</em>, <em>inputs=None</em>, <em>outputs=None</em>, <em>mode=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/op/tensorop/loss/mixup_loss.html#MixUpLoss"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.op.tensorop.loss.mixup_loss.MixUpLoss" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">fastestimator.op.tensorop.loss.mixup_loss.</code><code class="sig-name descname">MixUpLoss</code><span class="sig-paren">(</span><em class="sig-param">loss</em>, <em class="sig-param">lam=None</em>, <em class="sig-param">y_true=None</em>, <em class="sig-param">y_pred=None</em>, <em class="sig-param">inputs=None</em>, <em class="sig-param">outputs=None</em>, <em class="sig-param">mode=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/op/tensorop/loss/mixup_loss.html#MixUpLoss"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.op.tensorop.loss.mixup_loss.MixUpLoss" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#fastestimator.op.tensorop.loss.loss.Loss" title="fastestimator.op.tensorop.loss.loss.Loss"><code class="xref py py-class docutils literal notranslate"><span class="pre">fastestimator.op.tensorop.loss.loss.Loss</span></code></a></p>
 <p>This class should be used in conjunction with MixUpBatch to perform mix-up training, which helps to reduce
 over-fitting, stabilize GAN training, and harden against adversarial attacks (<a class="reference external" href="https://arxiv.org/abs/1710.09412">https://arxiv.org/abs/1710.09412</a>)</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>loss</strong> (<em>func</em>) – A loss object (tf.losses) which can be invoked like “loss(true, pred)”. It’s reduction method</li>
-<li><strong>be overridden to 'none'</strong> (<em>will</em>) – </li>
-<li><strong>lam</strong> – The key of the lambda value generated by MixUpBatch</li>
-<li><strong>y_true</strong> – ground truth label key</li>
-<li><strong>y_pred</strong> – prediction label key</li>
-<li><strong>inputs</strong> – A tuple or list like: [&lt;lam&gt;, &lt;y_true&gt;, &lt;y_pred&gt;]</li>
-<li><strong>outputs</strong> – Where to store the computed loss value (not required under normal use cases)</li>
-<li><strong>mode</strong> – ‘train’, ‘eval’, ‘test’, or None</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>loss</strong> (<em>func</em>) – A loss object (tf.losses) which can be invoked like “loss(true, pred)”. It’s reduction method</p></li>
+<li><p><strong>be overridden to 'none'</strong> (<em>will</em>) – </p></li>
+<li><p><strong>lam</strong> – The key of the lambda value generated by MixUpBatch</p></li>
+<li><p><strong>y_true</strong> – ground truth label key</p></li>
+<li><p><strong>y_pred</strong> – prediction label key</p></li>
+<li><p><strong>inputs</strong> – A tuple or list like: [&lt;lam&gt;, &lt;y_true&gt;, &lt;y_pred&gt;]</p></li>
+<li><p><strong>outputs</strong> – Where to store the computed loss value (not required under normal use cases)</p></li>
+<li><p><strong>mode</strong> – ‘train’, ‘eval’, ‘test’, or None</p></li>
 </ul>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+</dl>
 <dl class="method">
 <dt id="fastestimator.op.tensorop.loss.mixup_loss.MixUpLoss.forward">
-<code class="descname">forward</code><span class="sig-paren">(</span><em>data</em>, <em>state</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/op/tensorop/loss/mixup_loss.html#MixUpLoss.forward"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.op.tensorop.loss.mixup_loss.MixUpLoss.forward" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">forward</code><span class="sig-paren">(</span><em class="sig-param">data</em>, <em class="sig-param">state</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/op/tensorop/loss/mixup_loss.html#MixUpLoss.forward"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.op.tensorop.loss.mixup_loss.MixUpLoss.forward" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -352,30 +342,26 @@ over-fitting, stabilize GAN training, and harden against adversarial attacks (<a
 <span id="sparse-categorical-crossentropy"></span><h2>sparse_categorical_crossentropy<a class="headerlink" href="#module-fastestimator.op.tensorop.loss.sparse_categorical_crossentropy" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="fastestimator.op.tensorop.loss.sparse_categorical_crossentropy.SparseCategoricalCrossentropy">
-<em class="property">class </em><code class="descclassname">fastestimator.op.tensorop.loss.sparse_categorical_crossentropy.</code><code class="descname">SparseCategoricalCrossentropy</code><span class="sig-paren">(</span><em>y_true=None</em>, <em>y_pred=None</em>, <em>inputs=None</em>, <em>outputs=None</em>, <em>mode=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/op/tensorop/loss/sparse_categorical_crossentropy.html#SparseCategoricalCrossentropy"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.op.tensorop.loss.sparse_categorical_crossentropy.SparseCategoricalCrossentropy" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">fastestimator.op.tensorop.loss.sparse_categorical_crossentropy.</code><code class="sig-name descname">SparseCategoricalCrossentropy</code><span class="sig-paren">(</span><em class="sig-param">y_true=None</em>, <em class="sig-param">y_pred=None</em>, <em class="sig-param">inputs=None</em>, <em class="sig-param">outputs=None</em>, <em class="sig-param">mode=None</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/op/tensorop/loss/sparse_categorical_crossentropy.html#SparseCategoricalCrossentropy"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.op.tensorop.loss.sparse_categorical_crossentropy.SparseCategoricalCrossentropy" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#fastestimator.op.tensorop.loss.loss.Loss" title="fastestimator.op.tensorop.loss.loss.Loss"><code class="xref py py-class docutils literal notranslate"><span class="pre">fastestimator.op.tensorop.loss.loss.Loss</span></code></a></p>
 <p>Calculate sparse categorical cross entropy, the rest of the keyword argument will be passed to
 tf.losses.SparseCategoricalCrossentropy</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>y_true</strong> – ground truth label key</li>
-<li><strong>y_pred</strong> – prediction label key</li>
-<li><strong>inputs</strong> – A tuple or list like: [&lt;y_true&gt;, &lt;y_pred&gt;]</li>
-<li><strong>outputs</strong> – Where to store the computed loss value (not required under normal use cases)</li>
-<li><strong>mode</strong> – ‘train’, ‘eval’, ‘test’, or None</li>
-<li><strong>kwargs</strong> – Arguments to be passed along to the tf.losses constructor. Passing the ‘reduction’ arg will raise a
-KeyError</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>y_true</strong> – ground truth label key</p></li>
+<li><p><strong>y_pred</strong> – prediction label key</p></li>
+<li><p><strong>inputs</strong> – A tuple or list like: [&lt;y_true&gt;, &lt;y_pred&gt;]</p></li>
+<li><p><strong>outputs</strong> – Where to store the computed loss value (not required under normal use cases)</p></li>
+<li><p><strong>mode</strong> – ‘train’, ‘eval’, ‘test’, or None</p></li>
+<li><p><strong>kwargs</strong> – Arguments to be passed along to the tf.losses constructor. Passing the ‘reduction’ arg will raise a
+KeyError</p></li>
 </ul>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+</dl>
 <dl class="method">
 <dt id="fastestimator.op.tensorop.loss.sparse_categorical_crossentropy.SparseCategoricalCrossentropy.forward">
-<code class="descname">forward</code><span class="sig-paren">(</span><em>data</em>, <em>state</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/op/tensorop/loss/sparse_categorical_crossentropy.html#SparseCategoricalCrossentropy.forward"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.op.tensorop.loss.sparse_categorical_crossentropy.SparseCategoricalCrossentropy.forward" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">forward</code><span class="sig-paren">(</span><em class="sig-param">data</em>, <em class="sig-param">state</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/op/tensorop/loss/sparse_categorical_crossentropy.html#SparseCategoricalCrossentropy.forward"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.op.tensorop.loss.sparse_categorical_crossentropy.SparseCategoricalCrossentropy.forward" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -394,7 +380,7 @@ KeyError</li>
         <a href="fastestimator.op.tensorop.model.html" class="btn btn-neutral float-right" title="model" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="fastestimator.op.tensorop.filter.html" class="btn btn-neutral" title="filter" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="fastestimator.op.tensorop.filter.html" class="btn btn-neutral float-left" title="filter" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -420,37 +406,16 @@ KeyError</li>
   
 
 
-  
-
-    
-    
-      <script type="text/javascript">
-          var DOCUMENTATION_OPTIONS = {
-              URL_ROOT:'./',
-              VERSION:'1.0b0',
-              LANGUAGE:'None',
-              COLLAPSE_INDEX:false,
-              FILE_SUFFIX:'.html',
-              HAS_SOURCE:  true,
-              SOURCELINK_SUFFIX: '.txt'
-          };
-      </script>
-        <script type="text/javascript" src="_static/jquery.js"></script>
-        <script type="text/javascript" src="_static/underscore.js"></script>
-        <script type="text/javascript" src="_static/doctools.js"></script>
-        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-    
-
-  
-
-  <script type="text/javascript" src="_static/js/theme.js"></script>
-
   <script type="text/javascript">
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script> 
+  </script>
+
+  
+  
+    
+   
 
 </body>
 </html>

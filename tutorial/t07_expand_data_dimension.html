@@ -19,34 +19,39 @@
   
 
   
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
 
-  
-  
     
 
   
-
   <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Tutorial 8: Changing hyperparameters during training with Scheduler" href="t08_scheduler_progressive_training.html" />
     <link rel="prev" title="Tutorial 6: Dealing with imbalanced dataset using TensorFilter" href="t06_TensorFilter_imbalanced_training.html" /> 
-
-  
-  <script src="../_static/js/modernizr.min.js"></script>
-
 </head>
 
 <body class="wy-body-for-nav">
 
    
   <div class="wy-grid-for-nav">
-
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search">
+        <div class="wy-side-nav-search" >
           
 
           
@@ -96,8 +101,8 @@
 <li class="toctree-l2 current"><a class="current reference internal" href="#">Tutorial 7: Expanding data dimension in RecordWriter and Pipeline</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#Step-1---RecordWriter:-expand-data-dimension-and-write-it-to-the-disk">Step 1 - RecordWriter: expand data dimension and write it to the disk</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#Step-2---Pipeline:-expand-dimension-on-the-fly">Step 2 - Pipeline: expand dimension on the fly</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#Step-3---Check-pipeline-results...">Step 3 - Check pipeline results…</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#....-and-visualize!">…. and visualize!</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Step-3---Check-pipeline-results…">Step 3 - Check pipeline results…</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#….-and-visualize!">…. and visualize!</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="t08_scheduler_progressive_training.html">Tutorial 8: Changing hyperparameters during training with Scheduler</a></li>
@@ -400,8 +405,8 @@ div.rendered_html tbody tr:hover {
 <p>In many domains (especially medical imaging), multiple examples are sampled from the same data, we call it <strong>data dimension expansion</strong>. In this tutorial we will show you how to do data dimension expansion in FastEstimator.</p>
 <p>In general, expanding data dimension can be achieved in both <code class="docutils literal notranslate"><span class="pre">RecordWriter</span></code> and <code class="docutils literal notranslate"><span class="pre">Pipeline</span></code>. Here are the differences:</p>
 <ul class="simple">
-<li>Expanding data in <code class="docutils literal notranslate"><span class="pre">RecordWriter</span></code> means occupying <strong>more disk-space</strong>, and the expanded samples are fixed during the training. The good thing is that it <strong>saves preprocessing computation</strong> during training.</li>
-<li>Expanding data in <code class="docutils literal notranslate"><span class="pre">Pipeline</span></code> means expanded data can be different for every batch during training, the computation is done <strong>in-memory</strong> therefore <strong>no extra disk space</strong> is required. The drawback is that <strong>additional computation</strong> is required.</li>
+<li><p>Expanding data in <code class="docutils literal notranslate"><span class="pre">RecordWriter</span></code> means occupying <strong>more disk-space</strong>, and the expanded samples are fixed during the training. The good thing is that it <strong>saves preprocessing computation</strong> during training.</p></li>
+<li><p>Expanding data in <code class="docutils literal notranslate"><span class="pre">Pipeline</span></code> means expanded data can be different for every batch during training, the computation is done <strong>in-memory</strong> therefore <strong>no extra disk space</strong> is required. The drawback is that <strong>additional computation</strong> is required.</p></li>
 </ul>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
@@ -494,8 +499,8 @@ div.rendered_html tbody tr:hover {
 </div>
 </div>
 </div>
-<div class="section" id="Step-3---Check-pipeline-results...">
-<h2>Step 3 - Check pipeline results…<a class="headerlink" href="#Step-3---Check-pipeline-results..." title="Permalink to this headline">¶</a></h2>
+<div class="section" id="Step-3---Check-pipeline-results…">
+<h2>Step 3 - Check pipeline results…<a class="headerlink" href="#Step-3---Check-pipeline-results…" title="Permalink to this headline">¶</a></h2>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
@@ -513,8 +518,8 @@ div.rendered_html tbody tr:hover {
 </div>
 </div>
 </div>
-<div class="section" id="....-and-visualize!">
-<h2>…. and visualize!<a class="headerlink" href="#....-and-visualize!" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="….-and-visualize!">
+<h2>…. and visualize!<a class="headerlink" href="#….-and-visualize!" title="Permalink to this headline">¶</a></h2>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
 </pre></div>
@@ -564,7 +569,7 @@ ground truth label is 5
         <a href="t08_scheduler_progressive_training.html" class="btn btn-neutral float-right" title="Tutorial 8: Changing hyperparameters during training with Scheduler" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="t06_TensorFilter_imbalanced_training.html" class="btn btn-neutral" title="Tutorial 6: Dealing with imbalanced dataset using TensorFilter" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="t06_TensorFilter_imbalanced_training.html" class="btn btn-neutral float-left" title="Tutorial 6: Dealing with imbalanced dataset using TensorFilter" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -590,37 +595,16 @@ ground truth label is 5
   
 
 
-  
-
-    
-    
-      <script type="text/javascript">
-          var DOCUMENTATION_OPTIONS = {
-              URL_ROOT:'../',
-              VERSION:'1.0b0',
-              LANGUAGE:'None',
-              COLLAPSE_INDEX:false,
-              FILE_SUFFIX:'.html',
-              HAS_SOURCE:  true,
-              SOURCELINK_SUFFIX: '.txt'
-          };
-      </script>
-        <script type="text/javascript" src="../_static/jquery.js"></script>
-        <script type="text/javascript" src="../_static/underscore.js"></script>
-        <script type="text/javascript" src="../_static/doctools.js"></script>
-        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-    
-
-  
-
-  <script type="text/javascript" src="../_static/js/theme.js"></script>
-
   <script type="text/javascript">
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script> 
+  </script>
+
+  
+  
+    
+   
 
 </body>
 </html>

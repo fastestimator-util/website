@@ -19,34 +19,39 @@
   
 
   
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
 
-  
-  
     
 
   
-
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="summary" href="fastestimator.summary.html" />
     <link rel="prev" title="model" href="fastestimator.op.tensorop.model.html" /> 
-
-  
-  <script src="_static/js/modernizr.min.js"></script>
-
 </head>
 
 <body class="wy-body-for-nav">
 
    
   <div class="wy-grid-for-nav">
-
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search">
+        <div class="wy-side-nav-search" >
           
 
           
@@ -204,16 +209,16 @@
 <span id="epoch-scheduler"></span><h2>epoch_scheduler<a class="headerlink" href="#module-fastestimator.schedule.epoch_scheduler" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="fastestimator.schedule.epoch_scheduler.Scheduler">
-<em class="property">class </em><code class="descclassname">fastestimator.schedule.epoch_scheduler.</code><code class="descname">Scheduler</code><span class="sig-paren">(</span><em>epoch_dict</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/schedule/epoch_scheduler.html#Scheduler"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.schedule.epoch_scheduler.Scheduler" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">fastestimator.schedule.epoch_scheduler.</code><code class="sig-name descname">Scheduler</code><span class="sig-paren">(</span><em class="sig-param">epoch_dict</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/schedule/epoch_scheduler.html#Scheduler"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.schedule.epoch_scheduler.Scheduler" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <dl class="method">
 <dt id="fastestimator.schedule.epoch_scheduler.Scheduler.get_sequential_value">
-<code class="descname">get_sequential_value</code><span class="sig-paren">(</span><em>epoch</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/schedule/epoch_scheduler.html#Scheduler.get_sequential_value"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.schedule.epoch_scheduler.Scheduler.get_sequential_value" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">get_sequential_value</code><span class="sig-paren">(</span><em class="sig-param">epoch</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/schedule/epoch_scheduler.html#Scheduler.get_sequential_value"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.schedule.epoch_scheduler.Scheduler.get_sequential_value" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="fastestimator.schedule.epoch_scheduler.Scheduler.get_current_value">
-<code class="descname">get_current_value</code><span class="sig-paren">(</span><em>epoch</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/schedule/epoch_scheduler.html#Scheduler.get_current_value"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.schedule.epoch_scheduler.Scheduler.get_current_value" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">get_current_value</code><span class="sig-paren">(</span><em class="sig-param">epoch</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/schedule/epoch_scheduler.html#Scheduler.get_current_value"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.schedule.epoch_scheduler.Scheduler.get_current_value" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -224,109 +229,90 @@
 <span id="lr-scheduler"></span><h2>lr_scheduler<a class="headerlink" href="#module-fastestimator.schedule.lr_scheduler" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="fastestimator.schedule.lr_scheduler.LRSchedule">
-<em class="property">class </em><code class="descclassname">fastestimator.schedule.lr_scheduler.</code><code class="descname">LRSchedule</code><span class="sig-paren">(</span><em>schedule_mode</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/schedule/lr_scheduler.html#LRSchedule"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.schedule.lr_scheduler.LRSchedule" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">fastestimator.schedule.lr_scheduler.</code><code class="sig-name descname">LRSchedule</code><span class="sig-paren">(</span><em class="sig-param">schedule_mode</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/schedule/lr_scheduler.html#LRSchedule"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.schedule.lr_scheduler.LRSchedule" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>A base class for learning rate scheduler</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>schedule_mode</strong> – Mode of the learning rate scheduler. Either can be ‘step’ or ‘epoch’ based learning rate decay</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>schedule_mode</strong> – Mode of the learning rate scheduler. Either can be ‘step’ or ‘epoch’ based learning rate decay</p>
+</dd>
+</dl>
 <dl class="method">
 <dt id="fastestimator.schedule.lr_scheduler.LRSchedule.schedule_fn">
-<code class="descname">schedule_fn</code><span class="sig-paren">(</span><em>current_step_or_epoch</em>, <em>lr</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/schedule/lr_scheduler.html#LRSchedule.schedule_fn"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.schedule.lr_scheduler.LRSchedule.schedule_fn" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">schedule_fn</code><span class="sig-paren">(</span><em class="sig-param">current_step_or_epoch</em>, <em class="sig-param">lr</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/schedule/lr_scheduler.html#LRSchedule.schedule_fn"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.schedule.lr_scheduler.LRSchedule.schedule_fn" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
 
 <dl class="class">
 <dt id="fastestimator.schedule.lr_scheduler.CyclicLRSchedule">
-<em class="property">class </em><code class="descclassname">fastestimator.schedule.lr_scheduler.</code><code class="descname">CyclicLRSchedule</code><span class="sig-paren">(</span><em>num_cycle=1</em>, <em>cycle_multiplier=2</em>, <em>decrease_method='cosine'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/schedule/lr_scheduler.html#CyclicLRSchedule"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.schedule.lr_scheduler.CyclicLRSchedule" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">fastestimator.schedule.lr_scheduler.</code><code class="sig-name descname">CyclicLRSchedule</code><span class="sig-paren">(</span><em class="sig-param">num_cycle=1</em>, <em class="sig-param">cycle_multiplier=2</em>, <em class="sig-param">decrease_method='cosine'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/schedule/lr_scheduler.html#CyclicLRSchedule"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.schedule.lr_scheduler.CyclicLRSchedule" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#fastestimator.schedule.lr_scheduler.LRSchedule" title="fastestimator.schedule.lr_scheduler.LRSchedule"><code class="xref py py-class docutils literal notranslate"><span class="pre">fastestimator.schedule.lr_scheduler.LRSchedule</span></code></a></p>
 <p>A class representing cyclic learning rate scheduler</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>num_cycle</strong> – The number of cycles to be used by the learning rate scheduler</li>
-<li><strong>cycle_multiplier</strong> – Multiplier of the next cycle length with respect to previous cycle length</li>
-<li><strong>decrease_method</strong> – The decay method to be used with cyclic learning rate scheduler</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>num_cycle</strong> – The number of cycles to be used by the learning rate scheduler</p></li>
+<li><p><strong>cycle_multiplier</strong> – Multiplier of the next cycle length with respect to previous cycle length</p></li>
+<li><p><strong>decrease_method</strong> – The decay method to be used with cyclic learning rate scheduler</p></li>
 </ul>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+</dl>
 <dl class="method">
 <dt id="fastestimator.schedule.lr_scheduler.CyclicLRSchedule.lr_linear_decay">
-<code class="descname">lr_linear_decay</code><span class="sig-paren">(</span><em>current_step</em>, <em>lr_start</em>, <em>lr_end</em>, <em>step_start</em>, <em>step_end</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/schedule/lr_scheduler.html#CyclicLRSchedule.lr_linear_decay"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.schedule.lr_scheduler.CyclicLRSchedule.lr_linear_decay" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">lr_linear_decay</code><span class="sig-paren">(</span><em class="sig-param">current_step</em>, <em class="sig-param">lr_start</em>, <em class="sig-param">lr_end</em>, <em class="sig-param">step_start</em>, <em class="sig-param">step_end</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/schedule/lr_scheduler.html#CyclicLRSchedule.lr_linear_decay"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.schedule.lr_scheduler.CyclicLRSchedule.lr_linear_decay" title="Permalink to this definition">¶</a></dt>
 <dd><p>This function applies linear decay to the learning rate</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>current_step</strong> – Current step of the training epoch</li>
-<li><strong>lr_start</strong> – Learning rate from where it will start decaying</li>
-<li><strong>lr_end</strong> – Learning rate till which it will decay</li>
-<li><strong>step_start</strong> – Beginning step in the cycle of the learning rate scheduler</li>
-<li><strong>step_end</strong> – Last step in the cycle of the learning rate schedular</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>current_step</strong> – Current step of the training epoch</p></li>
+<li><p><strong>lr_start</strong> – Learning rate from where it will start decaying</p></li>
+<li><p><strong>lr_end</strong> – Learning rate till which it will decay</p></li>
+<li><p><strong>step_start</strong> – Beginning step in the cycle of the learning rate scheduler</p></li>
+<li><p><strong>step_end</strong> – Last step in the cycle of the learning rate schedular</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Decayed learning rate</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Decayed learning rate</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="fastestimator.schedule.lr_scheduler.CyclicLRSchedule.lr_cosine_decay">
-<code class="descname">lr_cosine_decay</code><span class="sig-paren">(</span><em>current_step</em>, <em>lr_start</em>, <em>lr_end</em>, <em>step_start</em>, <em>step_end</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/schedule/lr_scheduler.html#CyclicLRSchedule.lr_cosine_decay"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.schedule.lr_scheduler.CyclicLRSchedule.lr_cosine_decay" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">lr_cosine_decay</code><span class="sig-paren">(</span><em class="sig-param">current_step</em>, <em class="sig-param">lr_start</em>, <em class="sig-param">lr_end</em>, <em class="sig-param">step_start</em>, <em class="sig-param">step_end</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/schedule/lr_scheduler.html#CyclicLRSchedule.lr_cosine_decay"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.schedule.lr_scheduler.CyclicLRSchedule.lr_cosine_decay" title="Permalink to this definition">¶</a></dt>
 <dd><p>This function applies cosine decay to the learning rate</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>current_step</strong> – Current step of the training epoch</li>
-<li><strong>lr_start</strong> – Learning rate from where it will start decaying</li>
-<li><strong>lr_end</strong> – Learning rate till which it will decay</li>
-<li><strong>step_start</strong> – Beginning step in the cycle of the learning rate scheduler</li>
-<li><strong>step_end</strong> – Last step in the cycle of the learning rate schedular</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>current_step</strong> – Current step of the training epoch</p></li>
+<li><p><strong>lr_start</strong> – Learning rate from where it will start decaying</p></li>
+<li><p><strong>lr_end</strong> – Learning rate till which it will decay</p></li>
+<li><p><strong>step_start</strong> – Beginning step in the cycle of the learning rate scheduler</p></li>
+<li><p><strong>step_end</strong> – Last step in the cycle of the learning rate schedular</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Decayed learning rate</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Decayed learning rate</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="fastestimator.schedule.lr_scheduler.CyclicLRSchedule.schedule_fn">
-<code class="descname">schedule_fn</code><span class="sig-paren">(</span><em>current_step_or_epoch</em>, <em>lr</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/schedule/lr_scheduler.html#CyclicLRSchedule.schedule_fn"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.schedule.lr_scheduler.CyclicLRSchedule.schedule_fn" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">schedule_fn</code><span class="sig-paren">(</span><em class="sig-param">current_step_or_epoch</em>, <em class="sig-param">lr</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/schedule/lr_scheduler.html#CyclicLRSchedule.schedule_fn"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.schedule.lr_scheduler.CyclicLRSchedule.schedule_fn" title="Permalink to this definition">¶</a></dt>
 <dd><p>The function computes the learning rate decay ratio using cyclic learning rate</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>current_step_or_epoch</strong> – Current training step or epoch</li>
-<li><strong>lr</strong> – Current learning rate</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>current_step_or_epoch</strong> – Current training step or epoch</p></li>
+<li><p><strong>lr</strong> – Current learning rate</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Learning rate ratio</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Learning rate ratio</p>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>
@@ -345,7 +331,7 @@
         <a href="fastestimator.summary.html" class="btn btn-neutral float-right" title="summary" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="fastestimator.op.tensorop.model.html" class="btn btn-neutral" title="model" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="fastestimator.op.tensorop.model.html" class="btn btn-neutral float-left" title="model" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -371,37 +357,16 @@
   
 
 
-  
-
-    
-    
-      <script type="text/javascript">
-          var DOCUMENTATION_OPTIONS = {
-              URL_ROOT:'./',
-              VERSION:'1.0b0',
-              LANGUAGE:'None',
-              COLLAPSE_INDEX:false,
-              FILE_SUFFIX:'.html',
-              HAS_SOURCE:  true,
-              SOURCELINK_SUFFIX: '.txt'
-          };
-      </script>
-        <script type="text/javascript" src="_static/jquery.js"></script>
-        <script type="text/javascript" src="_static/underscore.js"></script>
-        <script type="text/javascript" src="_static/doctools.js"></script>
-        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-    
-
-  
-
-  <script type="text/javascript" src="_static/js/theme.js"></script>
-
   <script type="text/javascript">
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script> 
+  </script>
+
+  
+  
+    
+   
 
 </body>
 </html>
