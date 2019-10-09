@@ -19,34 +19,39 @@
   
 
   
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
 
-  
-  
     
 
   
-
   <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Tutorial 4: Pipeline debugging and benchmarking" href="t04_pipeline_debug_benchmark.html" />
     <link rel="prev" title="Tutorial 2: Dealing with large datasets with FastEstimator" href="t02_using_data_in_disk.html" /> 
-
-  
-  <script src="../_static/js/modernizr.min.js"></script>
-
 </head>
 
 <body class="wy-body-for-nav">
 
    
   <div class="wy-grid-for-nav">
-
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search">
+        <div class="wy-side-nav-search" >
           
 
           
@@ -411,7 +416,8 @@ div.rendered_html tbody tr:hover {
 <p>Now you may think: “<code class="docutils literal notranslate"><span class="pre">Operator</span></code> and function are almost the same, what’s different between them? why do we need it?”</p>
 <p>The difference is: a function uses variables whereas <code class="docutils literal notranslate"><span class="pre">Operator</span></code> uses keys (which is a representation of variable). The purpose of <code class="docutils literal notranslate"><span class="pre">Operator</span></code> is to allow users to construct a graph when variables are not created yet. In FastEstimator, we take care of the variable creation, routing and management, so that users can have a good night of sleep!</p>
 <blockquote>
-<div>This tutorial will first explain the concept of Operator, and then present an example of how to create and use it.</div></blockquote>
+<div><p>This tutorial will first explain the concept of Operator, and then present an example of how to create and use it.</p>
+</div></blockquote>
 <div class="section" id="How-does-Operator-work?">
 <h2>How does Operator work?<a class="headerlink" href="#How-does-Operator-work?" title="Permalink to this headline">¶</a></h2>
 <p>Assuming our data is in a dictionary format with key-value pairs, and we have an <code class="docutils literal notranslate"><span class="pre">Operator</span></code> named <code class="docutils literal notranslate"><span class="pre">Add_one</span></code>, which adds 1 to the input. If our data is:</p>
@@ -424,9 +430,9 @@ div.rendered_html tbody tr:hover {
 </div>
 <p>At run time, the operator will:</p>
 <ol class="arabic simple">
-<li>take the value of the input key ‘x’ from the data dictionary</li>
-<li>apply transformation functions to the value</li>
-<li>write the output value to the data dictionary with output key ‘x’</li>
+<li><p>take the value of the input key ‘x’ from the data dictionary</p></li>
+<li><p>apply transformation functions to the value</p></li>
+<li><p>write the output value to the data dictionary with output key ‘x’</p></li>
 </ol>
 <p>As a result, the data will become:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="s2">&quot;x&quot;</span><span class="p">:</span><span class="mi">2</span><span class="p">,</span> <span class="s2">&quot;y&quot;</span><span class="p">:</span><span class="mi">2</span><span class="p">}</span>
@@ -514,8 +520,8 @@ div.rendered_html tbody tr:hover {
 <h3>Step 0: Use pre-built Op and custom Op for data preprocessing in RecordWriter<a class="headerlink" href="#Step-0:-Use-pre-built-Op-and-custom-Op-for-data-preprocessing-in-RecordWriter" title="Permalink to this headline">¶</a></h3>
 <p>In this example, when the csv files and training images are provided in-disk, we want to do two preprocessing steps upfront:</p>
 <ol class="arabic simple">
-<li>read the image (in grey scale) and its label. We will here use the pre-built <code class="docutils literal notranslate"><span class="pre">ImageReader</span></code> Operator in FastEstimator.</li>
-<li>rescale the image. We want to reduce the pixel value range from [0, 255] to [-1, 1]. We will create a customized Operator to achieve this.</li>
+<li><p>read the image (in grey scale) and its label. We will here use the pre-built <code class="docutils literal notranslate"><span class="pre">ImageReader</span></code> Operator in FastEstimator.</p></li>
+<li><p>rescale the image. We want to reduce the pixel value range from [0, 255] to [-1, 1]. We will create a customized Operator to achieve this.</p></li>
 </ol>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
@@ -643,7 +649,7 @@ div.rendered_html tbody tr:hover {
         <a href="t04_pipeline_debug_benchmark.html" class="btn btn-neutral float-right" title="Tutorial 4: Pipeline debugging and benchmarking" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="t02_using_data_in_disk.html" class="btn btn-neutral" title="Tutorial 2: Dealing with large datasets with FastEstimator" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="t02_using_data_in_disk.html" class="btn btn-neutral float-left" title="Tutorial 2: Dealing with large datasets with FastEstimator" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -669,37 +675,16 @@ div.rendered_html tbody tr:hover {
   
 
 
-  
-
-    
-    
-      <script type="text/javascript">
-          var DOCUMENTATION_OPTIONS = {
-              URL_ROOT:'../',
-              VERSION:'1.0b0',
-              LANGUAGE:'None',
-              COLLAPSE_INDEX:false,
-              FILE_SUFFIX:'.html',
-              HAS_SOURCE:  true,
-              SOURCELINK_SUFFIX: '.txt'
-          };
-      </script>
-        <script type="text/javascript" src="../_static/jquery.js"></script>
-        <script type="text/javascript" src="../_static/underscore.js"></script>
-        <script type="text/javascript" src="../_static/doctools.js"></script>
-        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-    
-
-  
-
-  <script type="text/javascript" src="../_static/js/theme.js"></script>
-
   <script type="text/javascript">
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script> 
+  </script>
+
+  
+  
+    
+   
 
 </body>
 </html>

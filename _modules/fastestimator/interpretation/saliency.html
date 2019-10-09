@@ -19,32 +19,37 @@
   
 
   
+  <script type="text/javascript" src="../../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../../_static/language_data.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
 
-  
-  
     
 
   
-
   <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" /> 
-
-  
-  <script src="../../../_static/js/modernizr.min.js"></script>
-
 </head>
 
 <body class="wy-body-for-nav">
 
    
   <div class="wy-grid-for-nav">
-
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search">
+        <div class="wy-side-nav-search" >
           
 
           
@@ -171,8 +176,8 @@
 <span class="c1"># noinspection PyPackageRequirements</span>
 <span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
 
-<span class="kn">from</span> <span class="nn">fastestimator.interpretation.util</span> <span class="k">import</span> <span class="n">show_image</span><span class="p">,</span> <span class="n">show_text</span><span class="p">,</span> <span class="n">show_gray_image</span><span class="p">,</span> <span class="n">GradientSaliency</span><span class="p">,</span> \
-    <span class="n">IntegratedGradients</span>
+<span class="kn">from</span> <span class="nn">fastestimator.interpretation.util</span> <span class="k">import</span> <span class="p">(</span><span class="n">GradientSaliency</span><span class="p">,</span> <span class="n">IntegratedGradients</span><span class="p">,</span> <span class="n">show_gray_image</span><span class="p">,</span> <span class="n">show_image</span><span class="p">,</span>
+                                               <span class="n">show_text</span><span class="p">)</span>
 <span class="kn">from</span> <span class="nn">fastestimator.util.util</span> <span class="k">import</span> <span class="n">decode_predictions</span>
 
 
@@ -182,7 +187,9 @@
 <span class="sd">    Args:</span>
 <span class="sd">        tensor: A tensor with batches on the zero axis. Shape (batch X ...)</span>
 <span class="sd">        percentile: The percentile value to be computed for each batch in the tensor</span>
-<span class="sd">        keepdims: Whether to keep shape compatibility with the input tensor</span>
+<span class="sd">        keepdims: Whether to keep shape compatibility with the input</span>
+<span class="sd">        tensor</span>
+
 <span class="sd">    Returns:</span>
 <span class="sd">        A tensor corresponding to the given percentile value within each batch of the input tensor</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -332,37 +339,16 @@
   
 
 
-  
-
-    
-    
-      <script type="text/javascript">
-          var DOCUMENTATION_OPTIONS = {
-              URL_ROOT:'../../../',
-              VERSION:'1.0b0',
-              LANGUAGE:'None',
-              COLLAPSE_INDEX:false,
-              FILE_SUFFIX:'.html',
-              HAS_SOURCE:  true,
-              SOURCELINK_SUFFIX: '.txt'
-          };
-      </script>
-        <script type="text/javascript" src="../../../_static/jquery.js"></script>
-        <script type="text/javascript" src="../../../_static/underscore.js"></script>
-        <script type="text/javascript" src="../../../_static/doctools.js"></script>
-        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-    
-
-  
-
-  <script type="text/javascript" src="../../../_static/js/theme.js"></script>
-
   <script type="text/javascript">
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script> 
+  </script>
+
+  
+  
+    
+   
 
 </body>
 </html>

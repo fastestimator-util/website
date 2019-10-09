@@ -19,34 +19,39 @@
   
 
   
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
 
-  
-  
     
 
   
-
   <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Tutorial 2: Dealing with large datasets with FastEstimator" href="t02_using_data_in_disk.html" />
     <link rel="prev" title="Learn" href="../learn.html" /> 
-
-  
-  <script src="../_static/js/modernizr.min.js"></script>
-
 </head>
 
 <body class="wy-body-for-nav">
 
    
   <div class="wy-grid-for-nav">
-
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search">
+        <div class="wy-side-nav-search" >
           
 
           
@@ -91,8 +96,8 @@
 <li class="toctree-l3"><a class="reference internal" href="#In-FastEstimator,-there-are-3-APIs-that-you-need-to-know:">In FastEstimator, there are 3 APIs that you need to know:</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#Step-1:-Prepare-the-Pipeline">Step 1: Prepare the Pipeline</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#Step-2:-Define-the-network">Step 2: Define the network</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#Step-3:-Create-the-Estimator...">Step 3: Create the Estimator…</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#...-and-train-your-model!">… and train your model!</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Step-3:-Create-the-Estimator…">Step 3: Create the Estimator…</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#…-and-train-your-model!">… and train your model!</a></li>
 </ul>
 </li>
 </ul>
@@ -404,9 +409,9 @@ div.rendered_html tbody tr:hover {
 <div class="section" id="In-FastEstimator,-there-are-3-APIs-that-you-need-to-know:">
 <h2>In FastEstimator, there are 3 APIs that you need to know:<a class="headerlink" href="#In-FastEstimator,-there-are-3-APIs-that-you-need-to-know:" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
-<li><strong>Pipeline</strong>: takes care of loading and preprocessing data.</li>
-<li><strong>Network</strong>: responsible for trainable and differentiable models, operations and loss.</li>
-<li><strong>Estimator</strong>: manages the training loop.</li>
+<li><p><strong>Pipeline</strong>: takes care of loading and preprocessing data.</p></li>
+<li><p><strong>Network</strong>: responsible for trainable and differentiable models, operations and loss.</p></li>
+<li><p><strong>Estimator</strong>: manages the training loop.</p></li>
 </ul>
 <p>Any deep learning implementation will follow the <code class="docutils literal notranslate"><span class="pre">Pipeline</span></code> -&gt; <code class="docutils literal notranslate"><span class="pre">Network</span></code> -&gt; <code class="docutils literal notranslate"><span class="pre">Estimator</span></code> process as illustrated below:</p>
 <p>Pipeline operations will usually happen on CPU, whereas Network operations will happen on GPU when available.</p>
@@ -481,8 +486,8 @@ div.rendered_html tbody tr:hover {
 </div>
 </div>
 </div>
-<div class="section" id="Step-3:-Create-the-Estimator...">
-<h3>Step 3: Create the Estimator…<a class="headerlink" href="#Step-3:-Create-the-Estimator..." title="Permalink to this headline">¶</a></h3>
+<div class="section" id="Step-3:-Create-the-Estimator…">
+<h3>Step 3: Create the Estimator…<a class="headerlink" href="#Step-3:-Create-the-Estimator…" title="Permalink to this headline">¶</a></h3>
 <p><code class="docutils literal notranslate"><span class="pre">Estimator</span></code> takes both <code class="docutils literal notranslate"><span class="pre">pipeline</span></code> and <code class="docutils literal notranslate"><span class="pre">network</span></code> and combines them into the training loop. Here’s the basic usage of <code class="docutils literal notranslate"><span class="pre">Estimator</span></code>.</p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
@@ -495,8 +500,8 @@ div.rendered_html tbody tr:hover {
 </div>
 </div>
 </div>
-<div class="section" id="...-and-train-your-model!">
-<h3>… and train your model!<a class="headerlink" href="#...-and-train-your-model!" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="…-and-train-your-model!">
+<h3>… and train your model!<a class="headerlink" href="#…-and-train-your-model!" title="Permalink to this headline">¶</a></h3>
 <p>Since the data is already loaded in memory, the training is happening without any disk reading. We only have to call the fit method to launch the training!</p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
@@ -531,7 +536,7 @@ div.rendered_html tbody tr:hover {
         <a href="t02_using_data_in_disk.html" class="btn btn-neutral float-right" title="Tutorial 2: Dealing with large datasets with FastEstimator" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="../learn.html" class="btn btn-neutral" title="Learn" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="../learn.html" class="btn btn-neutral float-left" title="Learn" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -557,37 +562,16 @@ div.rendered_html tbody tr:hover {
   
 
 
-  
-
-    
-    
-      <script type="text/javascript">
-          var DOCUMENTATION_OPTIONS = {
-              URL_ROOT:'../',
-              VERSION:'1.0b0',
-              LANGUAGE:'None',
-              COLLAPSE_INDEX:false,
-              FILE_SUFFIX:'.html',
-              HAS_SOURCE:  true,
-              SOURCELINK_SUFFIX: '.txt'
-          };
-      </script>
-        <script type="text/javascript" src="../_static/jquery.js"></script>
-        <script type="text/javascript" src="../_static/underscore.js"></script>
-        <script type="text/javascript" src="../_static/doctools.js"></script>
-        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-    
-
-  
-
-  <script type="text/javascript" src="../_static/js/theme.js"></script>
-
   <script type="text/javascript">
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script> 
+  </script>
+
+  
+  
+    
+   
 
 </body>
 </html>

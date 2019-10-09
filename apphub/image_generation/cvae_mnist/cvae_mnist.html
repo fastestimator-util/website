@@ -19,34 +19,39 @@
   
 
   
+  <script type="text/javascript" src="../../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../../_static/language_data.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
 
-  
-  
     
 
   
-
   <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" />
     <link rel="next" title="Horse to Zebra Unpaired Image Translation with CycleGAN in FastEstimator" href="../cyclegan_horse2zebra/cyclegan.html" />
     <link rel="prev" title="Image Generation" href="../../image_generation.html" /> 
-
-  
-  <script src="../../../_static/js/modernizr.min.js"></script>
-
 </head>
 
 <body class="wy-body-for-nav">
 
    
   <div class="wy-grid-for-nav">
-
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search">
+        <div class="wy-side-nav-search" >
           
 
           
@@ -633,8 +638,8 @@ div.rendered_html tbody tr:hover {
 <div class="section" id="Step-3---Network-definition">
 <h2>Step 3 - Network definition<a class="headerlink" href="#Step-3---Network-definition" title="Permalink to this headline">¶</a></h2>
 <p>In this step, we build the network, summarizing all operations of our model that are pictured in the graph above. We will first need to define the reparametrization and loss.</p>
-<div class="section" id="Reparametrization-to-sample-from-encoder's-output">
-<h3>Reparametrization to sample from encoder’s output<a class="headerlink" href="#Reparametrization-to-sample-from-encoder's-output" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="Reparametrization-to-sample-from-encoder’s-output">
+<h3>Reparametrization to sample from encoder’s output<a class="headerlink" href="#Reparametrization-to-sample-from-encoder’s-output" title="Permalink to this headline">¶</a></h3>
 <p>Reparametrization is the trick used to sample from our parameters with operations allowing backpropagation. We will generate a white noise vector epsilon (Gaussian distribution N(0,1)) whose length is the latent dimension, multiply it with standard deviation and add the mean. (See Auto-Encoding Variational Bayes by Kingma and Welling)</p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
@@ -886,7 +891,7 @@ test image idx 3760
         <a href="../cyclegan_horse2zebra/cyclegan.html" class="btn btn-neutral float-right" title="Horse to Zebra Unpaired Image Translation with CycleGAN in FastEstimator" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="../../image_generation.html" class="btn btn-neutral" title="Image Generation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="../../image_generation.html" class="btn btn-neutral float-left" title="Image Generation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -912,37 +917,16 @@ test image idx 3760
   
 
 
-  
-
-    
-    
-      <script type="text/javascript">
-          var DOCUMENTATION_OPTIONS = {
-              URL_ROOT:'../../../',
-              VERSION:'1.0b0',
-              LANGUAGE:'None',
-              COLLAPSE_INDEX:false,
-              FILE_SUFFIX:'.html',
-              HAS_SOURCE:  true,
-              SOURCELINK_SUFFIX: '.txt'
-          };
-      </script>
-        <script type="text/javascript" src="../../../_static/jquery.js"></script>
-        <script type="text/javascript" src="../../../_static/underscore.js"></script>
-        <script type="text/javascript" src="../../../_static/doctools.js"></script>
-        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-    
-
-  
-
-  <script type="text/javascript" src="../../../_static/js/theme.js"></script>
-
   <script type="text/javascript">
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script> 
+  </script>
+
+  
+  
+    
+   
 
 </body>
 </html>

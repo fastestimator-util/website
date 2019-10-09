@@ -19,34 +19,39 @@
   
 
   
+  <script type="text/javascript" src="../../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../../_static/language_data.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
 
-  
-  
     
 
   
-
   <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" />
     <link rel="next" title="DCGAN Example with MNIST Dataset" href="../dcgan_mnist/dcgan_mnist.html" />
     <link rel="prev" title="Convolutional Variational Autoencoder example using MNIST dataset" href="../cvae_mnist/cvae_mnist.html" /> 
-
-  
-  <script src="../../../_static/js/modernizr.min.js"></script>
-
 </head>
 
 <body class="wy-body-for-nav">
 
    
   <div class="wy-grid-for-nav">
-
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search">
+        <div class="wy-side-nav-search" >
           
 
           
@@ -606,8 +611,8 @@ FastEstimator: Found 1067 examples for train in /tmp/.fe/HORSE2ZEBRA/FEdata/trai
 <h2>Loss functions<a class="headerlink" href="#Loss-functions" title="Permalink to this headline">¶</a></h2>
 <p>With <code class="docutils literal notranslate"><span class="pre">FEModel</span></code> being defined for each network, we need to define associated losses. We provide <code class="docutils literal notranslate"><span class="pre">Loss</span></code> class from which users can derive to express necessary logics for calculating the loss. In FastEstimator, the computation of loss is yet another <code class="docutils literal notranslate"><span class="pre">TensorOp</span></code>; therefore, the final loss value needs to be returned in <code class="docutils literal notranslate"><span class="pre">forward</span></code> method.</p>
 <p>Because horse images and zebra images are unpaired, the loss of generator is quite complex. The generator’s loss is composed of tree terms: 1) adversarial; 2) cycle-consistency; 3) identity. The cycle-consistency term and identity term are weighted by a parameter <code class="docutils literal notranslate"><span class="pre">LAMBDA</span></code>. In the paper the authors used 10 for <code class="docutils literal notranslate"><span class="pre">LAMBDA</span></code>.</p>
-<p>Let’s consider computing the loss for <code class="docutils literal notranslate"><span class="pre">g_AtoB</span></code> which translates horses to zebras. 1. Adversarial term that is computed as binary cross entropy between 1s and <code class="docutils literal notranslate"><span class="pre">d_A</span></code>’s prediction on the translated images 2. Cycle consistency term is computed with mean absolute error between original <em>horse</em> images and the cycled horse images that are translated <em>forward</em> by <code class="docutils literal notranslate"><span class="pre">g_AtoB</span></code> and then <em>backward</em> by <code class="docutils literal notranslate"><span class="pre">g_BtoA</span></code>. 3. Identity term that is computed with the mean absolute error between original <em>zebra</em> and
-the output of <code class="docutils literal notranslate"><span class="pre">g_AtoB</span></code> on these images.</p>
+<p>Let’s consider computing the loss for <code class="docutils literal notranslate"><span class="pre">g_AtoB</span></code> which translates horses to zebras. 1. Adversarial term that is computed as binary cross entropy between 1s and <code class="docutils literal notranslate"><span class="pre">d_A</span></code>’s prediction on the translated images 2. Cycle consistency term is computed with mean absolute error between original <em>horse</em> images and the cycled horse images that are translated <em>forward</em> by <code class="docutils literal notranslate"><span class="pre">g_AtoB</span></code> and then <em>backward</em> by <code class="docutils literal notranslate"><span class="pre">g_BtoA</span></code>. 3. Identity term that is computed with the mean absolute error between original <em>zebra</em>
+and the output of <code class="docutils literal notranslate"><span class="pre">g_AtoB</span></code> on these images.</p>
 <p>The discriminator’s loss is the standard adversarial loss that is computed as binary cross entropy between: * 1s and real images * 0s and fake images</p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
@@ -785,7 +790,7 @@ the output of <code class="docutils literal notranslate"><span class="pre">g_Ato
         <a href="../dcgan_mnist/dcgan_mnist.html" class="btn btn-neutral float-right" title="DCGAN Example with MNIST Dataset" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="../cvae_mnist/cvae_mnist.html" class="btn btn-neutral" title="Convolutional Variational Autoencoder example using MNIST dataset" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="../cvae_mnist/cvae_mnist.html" class="btn btn-neutral float-left" title="Convolutional Variational Autoencoder example using MNIST dataset" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -811,37 +816,16 @@ the output of <code class="docutils literal notranslate"><span class="pre">g_Ato
   
 
 
-  
-
-    
-    
-      <script type="text/javascript">
-          var DOCUMENTATION_OPTIONS = {
-              URL_ROOT:'../../../',
-              VERSION:'1.0b0',
-              LANGUAGE:'None',
-              COLLAPSE_INDEX:false,
-              FILE_SUFFIX:'.html',
-              HAS_SOURCE:  true,
-              SOURCELINK_SUFFIX: '.txt'
-          };
-      </script>
-        <script type="text/javascript" src="../../../_static/jquery.js"></script>
-        <script type="text/javascript" src="../../../_static/underscore.js"></script>
-        <script type="text/javascript" src="../../../_static/doctools.js"></script>
-        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-    
-
-  
-
-  <script type="text/javascript" src="../../../_static/js/theme.js"></script>
-
   <script type="text/javascript">
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script> 
+  </script>
+
+  
+  
+    
+   
 
 </body>
 </html>
