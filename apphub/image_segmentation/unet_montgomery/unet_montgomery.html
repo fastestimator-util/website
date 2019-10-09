@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Lung Segmentation - Montgomery Dataset &mdash; FastEstimator 1.0a0 documentation</title>
+  <title>Lung Segmentation - Montgomery Dataset &mdash; FastEstimator 1.0b0 documentation</title>
   
 
   
@@ -560,7 +560,7 @@ div.rendered_html tbody tr:hover {
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="n">writer</span> <span class="o">=</span> <span class="n">RecordWriter</span><span class="p">(</span>
-        <span class="n">save_dir</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s2">&quot;FEdata&quot;</span><span class="p">),</span>
+        <span class="n">save_dir</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s2">&quot;tfrecords&quot;</span><span class="p">),</span>
         <span class="n">train_data</span><span class="o">=</span><span class="n">train_csv_path</span><span class="p">,</span>
         <span class="n">validation_data</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span>
         <span class="n">ops</span><span class="o">=</span><span class="p">[</span>
@@ -589,6 +589,7 @@ div.rendered_html tbody tr:hover {
 <span></span><span class="n">batch_size</span><span class="o">=</span><span class="mi">4</span>
 <span class="n">epochs</span> <span class="o">=</span> <span class="mi">25</span>
 <span class="n">steps_per_epoch</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="n">validation_steps</span> <span class="o">=</span> <span class="kc">None</span>
 </pre></div>
 </div>
 </div>
@@ -717,8 +718,13 @@ FastEstimator: Found 27 examples for eval in /tmp/.fe/MONTGOMERY/FEdata/eval_sum
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">estimator</span> <span class="o">=</span> <span class="n">fe</span><span class="o">.</span><span class="n">Estimator</span><span class="p">(</span><span class="n">network</span><span class="o">=</span><span class="n">network</span><span class="p">,</span> <span class="n">pipeline</span><span class="o">=</span><span class="n">pipeline</span><span class="p">,</span> <span class="n">epochs</span><span class="o">=</span><span class="n">epochs</span><span class="p">,</span> <span class="n">log_steps</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span>
-                         <span class="n">traces</span><span class="o">=</span><span class="n">traces</span><span class="p">,</span> <span class="n">steps_per_epoch</span><span class="o">=</span><span class="n">steps_per_epoch</span><span class="p">)</span>
+<span></span><span class="n">estimator</span> <span class="o">=</span> <span class="n">fe</span><span class="o">.</span><span class="n">Estimator</span><span class="p">(</span><span class="n">network</span><span class="o">=</span><span class="n">network</span><span class="p">,</span>
+                         <span class="n">pipeline</span><span class="o">=</span><span class="n">pipeline</span><span class="p">,</span>
+                         <span class="n">epochs</span><span class="o">=</span><span class="n">epochs</span><span class="p">,</span>
+                         <span class="n">log_steps</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span>
+                         <span class="n">traces</span><span class="o">=</span><span class="n">traces</span><span class="p">,</span>
+                         <span class="n">steps_per_epoch</span><span class="o">=</span><span class="n">steps_per_epoch</span><span class="p">,</span>
+                         <span class="n">validation_steps</span><span class="o">=</span><span class="n">validation_steps</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>

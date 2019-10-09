@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Convolutional Variational Autoencoder example using MNIST dataset &mdash; FastEstimator 1.0a0 documentation</title>
+  <title>Convolutional Variational Autoencoder example using MNIST dataset &mdash; FastEstimator 1.0b0 documentation</title>
   
 
   
@@ -458,6 +458,7 @@ div.rendered_html tbody tr:hover {
 <span class="n">epochs</span> <span class="o">=</span> <span class="mi">100</span>
 <span class="n">batch_size</span> <span class="o">=</span> <span class="mi">100</span>
 <span class="n">steps_per_epoch</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="n">validation_steps</span> <span class="o">=</span> <span class="kc">None</span>
 </pre></div>
 </div>
 </div>
@@ -539,9 +540,7 @@ div.rendered_html tbody tr:hover {
 
 <span class="c1"># Pipeline compiles batch size, datasets and preprocessing</span>
 <span class="n">pipeline</span> <span class="o">=</span> <span class="n">fe</span><span class="o">.</span><span class="n">Pipeline</span><span class="p">(</span><span class="n">batch_size</span><span class="o">=</span><span class="n">batch_size</span><span class="p">,</span>
-
                        <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">,</span>
-
                        <span class="n">ops</span><span class="o">=</span><span class="p">[</span><span class="n">Myrescale</span><span class="p">(</span><span class="n">inputs</span><span class="o">=</span><span class="s2">&quot;x&quot;</span><span class="p">,</span> <span class="n">outputs</span><span class="o">=</span><span class="s2">&quot;x&quot;</span><span class="p">),</span> <span class="n">Mybinarize</span><span class="p">(</span><span class="n">inputs</span><span class="o">=</span><span class="s2">&quot;x&quot;</span><span class="p">,</span> <span class="n">outputs</span><span class="o">=</span><span class="s2">&quot;x&quot;</span><span class="p">)])</span>
 </pre></div>
 </div>
@@ -570,35 +569,21 @@ div.rendered_html tbody tr:hover {
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="c1"># Encoder network</span>
-
 <span class="k">def</span> <span class="nf">encoder_net</span><span class="p">():</span>
-
     <span class="n">encoder_model</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">Sequential</span><span class="p">()</span>
-
     <span class="n">encoder_model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">InputLayer</span><span class="p">(</span><span class="n">input_shape</span><span class="o">=</span><span class="p">(</span><span class="mi">28</span><span class="p">,</span> <span class="mi">28</span><span class="p">,</span> <span class="mi">1</span><span class="p">)))</span>
-
     <span class="n">encoder_model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Conv2D</span><span class="p">(</span><span class="n">filters</span><span class="o">=</span><span class="mi">32</span><span class="p">,</span> <span class="n">kernel_size</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">strides</span><span class="o">=</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="n">activation</span><span class="o">=</span><span class="s1">&#39;relu&#39;</span><span class="p">))</span>
-
     <span class="n">encoder_model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Conv2D</span><span class="p">(</span><span class="n">filters</span><span class="o">=</span><span class="mi">64</span><span class="p">,</span> <span class="n">kernel_size</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">strides</span><span class="o">=</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="n">activation</span><span class="o">=</span><span class="s1">&#39;relu&#39;</span><span class="p">))</span>
-
     <span class="n">encoder_model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Flatten</span><span class="p">())</span>
-
     <span class="n">encoder_model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Dense</span><span class="p">(</span><span class="n">LATENT_DIM</span> <span class="o">+</span> <span class="n">LATENT_DIM</span><span class="p">))</span>
-
     <span class="k">return</span> <span class="n">encoder_model</span>
 
 <span class="c1"># The encoder network outputs a flatten array concatenating mean and logvar,we define SplitOp to split them.</span>
-
 <span class="k">class</span> <span class="nc">SplitOp</span><span class="p">(</span><span class="n">TensorOp</span><span class="p">):</span>
-
     <span class="sd">&quot;&quot;&quot;To split the infer net output into two &quot;&quot;&quot;</span>
-
     <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">state</span><span class="p">):</span>
-
         <span class="n">mean</span><span class="p">,</span> <span class="n">logvar</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">num_or_size_splits</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-
         <span class="k">return</span> <span class="n">mean</span><span class="p">,</span> <span class="n">logvar</span>
-
 </pre></div>
 </div>
 </div>
@@ -613,25 +598,15 @@ div.rendered_html tbody tr:hover {
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="c1"># Decoder model</span>
 <span class="k">def</span> <span class="nf">generative_net</span><span class="p">():</span>
-
     <span class="n">generative_model</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">Sequential</span><span class="p">()</span>
-
     <span class="n">generative_model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">InputLayer</span><span class="p">(</span><span class="n">input_shape</span><span class="o">=</span><span class="p">(</span><span class="n">LATENT_DIM</span><span class="p">,</span> <span class="p">)))</span>
-
     <span class="n">generative_model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Dense</span><span class="p">(</span><span class="n">units</span><span class="o">=</span><span class="mi">7</span> <span class="o">*</span> <span class="mi">7</span> <span class="o">*</span> <span class="mi">32</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">relu</span><span class="p">))</span>
-
     <span class="n">generative_model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Reshape</span><span class="p">(</span><span class="n">target_shape</span><span class="o">=</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">32</span><span class="p">)))</span>
-
     <span class="n">generative_model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span>
-
         <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Conv2DTranspose</span><span class="p">(</span><span class="n">filters</span><span class="o">=</span><span class="mi">64</span><span class="p">,</span> <span class="n">kernel_size</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">strides</span><span class="o">=</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="n">padding</span><span class="o">=</span><span class="s2">&quot;SAME&quot;</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="s1">&#39;relu&#39;</span><span class="p">))</span>
-
     <span class="n">generative_model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span>
-
         <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Conv2DTranspose</span><span class="p">(</span><span class="n">filters</span><span class="o">=</span><span class="mi">32</span><span class="p">,</span> <span class="n">kernel_size</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">strides</span><span class="o">=</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="n">padding</span><span class="o">=</span><span class="s2">&quot;SAME&quot;</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="s1">&#39;relu&#39;</span><span class="p">))</span>
-
     <span class="n">generative_model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Conv2DTranspose</span><span class="p">(</span><span class="n">filters</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">kernel_size</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">strides</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="n">padding</span><span class="o">=</span><span class="s2">&quot;SAME&quot;</span><span class="p">))</span>
-
     <span class="k">return</span> <span class="n">generative_model</span>
 </pre></div>
 </div>
@@ -646,23 +621,15 @@ div.rendered_html tbody tr:hover {
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="c1"># Prepare/Compile models</span>
-
 <span class="n">enc_model</span> <span class="o">=</span> <span class="n">fe</span><span class="o">.</span><span class="n">build</span><span class="p">(</span><span class="n">model_def</span><span class="o">=</span><span class="n">encoder_net</span><span class="p">,</span>
-
                       <span class="n">model_name</span><span class="o">=</span><span class="s2">&quot;encoder&quot;</span><span class="p">,</span>
-
                       <span class="n">loss_name</span><span class="o">=</span><span class="s2">&quot;loss&quot;</span><span class="p">,</span>
-
                       <span class="n">optimizer</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">optimizers</span><span class="o">.</span><span class="n">Adam</span><span class="p">(</span><span class="mf">1e-4</span><span class="p">))</span>
 
 <span class="n">gen_model</span> <span class="o">=</span> <span class="n">fe</span><span class="o">.</span><span class="n">build</span><span class="p">(</span><span class="n">model_def</span><span class="o">=</span><span class="n">generative_net</span><span class="p">,</span>
-
                     <span class="n">model_name</span><span class="o">=</span><span class="s2">&quot;decoder&quot;</span><span class="p">,</span>
-
                     <span class="n">loss_name</span><span class="o">=</span><span class="s2">&quot;loss&quot;</span><span class="p">,</span>
-
                     <span class="n">optimizer</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">optimizers</span><span class="o">.</span><span class="n">Adam</span><span class="p">(</span><span class="mf">1e-4</span><span class="p">))</span>
-
 </pre></div>
 </div>
 </div>
@@ -780,13 +747,10 @@ div.rendered_html tbody tr:hover {
 
 <span class="c1"># Estimator</span>
 <span class="n">estimator</span> <span class="o">=</span> <span class="n">fe</span><span class="o">.</span><span class="n">Estimator</span><span class="p">(</span><span class="n">network</span><span class="o">=</span><span class="n">network</span><span class="p">,</span>
-
                          <span class="n">pipeline</span><span class="o">=</span><span class="n">pipeline</span><span class="p">,</span>
-
                          <span class="n">epochs</span><span class="o">=</span><span class="n">epochs</span><span class="p">,</span>
-
                          <span class="n">steps_per_epoch</span><span class="o">=</span><span class="n">steps_per_epoch</span><span class="p">,</span>
-
+                         <span class="n">validation_steps</span><span class="o">=</span><span class="n">validation_steps</span><span class="p">,</span>
                          <span class="n">traces</span><span class="o">=</span><span class="p">[</span><span class="n">ModelSaver</span><span class="p">(</span><span class="n">model_name</span><span class="o">=</span><span class="s2">&quot;decoder&quot;</span><span class="p">,</span> <span class="n">save_dir</span><span class="o">=</span><span class="n">model_dir</span><span class="p">,</span> <span class="n">save_best</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
                                  <span class="n">ModelSaver</span><span class="p">(</span><span class="n">model_name</span><span class="o">=</span><span class="s2">&quot;encoder&quot;</span><span class="p">,</span> <span class="n">save_dir</span><span class="o">=</span><span class="n">model_dir</span><span class="p">,</span> <span class="n">save_best</span><span class="o">=</span><span class="kc">True</span><span class="p">)])</span>
 </pre></div>
@@ -908,15 +872,6 @@ test image idx 3760
 </div>
 <div class="output_area docutils container">
 <img alt="../../../_images/apphub_image_generation_cvae_mnist_cvae_mnist_47_0.png" src="../../../_images/apphub_image_generation_cvae_mnist_cvae_mnist_47_0.png" />
-</div>
-</div>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span>
-</pre></div>
 </div>
 </div>
 </div>

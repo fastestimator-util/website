@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>logs &mdash; FastEstimator 1.0a0 documentation</title>
+  <title>logs &mdash; FastEstimator 1.0b0 documentation</title>
   
 
   
@@ -267,7 +267,7 @@ metrics which are blacklisted, and then pass the necessary information on the gr
 <span id="log-plot"></span><h2>log_plot<a class="headerlink" href="#module-fastestimator.summary.logs.log_plot" title="Permalink to this headline">¶</a></h2>
 <dl class="function">
 <dt id="fastestimator.summary.logs.log_plot.plot_logs">
-<code class="sig-prename descclassname">fastestimator.summary.logs.log_plot.</code><code class="sig-name descname">plot_logs</code><span class="sig-paren">(</span><em class="sig-param">experiments</em>, <em class="sig-param">smooth_factor=0</em>, <em class="sig-param">share_legend=True</em>, <em class="sig-param">ignore_metrics=None</em>, <em class="sig-param">pretty_names=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/summary/logs/log_plot.html#plot_logs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.summary.logs.log_plot.plot_logs" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">fastestimator.summary.logs.log_plot.</code><code class="sig-name descname">plot_logs</code><span class="sig-paren">(</span><em class="sig-param">experiments</em>, <em class="sig-param">smooth_factor=0</em>, <em class="sig-param">share_legend=True</em>, <em class="sig-param">ignore_metrics=None</em>, <em class="sig-param">pretty_names=False</em>, <em class="sig-param">include_metrics=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/summary/logs/log_plot.html#plot_logs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.summary.logs.log_plot.plot_logs" title="Permalink to this definition">¶</a></dt>
 <dd><p>A function which will plot experiment histories for comparison viewing / analysis</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -278,6 +278,7 @@ metrics which are blacklisted, and then pass the necessary information on the gr
 <li><p><strong>share_legend</strong> (<em>bool</em>) – Whether to have one legend across all graphs (true) or one legend per graph (false)</p></li>
 <li><p><strong>pretty_names</strong> (<em>bool</em>) – Whether to modify the metric names in graph titles (true) or leave them alone (false)</p></li>
 <li><p><strong>ignore_metrics</strong> (<em>set</em>) – Any keys to ignore during plotting</p></li>
+<li><p><strong>include_metrics</strong> (<em>set</em>) – A whitelist of keys to include during plotting. If None then all will be included.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
@@ -288,7 +289,7 @@ metrics which are blacklisted, and then pass the necessary information on the gr
 
 <dl class="function">
 <dt id="fastestimator.summary.logs.log_plot.visualize_logs">
-<code class="sig-prename descclassname">fastestimator.summary.logs.log_plot.</code><code class="sig-name descname">visualize_logs</code><span class="sig-paren">(</span><em class="sig-param">experiments</em>, <em class="sig-param">save_path=None</em>, <em class="sig-param">smooth_factor=0</em>, <em class="sig-param">share_legend=True</em>, <em class="sig-param">pretty_names=False</em>, <em class="sig-param">ignore_metrics=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/summary/logs/log_plot.html#visualize_logs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.summary.logs.log_plot.visualize_logs" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">fastestimator.summary.logs.log_plot.</code><code class="sig-name descname">visualize_logs</code><span class="sig-paren">(</span><em class="sig-param">experiments</em>, <em class="sig-param">save_path=None</em>, <em class="sig-param">smooth_factor=0</em>, <em class="sig-param">share_legend=True</em>, <em class="sig-param">pretty_names=False</em>, <em class="sig-param">ignore_metrics=None</em>, <em class="sig-param">include_metrics=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fastestimator/summary/logs/log_plot.html#visualize_logs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fastestimator.summary.logs.log_plot.visualize_logs" title="Permalink to this definition">¶</a></dt>
 <dd><p>A function which will save or display experiment histories for comparison viewing / analysis</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -300,6 +301,7 @@ metrics which are blacklisted, and then pass the necessary information on the gr
 <li><p><strong>share_legend</strong> (<em>bool</em>) – Whether to have one legend across all graphs (true) or one legend per graph (false)</p></li>
 <li><p><strong>pretty_names</strong> (<em>bool</em>) – Whether to modify the metric names in graph titles (true) or leave them alone (false)</p></li>
 <li><p><strong>ignore_metrics</strong> (<em>set</em>) – Any metrics to ignore during plotting</p></li>
+<li><p><strong>include_metrics</strong> (<em>set</em>) – A whitelist of metric keys (None whitelists all keys)</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>

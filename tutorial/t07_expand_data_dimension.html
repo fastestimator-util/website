@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Tutorial 7: Expanding data dimension in RecordWriter and Pipeline &mdash; FastEstimator 1.0a0 documentation</title>
+  <title>Tutorial 7: Expanding data dimension in RecordWriter and Pipeline &mdash; FastEstimator 1.0b0 documentation</title>
   
 
   
@@ -409,7 +409,7 @@ div.rendered_html tbody tr:hover {
 <li><p>Expanding data in <code class="docutils literal notranslate"><span class="pre">Pipeline</span></code> means expanded data can be different for every batch during training, the computation is done <strong>in-memory</strong> therefore <strong>no extra disk space</strong> is required. The drawback is that <strong>additional computation</strong> is required.</p></li>
 </ul>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -451,7 +451,7 @@ div.rendered_html tbody tr:hover {
 
 <span class="c1"># We insert this custom op in the ops list of RecordWriter.</span>
 <span class="c1"># We have to specify expand_dims=True to allow data dimension expansion.</span>
-<span class="n">writer</span> <span class="o">=</span> <span class="n">RecordWriter</span><span class="p">(</span><span class="n">save_dir</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">data_path</span><span class="p">,</span> <span class="s2">&quot;FEdata_replicate&quot;</span><span class="p">),</span>
+<span class="n">writer</span> <span class="o">=</span> <span class="n">RecordWriter</span><span class="p">(</span><span class="n">save_dir</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">data_path</span><span class="p">,</span> <span class="s2">&quot;tfrecords_replicate&quot;</span><span class="p">),</span>
                          <span class="n">train_data</span><span class="o">=</span><span class="n">train_csv</span><span class="p">,</span>
                          <span class="n">validation_data</span><span class="o">=</span><span class="n">eval_csv</span><span class="p">,</span>
                          <span class="n">ops</span><span class="o">=</span><span class="p">[</span><span class="n">ImageReader</span><span class="p">(</span><span class="n">inputs</span><span class="o">=</span><span class="s2">&quot;x&quot;</span><span class="p">,</span> <span class="n">outputs</span><span class="o">=</span><span class="s2">&quot;x&quot;</span><span class="p">,</span> <span class="n">parent_path</span><span class="o">=</span><span class="n">data_path</span><span class="p">,</span> <span class="n">grey_scale</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
@@ -465,7 +465,7 @@ div.rendered_html tbody tr:hover {
 <h2>Step 2 - Pipeline: expand dimension on the fly<a class="headerlink" href="#Step-2---Pipeline:-expand-dimension-on-the-fly" title="Permalink to this headline">¶</a></h2>
 <p>In the last step, we extracted 4 different 27x27 sub-images for each image. Now for each 27x27 image, let’s randomly sub-sample two 20x20 images during the training:</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -501,8 +501,8 @@ div.rendered_html tbody tr:hover {
 </div>
 <div class="section" id="Step-3---Check-pipeline-results…">
 <h2>Step 3 - Check pipeline results…<a class="headerlink" href="#Step-3---Check-pipeline-results…" title="Permalink to this headline">¶</a></h2>
-<div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -516,60 +516,6 @@ div.rendered_html tbody tr:hover {
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;shape of feature y is </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">y</span><span class="o">.</span><span class="n">shape</span><span class="p">))</span>
 </pre></div>
 </div>
-</div>
-<div class="nboutput nblast docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area docutils container">
-<div class="highlight"><pre>
-FastEstimator: Saving tfrecord to /tmp/.fe/Mnist/FEdata_replicate
-FastEstimator: Converting Train TFRecords 0.0%, Speed: 0.00 record/sec
-FastEstimator: Converting Train TFRecords 5.0%, Speed: 10469.19 record/sec
-FastEstimator: Converting Train TFRecords 10.0%, Speed: 10503.14 record/sec
-FastEstimator: Converting Train TFRecords 15.0%, Speed: 10543.56 record/sec
-FastEstimator: Converting Train TFRecords 20.0%, Speed: 10459.64 record/sec
-FastEstimator: Converting Train TFRecords 25.0%, Speed: 10502.02 record/sec
-FastEstimator: Converting Train TFRecords 30.0%, Speed: 10537.37 record/sec
-FastEstimator: Converting Train TFRecords 35.0%, Speed: 10582.11 record/sec
-FastEstimator: Converting Train TFRecords 40.0%, Speed: 10576.54 record/sec
-FastEstimator: Converting Train TFRecords 45.0%, Speed: 10580.37 record/sec
-FastEstimator: Converting Train TFRecords 50.0%, Speed: 10583.58 record/sec
-FastEstimator: Converting Train TFRecords 55.0%, Speed: 10575.13 record/sec
-FastEstimator: Converting Train TFRecords 60.0%, Speed: 10578.95 record/sec
-FastEstimator: Converting Train TFRecords 65.0%, Speed: 10547.38 record/sec
-FastEstimator: Converting Train TFRecords 70.0%, Speed: 10571.09 record/sec
-FastEstimator: Converting Train TFRecords 75.0%, Speed: 10564.39 record/sec
-FastEstimator: Converting Train TFRecords 80.0%, Speed: 10561.29 record/sec
-FastEstimator: Converting Train TFRecords 85.0%, Speed: 10539.61 record/sec
-FastEstimator: Converting Train TFRecords 90.0%, Speed: 10532.81 record/sec
-FastEstimator: Converting Train TFRecords 95.0%, Speed: 10514.78 record/sec
-FastEstimator: Converting Eval TFRecords 0.0%, Speed: 0.00 record/sec
-FastEstimator: Converting Eval TFRecords 5.0%, Speed: 9647.61 record/sec
-FastEstimator: Converting Eval TFRecords 9.9%, Speed: 10271.09 record/sec
-FastEstimator: Converting Eval TFRecords 14.9%, Speed: 10281.40 record/sec
-FastEstimator: Converting Eval TFRecords 19.8%, Speed: 10370.66 record/sec
-FastEstimator: Converting Eval TFRecords 24.8%, Speed: 10379.06 record/sec
-FastEstimator: Converting Eval TFRecords 29.8%, Speed: 10417.37 record/sec
-FastEstimator: Converting Eval TFRecords 34.7%, Speed: 10520.16 record/sec
-FastEstimator: Converting Eval TFRecords 39.7%, Speed: 10488.91 record/sec
-FastEstimator: Converting Eval TFRecords 44.6%, Speed: 10550.16 record/sec
-FastEstimator: Converting Eval TFRecords 49.6%, Speed: 10540.58 record/sec
-FastEstimator: Converting Eval TFRecords 54.6%, Speed: 10562.85 record/sec
-FastEstimator: Converting Eval TFRecords 59.5%, Speed: 10582.31 record/sec
-FastEstimator: Converting Eval TFRecords 64.5%, Speed: 10544.70 record/sec
-FastEstimator: Converting Eval TFRecords 69.4%, Speed: 10480.63 record/sec
-FastEstimator: Converting Eval TFRecords 74.4%, Speed: 10503.94 record/sec
-FastEstimator: Converting Eval TFRecords 79.4%, Speed: 10528.05 record/sec
-FastEstimator: Converting Eval TFRecords 84.3%, Speed: 10515.29 record/sec
-FastEstimator: Converting Eval TFRecords 89.3%, Speed: 10471.55 record/sec
-FastEstimator: Converting Eval TFRecords 94.2%, Speed: 10465.51 record/sec
-FastEstimator: Converting Eval TFRecords 99.2%, Speed: 10490.91 record/sec
-FastEstimator: Reading non-empty directory: /tmp/.fe/Mnist/FEdata_replicate
-FastEstimator: Found 240000 examples for train in /tmp/.fe/Mnist/FEdata_replicate/train_summary0.json
-FastEstimator: Found 40000 examples for eval in /tmp/.fe/Mnist/FEdata_replicate/eval_summary0.json
-shape of feature x is (32, 20, 20, 1)
-shape of feature y is (32,)
-</pre></div></div>
 </div>
 </div>
 <div class="section" id="….-and-visualize!">
@@ -607,15 +553,6 @@ ground truth label is 5
 </div>
 </div>
 <p>As we can see, each image is indeed generating two random patches.</p>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span>
-</pre></div>
-</div>
-</div>
 </div>
 </div>
 <p>—</p>

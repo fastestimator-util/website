@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>fastestimator.dataset.mscoco &mdash; FastEstimator 1.0a0 documentation</title>
+  <title>fastestimator.dataset.mscoco &mdash; FastEstimator 1.0b0 documentation</title>
   
 
   
@@ -155,75 +155,103 @@
            <div itemprop="articleBody">
             
   <h1>Source code for fastestimator.dataset.mscoco</h1><div class="highlight"><pre>
-<span></span><span class="kn">import</span> <span class="nn">os</span>
-<span class="kn">import</span> <span class="nn">tempfile</span>
+<span></span><span class="c1"># Copyright 2019 The FastEstimator Authors. All Rights Reserved.</span>
+<span class="c1">#</span>
+<span class="c1"># Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);</span>
+<span class="c1"># you may not use this file except in compliance with the License.</span>
+<span class="c1"># You may obtain a copy of the License at</span>
+<span class="c1">#</span>
+<span class="c1">#     http://www.apache.org/licenses/LICENSE-2.0</span>
+<span class="c1">#</span>
+<span class="c1"># Unless required by applicable law or agreed to in writing, software</span>
+<span class="c1"># distributed under the License is distributed on an &quot;AS IS&quot; BASIS,</span>
+<span class="c1"># WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span>
+<span class="c1"># See the License for the specific language governing permissions and</span>
+<span class="c1"># limitations under the License.</span>
+<span class="c1"># ==============================================================================</span>
+<span class="sd">&quot;&quot;&quot;Download MS COCO 2014 dataset.&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">zipfile</span>
-<span class="kn">import</span> <span class="nn">wget</span>
+<span class="kn">from</span> <span class="nn">glob</span> <span class="k">import</span> <span class="n">glob</span>
+<span class="kn">from</span> <span class="nn">pathlib</span> <span class="k">import</span> <span class="n">Path</span>
 
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">from</span> <span class="nn">glob</span> <span class="k">import</span> <span class="n">glob</span>
+<span class="kn">import</span> <span class="nn">wget</span>
 
+<span class="kn">from</span> <span class="nn">fastestimator.util.wget</span> <span class="k">import</span> <span class="n">bar_custom</span><span class="p">,</span> <span class="n">callback_progress</span>
+
+<span class="n">wget</span><span class="o">.</span><span class="n">callback_progress</span> <span class="o">=</span> <span class="n">callback_progress</span>
 <span class="n">NUM_IMG_FILES</span> <span class="o">=</span> <span class="mi">82783</span>
 
 
 <span class="k">def</span> <span class="nf">_download_and_extract</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">path</span><span class="p">):</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">filename</span><span class="p">)):</span>
         <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Downloading data to </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">path</span><span class="p">))</span>
-        <span class="n">wget</span><span class="o">.</span><span class="n">download</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">path</span><span class="p">)</span>
+        <span class="n">wget</span><span class="o">.</span><span class="n">download</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">bar</span><span class="o">=</span><span class="n">bar_custom</span><span class="p">)</span>
 
     <span class="k">with</span> <span class="n">zipfile</span><span class="o">.</span><span class="n">ZipFile</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">filename</span><span class="p">),</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">zip_file</span><span class="p">:</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Extracting </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">filename</span><span class="p">)))</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Extracting </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">filename</span><span class="p">)))</span>
         <span class="n">zip_file</span><span class="o">.</span><span class="n">extractall</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
 
 
-<span class="k">def</span> <span class="nf">_create_csv</span><span class="p">(</span><span class="n">data_path</span><span class="p">):</span>
-    <span class="n">filenames</span> <span class="o">=</span> <span class="n">glob</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">data_path</span><span class="p">,</span> <span class="s1">&#39;*.jpg&#39;</span><span class="p">))</span>
-    <span class="n">csv</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="k">def</span> <span class="nf">_create_csv</span><span class="p">(</span><span class="n">data_folder_path</span><span class="p">,</span> <span class="n">path</span><span class="p">):</span>
+    <span class="n">filenames</span> <span class="o">=</span> <span class="n">glob</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">data_folder_path</span><span class="p">,</span> <span class="s1">&#39;*.jpg&#39;</span><span class="p">))</span>
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">filenames</span><span class="p">)</span> <span class="o">==</span> <span class="n">NUM_IMG_FILES</span><span class="p">:</span>
-        <span class="n">csv</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
-        <span class="n">rel_filenames</span> <span class="o">=</span> <span class="p">[</span><span class="n">f</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">data_path</span><span class="p">,</span> <span class="s1">&#39;.&#39;</span><span class="p">)</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">filenames</span><span class="p">]</span>
-        <span class="n">csv</span><span class="p">[</span><span class="s2">&quot;image&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">rel_filenames</span>
+        <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
+        <span class="n">rel_filenames</span> <span class="o">=</span> <span class="p">[</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">relpath</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">path</span><span class="p">)</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">filenames</span><span class="p">]</span>
+        <span class="n">df</span><span class="p">[</span><span class="s1">&#39;image&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">rel_filenames</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;One or more images are missing&quot;</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">csv</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;One or more images are missing.&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">df</span>
 
 
 <div class="viewcode-block" id="load_data"><a class="viewcode-back" href="../../../fastestimator.dataset.html#fastestimator.dataset.mscoco.load_data">[docs]</a><span class="k">def</span> <span class="nf">load_data</span><span class="p">(</span><span class="n">path</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Downloads the Coco dataset to local storage, if not already downloaded. This will generate one csv file</span>
-<span class="sd">    coco_train.csv, which contains all the path information.</span>
+    <span class="sd">&quot;&quot;&quot;Download the COCO dataset to local storage, if not already downloaded. This will generate a</span>
+<span class="sd">    coco_train.csv file, which contains all the path information.</span>
 
 <span class="sd">    Args:</span>
-<span class="sd">        path (str, optional): The path to store the Coco data. Defaults to None, will save at `tempfile.gettempdir()`.</span>
+<span class="sd">        path (str, optional): The path to store the COCO data. When `path` is not provided, will save at</span>
+<span class="sd">            `fastestimator_data` under user&#39;s home directory.</span>
 
 <span class="sd">    Returns:</span>
-<span class="sd">        string: path to csv file.</span>
-<span class="sd">        string: path to data directory.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">url</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;train&quot;</span><span class="p">:</span> <span class="s2">&quot;http://images.cocodataset.org/zips/train2014.zip&quot;</span><span class="p">}</span>
-    <span class="k">if</span> <span class="n">path</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">tempfile</span><span class="o">.</span><span class="n">gettempdir</span><span class="p">(),</span> <span class="s2">&quot;.fe&quot;</span><span class="p">,</span> <span class="s2">&quot;MSCOCO2014&quot;</span><span class="p">)</span>
-    <span class="n">path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+<span class="sd">        (tuple): tuple containing:</span>
+<span class="sd">            csv_path (str): Path to the summary csv file.</span>
+<span class="sd">            path (str): Path to data root directory.</span>
 
-    <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-    <span class="n">train_csv_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s2">&quot;coco_train.csv&quot;</span><span class="p">)</span>
-    <span class="n">train_data_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s2">&quot;train2014&quot;</span><span class="p">)</span>
-    <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">train_data_dir</span><span class="p">)):</span>
-        <span class="n">_download_and_extract</span><span class="p">(</span><span class="n">url</span><span class="p">[</span><span class="s2">&quot;train&quot;</span><span class="p">],</span> <span class="s2">&quot;train2014.zip&quot;</span><span class="p">,</span> <span class="n">path</span><span class="p">)</span>
-        <span class="n">train_csv</span> <span class="o">=</span> <span class="n">_create_csv</span><span class="p">(</span><span class="n">train_data_dir</span><span class="p">)</span>
-        <span class="n">train_csv</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">train_csv_path</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">home</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">Path</span><span class="o">.</span><span class="n">home</span><span class="p">())</span>
+
+    <span class="n">url</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;train&#39;</span><span class="p">:</span> <span class="s1">&#39;http://images.cocodataset.org/zips/train2014.zip&#39;</span><span class="p">}</span>
+    <span class="k">if</span> <span class="n">path</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">home</span><span class="p">,</span> <span class="s1">&#39;fastestimator_data&#39;</span><span class="p">,</span> <span class="s1">&#39;MSCOCO&#39;</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">glob</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">train_data_dir</span><span class="p">,</span> <span class="s1">&#39;*.jpg&#39;</span><span class="p">)))</span> <span class="o">==</span> <span class="n">NUM_IMG_FILES</span><span class="p">):</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;One or more images are missing&quot;</span><span class="p">)</span>
+        <span class="n">path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="n">csv_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s1">&#39;coco_train.csv&#39;</span><span class="p">)</span>
+    <span class="n">data_folder_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s1">&#39;train2014&#39;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">data_folder_path</span><span class="p">):</span>
+        <span class="n">_download_and_extract</span><span class="p">(</span><span class="n">url</span><span class="p">[</span><span class="s2">&quot;train&quot;</span><span class="p">],</span> <span class="s2">&quot;train2014.zip&quot;</span><span class="p">,</span> <span class="n">path</span><span class="p">)</span>
+        <span class="n">train_df</span> <span class="o">=</span> <span class="n">_create_csv</span><span class="p">(</span><span class="n">data_folder_path</span><span class="p">,</span> <span class="n">path</span><span class="p">)</span>
+        <span class="n">train_df</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">csv_path</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Data summary is saved at </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">csv_path</span><span class="p">))</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">len</span><span class="p">(</span><span class="n">glob</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">data_folder_path</span><span class="p">,</span> <span class="s1">&#39;*.jpg&#39;</span><span class="p">)))</span> <span class="o">==</span> <span class="n">NUM_IMG_FILES</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;One or more images are missing.&quot;</span><span class="p">)</span>
             <span class="n">_download_and_extract</span><span class="p">(</span><span class="n">url</span><span class="p">[</span><span class="s2">&quot;train&quot;</span><span class="p">],</span> <span class="s2">&quot;train2014.zip&quot;</span><span class="p">,</span> <span class="n">path</span><span class="p">)</span>
-            <span class="n">train_csv</span> <span class="o">=</span> <span class="n">_create_csv</span><span class="p">(</span><span class="n">train_data_dir</span><span class="p">)</span>
-            <span class="n">train_csv</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">train_csv_path</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+            <span class="n">train_df</span> <span class="o">=</span> <span class="n">_create_csv</span><span class="p">(</span><span class="n">data_folder_path</span><span class="p">,</span> <span class="n">path</span><span class="p">)</span>
+            <span class="n">train_df</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">csv_path</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Data summary is saved at </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">csv_path</span><span class="p">))</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">train_csv_path</span><span class="p">)):</span>
-                <span class="n">train_csv</span> <span class="o">=</span> <span class="n">_create_csv</span><span class="p">(</span><span class="n">train_data_dir</span><span class="p">)</span>
-                <span class="n">train_csv</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">train_csv_path</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">csv_path</span><span class="p">):</span>
+                <span class="n">train_df</span> <span class="o">=</span> <span class="n">_create_csv</span><span class="p">(</span><span class="n">data_folder_path</span><span class="p">,</span> <span class="n">path</span><span class="p">)</span>
+                <span class="n">train_df</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">csv_path</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Data summary is saved at </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">csv_path</span><span class="p">))</span>
             <span class="k">else</span><span class="p">:</span>
-                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;reusing existing dataset&quot;</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">train_csv_path</span><span class="p">,</span> <span class="n">train_data_dir</span></div>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Reusing existing dataset.&quot;</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">csv_path</span><span class="p">,</span> <span class="n">path</span></div>
 </pre></div>
 
            </div>

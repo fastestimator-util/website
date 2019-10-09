@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>fastestimator.dataset.mendeley &mdash; FastEstimator 1.0a0 documentation</title>
+  <title>fastestimator.dataset.mendeley &mdash; FastEstimator 1.0b0 documentation</title>
   
 
   
@@ -170,90 +170,90 @@
 <span class="c1"># limitations under the License.</span>
 <span class="c1"># ==============================================================================</span>
 <span class="sd">&quot;&quot;&quot; Mendeley dataset API.</span>
-<span class="sd">Kermany, Daniel; Zhang, Kang; Goldbaum, Michael (2018), &quot;Labeled Optical Coherence Tomography (OCT) and Chest X-Ray Images for Classification&quot;, Mendeley Data, v2</span>
-<span class="sd">http://dx.doi.org/10.17632/rscbjbr9sj.2</span>
+<span class="sd">Kermany, Daniel; Zhang, Kang; Goldbaum, Michael (2018), &quot;Labeled Optical Coherence Tomography (OCT) and Chest X-Ray</span>
+<span class="sd">Images for Classification&quot;, Mendeley Data, v2 http://dx.doi.org/10.17632/rscbjbr9sj.2</span>
 
 <span class="sd">CC BY 4.0 licence:</span>
 <span class="sd">https://creativecommons.org/licenses/by/4.0/</span>
 <span class="sd">&quot;&quot;&quot;</span>
 
 <span class="kn">import</span> <span class="nn">os</span>
-<span class="kn">import</span> <span class="nn">tempfile</span>
 <span class="kn">import</span> <span class="nn">zipfile</span>
+<span class="kn">from</span> <span class="nn">glob</span> <span class="k">import</span> <span class="n">glob</span>
+<span class="kn">from</span> <span class="nn">pathlib</span> <span class="k">import</span> <span class="n">Path</span>
+
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">import</span> <span class="nn">wget</span>
-<span class="kn">import</span> <span class="nn">requests</span><span class="o">,</span> <span class="nn">io</span>
+<span class="kn">import</span> <span class="nn">requests</span>
+<span class="kn">from</span> <span class="nn">tqdm</span> <span class="k">import</span> <span class="n">tqdm</span>
 
-<div class="viewcode-block" id="img_data_constructor"><a class="viewcode-back" href="../../../fastestimator.dataset.html#fastestimator.dataset.mendeley.img_data_constructor">[docs]</a><span class="k">def</span> <span class="nf">img_data_constructor</span><span class="p">(</span><span class="n">data_folder</span><span class="p">,</span> <span class="n">mode</span><span class="p">,</span> <span class="n">csv_path</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Creates the csv file containing all paths to images for the indicated mode and their labels.</span>
 
-<span class="sd">    Args:</span>
-<span class="sd">        data_folder (string): path to data directory.</span>
-<span class="sd">        mode (string): training or testing.</span>
-<span class="sd">        csv_path (string): path where to save csv file.</span>
-
-<span class="sd">    Returns:</span>
-<span class="sd">        DataFrame: DataFrame containing the paths to each image x and corresponding labels y.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">normal_cases_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">data_folder</span><span class="p">,</span> <span class="s1">&#39;NORMAL&#39;</span><span class="p">)</span>
-    <span class="n">pneumonia_cases_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">data_folder</span><span class="p">,</span> <span class="s1">&#39;PNEUMONIA&#39;</span><span class="p">)</span>
-    <span class="n">data</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="k">for</span> <span class="n">dirpath</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">filenames</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">walk</span><span class="p">(</span><span class="n">normal_cases_dir</span><span class="p">):</span>
-        <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">filenames</span><span class="p">:</span>
-            <span class="c1"># Select only jpeg files:</span>
-            <span class="k">if</span> <span class="n">f</span><span class="p">[</span><span class="o">-</span><span class="mi">4</span><span class="p">:]</span> <span class="o">==</span> <span class="s1">&#39;jpeg&#39;</span><span class="p">:</span>
-                <span class="n">img</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">dirpath</span><span class="p">,</span> <span class="n">f</span><span class="p">))</span>
-                <span class="n">data</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">img</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
-    <span class="k">for</span> <span class="n">dirpath</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">filenames</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">walk</span><span class="p">(</span><span class="n">pneumonia_cases_dir</span><span class="p">):</span>
-        <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">filenames</span><span class="p">:</span>
-            <span class="k">if</span> <span class="n">f</span><span class="p">[</span><span class="o">-</span><span class="mi">4</span><span class="p">:]</span> <span class="o">==</span> <span class="s1">&#39;jpeg&#39;</span><span class="p">:</span>
-                <span class="n">img</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">dirpath</span><span class="p">,</span> <span class="n">f</span><span class="p">))</span>
-                <span class="n">data</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">img</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
-    <span class="n">num_example</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;found </span><span class="si">%d</span><span class="s2"> number of examples for </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">num_example</span><span class="p">,</span> <span class="n">mode</span><span class="p">))</span>
-    <span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">],</span> <span class="n">index</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
-    <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">frac</span><span class="o">=</span><span class="mf">1.</span><span class="p">)</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-    <span class="n">data</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">csv_path</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">data</span></div>
+<span class="k">def</span> <span class="nf">_create_csv</span><span class="p">(</span><span class="n">img_path</span><span class="p">,</span> <span class="n">parent_path</span><span class="p">,</span> <span class="n">csv_path</span><span class="p">):</span>
+    <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
+    <span class="n">df</span><span class="p">[</span><span class="s1">&#39;image&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">img_path</span>
+    <span class="n">df</span><span class="p">[</span><span class="s1">&#39;image&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;image&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">relpath</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">parent_path</span><span class="p">))</span>
+    <span class="n">df</span><span class="p">[</span><span class="s1">&#39;image&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;image&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">normpath</span><span class="p">)</span>
+    <span class="n">df</span><span class="p">[</span><span class="s1">&#39;label&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;image&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">contains</span><span class="p">(</span><span class="s1">&#39;PNEUMONIA&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+    <span class="n">df</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">csv_path</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Data summary is saved at </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">csv_path</span><span class="p">))</span>
 
 
 <div class="viewcode-block" id="load_data"><a class="viewcode-back" href="../../../fastestimator.dataset.html#fastestimator.dataset.mendeley.load_data">[docs]</a><span class="k">def</span> <span class="nf">load_data</span><span class="p">(</span><span class="n">path</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Downloads the Mendeley dataset to local storage, if not already downloaded. This will generate 2 csv files</span>
-<span class="sd">    (train and test), which contain all the path information.</span>
+    <span class="sd">&quot;&quot;&quot;Download the Mendeley dataset to local storage, if not already downloaded. This will generate 2 csv files</span>
+<span class="sd">    (train, test), which contain all the path information.</span>
 
 <span class="sd">    Args:</span>
-<span class="sd">        path (str, optional): The path to store the Mendeley data. Defaults to None, will save at</span>
-<span class="sd">        `tempfile.gettempdir()`.</span>
+<span class="sd">        path (str, optional): The path to store the Mendeley data. When `path` is not provided, will save at</span>
+<span class="sd">            `fastestimator_data` under user&#39;s home directory.</span>
 
 <span class="sd">    Returns:</span>
-<span class="sd">        string: path to train csv file.</span>
-<span class="sd">        string: path to test csv file.</span>
-<span class="sd">        string: path to data directory.</span>
+<span class="sd">        (tuple): tuple containing:</span>
+<span class="sd">            train_csv (str): Path to train csv file.</span>
+<span class="sd">            test_csv (str): Path to test csv file.</span>
+<span class="sd">            path (str): Path to data root directory.</span>
+
 <span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">url</span> <span class="o">=</span> <span class="s1">&#39;https://data.mendeley.com/datasets/rscbjbr9sj/2/files/41d542e7-7f91-47f6-9ff2-dd8e5a5a7861/&#39;</span> \
+        <span class="s1">&#39;ChestXRay2017.zip?dl=1&#39;</span>
+    <span class="n">home</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">Path</span><span class="o">.</span><span class="n">home</span><span class="p">())</span>
 
     <span class="k">if</span> <span class="n">path</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">tempfile</span><span class="o">.</span><span class="n">gettempdir</span><span class="p">(),</span> <span class="s2">&quot;.fe&quot;</span><span class="p">,</span> <span class="s2">&quot;Mendeley&quot;</span><span class="p">)</span>
-    <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
-        <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
-    <span class="n">train_csv</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s2">&quot;train_data.csv&quot;</span><span class="p">)</span>
-    <span class="n">test_csv</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s2">&quot;test_data.csv&quot;</span><span class="p">)</span>
-    <span class="n">data_compressed_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s2">&quot;ChestXRay2017.zip&quot;</span><span class="p">)</span>
-    <span class="n">data_folder_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s2">&quot;chest_xray&quot;</span><span class="p">)</span>
+        <span class="n">path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">home</span><span class="p">,</span> <span class="s1">&#39;fastestimator_data&#39;</span><span class="p">,</span> <span class="s1">&#39;Mendeley&#39;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="n">train_csv</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s1">&#39;train.csv&#39;</span><span class="p">)</span>
+    <span class="n">test_csv</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s1">&#39;test.csv&#39;</span><span class="p">)</span>
+    <span class="n">data_compressed_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s1">&#39;ChestXRay2017.zip&#39;</span><span class="p">)</span>
+    <span class="n">data_folder_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s1">&#39;chest_xray&#39;</span><span class="p">)</span>
+
+    <span class="c1"># download</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">data_compressed_path</span><span class="p">):</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Downloading data to </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">path</span><span class="p">)</span>
-        <span class="n">r</span><span class="o">=</span><span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;https://data.mendeley.com/datasets/rscbjbr9sj/2/files/41d542e7-7f91-47f6-9ff2-dd8e5a5a7861/ChestXRay2017.zip?dl=1&#39;</span><span class="p">)</span>
-        <span class="n">z</span> <span class="o">=</span> <span class="n">zipfile</span><span class="o">.</span><span class="n">ZipFile</span><span class="p">(</span><span class="n">io</span><span class="o">.</span><span class="n">BytesIO</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">content</span><span class="p">))</span>
-        <span class="n">z</span><span class="o">.</span><span class="n">extractall</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Downloading data to </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">path</span><span class="p">))</span>
+        <span class="n">stream</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">stream</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>  <span class="c1"># python wget does not work</span>
+        <span class="n">total_size</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">stream</span><span class="o">.</span><span class="n">headers</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;content-length&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
+        <span class="n">block_size</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="mf">1e6</span><span class="p">)</span>  <span class="c1"># 1 MB</span>
+        <span class="n">progress</span> <span class="o">=</span> <span class="n">tqdm</span><span class="p">(</span><span class="n">total</span><span class="o">=</span><span class="n">total_size</span><span class="p">,</span> <span class="n">unit</span><span class="o">=</span><span class="s1">&#39;B&#39;</span><span class="p">,</span> <span class="n">unit_scale</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">data_compressed_path</span><span class="p">,</span> <span class="s1">&#39;wb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">outfile</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">data</span> <span class="ow">in</span> <span class="n">stream</span><span class="o">.</span><span class="n">iter_content</span><span class="p">(</span><span class="n">block_size</span><span class="p">):</span>
+                <span class="n">progress</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">))</span>
+                <span class="n">outfile</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+        <span class="n">progress</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+    <span class="c1"># extract</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">data_folder_path</span><span class="p">):</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;extracting data...&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Extracting file ...&quot;</span><span class="p">)</span>
         <span class="k">with</span> <span class="n">zipfile</span><span class="o">.</span><span class="n">ZipFile</span><span class="p">(</span><span class="n">data_compressed_path</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">zip_file</span><span class="p">:</span>
             <span class="n">zip_file</span><span class="o">.</span><span class="n">extractall</span><span class="p">(</span><span class="n">path</span><span class="o">=</span><span class="n">path</span><span class="p">)</span>
+
+    <span class="c1"># glob and generate csv</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">train_csv</span><span class="p">):</span>
-        <span class="n">train_folder</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">data_folder_path</span><span class="p">,</span> <span class="s2">&quot;train&quot;</span><span class="p">)</span>
-        <span class="n">img_data_constructor</span><span class="p">(</span><span class="n">train_folder</span><span class="p">,</span> <span class="s2">&quot;train&quot;</span><span class="p">,</span> <span class="n">train_csv</span><span class="p">)</span>
+        <span class="n">train_img</span> <span class="o">=</span> <span class="n">glob</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">data_folder_path</span><span class="p">,</span> <span class="s1">&#39;train&#39;</span><span class="p">,</span> <span class="s1">&#39;**&#39;</span><span class="p">,</span> <span class="s1">&#39;*.jpeg&#39;</span><span class="p">))</span>
+        <span class="n">_create_csv</span><span class="p">(</span><span class="n">train_img</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">train_csv</span><span class="p">)</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">test_csv</span><span class="p">):</span>
-        <span class="n">test_folder</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">data_folder_path</span><span class="p">,</span> <span class="s2">&quot;test&quot;</span><span class="p">)</span>
-        <span class="n">img_data_constructor</span><span class="p">(</span><span class="n">test_folder</span><span class="p">,</span> <span class="s2">&quot;test&quot;</span><span class="p">,</span> <span class="n">test_csv</span><span class="p">)</span>
+        <span class="n">test_img</span> <span class="o">=</span> <span class="n">glob</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">data_folder_path</span><span class="p">,</span> <span class="s1">&#39;test&#39;</span><span class="p">,</span> <span class="s1">&#39;**&#39;</span><span class="p">,</span> <span class="s1">&#39;*.jpeg&#39;</span><span class="p">))</span>
+        <span class="n">_create_csv</span><span class="p">(</span><span class="n">test_img</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">test_csv</span><span class="p">)</span>
+
     <span class="k">return</span> <span class="n">train_csv</span><span class="p">,</span> <span class="n">test_csv</span><span class="p">,</span> <span class="n">path</span></div>
 </pre></div>
 

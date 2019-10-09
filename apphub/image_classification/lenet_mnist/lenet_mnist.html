@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>MNIST Image Classification Using LeNet &mdash; FastEstimator 1.0a0 documentation</title>
+  <title>MNIST Image Classification Using LeNet &mdash; FastEstimator 1.0b0 documentation</title>
   
 
   
@@ -41,7 +41,7 @@
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" />
     <link rel="next" title="Image Generation" href="../../image_generation.html" />
-    <link rel="prev" title="CIFAR10 Image Classification Using LeNet with mixup" href="../lenet_cifar10_mixup/lenet_cifar10_mixup.html" /> 
+    <link rel="prev" title="CIFAR10 Image Classification Using LeNet" href="../lenet_cifar10_mixup/lenet_cifar10_mixup.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -95,9 +95,8 @@
 <li class="toctree-l1 current"><a class="reference internal" href="../../../apphub.html">Example</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="../../NLP.html">NLP</a></li>
 <li class="toctree-l2 current"><a class="reference internal" href="../../image_classification.html">Image Classification</a><ul class="current">
-<li class="toctree-l3"><a class="reference internal" href="../densenet121_cifar10/densenet121_cifar10.html">CIFAR10 Image Classification Using DenseNet-121</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../lenet_cifar10_adversarial/lenet_cifar10_adversarial.html">CIFAR10 Image Classification Using LeNet with adversarial samples</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../lenet_cifar10_mixup/lenet_cifar10_mixup.html">CIFAR10 Image Classification Using LeNet with mixup</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../lenet_cifar10_adversarial/lenet_cifar10_adversarial.html">CIFAR10 Image Classification Using LeNet</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../lenet_cifar10_mixup/lenet_cifar10_mixup.html">CIFAR10 Image Classification Using LeNet</a></li>
 <li class="toctree-l3 current"><a class="current reference internal" href="#">MNIST Image Classification Using LeNet</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#Step-1:-Prepare-training-and-evaluation-dataset,-create-FastEstimator-Pipeline">Step 1: Prepare training and evaluation dataset, create FastEstimator <code class="docutils literal notranslate"><span class="pre">Pipeline</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#Step-2:-Prepare-model,-create-FastEstimator-Network">Step 2: Prepare model, create FastEstimator <code class="docutils literal notranslate"><span class="pre">Network</span></code></a></li>
@@ -408,71 +407,14 @@ div.rendered_html tbody tr:hover {
 <div class="section" id="MNIST-Image-Classification-Using-LeNet">
 <h1>MNIST Image Classification Using LeNet<a class="headerlink" href="#MNIST-Image-Classification-Using-LeNet" title="Permalink to this headline">¶</a></h1>
 <p>In this tutorial, we are going to walk through the logic in <code class="docutils literal notranslate"><span class="pre">lenet_mnist.py</span></code> shown below and provide step-by-step instructions.</p>
-<div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="o">!</span>cat lenet_mnist.py
 </pre></div>
 </div>
-</div>
-<div class="nboutput nblast docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area docutils container">
-<div class="highlight"><pre>
-# Copyright 2019 The FastEstimator Authors. All Rights Reserved.
-#
-# Licensed under the Apache License, Version 2.0 (the &#34;License&#34;);
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
-#
-#     http://www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an &#34;AS IS&#34; BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
-# ==============================================================================
-import tempfile
-
-import numpy as np
-import tensorflow as tf
-
-import fastestimator as fe
-from fastestimator.trace import Accuracy, ModelSaver
-from fastestimator.architecture import LeNet
-from fastestimator.op.tensorop import Minmax, ModelOp, SparseCategoricalCrossentropy
-
-
-def get_estimator(epochs=2, batch_size=32, model_dir=tempfile.mkdtemp()):
-    # step 1. prepare data
-    (x_train, y_train), (x_eval, y_eval) = tf.keras.datasets.mnist.load_data()
-    train_data = {&#34;x&#34;: np.expand_dims(x_train, -1), &#34;y&#34;: y_train}
-    eval_data = {&#34;x&#34;: np.expand_dims(x_eval, -1), &#34;y&#34;: y_eval}
-    data = {&#34;train&#34;: train_data, &#34;eval&#34;: eval_data}
-    pipeline = fe.Pipeline(batch_size=batch_size, data=data, ops=Minmax(inputs=&#34;x&#34;, outputs=&#34;x&#34;))
-
-    # step 2. prepare model
-    model = fe.FEModel(model_def=LeNet, model_name=&#34;lenet&#34;, optimizer=&#34;adam&#34;)
-    network = fe.Network(
-        ops=[ModelOp(inputs=&#34;x&#34;, model=model, outputs=&#34;y_pred&#34;), SparseCategoricalCrossentropy(inputs=(&#34;y&#34;, &#34;y_pred&#34;))])
-
-    # step 3.prepare estimator
-    traces = [
-        Accuracy(true_key=&#34;y&#34;, pred_key=&#34;y_pred&#34;, output_name=&#39;acc&#39;),
-        ModelSaver(model_name=&#34;lenet&#34;, save_dir=model_dir, save_best=True)
-    ]
-    estimator = fe.Estimator(network=network, pipeline=pipeline, epochs=epochs, traces=traces)
-    return estimator
-
-
-if __name__ == &#34;__main__&#34;:
-    est = get_estimator()
-    est.fit()
-</pre></div></div>
 </div>
 <div class="section" id="Step-1:-Prepare-training-and-evaluation-dataset,-create-FastEstimator-Pipeline">
 <h2>Step 1: Prepare training and evaluation dataset, create FastEstimator <code class="docutils literal notranslate"><span class="pre">Pipeline</span></code><a class="headerlink" href="#Step-1:-Prepare-training-and-evaluation-dataset,-create-FastEstimator-Pipeline" title="Permalink to this headline">¶</a></h2>
@@ -544,6 +486,7 @@ eval image shape is (10000, 28, 28, 1)
 <span class="n">epochs</span> <span class="o">=</span> <span class="mi">2</span>
 <span class="n">batch_size</span> <span class="o">=</span> <span class="mi">32</span>
 <span class="n">steps_per_epoch</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="n">validation_steps</span> <span class="o">=</span> <span class="kc">None</span>
 </pre></div>
 </div>
 </div>
@@ -608,80 +551,26 @@ eval image shape is (10000, 28, 28, 1)
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">estimator</span> <span class="o">=</span> <span class="n">fe</span><span class="o">.</span><span class="n">Estimator</span><span class="p">(</span><span class="n">network</span><span class="o">=</span><span class="n">network</span><span class="p">,</span> <span class="n">pipeline</span><span class="o">=</span><span class="n">pipeline</span><span class="p">,</span> <span class="n">epochs</span><span class="o">=</span><span class="n">epochs</span><span class="p">,</span>
-                         <span class="n">steps_per_epoch</span><span class="o">=</span><span class="n">steps_per_epoch</span><span class="p">,</span> <span class="n">traces</span><span class="o">=</span><span class="n">traces</span><span class="p">)</span>
+<span></span><span class="n">estimator</span> <span class="o">=</span> <span class="n">fe</span><span class="o">.</span><span class="n">Estimator</span><span class="p">(</span><span class="n">network</span><span class="o">=</span><span class="n">network</span><span class="p">,</span>
+                         <span class="n">pipeline</span><span class="o">=</span><span class="n">pipeline</span><span class="p">,</span>
+                         <span class="n">epochs</span><span class="o">=</span><span class="n">epochs</span><span class="p">,</span>
+                         <span class="n">steps_per_epoch</span><span class="o">=</span><span class="n">steps_per_epoch</span><span class="p">,</span>
+                         <span class="n">validation_steps</span><span class="o">=</span><span class="n">validation_steps</span><span class="p">,</span>
+                         <span class="n">traces</span><span class="o">=</span><span class="n">traces</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="section" id="Start-Training">
 <h2>Start Training<a class="headerlink" href="#Start-Training" title="Permalink to this headline">¶</a></h2>
-<p>training time takes ~1min on CPU of Mac Book Pro</p>
-<div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="n">estimator</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
 </pre></div>
 </div>
-</div>
-<div class="nboutput nblast docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area docutils container">
-<div class="highlight"><pre>
-    ______           __  ______     __  _                 __
-   / ____/___ ______/ /_/ ____/____/ /_(_)___ ___  ____ _/ /_____  _____
-  / /_  / __ `/ ___/ __/ __/ / ___/ __/ / __ `__ \/ __ `/ __/ __ \/ ___/
- / __/ / /_/ (__  ) /_/ /___(__  ) /_/ / / / / / / /_/ / /_/ /_/ / /
-/_/    \__,_/____/\__/_____/____/\__/_/_/ /_/ /_/\__,_/\__/\____/_/
-
-
-FastEstimator-Start: step: 0; total_train_steps: 3750; lenet_lr: 0.001;
-FastEstimator-Train: step: 0; loss: 2.2939115;
-FastEstimator-Train: step: 100; loss: 0.3307221; examples/sec: 1999.1; progress: 2.7%;
-FastEstimator-Train: step: 200; loss: 0.0966952; examples/sec: 2024.1; progress: 5.3%;
-FastEstimator-Train: step: 300; loss: 0.0663533; examples/sec: 2054.5; progress: 8.0%;
-FastEstimator-Train: step: 400; loss: 0.3214094; examples/sec: 2040.8; progress: 10.7%;
-FastEstimator-Train: step: 500; loss: 0.094881; examples/sec: 2036.7; progress: 13.3%;
-FastEstimator-Train: step: 600; loss: 0.105669; examples/sec: 2012.1; progress: 16.0%;
-FastEstimator-Train: step: 700; loss: 0.0671014; examples/sec: 1997.2; progress: 18.7%;
-FastEstimator-Train: step: 800; loss: 0.0074315; examples/sec: 2038.9; progress: 21.3%;
-FastEstimator-Train: step: 900; loss: 0.1444476; examples/sec: 1907.2; progress: 24.0%;
-FastEstimator-Train: step: 1000; loss: 0.0217456; examples/sec: 1841.8; progress: 26.7%;
-FastEstimator-Train: step: 1100; loss: 0.0066336; examples/sec: 1867.2; progress: 29.3%;
-FastEstimator-Train: step: 1200; loss: 0.1368273; examples/sec: 1947.0; progress: 32.0%;
-FastEstimator-Train: step: 1300; loss: 0.0055385; examples/sec: 1876.7; progress: 34.7%;
-FastEstimator-Train: step: 1400; loss: 0.0103834; examples/sec: 1824.9; progress: 37.3%;
-FastEstimator-Train: step: 1500; loss: 0.0384815; examples/sec: 1706.7; progress: 40.0%;
-FastEstimator-Train: step: 1600; loss: 0.0244098; examples/sec: 1645.0; progress: 42.7%;
-FastEstimator-Train: step: 1700; loss: 0.023585; examples/sec: 1730.0; progress: 45.3%;
-FastEstimator-Train: step: 1800; loss: 0.0234456; examples/sec: 1748.2; progress: 48.0%;
-FastEstimator-ModelSaver: Saving model to /var/folders/sg/pck0wj4d27j2rwzg88n70trj5ysk83/T/tmppqc833no/lenet_best_loss.h5
-FastEstimator-Eval: step: 1875; epoch: 0; loss: 0.0418167; min_loss: 0.04181668; since_best_loss: 0; acc: 0.9868790064102564;
-FastEstimator-Train: step: 1900; loss: 0.0034348; examples/sec: 1614.7; progress: 50.7%;
-FastEstimator-Train: step: 2000; loss: 0.0102888; examples/sec: 1826.9; progress: 53.3%;
-FastEstimator-Train: step: 2100; loss: 0.0652192; examples/sec: 1850.4; progress: 56.0%;
-FastEstimator-Train: step: 2200; loss: 0.0034029; examples/sec: 1848.2; progress: 58.7%;
-FastEstimator-Train: step: 2300; loss: 0.0094607; examples/sec: 1799.9; progress: 61.3%;
-FastEstimator-Train: step: 2400; loss: 0.0203875; examples/sec: 1828.7; progress: 64.0%;
-FastEstimator-Train: step: 2500; loss: 0.1798029; examples/sec: 1922.2; progress: 66.7%;
-FastEstimator-Train: step: 2600; loss: 0.1138548; examples/sec: 1883.4; progress: 69.3%;
-FastEstimator-Train: step: 2700; loss: 0.0313583; examples/sec: 1859.7; progress: 72.0%;
-FastEstimator-Train: step: 2800; loss: 0.0135262; examples/sec: 1924.9; progress: 74.7%;
-FastEstimator-Train: step: 2900; loss: 0.0261103; examples/sec: 1666.0; progress: 77.3%;
-FastEstimator-Train: step: 3000; loss: 0.0026995; examples/sec: 1817.5; progress: 80.0%;
-FastEstimator-Train: step: 3100; loss: 0.0119558; examples/sec: 1816.0; progress: 82.7%;
-FastEstimator-Train: step: 3200; loss: 0.0848036; examples/sec: 1823.7; progress: 85.3%;
-FastEstimator-Train: step: 3300; loss: 0.0070706; examples/sec: 1789.6; progress: 88.0%;
-FastEstimator-Train: step: 3400; loss: 0.0774212; examples/sec: 1741.3; progress: 90.7%;
-FastEstimator-Train: step: 3500; loss: 0.026064; examples/sec: 1753.5; progress: 93.3%;
-FastEstimator-Train: step: 3600; loss: 0.0017203; examples/sec: 1708.7; progress: 96.0%;
-FastEstimator-Train: step: 3700; loss: 0.0020871; examples/sec: 1696.0; progress: 98.7%;
-FastEstimator-Eval: step: 3750; epoch: 1; loss: 0.0536151; min_loss: 0.04181668; since_best_loss: 1; acc: 0.9822716346153846;
-FastEstimator-Finish: step: 3750; total_time: 69.29 sec; lenet_lr: 0.001;
-</pre></div></div>
 </div>
 </div>
 <div class="section" id="Inferencing">
@@ -733,15 +622,6 @@ model predicted class is 4
 <img alt="../../../_images/apphub_image_classification_lenet_mnist_lenet_mnist_29_1.png" src="../../../_images/apphub_image_classification_lenet_mnist_lenet_mnist_29_1.png" />
 </div>
 </div>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span>
-</pre></div>
-</div>
-</div>
 </div>
 </div>
 <p>—</p>
@@ -758,7 +638,7 @@ model predicted class is 4
         <a href="../../image_generation.html" class="btn btn-neutral float-right" title="Image Generation" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="../lenet_cifar10_mixup/lenet_cifar10_mixup.html" class="btn btn-neutral float-left" title="CIFAR10 Image Classification Using LeNet with mixup" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="../lenet_cifar10_mixup/lenet_cifar10_mixup.html" class="btn btn-neutral float-left" title="CIFAR10 Image Classification Using LeNet" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Boston housing price predictor (regression) using DNN &mdash; FastEstimator 1.0a0 documentation</title>
+  <title>Boston housing price predictor (regression) using DNN &mdash; FastEstimator 1.0b0 documentation</title>
   
 
   
@@ -533,20 +533,17 @@ eval value shape is (102,)
 </pre></div>
 </div>
 </div>
-<p>For in-memory data in Pipeline, the data format should be a nested dictionary like: {“mode1”: {“feature1”: numpy_array, “feature2”: numpy_array, …}, …}. Each mode can be either train or eval, in our case, we have both train and eval. feature is the feature name, in our case, we have x and y.</p>
+<p>For in-memory data in Pipeline, the data format should be a nested dictionary like: {“mode1”: {“feature1”: numpy_array, “feature2”: numpy_array, …}, …}. Each mode can be either train or eval, in our case, we have both train and eval. feature is the feature name, in our case, we have x and y. The network prediction will be a rank-1 array, in order to match prediction, we will expand the groud truth dimension by 1.</p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
-        <span class="s2">&quot;train&quot;</span><span class="p">:</span> <span class="p">{</span>
-            <span class="s2">&quot;x&quot;</span><span class="p">:</span> <span class="n">x_train</span><span class="p">,</span> <span class="s2">&quot;y&quot;</span><span class="p">:</span> <span class="n">y_train</span>
-        <span class="p">},</span>
-        <span class="s2">&quot;eval&quot;</span><span class="p">:</span> <span class="p">{</span>
-            <span class="s2">&quot;x&quot;</span><span class="p">:</span> <span class="n">x_eval</span><span class="p">,</span> <span class="s2">&quot;y&quot;</span><span class="p">:</span> <span class="n">y_eval</span>
-        <span class="p">}</span>
-    <span class="p">}</span>
+<span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="n">train_data</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;x&quot;</span><span class="p">:</span> <span class="n">x_train</span><span class="p">,</span> <span class="s2">&quot;y&quot;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">expand_dims</span><span class="p">(</span><span class="n">y_train</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)}</span>
+<span class="n">eval_data</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;x&quot;</span><span class="p">:</span> <span class="n">x_eval</span><span class="p">,</span> <span class="s2">&quot;y&quot;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">expand_dims</span><span class="p">(</span><span class="n">y_eval</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)}</span>
+<span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;train&quot;</span><span class="p">:</span> <span class="n">train_data</span><span class="p">,</span> <span class="s2">&quot;eval&quot;</span><span class="p">:</span> <span class="n">eval_data</span><span class="p">}</span>
 </pre></div>
 </div>
 </div>
@@ -559,6 +556,7 @@ eval value shape is (102,)
 <span class="n">epochs</span> <span class="o">=</span> <span class="mi">50</span>
 <span class="n">batch_size</span> <span class="o">=</span> <span class="mi">32</span>
 <span class="n">steps_per_epoch</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="n">validation_steps</span> <span class="o">=</span> <span class="kc">None</span>
 </pre></div>
 </div>
 </div>
@@ -638,116 +636,26 @@ eval value shape is (102,)
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">estimator</span> <span class="o">=</span> <span class="n">fe</span><span class="o">.</span><span class="n">Estimator</span><span class="p">(</span><span class="n">network</span><span class="o">=</span><span class="n">network</span><span class="p">,</span> <span class="n">pipeline</span><span class="o">=</span><span class="n">pipeline</span><span class="p">,</span> <span class="n">epochs</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">traces</span><span class="o">=</span><span class="n">traces</span><span class="p">)</span>
+<span></span><span class="n">estimator</span> <span class="o">=</span> <span class="n">fe</span><span class="o">.</span><span class="n">Estimator</span><span class="p">(</span><span class="n">network</span><span class="o">=</span><span class="n">network</span><span class="p">,</span>
+                         <span class="n">pipeline</span><span class="o">=</span><span class="n">pipeline</span><span class="p">,</span>
+                         <span class="n">epochs</span><span class="o">=</span><span class="n">epochs</span><span class="p">,</span>
+                         <span class="n">steps_per_epoch</span><span class="o">=</span><span class="n">steps_per_epoch</span><span class="p">,</span>
+                         <span class="n">validation_steps</span><span class="o">=</span><span class="n">validation_steps</span><span class="p">,</span>
+                         <span class="n">traces</span><span class="o">=</span><span class="n">traces</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="section" id="Start-Training">
 <h2>Start Training<a class="headerlink" href="#Start-Training" title="Permalink to this headline">¶</a></h2>
-<div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="n">estimator</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
 </pre></div>
 </div>
-</div>
-<div class="nboutput nblast docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area docutils container">
-<div class="highlight"><pre>
-    ______           __  ______     __  _                 __
-   / ____/___ ______/ /_/ ____/____/ /_(_)___ ___  ____ _/ /_____  _____
-  / /_  / __ `/ ___/ __/ __/ / ___/ __/ / __ `__ \/ __ `/ __/ __ \/ ___/
- / __/ / /_/ (__  ) /_/ /___(__  ) /_/ / / / / / / /_/ / /_/ /_/ / /
-/_/    \__,_/____/\__/_____/____/\__/_/_/ /_/ /_/\__,_/\__/\____/_/
-
-
-WARNING:tensorflow:Layer dense is casting an input tensor from dtype float64 to the layer&#39;s dtype of float32, which is new behavior in TensorFlow 2.  The layer has dtype float32 because it&#39;s dtype defaults to floatx.
-
-If you intended to run this layer in float32, you can safely ignore this warning. If in doubt, this warning is likely only an issue if you are porting a TensorFlow 1.X model to TensorFlow 2.
-
-To change all layers to have dtype float64 by default, call `tf.keras.backend.set_floatx(&#39;float64&#39;)`. To change just this layer, pass dtype=&#39;float64&#39; to the layer constructor. If you are the author of this layer, you can disable autocasting by passing autocast=False to the base Layer constructor.
-
-FastEstimator-Start: step: 0; total_train_steps: 600; dnn_lr: 0.001;
-FastEstimator-Train: step: 0; loss: 631.3717;
-FastEstimator-ModelSaver: Saving model to /tmp/tmpdde82bud/dnn_best_loss.h5
-FastEstimator-Eval: step: 12; epoch: 0; loss: 598.1178; min_loss: 598.1178; since_best_loss: 0;
-FastEstimator-ModelSaver: Saving model to /tmp/tmpdde82bud/dnn_best_loss.h5
-FastEstimator-Eval: step: 24; epoch: 1; loss: 585.2871; min_loss: 585.2871; since_best_loss: 0;
-FastEstimator-ModelSaver: Saving model to /tmp/tmpdde82bud/dnn_best_loss.h5
-FastEstimator-Eval: step: 36; epoch: 2; loss: 548.1287; min_loss: 548.1287; since_best_loss: 0;
-FastEstimator-ModelSaver: Saving model to /tmp/tmpdde82bud/dnn_best_loss.h5
-FastEstimator-Eval: step: 48; epoch: 3; loss: 491.4474; min_loss: 491.44742; since_best_loss: 0;
-FastEstimator-ModelSaver: Saving model to /tmp/tmpdde82bud/dnn_best_loss.h5
-FastEstimator-Eval: step: 60; epoch: 4; loss: 440.35083; min_loss: 440.3508; since_best_loss: 0;
-FastEstimator-ModelSaver: Saving model to /tmp/tmpdde82bud/dnn_best_loss.h5
-FastEstimator-Eval: step: 72; epoch: 5; loss: 349.36548; min_loss: 349.36548; since_best_loss: 0;
-FastEstimator-ModelSaver: Saving model to /tmp/tmpdde82bud/dnn_best_loss.h5
-FastEstimator-Eval: step: 84; epoch: 6; loss: 263.70737; min_loss: 263.70737; since_best_loss: 0;
-FastEstimator-ModelSaver: Saving model to /tmp/tmpdde82bud/dnn_best_loss.h5
-FastEstimator-Eval: step: 96; epoch: 7; loss: 208.04659; min_loss: 208.04659; since_best_loss: 0;
-FastEstimator-Train: step: 100; loss: 322.79944; examples/sec: 16267.8; progress: 16.7%;
-FastEstimator-ModelSaver: Saving model to /tmp/tmpdde82bud/dnn_best_loss.h5
-FastEstimator-Eval: step: 108; epoch: 8; loss: 158.2412; min_loss: 158.2412; since_best_loss: 0;
-FastEstimator-Eval: step: 120; epoch: 9; loss: 162.33815; min_loss: 158.2412; since_best_loss: 1;
-FastEstimator-Eval: step: 132; epoch: 10; loss: 159.01903; min_loss: 158.2412; since_best_loss: 2;
-FastEstimator-ModelSaver: Saving model to /tmp/tmpdde82bud/dnn_best_loss.h5
-FastEstimator-Eval: step: 144; epoch: 11; loss: 144.94574; min_loss: 144.94574; since_best_loss: 0;
-FastEstimator-ModelSaver: Saving model to /tmp/tmpdde82bud/dnn_best_loss.h5
-FastEstimator-Eval: step: 156; epoch: 12; loss: 121.13295; min_loss: 121.13296; since_best_loss: 0;
-FastEstimator-Eval: step: 168; epoch: 13; loss: 131.03876; min_loss: 121.13296; since_best_loss: 1;
-FastEstimator-Eval: step: 180; epoch: 14; loss: 130.50304; min_loss: 121.13296; since_best_loss: 2;
-FastEstimator-ModelSaver: Saving model to /tmp/tmpdde82bud/dnn_best_loss.h5
-FastEstimator-Eval: step: 192; epoch: 15; loss: 119.98342; min_loss: 119.98342; since_best_loss: 0;
-FastEstimator-Train: step: 200; loss: 236.739; examples/sec: 16529.9; progress: 33.3%;
-FastEstimator-Eval: step: 204; epoch: 16; loss: 123.13568; min_loss: 119.98342; since_best_loss: 1;
-FastEstimator-Eval: step: 216; epoch: 17; loss: 131.41255; min_loss: 119.98342; since_best_loss: 2;
-FastEstimator-Eval: step: 228; epoch: 18; loss: 129.76547; min_loss: 119.98342; since_best_loss: 3;
-FastEstimator-Eval: step: 240; epoch: 19; loss: 126.51717; min_loss: 119.98342; since_best_loss: 4;
-FastEstimator-ModelSaver: Saving model to /tmp/tmpdde82bud/dnn_best_loss.h5
-FastEstimator-Eval: step: 252; epoch: 20; loss: 113.30204; min_loss: 113.30204; since_best_loss: 0;
-FastEstimator-Eval: step: 264; epoch: 21; loss: 120.73496; min_loss: 113.30204; since_best_loss: 1;
-FastEstimator-ModelSaver: Saving model to /tmp/tmpdde82bud/dnn_best_loss.h5
-FastEstimator-Eval: step: 276; epoch: 22; loss: 107.06936; min_loss: 107.06936; since_best_loss: 0;
-FastEstimator-ModelSaver: Saving model to /tmp/tmpdde82bud/dnn_best_loss.h5
-FastEstimator-Eval: step: 288; epoch: 23; loss: 106.74676; min_loss: 106.74676; since_best_loss: 0;
-FastEstimator-Eval: step: 300; epoch: 24; loss: 113.59786; min_loss: 106.74676; since_best_loss: 1;
-FastEstimator-Train: step: 300; loss: 117.393845; examples/sec: 16687.8; progress: 50.0%;
-FastEstimator-Eval: step: 312; epoch: 25; loss: 119.75425; min_loss: 106.74676; since_best_loss: 2;
-FastEstimator-Eval: step: 324; epoch: 26; loss: 121.13931; min_loss: 106.74676; since_best_loss: 3;
-FastEstimator-Eval: step: 336; epoch: 27; loss: 115.6521; min_loss: 106.74676; since_best_loss: 4;
-FastEstimator-Eval: step: 348; epoch: 28; loss: 112.549225; min_loss: 106.74676; since_best_loss: 5;
-FastEstimator-ModelSaver: Saving model to /tmp/tmpdde82bud/dnn_best_loss.h5
-FastEstimator-Eval: step: 360; epoch: 29; loss: 100.22953; min_loss: 100.22953; since_best_loss: 0;
-FastEstimator-Eval: step: 372; epoch: 30; loss: 107.33677; min_loss: 100.22953; since_best_loss: 1;
-FastEstimator-Eval: step: 384; epoch: 31; loss: 114.498955; min_loss: 100.22953; since_best_loss: 2;
-FastEstimator-Eval: step: 396; epoch: 32; loss: 112.131325; min_loss: 100.22953; since_best_loss: 3;
-FastEstimator-Train: step: 400; loss: 143.01228; examples/sec: 16677.9; progress: 66.7%;
-FastEstimator-Eval: step: 408; epoch: 33; loss: 115.31739; min_loss: 100.22953; since_best_loss: 4;
-FastEstimator-Eval: step: 420; epoch: 34; loss: 109.61444; min_loss: 100.22953; since_best_loss: 5;
-FastEstimator-Eval: step: 432; epoch: 35; loss: 104.92245; min_loss: 100.22953; since_best_loss: 6;
-FastEstimator-Eval: step: 444; epoch: 36; loss: 114.666664; min_loss: 100.22953; since_best_loss: 7;
-FastEstimator-Eval: step: 456; epoch: 37; loss: 110.88846; min_loss: 100.22953; since_best_loss: 8;
-FastEstimator-Eval: step: 468; epoch: 38; loss: 112.38455; min_loss: 100.22953; since_best_loss: 9;
-FastEstimator-Eval: step: 480; epoch: 39; loss: 103.19473; min_loss: 100.22953; since_best_loss: 10;
-FastEstimator-ModelSaver: Saving model to /tmp/tmpdde82bud/dnn_best_loss.h5
-FastEstimator-Eval: step: 492; epoch: 40; loss: 97.947845; min_loss: 97.947845; since_best_loss: 0;
-FastEstimator-Train: step: 500; loss: 141.27327; examples/sec: 16559.5; progress: 83.3%;
-FastEstimator-Eval: step: 504; epoch: 41; loss: 119.58506; min_loss: 97.947845; since_best_loss: 1;
-FastEstimator-Eval: step: 516; epoch: 42; loss: 107.86062; min_loss: 97.947845; since_best_loss: 2;
-FastEstimator-Eval: step: 528; epoch: 43; loss: 107.24213; min_loss: 97.947845; since_best_loss: 3;
-FastEstimator-Eval: step: 540; epoch: 44; loss: 108.99735; min_loss: 97.947845; since_best_loss: 4;
-FastEstimator-Eval: step: 552; epoch: 45; loss: 114.51487; min_loss: 97.947845; since_best_loss: 5;
-FastEstimator-Eval: step: 564; epoch: 46; loss: 105.02364; min_loss: 97.947845; since_best_loss: 6;
-FastEstimator-Eval: step: 576; epoch: 47; loss: 108.6293; min_loss: 97.947845; since_best_loss: 7;
-FastEstimator-Eval: step: 588; epoch: 48; loss: 111.32884; min_loss: 97.947845; since_best_loss: 8;
-FastEstimator-Eval: step: 600; epoch: 49; loss: 105.59374; min_loss: 97.947845; since_best_loss: 9;
-FastEstimator-Finish: step: 600; total_time: 3.4 sec; dnn_lr: 0.001;
-</pre></div></div>
 </div>
 </div>
 <div class="section" id="Inferencing">
@@ -791,15 +699,6 @@ FastEstimator-Finish: step: 600; total_time: 3.4 sec; dnn_lr: 0.001;
 test sample idx 2, ground truth: 19.0
 model predicted value is [[20.183064]]
 </pre></div></div>
-</div>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span>
-</pre></div>
-</div>
 </div>
 </div>
 </div>

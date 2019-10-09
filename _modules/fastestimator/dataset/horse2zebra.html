@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>fastestimator.dataset.horse2zebra &mdash; FastEstimator 1.0a0 documentation</title>
+  <title>fastestimator.dataset.horse2zebra &mdash; FastEstimator 1.0b0 documentation</title>
   
 
   
@@ -169,69 +169,90 @@
 <span class="c1"># See the License for the specific language governing permissions and</span>
 <span class="c1"># limitations under the License.</span>
 <span class="c1"># ==============================================================================</span>
-<span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">Download horse2zebra dataset from https://people.eecs.berkeley.edu/~taesung_park/CycleGAN/datasets/horse2zebra.zip</span>
+<span class="sd">&quot;&quot;&quot;Download horse2zebra dataset from https://people.eecs.berkeley.edu/~taesung_park/CycleGAN/datasets/horse2zebra.zip.</span>
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">zipfile</span>
-<span class="kn">import</span> <span class="nn">tempfile</span>
 <span class="kn">from</span> <span class="nn">glob</span> <span class="k">import</span> <span class="n">glob</span>
+<span class="kn">from</span> <span class="nn">pathlib</span> <span class="k">import</span> <span class="n">Path</span>
 
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 <span class="kn">import</span> <span class="nn">wget</span>
 
+<span class="kn">from</span> <span class="nn">fastestimator.util.wget</span> <span class="k">import</span> <span class="n">bar_custom</span><span class="p">,</span> <span class="n">callback_progress</span>
 
-<span class="k">def</span> <span class="nf">_create_csv</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="n">key_name</span><span class="p">,</span> <span class="n">parent_path</span><span class="p">,</span> <span class="n">csv_name</span><span class="p">):</span>
+<span class="n">wget</span><span class="o">.</span><span class="n">callback_progress</span> <span class="o">=</span> <span class="n">callback_progress</span>
+
+
+<span class="k">def</span> <span class="nf">_create_csv</span><span class="p">(</span><span class="n">img_path</span><span class="p">,</span> <span class="n">key_name</span><span class="p">,</span> <span class="n">parent_path</span><span class="p">,</span> <span class="n">csv_path</span><span class="p">):</span>
     <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
-    <span class="n">df</span><span class="p">[</span><span class="n">key_name</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">img_filename</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">parent_path</span><span class="p">,</span> <span class="s1">&#39;.&#39;</span><span class="p">)</span> <span class="k">for</span> <span class="n">img_filename</span> <span class="ow">in</span> <span class="n">img</span><span class="p">]</span>
-    <span class="n">df</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">csv_name</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">df</span><span class="p">[</span><span class="n">key_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">img_path</span>
+    <span class="n">df</span><span class="p">[</span><span class="n">key_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">key_name</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">relpath</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">parent_path</span><span class="p">))</span>
+    <span class="n">df</span><span class="p">[</span><span class="n">key_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">key_name</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">normpath</span><span class="p">)</span>
+    <span class="n">df</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">csv_path</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Data summary is saved at </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">csv_path</span><span class="p">))</span>
 
 
 <div class="viewcode-block" id="load_data"><a class="viewcode-back" href="../../../fastestimator.dataset.html#fastestimator.dataset.horse2zebra.load_data">[docs]</a><span class="k">def</span> <span class="nf">load_data</span><span class="p">(</span><span class="n">path</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Downloads the horse2zebra dataset to local storage, if not already downloaded. This will generate 4 csv files</span>
+    <span class="sd">&quot;&quot;&quot;Download the horse2zebra dataset to local storage, if not already downloaded. This will generate 4 csv files</span>
 <span class="sd">    (trainA, trainB, testA, testB), which contain all the path information.</span>
 
 <span class="sd">    Args:</span>
-<span class="sd">        path (str, optional): The path to store the horse2zebra data. Defaults to None, will save at</span>
-<span class="sd">        `tempfile.gettempdir()`.</span>
+<span class="sd">        path (str, optional): The path to store the horse2zebra data. When `path` is not provided, will save at</span>
+<span class="sd">            `fastestimator_data` under user&#39;s home directory.</span>
 
 <span class="sd">    Returns:</span>
-<span class="sd">        string: path to trainA csv file.</span>
-<span class="sd">        string: path to trainB csv file.</span>
-<span class="sd">        string: path to testA csv file.</span>
-<span class="sd">        string: path to testB csv file.</span>
-<span class="sd">        string: path to data directory.</span>
+<span class="sd">        (tuple): tuple containing:</span>
+<span class="sd">            train_a_csv (str): Path to trainA csv file.</span>
+<span class="sd">            train_b_csv (str): Path to trainB csv file.</span>
+<span class="sd">            test_a_csv (str): Path to testA csv file.</span>
+<span class="sd">            test_b_csv (str): Path to testB csv file.</span>
+<span class="sd">            path (str): Path to data root directory.</span>
+
 <span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">home</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">Path</span><span class="o">.</span><span class="n">home</span><span class="p">())</span>
+
     <span class="k">if</span> <span class="n">path</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">tempfile</span><span class="o">.</span><span class="n">gettempdir</span><span class="p">(),</span> <span class="s2">&quot;.fe&quot;</span><span class="p">,</span> <span class="s2">&quot;HORSE2ZEBRA&quot;</span><span class="p">)</span>
-    <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">path</span><span class="p">)):</span>
-        <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+        <span class="n">path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">home</span><span class="p">,</span> <span class="s1">&#39;fastestimator_data&#39;</span><span class="p">,</span> <span class="s1">&#39;horse2zebra&#39;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
     <span class="n">data_compressed_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s1">&#39;horse2zebra.zip&#39;</span><span class="p">)</span>
-    <span class="n">data_folder_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s1">&#39;horse2zebra&#39;</span><span class="p">)</span>
-    <span class="n">trainA_csv</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s1">&#39;trainA.csv&#39;</span><span class="p">)</span>
-    <span class="n">trainB_csv</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s1">&#39;trainB.csv&#39;</span><span class="p">)</span>
-    <span class="n">testA_csv</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s1">&#39;testA.csv&#39;</span><span class="p">)</span>
-    <span class="n">testB_csv</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s1">&#39;testB.csv&#39;</span><span class="p">)</span>
+    <span class="n">data_folder_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s1">&#39;images&#39;</span><span class="p">)</span>
+    <span class="n">train_a_csv</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s1">&#39;trainA.csv&#39;</span><span class="p">)</span>
+    <span class="n">train_b_csv</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s1">&#39;trainB.csv&#39;</span><span class="p">)</span>
+    <span class="n">test_a_csv</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s1">&#39;testA.csv&#39;</span><span class="p">)</span>
+    <span class="n">test_b_csv</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s1">&#39;testB.csv&#39;</span><span class="p">)</span>
+
+    <span class="c1"># download</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">data_compressed_path</span><span class="p">):</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Downloading data to </span><span class="si">{}</span><span class="s2">:&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">path</span><span class="p">))</span>
-        <span class="n">wget</span><span class="o">.</span><span class="n">download</span><span class="p">(</span><span class="s1">&#39;https://people.eecs.berkeley.edu/~taesung_park/CycleGAN/datasets/horse2zebra.zip&#39;</span><span class="p">,</span> <span class="n">path</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Downloading data to </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">path</span><span class="p">))</span>
+        <span class="n">wget</span><span class="o">.</span><span class="n">download</span><span class="p">(</span><span class="s1">&#39;https://people.eecs.berkeley.edu/~taesung_park/CycleGAN/datasets/horse2zebra.zip&#39;</span><span class="p">,</span>
+                      <span class="n">path</span><span class="p">,</span>
+                      <span class="n">bar</span><span class="o">=</span><span class="n">bar_custom</span><span class="p">)</span>
+
+    <span class="c1"># extract</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">data_folder_path</span><span class="p">):</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">Extracting files...&#39;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Extracting files ...&quot;</span><span class="p">)</span>
         <span class="k">with</span> <span class="n">zipfile</span><span class="o">.</span><span class="n">ZipFile</span><span class="p">(</span><span class="n">data_compressed_path</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">zip_file</span><span class="p">:</span>
             <span class="n">zip_file</span><span class="o">.</span><span class="n">extractall</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
-    <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">trainA_csv</span><span class="p">):</span>
-        <span class="n">trainA_img</span> <span class="o">=</span> <span class="n">glob</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s1">&#39;horse2zebra&#39;</span><span class="p">,</span> <span class="s1">&#39;trainA&#39;</span><span class="p">,</span> <span class="s1">&#39;*.jpg&#39;</span><span class="p">))</span>
-        <span class="n">_create_csv</span><span class="p">(</span><span class="n">trainA_img</span><span class="p">,</span> <span class="s1">&#39;imgA&#39;</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">trainA_csv</span><span class="p">)</span>
-    <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">trainB_csv</span><span class="p">):</span>
-        <span class="n">trainB_img</span> <span class="o">=</span> <span class="n">glob</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s1">&#39;horse2zebra&#39;</span><span class="p">,</span> <span class="s1">&#39;trainB&#39;</span><span class="p">,</span> <span class="s1">&#39;*.jpg&#39;</span><span class="p">))</span>
-        <span class="n">_create_csv</span><span class="p">(</span><span class="n">trainB_img</span><span class="p">,</span> <span class="s1">&#39;imgB&#39;</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">trainB_csv</span><span class="p">)</span>
-    <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">testA_csv</span><span class="p">):</span>
-        <span class="n">testA_img</span> <span class="o">=</span> <span class="n">glob</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s1">&#39;horse2zebra&#39;</span><span class="p">,</span> <span class="s1">&#39;testA&#39;</span><span class="p">,</span> <span class="s1">&#39;*.jpg&#39;</span><span class="p">))</span>
-        <span class="n">_create_csv</span><span class="p">(</span><span class="n">testA_img</span><span class="p">,</span> <span class="s1">&#39;imgA&#39;</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">testA_csv</span><span class="p">)</span>
-    <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">testB_csv</span><span class="p">):</span>
-        <span class="n">testB_img</span> <span class="o">=</span> <span class="n">glob</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s1">&#39;horse2zebra&#39;</span><span class="p">,</span> <span class="s1">&#39;testB&#39;</span><span class="p">,</span> <span class="s1">&#39;*.jpg&#39;</span><span class="p">))</span>
-        <span class="n">_create_csv</span><span class="p">(</span><span class="n">testB_img</span><span class="p">,</span> <span class="s1">&#39;imgB&#39;</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">testB_csv</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">trainA_csv</span><span class="p">,</span> <span class="n">trainB_csv</span><span class="p">,</span> <span class="n">testA_csv</span><span class="p">,</span> <span class="n">testB_csv</span><span class="p">,</span> <span class="n">path</span></div>
+        <span class="n">os</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s1">&#39;horse2zebra&#39;</span><span class="p">),</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s1">&#39;images&#39;</span><span class="p">))</span>
+
+    <span class="c1"># glob and generate csv</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">train_a_csv</span><span class="p">):</span>
+        <span class="n">train_a_img</span> <span class="o">=</span> <span class="n">glob</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">data_folder_path</span><span class="p">,</span> <span class="s1">&#39;trainA&#39;</span><span class="p">,</span> <span class="s1">&#39;*.jpg&#39;</span><span class="p">))</span>
+        <span class="n">_create_csv</span><span class="p">(</span><span class="n">train_a_img</span><span class="p">,</span> <span class="s1">&#39;imgA&#39;</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">train_a_csv</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">train_b_csv</span><span class="p">):</span>
+        <span class="n">train_b_img</span> <span class="o">=</span> <span class="n">glob</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">data_folder_path</span><span class="p">,</span> <span class="s1">&#39;trainB&#39;</span><span class="p">,</span> <span class="s1">&#39;*.jpg&#39;</span><span class="p">))</span>
+        <span class="n">_create_csv</span><span class="p">(</span><span class="n">train_b_img</span><span class="p">,</span> <span class="s1">&#39;imgB&#39;</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">train_b_csv</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">test_a_csv</span><span class="p">):</span>
+        <span class="n">test_a_img</span> <span class="o">=</span> <span class="n">glob</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">data_folder_path</span><span class="p">,</span> <span class="s1">&#39;testA&#39;</span><span class="p">,</span> <span class="s1">&#39;*.jpg&#39;</span><span class="p">))</span>
+        <span class="n">_create_csv</span><span class="p">(</span><span class="n">test_a_img</span><span class="p">,</span> <span class="s1">&#39;imgA&#39;</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">test_a_csv</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">test_b_csv</span><span class="p">):</span>
+        <span class="n">test_b_img</span> <span class="o">=</span> <span class="n">glob</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">data_folder_path</span><span class="p">,</span> <span class="s1">&#39;testB&#39;</span><span class="p">,</span> <span class="s1">&#39;*.jpg&#39;</span><span class="p">))</span>
+        <span class="n">_create_csv</span><span class="p">(</span><span class="n">test_b_img</span><span class="p">,</span> <span class="s1">&#39;imgB&#39;</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">test_b_csv</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">train_a_csv</span><span class="p">,</span> <span class="n">train_b_csv</span><span class="p">,</span> <span class="n">test_a_csv</span><span class="p">,</span> <span class="n">test_b_csv</span><span class="p">,</span> <span class="n">path</span></div>
 </pre></div>
 
            </div>

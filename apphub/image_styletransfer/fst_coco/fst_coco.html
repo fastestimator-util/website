@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Fast Style Transfer with FastEstimator &mdash; FastEstimator 1.0a0 documentation</title>
+  <title>Fast Style Transfer with FastEstimator &mdash; FastEstimator 1.0b0 documentation</title>
   
 
   
@@ -460,6 +460,7 @@ image</em>. In <a class="reference external" href="https://cs.stanford.edu/peopl
 <span class="n">batch_size</span> <span class="o">=</span> <span class="mi">4</span>
 <span class="n">epochs</span> <span class="o">=</span> <span class="mi">2</span>
 <span class="n">steps_per_epoch</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="n">validation_steps</span> <span class="o">=</span> <span class="kc">None</span>
 <span class="n">img_path</span> <span class="o">=</span> <span class="s1">&#39;panda.jpeg&#39;</span>
 <span class="n">saved_model_path</span> <span class="o">=</span> <span class="s1">&#39;style_transfer_net_epoch_1_step_41390.h5&#39;</span>
 </pre></div>
@@ -513,7 +514,7 @@ reusing existing dataset
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="kn">from</span> <span class="nn">fastestimator.op.numpyop</span> <span class="k">import</span> <span class="n">ImageReader</span><span class="p">,</span> <span class="n">Resize</span>
 <span class="kn">from</span> <span class="nn">fastestimator.util</span> <span class="k">import</span> <span class="n">RecordWriter</span>
-<span class="n">tfr_save_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s1">&#39;FEdata&#39;</span><span class="p">)</span>
+<span class="n">tfr_save_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s1">&#39;tfrecords&#39;</span><span class="p">)</span>
 <span class="n">writer</span> <span class="o">=</span> <span class="n">RecordWriter</span><span class="p">(</span>
     <span class="n">train_data</span><span class="o">=</span><span class="n">train_csv</span><span class="p">,</span>
     <span class="n">save_dir</span><span class="o">=</span><span class="n">tfr_save_dir</span><span class="p">,</span>
@@ -672,13 +673,14 @@ difference in <code class="docutils literal notranslate"><span class="pre">relu3
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="kn">from</span> <span class="nn">fastestimator.trace</span> <span class="k">import</span> <span class="n">ModelSaver</span>
+<span class="kn">import</span> <span class="nn">tempfile</span>
 
-<span class="n">model_dir</span><span class="o">=</span><span class="s1">&#39;/tmp/.fe/fst/ModelSaver/&#39;</span>
-<span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">model_dir</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">model_dir</span><span class="o">=</span><span class="n">tempfile</span><span class="o">.</span><span class="n">mkdtemp</span><span class="p">()</span>
 <span class="n">estimator</span> <span class="o">=</span> <span class="n">fe</span><span class="o">.</span><span class="n">Estimator</span><span class="p">(</span><span class="n">network</span><span class="o">=</span><span class="n">network</span><span class="p">,</span>
                          <span class="n">pipeline</span><span class="o">=</span><span class="n">pipeline</span><span class="p">,</span>
                          <span class="n">epochs</span><span class="o">=</span><span class="n">epochs</span><span class="p">,</span>
                          <span class="n">steps_per_epoch</span><span class="o">=</span><span class="n">steps_per_epoch</span><span class="p">,</span>
+                         <span class="n">validation_steps</span><span class="o">=</span><span class="n">validation_steps</span><span class="p">,</span>
                          <span class="n">traces</span><span class="o">=</span><span class="n">ModelSaver</span><span class="p">(</span><span class="n">model_name</span><span class="o">=</span><span class="s2">&quot;style_transfer_net&quot;</span><span class="p">,</span> <span class="n">save_dir</span><span class="o">=</span><span class="n">model_dir</span><span class="p">))</span>
 </pre></div>
 </div>
@@ -755,15 +757,6 @@ difference in <code class="docutils literal notranslate"><span class="pre">relu3
 </div>
 <div class="output_area docutils container">
 <img alt="../../../_images/apphub_image_styletransfer_fst_coco_fst_coco_26_0.png" src="../../../_images/apphub_image_styletransfer_fst_coco_fst_coco_26_0.png" />
-</div>
-</div>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span>
-</pre></div>
 </div>
 </div>
 </div>

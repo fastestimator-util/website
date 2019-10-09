@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>fastestimator.util.record_writer &mdash; FastEstimator 1.0a0 documentation</title>
+  <title>fastestimator.util.record_writer &mdash; FastEstimator 1.0b0 documentation</title>
   
 
   
@@ -294,9 +294,11 @@
     <span class="k">def</span> <span class="nf">_float_feature</span><span class="p">(</span><span class="n">value</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">tf</span><span class="o">.</span><span class="n">train</span><span class="o">.</span><span class="n">Feature</span><span class="p">(</span><span class="n">float_list</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">train</span><span class="o">.</span><span class="n">FloatList</span><span class="p">(</span><span class="n">value</span><span class="o">=</span><span class="p">[</span><span class="n">value</span><span class="p">]))</span>
 
-<div class="viewcode-block" id="RecordWriter.write"><a class="viewcode-back" href="../../../fastestimator.util.html#fastestimator.util.record_writer.RecordWriter.write">[docs]</a>    <span class="k">def</span> <span class="nf">write</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="RecordWriter.write"><a class="viewcode-back" href="../../../fastestimator.util.html#fastestimator.util.record_writer.RecordWriter.write">[docs]</a>    <span class="k">def</span> <span class="nf">write</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">save_dir</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Write TFRecods in parallel. Number of processes is set to number of CPU cores.&quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_prepare_savepath</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">save_dir</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">save_dir</span><span class="p">:</span>
+            <span class="n">save_dir</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">save_dir</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_prepare_savepath</span><span class="p">(</span><span class="n">save_dir</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">train_data</span><span class="p">,</span> <span class="n">validation_data</span><span class="p">,</span> <span class="n">write_feature</span><span class="p">,</span> <span class="n">ops</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">train_data</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">validation_data</span><span class="p">,</span>
                                                                    <span class="bp">self</span><span class="o">.</span><span class="n">write_feature</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ops</span><span class="p">):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_create_record_local</span><span class="p">(</span><span class="n">train_data</span><span class="p">,</span> <span class="n">validation_data</span><span class="p">,</span> <span class="n">write_feature</span><span class="p">,</span> <span class="n">ops</span><span class="p">)</span>
