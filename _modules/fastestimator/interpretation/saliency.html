@@ -176,8 +176,8 @@
 <span class="c1"># noinspection PyPackageRequirements</span>
 <span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
 
-<span class="kn">from</span> <span class="nn">fastestimator.interpretation.util</span> <span class="k">import</span> <span class="p">(</span><span class="n">GradientSaliency</span><span class="p">,</span> <span class="n">IntegratedGradients</span><span class="p">,</span> <span class="n">show_gray_image</span><span class="p">,</span> <span class="n">show_image</span><span class="p">,</span>
-                                               <span class="n">show_text</span><span class="p">)</span>
+<span class="kn">from</span> <span class="nn">fastestimator.interpretation.util</span> <span class="k">import</span> <span class="n">show_image</span><span class="p">,</span> <span class="n">show_text</span><span class="p">,</span> <span class="n">show_gray_image</span><span class="p">,</span> <span class="n">GradientSaliency</span><span class="p">,</span> \
+    <span class="n">IntegratedGradients</span>
 <span class="kn">from</span> <span class="nn">fastestimator.util.util</span> <span class="k">import</span> <span class="n">decode_predictions</span>
 
 
@@ -187,9 +187,7 @@
 <span class="sd">    Args:</span>
 <span class="sd">        tensor: A tensor with batches on the zero axis. Shape (batch X ...)</span>
 <span class="sd">        percentile: The percentile value to be computed for each batch in the tensor</span>
-<span class="sd">        keepdims: Whether to keep shape compatibility with the input</span>
-<span class="sd">        tensor</span>
-
+<span class="sd">        keepdims: Whether to keep shape compatibility with the input tensor</span>
 <span class="sd">    Returns:</span>
 <span class="sd">        A tensor corresponding to the given percentile value within each batch of the input tensor</span>
 <span class="sd">    &quot;&quot;&quot;</span>
