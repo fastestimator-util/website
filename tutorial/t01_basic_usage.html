@@ -513,20 +513,17 @@ div.rendered_html tbody tr:hover {
 </div>
 </div>
 <hr class="docutils" />
+<blockquote>
 <div><p class="rubric" id="key-take-aways">Key take-aways:</p>
-<p>In order to implement your own ideas in FastEstimator, you first need to conceptually walk through the same thought process.</p> 
-<ul class="simple">
-  <li><p> 1. How do I want my data to be processed during the training? <em>Express this in <code class="docutils literal notranslate"><span class="pre">Pipeline</span></code></em></p></li>
-  <li><p> 2. How do I want my network architecture and loss to be defined? What are the connections between networks if there are multiple of them? <em>Express this in <code class="docutils literal notranslate"><span class="pre">Network</span></code></em>. </p></li>
-  <li><p> 3. How long do I want to train my model? What do I need during training loop? <em>Express this in <code class="docutils literal notranslate"><span class="pre">Estimator</span></code></p></li>
-</ul>
+<p>In order to implement your own ideas in FastEstimator, you first need to conceptually walk through the same thought process. 1. How do I want my data to be processed during the training? <em>Express this in ``Pipeline``</em>. 2. How do I want my network architecture and loss to be defined? What are the connections between networks if there are multiple of them? <em>Express this in ``Network``</em>. 3. How long do I want to train my model? What do I need during training loop? <em>Express this in
+``Estimator``</em>.</p>
 <p>It is important to note that the preprocessing defined in <code class="docutils literal notranslate"><span class="pre">Pipeline</span></code> will be executed repeatedly for each batch during the training loop. However, some preprocessing only needs to happen once up front (for instance resizing and rescaling). Next tutorial will introduce how to deal with this case.</p>
-</div>
+</div></blockquote>
 </div>
 </div>
 </div>
 <p>—</p>
-<p><a class="reference external" href="https://github.com/fastestimator/fastestimator/blob/r1.0b0/tutorial/t01_basic_usage.ipynb">Example Link to GitHub</a></p>
+<p><a class="reference external" href="https://github.com/fastestimator/fastestimator/blob/master/tutorial/t01_basic_usage.ipynb">Example Link to GitHub</a></p>
 
 
            </div>
