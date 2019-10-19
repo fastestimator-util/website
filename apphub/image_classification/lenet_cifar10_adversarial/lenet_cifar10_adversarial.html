@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>CIFAR10 Image Classification Using LeNet &mdash; FastEstimator 1.0b0 documentation</title>
+  <title>CIFAR10 Image Classification Using LeNet With Adversarial Training &mdash; FastEstimator 1.0b0 documentation</title>
   
 
   
@@ -40,8 +40,8 @@
   <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" />
-    <link rel="next" title="CIFAR10 Image Classification Using LeNet" href="../lenet_cifar10_mixup/lenet_cifar10_mixup.html" />
-    <link rel="prev" title="&lt;no title&gt;" href="../densenet121_cifar10/densenet121_cifar10.html" /> 
+    <link rel="next" title="CIFAR10 Image Classification Using LeNet with Mixup Training" href="../lenet_cifar10_mixup/lenet_cifar10_mixup.html" />
+    <link rel="prev" title="CIFAR10 Image Classification Using DenseNet-121" href="../densenet121_cifar10/densenet121_cifar10.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -95,7 +95,8 @@
 <li class="toctree-l1 current"><a class="reference internal" href="../../../apphub.html">Example</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="../../NLP.html">NLP</a></li>
 <li class="toctree-l2 current"><a class="reference internal" href="../../image_classification.html">Image Classification</a><ul class="current">
-<li class="toctree-l3 current"><a class="current reference internal" href="#">CIFAR10 Image Classification Using LeNet</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../densenet121_cifar10/densenet121_cifar10.html">CIFAR10 Image Classification Using DenseNet-121</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">CIFAR10 Image Classification Using LeNet With Adversarial Training</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#Step-1:-Prepare-training-and-evaluation-dataset,-create-FastEstimator-Pipeline">Step 1: Prepare training and evaluation dataset, create FastEstimator <code class="docutils literal notranslate"><span class="pre">Pipeline</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#Step-2:-Prepare-model,-create-FastEstimator-Network">Step 2: Prepare model, create FastEstimator <code class="docutils literal notranslate"><span class="pre">Network</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#Step-3:-Configure-training,-create-Estimator">Step 3: Configure training, create <code class="docutils literal notranslate"><span class="pre">Estimator</span></code></a></li>
@@ -103,7 +104,7 @@
 <li class="toctree-l4"><a class="reference internal" href="#Step-5:-Inferencing-and-Adversarial-Attacks">Step 5: Inferencing and Adversarial Attacks</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="../lenet_cifar10_mixup/lenet_cifar10_mixup.html">CIFAR10 Image Classification Using LeNet</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../lenet_cifar10_mixup/lenet_cifar10_mixup.html">CIFAR10 Image Classification Using LeNet with Mixup Training</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../lenet_mnist/lenet_mnist.html">MNIST Image Classification Using LeNet</a></li>
 </ul>
 </li>
@@ -163,7 +164,7 @@
         
           <li><a href="../../image_classification.html">Image Classification</a> &raquo;</li>
         
-      <li>CIFAR10 Image Classification Using LeNet</li>
+      <li>CIFAR10 Image Classification Using LeNet With Adversarial Training</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -404,15 +405,15 @@ div.rendered_html tbody tr:hover {
     text-align: unset;
 }
 </style>
-<div class="section" id="CIFAR10-Image-Classification-Using-LeNet">
-<h1>CIFAR10 Image Classification Using LeNet<a class="headerlink" href="#CIFAR10-Image-Classification-Using-LeNet" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="CIFAR10-Image-Classification-Using-LeNet-With-Adversarial-Training">
+<h1>CIFAR10 Image Classification Using LeNet With Adversarial Training<a class="headerlink" href="#CIFAR10-Image-Classification-Using-LeNet-With-Adversarial-Training" title="Permalink to this headline">¶</a></h1>
 <p>In this tutorial, we are going to walk through the logic in <code class="docutils literal notranslate"><span class="pre">lenet_cifar10_adversarial.py</span></code> shown below and provide step-by-step instructions.</p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="o">!</span>cat lenet_cifar10_adversarial.py
+<div class="input_area highlight-python notranslate"><div class="highlight"><pre>
+<span></span>!cat lenet_cifar10_adversarial.py
 </pre></div>
 </div>
 </div>
@@ -423,14 +424,14 @@ div.rendered_html tbody tr:hover {
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
+<div class="input_area highlight-python notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">tensorflow</span> <span class="kn">as</span> <span class="nn">tf</span>
 
 <span class="p">(</span><span class="n">x_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">),</span> <span class="p">(</span><span class="n">x_eval</span><span class="p">,</span> <span class="n">y_eval</span><span class="p">)</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">cifar10</span><span class="o">.</span><span class="n">load_data</span><span class="p">()</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;train image shape is </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">x_train</span><span class="o">.</span><span class="n">shape</span><span class="p">))</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;train label shape is </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">y_train</span><span class="o">.</span><span class="n">shape</span><span class="p">))</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;eval image shape is </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">x_eval</span><span class="o">.</span><span class="n">shape</span><span class="p">))</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;eval label shape is </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">y_eval</span><span class="o">.</span><span class="n">shape</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="s2">&quot;train image shape is {}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">x_train</span><span class="o">.</span><span class="n">shape</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="s2">&quot;train label shape is {}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">y_train</span><span class="o">.</span><span class="n">shape</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="s2">&quot;eval image shape is {}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">x_eval</span><span class="o">.</span><span class="n">shape</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="s2">&quot;eval label shape is {}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">y_eval</span><span class="o">.</span><span class="n">shape</span><span class="p">))</span>
 </pre></div>
 </div>
 </div>
@@ -450,7 +451,7 @@ eval label shape is (10000, 1)
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<div class="input_area highlight-python notranslate"><div class="highlight"><pre>
 <span></span><span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;train&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;x&quot;</span><span class="p">:</span> <span class="n">x_train</span><span class="p">,</span> <span class="s2">&quot;y&quot;</span><span class="p">:</span> <span class="n">y_train</span><span class="p">},</span> <span class="s2">&quot;eval&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;x&quot;</span><span class="p">:</span> <span class="n">x_eval</span><span class="p">,</span> <span class="s2">&quot;y&quot;</span><span class="p">:</span> <span class="n">y_eval</span><span class="p">}}</span>
 </pre></div>
 </div>
@@ -459,12 +460,12 @@ eval label shape is (10000, 1)
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<div class="input_area highlight-python notranslate"><div class="highlight"><pre>
 <span></span><span class="c1">#Parameters</span>
 <span class="n">epochs</span> <span class="o">=</span> <span class="mi">15</span>
 <span class="n">batch_size</span> <span class="o">=</span> <span class="mi">50</span>
-<span class="n">steps_per_epoch</span> <span class="o">=</span> <span class="kc">None</span>
-<span class="n">validation_steps</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="n">steps_per_epoch</span> <span class="o">=</span> <span class="bp">None</span>
+<span class="n">validation_steps</span> <span class="o">=</span> <span class="bp">None</span>
 <span class="n">num_test_samples</span> <span class="o">=</span> <span class="mi">10000</span>
 </pre></div>
 </div>
@@ -474,9 +475,9 @@ eval label shape is (10000, 1)
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="kn">import</span> <span class="nn">fastestimator</span> <span class="k">as</span> <span class="nn">fe</span>
-<span class="kn">from</span> <span class="nn">fastestimator.op.tensorop</span> <span class="k">import</span> <span class="n">Minmax</span>
+<div class="input_area highlight-python notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">fastestimator</span> <span class="kn">as</span> <span class="nn">fe</span>
+<span class="kn">from</span> <span class="nn">fastestimator.op.tensorop</span> <span class="kn">import</span> <span class="n">Minmax</span>
 
 <span class="n">pipeline</span> <span class="o">=</span> <span class="n">fe</span><span class="o">.</span><span class="n">Pipeline</span><span class="p">(</span><span class="n">batch_size</span><span class="o">=</span><span class="n">batch_size</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">ops</span><span class="o">=</span><span class="n">Minmax</span><span class="p">(</span><span class="n">inputs</span><span class="o">=</span><span class="s2">&quot;x&quot;</span><span class="p">,</span> <span class="n">outputs</span><span class="o">=</span><span class="s2">&quot;x&quot;</span><span class="p">))</span>
 </pre></div>
@@ -490,8 +491,8 @@ eval label shape is (10000, 1)
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="kn">from</span> <span class="nn">fastestimator.architecture</span> <span class="k">import</span> <span class="n">LeNet</span>
+<div class="input_area highlight-python notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">fastestimator.architecture</span> <span class="kn">import</span> <span class="n">LeNet</span>
 
 <span class="n">model</span> <span class="o">=</span> <span class="n">fe</span><span class="o">.</span><span class="n">build</span><span class="p">(</span><span class="n">model_def</span><span class="o">=</span><span class="k">lambda</span><span class="p">:</span> <span class="n">LeNet</span><span class="p">(</span><span class="n">input_shape</span><span class="o">=</span><span class="n">x_train</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">:],</span> <span class="n">classes</span><span class="o">=</span><span class="mi">10</span><span class="p">),</span> <span class="n">model_name</span><span class="o">=</span><span class="s2">&quot;LeNet&quot;</span><span class="p">,</span>
                  <span class="n">optimizer</span><span class="o">=</span><span class="s2">&quot;adam&quot;</span><span class="p">,</span> <span class="n">loss_name</span><span class="o">=</span><span class="s2">&quot;loss&quot;</span><span class="p">)</span>
@@ -503,8 +504,8 @@ eval label shape is (10000, 1)
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="kn">from</span> <span class="nn">fastestimator.op.tensorop</span> <span class="k">import</span> <span class="n">ModelOp</span><span class="p">,</span> <span class="n">SparseCategoricalCrossentropy</span>
+<div class="input_area highlight-python notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">fastestimator.op.tensorop</span> <span class="kn">import</span> <span class="n">ModelOp</span><span class="p">,</span> <span class="n">SparseCategoricalCrossentropy</span>
 
 <span class="n">simple_network</span> <span class="o">=</span> <span class="n">fe</span><span class="o">.</span><span class="n">Network</span><span class="p">(</span><span class="n">ops</span><span class="o">=</span><span class="p">[</span><span class="n">ModelOp</span><span class="p">(</span><span class="n">inputs</span><span class="o">=</span><span class="s2">&quot;x&quot;</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">,</span> <span class="n">outputs</span><span class="o">=</span><span class="s2">&quot;y_pred&quot;</span><span class="p">),</span>
                                  <span class="n">SparseCategoricalCrossentropy</span><span class="p">(</span><span class="n">y_pred</span><span class="o">=</span><span class="s2">&quot;y_pred&quot;</span><span class="p">,</span> <span class="n">y_true</span><span class="o">=</span><span class="s2">&quot;y&quot;</span><span class="p">,</span> <span class="n">outputs</span><span class="o">=</span><span class="s2">&quot;loss&quot;</span><span class="p">)])</span>
@@ -518,15 +519,15 @@ the track_input flag set to <code class="docutils literal notranslate"><span cla
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="kn">from</span> <span class="nn">fastestimator.op.tensorop</span> <span class="k">import</span> <span class="n">AdversarialSample</span><span class="p">,</span> <span class="n">Average</span>
+<div class="input_area highlight-python notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">fastestimator.op.tensorop</span> <span class="kn">import</span> <span class="n">AdversarialSample</span><span class="p">,</span> <span class="n">Average</span>
 
 <span class="n">pipeline2</span> <span class="o">=</span> <span class="n">fe</span><span class="o">.</span><span class="n">Pipeline</span><span class="p">(</span><span class="n">batch_size</span><span class="o">=</span><span class="n">batch_size</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">ops</span><span class="o">=</span><span class="n">Minmax</span><span class="p">(</span><span class="n">inputs</span><span class="o">=</span><span class="s2">&quot;x&quot;</span><span class="p">,</span> <span class="n">outputs</span><span class="o">=</span><span class="s2">&quot;x&quot;</span><span class="p">))</span>
 <span class="n">model2</span> <span class="o">=</span> <span class="n">fe</span><span class="o">.</span><span class="n">build</span><span class="p">(</span><span class="n">model_def</span><span class="o">=</span><span class="k">lambda</span><span class="p">:</span> <span class="n">LeNet</span><span class="p">(</span><span class="n">input_shape</span><span class="o">=</span><span class="n">x_train</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">:],</span> <span class="n">classes</span><span class="o">=</span><span class="mi">10</span><span class="p">),</span>
                   <span class="n">model_name</span><span class="o">=</span><span class="s2">&quot;LeNet&quot;</span><span class="p">,</span> <span class="n">optimizer</span><span class="o">=</span><span class="s2">&quot;adam&quot;</span><span class="p">,</span> <span class="n">loss_name</span><span class="o">=</span><span class="s2">&quot;loss&quot;</span><span class="p">)</span>
 
 <span class="n">adversarial_network</span> <span class="o">=</span> <span class="n">fe</span><span class="o">.</span><span class="n">Network</span><span class="p">(</span><span class="n">ops</span><span class="o">=</span><span class="p">[</span>
-        <span class="n">ModelOp</span><span class="p">(</span><span class="n">inputs</span><span class="o">=</span><span class="s2">&quot;x&quot;</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">model2</span><span class="p">,</span> <span class="n">outputs</span><span class="o">=</span><span class="s2">&quot;y_pred&quot;</span><span class="p">,</span> <span class="n">track_input</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
+        <span class="n">ModelOp</span><span class="p">(</span><span class="n">inputs</span><span class="o">=</span><span class="s2">&quot;x&quot;</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">model2</span><span class="p">,</span> <span class="n">outputs</span><span class="o">=</span><span class="s2">&quot;y_pred&quot;</span><span class="p">,</span> <span class="n">track_input</span><span class="o">=</span><span class="bp">True</span><span class="p">),</span>
         <span class="n">SparseCategoricalCrossentropy</span><span class="p">(</span><span class="n">y_true</span><span class="o">=</span><span class="s2">&quot;y&quot;</span><span class="p">,</span> <span class="n">y_pred</span><span class="o">=</span><span class="s2">&quot;y_pred&quot;</span><span class="p">,</span> <span class="n">outputs</span><span class="o">=</span><span class="s2">&quot;loss&quot;</span><span class="p">),</span>
         <span class="n">AdversarialSample</span><span class="p">(</span><span class="n">inputs</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;loss&quot;</span><span class="p">,</span> <span class="s2">&quot;x&quot;</span><span class="p">),</span> <span class="n">outputs</span><span class="o">=</span><span class="s2">&quot;x_adverse&quot;</span><span class="p">,</span> <span class="n">epsilon</span><span class="o">=</span><span class="mf">0.01</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;train&quot;</span><span class="p">),</span>
         <span class="n">ModelOp</span><span class="p">(</span><span class="n">inputs</span><span class="o">=</span><span class="s2">&quot;x_adverse&quot;</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">model2</span><span class="p">,</span> <span class="n">outputs</span><span class="o">=</span><span class="s2">&quot;y_pred_adverse&quot;</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;train&quot;</span><span class="p">),</span>
@@ -544,20 +545,20 @@ the track_input flag set to <code class="docutils literal notranslate"><span cla
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<div class="input_area highlight-python notranslate"><div class="highlight"><pre>
 <span></span><span class="kn">import</span> <span class="nn">tempfile</span>
 <span class="kn">import</span> <span class="nn">os</span>
-<span class="kn">from</span> <span class="nn">fastestimator.trace</span> <span class="k">import</span> <span class="n">Accuracy</span><span class="p">,</span> <span class="n">ModelSaver</span>
+<span class="kn">from</span> <span class="nn">fastestimator.trace</span> <span class="kn">import</span> <span class="n">Accuracy</span><span class="p">,</span> <span class="n">ModelSaver</span>
 
 <span class="n">base_dir</span> <span class="o">=</span> <span class="n">tempfile</span><span class="o">.</span><span class="n">mkdtemp</span><span class="p">()</span>
 <span class="n">simple_save_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">base_dir</span><span class="p">,</span> <span class="s1">&#39;simple&#39;</span><span class="p">)</span>
 <span class="n">adversarial_save_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">base_dir</span><span class="p">,</span> <span class="s1">&#39;adverse&#39;</span><span class="p">)</span>
 
 <span class="n">simple_traces</span> <span class="o">=</span> <span class="p">[</span><span class="n">Accuracy</span><span class="p">(</span><span class="n">true_key</span><span class="o">=</span><span class="s2">&quot;y&quot;</span><span class="p">,</span> <span class="n">pred_key</span><span class="o">=</span><span class="s2">&quot;y_pred&quot;</span><span class="p">,</span> <span class="n">output_name</span><span class="o">=</span><span class="s1">&#39;acc&#39;</span><span class="p">),</span>
-                 <span class="n">ModelSaver</span><span class="p">(</span><span class="n">model_name</span><span class="o">=</span><span class="s2">&quot;LeNet&quot;</span><span class="p">,</span> <span class="n">save_dir</span><span class="o">=</span><span class="n">simple_save_dir</span><span class="p">,</span> <span class="n">save_best</span><span class="o">=</span><span class="kc">True</span><span class="p">)]</span>
+                 <span class="n">ModelSaver</span><span class="p">(</span><span class="n">model_name</span><span class="o">=</span><span class="s2">&quot;LeNet&quot;</span><span class="p">,</span> <span class="n">save_dir</span><span class="o">=</span><span class="n">simple_save_dir</span><span class="p">,</span> <span class="n">save_best</span><span class="o">=</span><span class="bp">True</span><span class="p">)]</span>
 
 <span class="n">adversarial_traces</span> <span class="o">=</span> <span class="p">[</span><span class="n">Accuracy</span><span class="p">(</span><span class="n">true_key</span><span class="o">=</span><span class="s2">&quot;y&quot;</span><span class="p">,</span> <span class="n">pred_key</span><span class="o">=</span><span class="s2">&quot;y_pred&quot;</span><span class="p">,</span> <span class="n">output_name</span><span class="o">=</span><span class="s1">&#39;acc&#39;</span><span class="p">),</span>
-                      <span class="n">ModelSaver</span><span class="p">(</span><span class="n">model_name</span><span class="o">=</span><span class="s2">&quot;LeNet&quot;</span><span class="p">,</span> <span class="n">save_dir</span><span class="o">=</span><span class="n">adversarial_save_dir</span><span class="p">,</span> <span class="n">save_best</span><span class="o">=</span><span class="kc">True</span><span class="p">)]</span>
+                      <span class="n">ModelSaver</span><span class="p">(</span><span class="n">model_name</span><span class="o">=</span><span class="s2">&quot;LeNet&quot;</span><span class="p">,</span> <span class="n">save_dir</span><span class="o">=</span><span class="n">adversarial_save_dir</span><span class="p">,</span> <span class="n">save_best</span><span class="o">=</span><span class="bp">True</span><span class="p">)]</span>
 </pre></div>
 </div>
 </div>
@@ -566,7 +567,7 @@ the track_input flag set to <code class="docutils literal notranslate"><span cla
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<div class="input_area highlight-python notranslate"><div class="highlight"><pre>
 <span></span><span class="n">simple_estimator</span> <span class="o">=</span> <span class="n">fe</span><span class="o">.</span><span class="n">Estimator</span><span class="p">(</span><span class="n">network</span><span class="o">=</span><span class="n">simple_network</span><span class="p">,</span>
                                 <span class="n">pipeline</span><span class="o">=</span><span class="n">pipeline</span><span class="p">,</span>
                                 <span class="n">epochs</span><span class="o">=</span><span class="n">epochs</span><span class="p">,</span>
@@ -593,7 +594,7 @@ the track_input flag set to <code class="docutils literal notranslate"><span cla
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<div class="input_area highlight-python notranslate"><div class="highlight"><pre>
 <span></span><span class="n">simple_estimator</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
 </pre></div>
 </div>
@@ -603,7 +604,7 @@ the track_input flag set to <code class="docutils literal notranslate"><span cla
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<div class="input_area highlight-python notranslate"><div class="highlight"><pre>
 <span></span><span class="n">adversarial_estimator</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
 </pre></div>
 </div>
@@ -616,12 +617,12 @@ the track_input flag set to <code class="docutils literal notranslate"><span cla
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<div class="input_area highlight-python notranslate"><div class="highlight"><pre>
 <span></span><span class="n">simple_model_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">simple_save_dir</span><span class="p">,</span> <span class="s1">&#39;LeNet_best_loss.h5&#39;</span><span class="p">)</span>
-<span class="n">simple_model</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">models</span><span class="o">.</span><span class="n">load_model</span><span class="p">(</span><span class="n">simple_model_path</span><span class="p">,</span> <span class="nb">compile</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">simple_model</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">models</span><span class="o">.</span><span class="n">load_model</span><span class="p">(</span><span class="n">simple_model_path</span><span class="p">,</span> <span class="nb">compile</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
 
 <span class="n">adversarial_model_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">adversarial_save_dir</span><span class="p">,</span> <span class="s1">&#39;LeNet_best_loss.h5&#39;</span><span class="p">)</span>
-<span class="n">adversarial_model</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">models</span><span class="o">.</span><span class="n">load_model</span><span class="p">(</span><span class="n">adversarial_model_path</span><span class="p">,</span> <span class="nb">compile</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">adversarial_model</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">models</span><span class="o">.</span><span class="n">load_model</span><span class="p">(</span><span class="n">adversarial_model_path</span><span class="p">,</span> <span class="nb">compile</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -630,11 +631,11 @@ the track_input flag set to <code class="docutils literal notranslate"><span cla
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">from</span> <span class="nn">fastestimator.interpretation</span> <span class="k">import</span> <span class="n">show_image</span>
-<span class="kn">from</span> <span class="nn">fastestimator.op.tensorop</span> <span class="k">import</span> <span class="n">Minmax</span>
+<div class="input_area highlight-python notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">fastestimator.interpretation</span> <span class="kn">import</span> <span class="n">show_image</span>
+<span class="kn">from</span> <span class="nn">fastestimator.op.tensorop</span> <span class="kn">import</span> <span class="n">Minmax</span>
 
 <span class="n">minmax</span> <span class="o">=</span> <span class="n">Minmax</span><span class="p">()</span>
 <span class="n">num_vis</span> <span class="o">=</span> <span class="mi">10</span>
@@ -650,17 +651,17 @@ the track_input flag set to <code class="docutils literal notranslate"><span cla
     <span class="mi">0</span><span class="p">:</span> <span class="s2">&quot;airplane&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">:</span> <span class="s2">&quot;car&quot;</span><span class="p">,</span> <span class="mi">2</span><span class="p">:</span> <span class="s2">&quot;bird&quot;</span><span class="p">,</span> <span class="mi">3</span><span class="p">:</span> <span class="s2">&quot;cat&quot;</span><span class="p">,</span> <span class="mi">4</span><span class="p">:</span> <span class="s2">&quot;deer&quot;</span><span class="p">,</span> <span class="mi">5</span><span class="p">:</span> <span class="s2">&quot;dog&quot;</span><span class="p">,</span> <span class="mi">6</span><span class="p">:</span> <span class="s2">&quot;frog&quot;</span><span class="p">,</span> <span class="mi">7</span><span class="p">:</span> <span class="s2">&quot;horse&quot;</span><span class="p">,</span> <span class="mi">8</span><span class="p">:</span> <span class="s2">&quot;ship&quot;</span><span class="p">,</span> <span class="mi">9</span><span class="p">:</span> <span class="s2">&quot;truck&quot;</span>
 <span class="p">}</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;True Labels:               [</span><span class="si">{}</span><span class="s2">]&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
-    <span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="s1">&#39;</span><span class="si">{:&lt;8}</span><span class="s1">&#39;</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_vis</span><span class="p">)]))</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">*</span><span class="p">[</span><span class="n">class_dictionary</span><span class="p">[</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">numpy</span><span class="p">()]</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">sample_labels</span><span class="p">][</span><span class="mi">0</span><span class="p">:</span><span class="n">num_vis</span><span class="p">]))</span>
+<span class="k">print</span><span class="p">(</span><span class="s2">&quot;True Labels:               [{}]&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+    <span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="s1">&#39;{:&lt;8}&#39;</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_vis</span><span class="p">)]))</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">*</span><span class="p">[</span><span class="n">class_dictionary</span><span class="p">[</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">numpy</span><span class="p">()]</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">sample_labels</span><span class="p">][</span><span class="mi">0</span><span class="p">:</span><span class="n">num_vis</span><span class="p">]))</span>
 <span class="n">simple_prediction_score</span> <span class="o">=</span> <span class="n">simple_model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">sample_images</span><span class="p">)</span>
 <span class="n">simple_accuracy</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">not_equal</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">simple_prediction_score</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span> <span class="n">tf</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">sample_labels</span><span class="p">,</span> <span class="p">(</span><span class="n">num_samples</span><span class="p">,))))</span> <span class="o">/</span> <span class="n">num_samples</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Simple Model Predicts:     [</span><span class="si">{}</span><span class="s2">] (</span><span class="si">{:2.1%}</span><span class="s2"> accuracy over </span><span class="si">{}</span><span class="s2"> images)&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
-    <span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="s1">&#39;</span><span class="si">{:&lt;8}</span><span class="s1">&#39;</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_vis</span><span class="p">)]),</span> <span class="n">simple_accuracy</span><span class="p">,</span> <span class="n">num_samples</span><span class="p">)</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+<span class="k">print</span><span class="p">(</span><span class="s2">&quot;Simple Model Predicts:     [{}] ({:2.1%} accuracy over {} images)&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+    <span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="s1">&#39;{:&lt;8}&#39;</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_vis</span><span class="p">)]),</span> <span class="n">simple_accuracy</span><span class="p">,</span> <span class="n">num_samples</span><span class="p">)</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
     <span class="o">*</span><span class="p">[</span><span class="n">class_dictionary</span><span class="p">[</span><span class="n">x</span><span class="p">]</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">simple_prediction_score</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)][</span><span class="mi">0</span><span class="p">:</span><span class="n">num_vis</span><span class="p">]))</span>
 <span class="n">adversarial_prediction_score</span> <span class="o">=</span> <span class="n">adversarial_model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">sample_images</span><span class="p">)</span>
 <span class="n">adversarial_accuracy</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">not_equal</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">adversarial_prediction_score</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span> <span class="n">tf</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">sample_labels</span><span class="p">,</span> <span class="p">(</span><span class="n">num_samples</span><span class="p">,))))</span> <span class="o">/</span> <span class="n">num_samples</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Adversarial Model Predicts:[</span><span class="si">{}</span><span class="s2">] (</span><span class="si">{:2.1%}</span><span class="s2"> accuracy over </span><span class="si">{}</span><span class="s2"> images)&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
-    <span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="s1">&#39;</span><span class="si">{:&lt;8}</span><span class="s1">&#39;</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_vis</span><span class="p">)]),</span> <span class="n">adversarial_accuracy</span><span class="p">,</span> <span class="n">num_samples</span><span class="p">)</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+<span class="k">print</span><span class="p">(</span><span class="s2">&quot;Adversarial Model Predicts:[{}] ({:2.1%} accuracy over {} images)&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+    <span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="s1">&#39;{:&lt;8}&#39;</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_vis</span><span class="p">)]),</span> <span class="n">adversarial_accuracy</span><span class="p">,</span> <span class="n">num_samples</span><span class="p">)</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
     <span class="o">*</span><span class="p">[</span><span class="n">class_dictionary</span><span class="p">[</span><span class="n">x</span><span class="p">]</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">adversarial_prediction_score</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)][</span><span class="mi">0</span><span class="p">:</span><span class="n">num_vis</span><span class="p">]))</span>
 </pre></div>
 </div>
@@ -687,12 +688,12 @@ Adversarial Model Predicts:[cat     , ship    , ship    , airplane, deer    , fr
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<div class="input_area highlight-python notranslate"><div class="highlight"><pre>
 <span></span><span class="k">def</span> <span class="nf">attack</span><span class="p">(</span><span class="n">images</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">ground_truth</span><span class="p">,</span> <span class="n">epsilon</span><span class="p">):</span>
     <span class="n">loss_obj</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">losses</span><span class="o">.</span><span class="n">SparseCategoricalCrossentropy</span><span class="p">(</span><span class="n">reduction</span><span class="o">=</span><span class="s1">&#39;none&#39;</span><span class="p">)</span>
     <span class="k">with</span> <span class="n">tf</span><span class="o">.</span><span class="n">GradientTape</span><span class="p">()</span> <span class="k">as</span> <span class="n">tape</span><span class="p">:</span>
         <span class="n">tape</span><span class="o">.</span><span class="n">watch</span><span class="p">(</span><span class="n">images</span><span class="p">)</span>
-        <span class="n">pred</span> <span class="o">=</span> <span class="n">model</span><span class="p">(</span><span class="n">images</span><span class="p">,</span> <span class="n">training</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+        <span class="n">pred</span> <span class="o">=</span> <span class="n">model</span><span class="p">(</span><span class="n">images</span><span class="p">,</span> <span class="n">training</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
         <span class="n">loss</span> <span class="o">=</span> <span class="n">loss_obj</span><span class="p">(</span><span class="n">ground_truth</span><span class="p">,</span> <span class="n">pred</span><span class="p">)</span>
     <span class="n">gradients</span> <span class="o">=</span> <span class="n">tape</span><span class="o">.</span><span class="n">gradient</span><span class="p">(</span><span class="n">loss</span><span class="p">,</span> <span class="n">images</span><span class="p">)</span>
     <span class="n">adverse_images</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">clip_by_value</span><span class="p">(</span><span class="n">images</span> <span class="o">+</span> <span class="n">epsilon</span> <span class="o">*</span> <span class="n">tf</span><span class="o">.</span><span class="n">sign</span><span class="p">(</span><span class="n">gradients</span><span class="p">),</span>
@@ -707,24 +708,24 @@ Adversarial Model Predicts:[cat     , ship    , ship    , airplane, deer    , fr
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[20]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<div class="input_area highlight-python notranslate"><div class="highlight"><pre>
 <span></span><span class="n">adverse_images</span> <span class="o">=</span> <span class="n">attack</span><span class="p">(</span><span class="n">sample_images</span><span class="p">,</span> <span class="n">simple_model</span><span class="p">,</span> <span class="n">sample_labels</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">)</span>
 
 <span class="n">fig</span><span class="p">,</span> <span class="n">axis</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">num_vis</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">21</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
 <span class="k">for</span> <span class="n">idx</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_vis</span><span class="p">):</span>
     <span class="n">show_image</span><span class="p">(</span><span class="n">adverse_images</span><span class="p">[</span><span class="n">idx</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="n">axis</span><span class="p">[</span><span class="n">idx</span><span class="p">])</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;True Labels:               [</span><span class="si">{}</span><span class="s2">]&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
-    <span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="s1">&#39;</span><span class="si">{:&lt;8}</span><span class="s1">&#39;</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_vis</span><span class="p">)]))</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">*</span><span class="p">[</span><span class="n">class_dictionary</span><span class="p">[</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">numpy</span><span class="p">()]</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">sample_labels</span><span class="p">][</span><span class="mi">0</span><span class="p">:</span><span class="n">num_vis</span><span class="p">]))</span>
+<span class="k">print</span><span class="p">(</span><span class="s2">&quot;True Labels:               [{}]&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+    <span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="s1">&#39;{:&lt;8}&#39;</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_vis</span><span class="p">)]))</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">*</span><span class="p">[</span><span class="n">class_dictionary</span><span class="p">[</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">numpy</span><span class="p">()]</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">sample_labels</span><span class="p">][</span><span class="mi">0</span><span class="p">:</span><span class="n">num_vis</span><span class="p">]))</span>
 <span class="n">simple_prediction_score</span> <span class="o">=</span> <span class="n">simple_model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">adverse_images</span><span class="p">)</span>
 <span class="n">simple_accuracy_w</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">not_equal</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">simple_prediction_score</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span> <span class="n">tf</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">sample_labels</span><span class="p">,</span> <span class="p">(</span><span class="n">num_samples</span><span class="p">,))))</span> <span class="o">/</span> <span class="n">num_samples</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Simple Model Predicts:     [</span><span class="si">{}</span><span class="s2">] (</span><span class="si">{:2.1%}</span><span class="s2"> accuracy over </span><span class="si">{}</span><span class="s2"> images)&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
-    <span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="s1">&#39;</span><span class="si">{:&lt;8}</span><span class="s1">&#39;</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_vis</span><span class="p">)]),</span> <span class="n">simple_accuracy_w</span><span class="p">,</span> <span class="n">num_samples</span><span class="p">)</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+<span class="k">print</span><span class="p">(</span><span class="s2">&quot;Simple Model Predicts:     [{}] ({:2.1%} accuracy over {} images)&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+    <span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="s1">&#39;{:&lt;8}&#39;</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_vis</span><span class="p">)]),</span> <span class="n">simple_accuracy_w</span><span class="p">,</span> <span class="n">num_samples</span><span class="p">)</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
     <span class="o">*</span><span class="p">[</span><span class="n">class_dictionary</span><span class="p">[</span><span class="n">x</span><span class="p">]</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">simple_prediction_score</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)][</span><span class="mi">0</span><span class="p">:</span><span class="n">num_vis</span><span class="p">]))</span>
 <span class="n">adversarial_prediction_score</span> <span class="o">=</span> <span class="n">adversarial_model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">adverse_images</span><span class="p">)</span>
 <span class="n">adversarial_accuracy_b</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">not_equal</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">adversarial_prediction_score</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span> <span class="n">tf</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">sample_labels</span><span class="p">,</span> <span class="p">(</span><span class="n">num_samples</span><span class="p">,))))</span> <span class="o">/</span> <span class="n">num_samples</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Adversarial Model Predicts:[</span><span class="si">{}</span><span class="s2">] (</span><span class="si">{:2.1%}</span><span class="s2"> accuracy over </span><span class="si">{}</span><span class="s2"> images)&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
-    <span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="s1">&#39;</span><span class="si">{:&lt;8}</span><span class="s1">&#39;</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_vis</span><span class="p">)]),</span> <span class="n">adversarial_accuracy_b</span><span class="p">,</span> <span class="n">num_samples</span><span class="p">)</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+<span class="k">print</span><span class="p">(</span><span class="s2">&quot;Adversarial Model Predicts:[{}] ({:2.1%} accuracy over {} images)&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+    <span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="s1">&#39;{:&lt;8}&#39;</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_vis</span><span class="p">)]),</span> <span class="n">adversarial_accuracy_b</span><span class="p">,</span> <span class="n">num_samples</span><span class="p">)</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
     <span class="o">*</span><span class="p">[</span><span class="n">class_dictionary</span><span class="p">[</span><span class="n">x</span><span class="p">]</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">adversarial_prediction_score</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)][</span><span class="mi">0</span><span class="p">:</span><span class="n">num_vis</span><span class="p">]))</span>
 </pre></div>
 </div>
@@ -752,24 +753,24 @@ instead and see how well the models resist the attack</p>
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[22]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<div class="input_area highlight-python notranslate"><div class="highlight"><pre>
 <span></span><span class="n">adverse_images</span> <span class="o">=</span> <span class="n">attack</span><span class="p">(</span><span class="n">sample_images</span><span class="p">,</span> <span class="n">adversarial_model</span><span class="p">,</span> <span class="n">sample_labels</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">)</span>
 
 <span class="n">fig</span><span class="p">,</span> <span class="n">axis</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">num_vis</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">21</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
 <span class="k">for</span> <span class="n">idx</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_vis</span><span class="p">):</span>
     <span class="n">show_image</span><span class="p">(</span><span class="n">adverse_images</span><span class="p">[</span><span class="n">idx</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="n">axis</span><span class="p">[</span><span class="n">idx</span><span class="p">])</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;True Labels:               [</span><span class="si">{}</span><span class="s2">]&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
-    <span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="s1">&#39;</span><span class="si">{:&lt;8}</span><span class="s1">&#39;</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_vis</span><span class="p">)]))</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">*</span><span class="p">[</span><span class="n">class_dictionary</span><span class="p">[</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">numpy</span><span class="p">()]</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">sample_labels</span><span class="p">][</span><span class="mi">0</span><span class="p">:</span><span class="n">num_vis</span><span class="p">]))</span>
+<span class="k">print</span><span class="p">(</span><span class="s2">&quot;True Labels:               [{}]&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+    <span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="s1">&#39;{:&lt;8}&#39;</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_vis</span><span class="p">)]))</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">*</span><span class="p">[</span><span class="n">class_dictionary</span><span class="p">[</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">numpy</span><span class="p">()]</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">sample_labels</span><span class="p">][</span><span class="mi">0</span><span class="p">:</span><span class="n">num_vis</span><span class="p">]))</span>
 <span class="n">simple_prediction_score</span> <span class="o">=</span> <span class="n">simple_model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">adverse_images</span><span class="p">)</span>
 <span class="n">simple_accuracy_b</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">not_equal</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">simple_prediction_score</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span> <span class="n">tf</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">sample_labels</span><span class="p">,</span> <span class="p">(</span><span class="n">num_samples</span><span class="p">,))))</span> <span class="o">/</span> <span class="n">num_samples</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Simple Model Predicts:     [</span><span class="si">{}</span><span class="s2">] (</span><span class="si">{:2.1%}</span><span class="s2"> accuracy over </span><span class="si">{}</span><span class="s2"> images)&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
-    <span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="s1">&#39;</span><span class="si">{:&lt;8}</span><span class="s1">&#39;</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_vis</span><span class="p">)]),</span> <span class="n">simple_accuracy_b</span><span class="p">,</span> <span class="n">num_samples</span><span class="p">)</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+<span class="k">print</span><span class="p">(</span><span class="s2">&quot;Simple Model Predicts:     [{}] ({:2.1%} accuracy over {} images)&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+    <span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="s1">&#39;{:&lt;8}&#39;</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_vis</span><span class="p">)]),</span> <span class="n">simple_accuracy_b</span><span class="p">,</span> <span class="n">num_samples</span><span class="p">)</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
     <span class="o">*</span><span class="p">[</span><span class="n">class_dictionary</span><span class="p">[</span><span class="n">x</span><span class="p">]</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">simple_prediction_score</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)][</span><span class="mi">0</span><span class="p">:</span><span class="n">num_vis</span><span class="p">]))</span>
 <span class="n">adversarial_prediction_score</span> <span class="o">=</span> <span class="n">adversarial_model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">adverse_images</span><span class="p">)</span>
 <span class="n">adversarial_accuracy_w</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">not_equal</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">adversarial_prediction_score</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span> <span class="n">tf</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">sample_labels</span><span class="p">,</span> <span class="p">(</span><span class="n">num_samples</span><span class="p">,))))</span> <span class="o">/</span> <span class="n">num_samples</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Adversarial Model Predicts:[</span><span class="si">{}</span><span class="s2">] (</span><span class="si">{:2.1%}</span><span class="s2"> accuracy over </span><span class="si">{}</span><span class="s2"> images)&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
-    <span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="s1">&#39;</span><span class="si">{:&lt;8}</span><span class="s1">&#39;</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_vis</span><span class="p">)]),</span> <span class="n">adversarial_accuracy_w</span><span class="p">,</span> <span class="n">num_samples</span><span class="p">)</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+<span class="k">print</span><span class="p">(</span><span class="s2">&quot;Adversarial Model Predicts:[{}] ({:2.1%} accuracy over {} images)&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+    <span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="s1">&#39;{:&lt;8}&#39;</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_vis</span><span class="p">)]),</span> <span class="n">adversarial_accuracy_w</span><span class="p">,</span> <span class="n">num_samples</span><span class="p">)</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
     <span class="o">*</span><span class="p">[</span><span class="n">class_dictionary</span><span class="p">[</span><span class="n">x</span><span class="p">]</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">adversarial_prediction_score</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)][</span><span class="mi">0</span><span class="p">:</span><span class="n">num_vis</span><span class="p">]))</span>
 </pre></div>
 </div>
@@ -796,12 +797,12 @@ Adversarial Model Predicts:[dog     , airplane, airplane, airplane, deer    , ca
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[23]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;White box attack vs simple network:      </span><span class="si">{:2.2%}</span><span class="s2"> accuracy&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">simple_accuracy_w</span> <span class="o">-</span> <span class="n">simple_accuracy</span><span class="p">))</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;White box attack vs adversarial network: </span><span class="si">{:2.2%}</span><span class="s2"> accuracy&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">adversarial_accuracy_w</span> <span class="o">-</span> <span class="n">simple_accuracy</span><span class="p">))</span>
-<span class="nb">print</span><span class="p">()</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Black box attack vs simple network:      </span><span class="si">{:2.2%}</span><span class="s2"> accuracy&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">simple_accuracy_b</span> <span class="o">-</span> <span class="n">simple_accuracy</span><span class="p">))</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Black box attack vs adversarial network: </span><span class="si">{:2.2%}</span><span class="s2"> accuracy&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">adversarial_accuracy_b</span> <span class="o">-</span> <span class="n">simple_accuracy</span><span class="p">))</span>
+<div class="input_area highlight-python notranslate"><div class="highlight"><pre>
+<span></span><span class="k">print</span><span class="p">(</span><span class="s2">&quot;White box attack vs simple network:      {:2.2%} accuracy&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">simple_accuracy_w</span> <span class="o">-</span> <span class="n">simple_accuracy</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="s2">&quot;White box attack vs adversarial network: {:2.2%} accuracy&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">adversarial_accuracy_w</span> <span class="o">-</span> <span class="n">simple_accuracy</span><span class="p">))</span>
+<span class="k">print</span><span class="p">()</span>
+<span class="k">print</span><span class="p">(</span><span class="s2">&quot;Black box attack vs simple network:      {:2.2%} accuracy&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">simple_accuracy_b</span> <span class="o">-</span> <span class="n">simple_accuracy</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="s2">&quot;Black box attack vs adversarial network: {:2.2%} accuracy&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">adversarial_accuracy_b</span> <span class="o">-</span> <span class="n">simple_accuracy</span><span class="p">))</span>
 </pre></div>
 </div>
 </div>
@@ -832,10 +833,10 @@ benefits are worth the increased training time would, of course, depend on the m
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../lenet_cifar10_mixup/lenet_cifar10_mixup.html" class="btn btn-neutral float-right" title="CIFAR10 Image Classification Using LeNet" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="../lenet_cifar10_mixup/lenet_cifar10_mixup.html" class="btn btn-neutral float-right" title="CIFAR10 Image Classification Using LeNet with Mixup Training" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="../densenet121_cifar10/densenet121_cifar10.html" class="btn btn-neutral float-left" title="&lt;no title&gt;" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="../densenet121_cifar10/densenet121_cifar10.html" class="btn btn-neutral float-left" title="CIFAR10 Image Classification Using DenseNet-121" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
