@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>CIFAR10 Image Classification Using LeNet with Mixup Training &mdash; FastEstimator 1.0b0 documentation</title>
+  <title>CIFAR10 Image Classification Using LeNet &mdash; FastEstimator 1.0b0 documentation</title>
   
 
   
@@ -41,7 +41,7 @@
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" />
     <link rel="next" title="MNIST Image Classification Using LeNet" href="../lenet_mnist/lenet_mnist.html" />
-    <link rel="prev" title="CIFAR10 Image Classification Using LeNet With Adversarial Training" href="../lenet_cifar10_adversarial/lenet_cifar10_adversarial.html" /> 
+    <link rel="prev" title="CIFAR10 Image Classification Using LeNet" href="../lenet_cifar10_adversarial/lenet_cifar10_adversarial.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -95,9 +95,8 @@
 <li class="toctree-l1 current"><a class="reference internal" href="../../../apphub.html">Example</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="../../NLP.html">NLP</a></li>
 <li class="toctree-l2 current"><a class="reference internal" href="../../image_classification.html">Image Classification</a><ul class="current">
-<li class="toctree-l3"><a class="reference internal" href="../densenet121_cifar10/densenet121_cifar10.html">CIFAR10 Image Classification Using DenseNet-121</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../lenet_cifar10_adversarial/lenet_cifar10_adversarial.html">CIFAR10 Image Classification Using LeNet With Adversarial Training</a></li>
-<li class="toctree-l3 current"><a class="current reference internal" href="#">CIFAR10 Image Classification Using LeNet with Mixup Training</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../lenet_cifar10_adversarial/lenet_cifar10_adversarial.html">CIFAR10 Image Classification Using LeNet</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">CIFAR10 Image Classification Using LeNet</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#Step-1:-Prepare-training-and-evaluation-dataset,-create-FastEstimator-Pipeline">Step 1: Prepare training and evaluation dataset, create FastEstimator <code class="docutils literal notranslate"><span class="pre">Pipeline</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#Step-2:-Prepare-model,-create-FastEstimator-Network">Step 2: Prepare model, create FastEstimator <code class="docutils literal notranslate"><span class="pre">Network</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#Step-3:-Configure-training,-create-Estimator">Step 3: Configure training, create <code class="docutils literal notranslate"><span class="pre">Estimator</span></code></a></li>
@@ -164,7 +163,7 @@
         
           <li><a href="../../image_classification.html">Image Classification</a> &raquo;</li>
         
-      <li>CIFAR10 Image Classification Using LeNet with Mixup Training</li>
+      <li>CIFAR10 Image Classification Using LeNet</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -405,15 +404,15 @@ div.rendered_html tbody tr:hover {
     text-align: unset;
 }
 </style>
-<div class="section" id="CIFAR10-Image-Classification-Using-LeNet-with-Mixup-Training">
-<h1>CIFAR10 Image Classification Using LeNet with Mixup Training<a class="headerlink" href="#CIFAR10-Image-Classification-Using-LeNet-with-Mixup-Training" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="CIFAR10-Image-Classification-Using-LeNet">
+<h1>CIFAR10 Image Classification Using LeNet<a class="headerlink" href="#CIFAR10-Image-Classification-Using-LeNet" title="Permalink to this headline">¶</a></h1>
 <p>In this tutorial, we are going to walk through the logic in <code class="docutils literal notranslate"><span class="pre">lenet_cifar10_mixup.py</span></code> shown below and provide step-by-step instructions.</p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
-<div class="input_area highlight-python notranslate"><div class="highlight"><pre>
-<span></span>!cat lenet_cifar10_mixup.py
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="o">!</span>cat lenet_cifar10_mixup.py
 </pre></div>
 </div>
 </div>
@@ -424,14 +423,14 @@ div.rendered_html tbody tr:hover {
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
 </pre></div>
 </div>
-<div class="input_area highlight-python notranslate"><div class="highlight"><pre>
-<span></span><span class="kn">import</span> <span class="nn">tensorflow</span> <span class="kn">as</span> <span class="nn">tf</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
 
 <span class="p">(</span><span class="n">x_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">),</span> <span class="p">(</span><span class="n">x_eval</span><span class="p">,</span> <span class="n">y_eval</span><span class="p">)</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">cifar10</span><span class="o">.</span><span class="n">load_data</span><span class="p">()</span>
-<span class="k">print</span><span class="p">(</span><span class="s2">&quot;train image shape is {}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">x_train</span><span class="o">.</span><span class="n">shape</span><span class="p">))</span>
-<span class="k">print</span><span class="p">(</span><span class="s2">&quot;train label shape is {}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">y_train</span><span class="o">.</span><span class="n">shape</span><span class="p">))</span>
-<span class="k">print</span><span class="p">(</span><span class="s2">&quot;eval image shape is {}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">x_eval</span><span class="o">.</span><span class="n">shape</span><span class="p">))</span>
-<span class="k">print</span><span class="p">(</span><span class="s2">&quot;eval label shape is {}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">y_eval</span><span class="o">.</span><span class="n">shape</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;train image shape is </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">x_train</span><span class="o">.</span><span class="n">shape</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;train label shape is </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">y_train</span><span class="o">.</span><span class="n">shape</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;eval image shape is </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">x_eval</span><span class="o">.</span><span class="n">shape</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;eval label shape is </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">y_eval</span><span class="o">.</span><span class="n">shape</span><span class="p">))</span>
 </pre></div>
 </div>
 </div>
@@ -451,7 +450,7 @@ eval label shape is (10000, 1)
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
 </pre></div>
 </div>
-<div class="input_area highlight-python notranslate"><div class="highlight"><pre>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;train&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;x&quot;</span><span class="p">:</span> <span class="n">x_train</span><span class="p">,</span> <span class="s2">&quot;y&quot;</span><span class="p">:</span> <span class="n">y_train</span><span class="p">},</span> <span class="s2">&quot;eval&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;x&quot;</span><span class="p">:</span> <span class="n">x_eval</span><span class="p">,</span> <span class="s2">&quot;y&quot;</span><span class="p">:</span> <span class="n">y_eval</span><span class="p">}}</span>
 </pre></div>
 </div>
@@ -460,12 +459,12 @@ eval label shape is (10000, 1)
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
-<div class="input_area highlight-python notranslate"><div class="highlight"><pre>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="c1">#Parameters</span>
 <span class="n">epochs</span> <span class="o">=</span> <span class="mi">35</span>
 <span class="n">batch_size</span> <span class="o">=</span> <span class="mi">50</span>
-<span class="n">steps_per_epoch</span> <span class="o">=</span> <span class="bp">None</span>
-<span class="n">validation_steps</span> <span class="o">=</span> <span class="bp">None</span>
+<span class="n">steps_per_epoch</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="n">validation_steps</span> <span class="o">=</span> <span class="kc">None</span>
 </pre></div>
 </div>
 </div>
@@ -474,9 +473,9 @@ eval label shape is (10000, 1)
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
 </pre></div>
 </div>
-<div class="input_area highlight-python notranslate"><div class="highlight"><pre>
-<span></span><span class="kn">import</span> <span class="nn">fastestimator</span> <span class="kn">as</span> <span class="nn">fe</span>
-<span class="kn">from</span> <span class="nn">fastestimator.op.tensorop</span> <span class="kn">import</span> <span class="n">Minmax</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">fastestimator</span> <span class="k">as</span> <span class="nn">fe</span>
+<span class="kn">from</span> <span class="nn">fastestimator.op.tensorop</span> <span class="k">import</span> <span class="n">Minmax</span>
 
 <span class="n">pipeline</span> <span class="o">=</span> <span class="n">fe</span><span class="o">.</span><span class="n">Pipeline</span><span class="p">(</span><span class="n">batch_size</span><span class="o">=</span><span class="n">batch_size</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">ops</span><span class="o">=</span><span class="n">Minmax</span><span class="p">(</span><span class="n">inputs</span><span class="o">=</span><span class="s2">&quot;x&quot;</span><span class="p">,</span> <span class="n">outputs</span><span class="o">=</span><span class="s2">&quot;x&quot;</span><span class="p">))</span>
 </pre></div>
@@ -490,8 +489,8 @@ eval label shape is (10000, 1)
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
 </pre></div>
 </div>
-<div class="input_area highlight-python notranslate"><div class="highlight"><pre>
-<span></span><span class="kn">from</span> <span class="nn">fastestimator.architecture</span> <span class="kn">import</span> <span class="n">LeNet</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">fastestimator.architecture</span> <span class="k">import</span> <span class="n">LeNet</span>
 
 <span class="n">model</span> <span class="o">=</span> <span class="n">fe</span><span class="o">.</span><span class="n">build</span><span class="p">(</span><span class="n">model_def</span><span class="o">=</span><span class="k">lambda</span><span class="p">:</span> <span class="n">LeNet</span><span class="p">(</span><span class="n">input_shape</span><span class="o">=</span><span class="n">x_train</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">:],</span>
                  <span class="n">classes</span><span class="o">=</span><span class="mi">10</span><span class="p">),</span> <span class="n">model_name</span><span class="o">=</span><span class="s2">&quot;LeNet&quot;</span><span class="p">,</span>
@@ -505,8 +504,8 @@ eval label shape is (10000, 1)
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
 </pre></div>
 </div>
-<div class="input_area highlight-python notranslate"><div class="highlight"><pre>
-<span></span><span class="kn">from</span> <span class="nn">fastestimator.op.tensorop</span> <span class="kn">import</span> <span class="n">ModelOp</span><span class="p">,</span> <span class="n">SparseCategoricalCrossentropy</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">fastestimator.op.tensorop</span> <span class="k">import</span> <span class="n">ModelOp</span><span class="p">,</span> <span class="n">SparseCategoricalCrossentropy</span>
 
 <span class="n">simple_network</span> <span class="o">=</span> <span class="n">fe</span><span class="o">.</span><span class="n">Network</span><span class="p">(</span><span class="n">ops</span><span class="o">=</span><span class="p">[</span><span class="n">ModelOp</span><span class="p">(</span><span class="n">inputs</span><span class="o">=</span><span class="s2">&quot;x&quot;</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">,</span> <span class="n">outputs</span><span class="o">=</span><span class="s2">&quot;y_pred&quot;</span><span class="p">),</span>
                                  <span class="n">SparseCategoricalCrossentropy</span><span class="p">(</span><span class="n">y_pred</span><span class="o">=</span><span class="s2">&quot;y_pred&quot;</span><span class="p">,</span> <span class="n">y_true</span><span class="o">=</span><span class="s2">&quot;y&quot;</span><span class="p">,</span> <span class="n">outputs</span><span class="o">=</span><span class="s2">&quot;loss&quot;</span><span class="p">)])</span>
@@ -519,10 +518,10 @@ before computing the loss. Note that mixup is only performed during training (no
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
 </pre></div>
 </div>
-<div class="input_area highlight-python notranslate"><div class="highlight"><pre>
-<span></span><span class="kn">from</span> <span class="nn">tensorflow.python.keras.losses</span> <span class="kn">import</span> <span class="n">SparseCategoricalCrossentropy</span> <span class="k">as</span> <span class="n">KerasCrossentropy</span>
-<span class="kn">from</span> <span class="nn">fastestimator.op.tensorop</span> <span class="kn">import</span> <span class="n">MixUpBatch</span><span class="p">,</span> <span class="n">MixUpLoss</span>
-<span class="kn">from</span> <span class="nn">fastestimator.schedule</span> <span class="kn">import</span> <span class="n">Scheduler</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">tensorflow.python.keras.losses</span> <span class="k">import</span> <span class="n">SparseCategoricalCrossentropy</span> <span class="k">as</span> <span class="n">KerasCrossentropy</span>
+<span class="kn">from</span> <span class="nn">fastestimator.op.tensorop</span> <span class="k">import</span> <span class="n">MixUpBatch</span><span class="p">,</span> <span class="n">MixUpLoss</span>
+<span class="kn">from</span> <span class="nn">fastestimator.schedule</span> <span class="k">import</span> <span class="n">Scheduler</span>
 
 <span class="n">pipeline2</span> <span class="o">=</span> <span class="n">fe</span><span class="o">.</span><span class="n">Pipeline</span><span class="p">(</span><span class="n">batch_size</span><span class="o">=</span><span class="n">batch_size</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">ops</span><span class="o">=</span><span class="n">Minmax</span><span class="p">(</span><span class="n">inputs</span><span class="o">=</span><span class="s2">&quot;x&quot;</span><span class="p">,</span> <span class="n">outputs</span><span class="o">=</span><span class="s2">&quot;x&quot;</span><span class="p">))</span>
 <span class="n">model2</span> <span class="o">=</span> <span class="n">fe</span><span class="o">.</span><span class="n">build</span><span class="p">(</span><span class="n">model_def</span><span class="o">=</span><span class="k">lambda</span><span class="p">:</span> <span class="n">LeNet</span><span class="p">(</span><span class="n">input_shape</span><span class="o">=</span><span class="n">x_train</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">:],</span> <span class="n">classes</span><span class="o">=</span><span class="mi">10</span><span class="p">),</span> <span class="n">model_name</span><span class="o">=</span><span class="s2">&quot;LeNet&quot;</span><span class="p">,</span>
@@ -547,10 +546,10 @@ before computing the loss. Note that mixup is only performed during training (no
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
 </pre></div>
 </div>
-<div class="input_area highlight-python notranslate"><div class="highlight"><pre>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="kn">import</span> <span class="nn">tempfile</span>
 <span class="kn">import</span> <span class="nn">os</span>
-<span class="kn">from</span> <span class="nn">fastestimator.trace</span> <span class="kn">import</span> <span class="n">Accuracy</span><span class="p">,</span> <span class="n">ModelSaver</span>
+<span class="kn">from</span> <span class="nn">fastestimator.trace</span> <span class="k">import</span> <span class="n">Accuracy</span><span class="p">,</span> <span class="n">ModelSaver</span>
 
 <span class="n">simple_traces</span> <span class="o">=</span> <span class="p">[</span><span class="n">Accuracy</span><span class="p">(</span><span class="n">true_key</span><span class="o">=</span><span class="s2">&quot;y&quot;</span><span class="p">,</span> <span class="n">pred_key</span><span class="o">=</span><span class="s2">&quot;y_pred&quot;</span><span class="p">,</span> <span class="n">output_name</span><span class="o">=</span><span class="s1">&#39;acc&#39;</span><span class="p">)]</span>
 
@@ -563,7 +562,7 @@ before computing the loss. Note that mixup is only performed during training (no
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
 </pre></div>
 </div>
-<div class="input_area highlight-python notranslate"><div class="highlight"><pre>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="n">simple_estimator</span> <span class="o">=</span> <span class="n">fe</span><span class="o">.</span><span class="n">Estimator</span><span class="p">(</span><span class="n">network</span><span class="o">=</span><span class="n">simple_network</span><span class="p">,</span>
                                 <span class="n">pipeline</span><span class="o">=</span><span class="n">pipeline</span><span class="p">,</span>
                                 <span class="n">epochs</span><span class="o">=</span><span class="n">epochs</span><span class="p">,</span>
@@ -590,7 +589,7 @@ before computing the loss. Note that mixup is only performed during training (no
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
-<div class="input_area highlight-python notranslate"><div class="highlight"><pre>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="n">simple_summary</span> <span class="o">=</span> <span class="n">simple_estimator</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">summary</span><span class="o">=</span><span class="s2">&quot;simple&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -600,7 +599,7 @@ before computing the loss. Note that mixup is only performed during training (no
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
-<div class="input_area highlight-python notranslate"><div class="highlight"><pre>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="n">mixup_summary</span> <span class="o">=</span> <span class="n">mixup_estimator</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">summary</span><span class="o">=</span><span class="s2">&quot;mixup&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -613,8 +612,8 @@ before computing the loss. Note that mixup is only performed during training (no
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
 </pre></div>
 </div>
-<div class="input_area highlight-python notranslate"><div class="highlight"><pre>
-<span></span><span class="kn">from</span> <span class="nn">fastestimator.summary</span> <span class="kn">import</span> <span class="n">visualize_logs</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">fastestimator.summary</span> <span class="k">import</span> <span class="n">visualize_logs</span>
 
 <span class="n">visualize_logs</span><span class="p">([</span><span class="n">simple_summary</span><span class="p">,</span> <span class="n">mixup_summary</span><span class="p">],</span> <span class="n">ignore_metrics</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;LeNet_lr&quot;</span><span class="p">})</span>
 </pre></div>
@@ -630,7 +629,7 @@ before computing the loss. Note that mixup is only performed during training (no
 </div>
 </div>
 <p>—</p>
-<p><a class="reference external" href="https://github.com/fastestimator/fastestimator/blob/r1.0b0/apphub/image_classification/lenet_cifar10_mixup/lenet_cifar10_mixup.ipynb">Example Link to GitHub</a></p>
+<p><a class="reference external" href="https://github.com/fastestimator/fastestimator/blob/master/apphub/image_classification/lenet_cifar10_mixup/lenet_cifar10_mixup.ipynb">Example Link to GitHub</a></p>
 
 
            </div>
@@ -643,7 +642,7 @@ before computing the loss. Note that mixup is only performed during training (no
         <a href="../lenet_mnist/lenet_mnist.html" class="btn btn-neutral float-right" title="MNIST Image Classification Using LeNet" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="../lenet_cifar10_adversarial/lenet_cifar10_adversarial.html" class="btn btn-neutral float-left" title="CIFAR10 Image Classification Using LeNet With Adversarial Training" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="../lenet_cifar10_adversarial/lenet_cifar10_adversarial.html" class="btn btn-neutral float-left" title="CIFAR10 Image Classification Using LeNet" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
